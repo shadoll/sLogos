@@ -3,8 +3,7 @@ FROM node:slim
 WORKDIR /app
 
 COPY package*.json ./
-RUN [ -f package-lock.json ] || touch package-lock.json
-RUN npm install
+RUN npm install || true
 
 # Only copy minimal files for initial build, source will be mounted
 COPY public/index.html public/global.css ./public/
