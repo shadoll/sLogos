@@ -34,10 +34,18 @@ jobs:
             cp public/CNAME public/build/CNAME
           fi
 
+      - name: Prepare Pages artifact
+        run: |
+            mkdir -p ./gh-pages-artifact
+            cp -r public/build/* ./gh-pages-artifact/
+            if [ -f public/CNAME ]; then
+            cp public/CNAME ./gh-pages-artifact/CNAME
+            fi
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./public/build
+            path: ./gh-pages-artifact
 
   deploy:
     needs: build-and-deploy
