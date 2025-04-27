@@ -1,0 +1,15 @@
+FROM node:slim
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN [ -f package-lock.json ] || touch package-lock.json
+RUN npm install
+
+# Only copy minimal files for initial build, source will be mounted
+COPY public/index.html public/global.css ./public/
+
+EXPOSE 5000
+EXPOSE 35729
+
+CMD ["npm", "run", "dev"]

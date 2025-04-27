@@ -1,0 +1,20 @@
+services:
+  logo-gallery-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: logo-gallery-dev
+    ports:
+      - "5006:5000"
+      - "35729:35729"
+    volumes:
+      - ./src:/app/src
+      - ./public:/app/public
+      - ./rollup.config.js:/app/rollup.config.js
+      - ./package.json:/app/package.json
+      - ./scripts:/app/scripts
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+      - HOST=0.0.0.0
+    command: npm run dev

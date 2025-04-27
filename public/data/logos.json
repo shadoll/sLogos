@@ -1,0 +1,56 @@
+[
+  {
+    "name": "Apple (black)",
+    "path": "logos/apple_black.svg",
+    "format": "SVG",
+    "disable": false
+  },
+  {
+    "name": "ATB",
+    "path": "logos/atb.svg",
+    "format": "SVG",
+    "disable": false
+  },
+  {
+    "name": "Binance",
+    "path": "logos/binance.svg",
+    "format": "SVG",
+    "disable": false
+  },
+  {
+    "name": "Dalnoboy Service",
+    "path": "logos/dalnoboy-service.svg",
+    "format": "SVG",
+    "disable": false
+  },
+  {
+    "name": "Google",
+    "path": "logos/google.svg",
+    "format": "SVG",
+    "disable": false
+  },
+  {
+    "name": "Privatbank",
+    "path": "logos/privatbank.png",
+    "format": "PNG",
+    "disable": false
+  },
+  {
+    "name": "Pumb",
+    "path": "logos/pumb.png",
+    "format": "PNG",
+    "disable": false
+  },
+  {
+    "name": "Roomerin",
+    "path": "logos/roomerin.svg",
+    "format": "SVG",
+    "disable": false
+  },
+  {
+    "name": "Shkafnik",
+    "path": "logos/shkafnik.png",
+    "format": "PNG",
+    "disable": false
+  }
+]
