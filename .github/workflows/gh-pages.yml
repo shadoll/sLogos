@@ -28,18 +28,12 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Copy CNAME (if exists)
-        run: |
-          if [ -f public/CNAME ]; then
-            cp public/CNAME public/build/CNAME
-          fi
-
       - name: Prepare Pages artifact
         run: |
             mkdir -p ./gh-pages-artifact
             cp -r public/build/* ./gh-pages-artifact/
             if [ -f public/CNAME ]; then
-            cp public/CNAME ./gh-pages-artifact/CNAME
+                cp public/CNAME ./gh-pages-artifact/CNAME
             fi
 
       - name: Upload artifact
