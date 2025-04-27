@@ -30,8 +30,7 @@ jobs:
 
       - name: Prepare Pages artifact
         run: |
-          mkdir -p ./gh-pages-artifact/build
-          cp public/build/* ./gh-pages-artifact/build/
+          cp -r public/build ./gh-pages-artifact/build/
           cp public/index.html ./gh-pages-artifact/
           cp public/global.css ./gh-pages-artifact/
           cp -r public/data ./gh-pages-artifact/
