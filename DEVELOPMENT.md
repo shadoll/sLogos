@@ -1,21 +1,6 @@
 # Logo Gallery - Developer Documentation
 
-This document provides instructions for developers working on the Logo Gallery project.
-
-## Project Overview
-
-Logo Gallery is a web application that displays a collection of company and brand logos with the following features:
-- Grid and list views of logos
-- Search functionality
-- Direct URL copying for each logo
-- Download capability
-- Responsive design
-
-The project is built with:
-- Svelte for the front-end UI
-- Node.js for script automation
-- Docker for containerization
-- GitHub Pages for deployment
+This document provides instructions for setting up, running, and contributing to the Logo Gallery project.
 
 ## Development Environment Setup
 
@@ -70,7 +55,7 @@ make run CMD="your-command-here"
 ```
 
 Examples:
-- List logo files: `make run CMD="ls -la public/assets/logos"`
+- List logo files: `make run CMD="ls -la public/logos"`
 - Run a specific npm script: `make run CMD="npm run some-script"`
 
 ## Project Structure
@@ -78,8 +63,7 @@ Examples:
 ```
 logos/
 ├── public/              # Static assets
-│   ├── assets/
-│   │   └── logos/       # Logo files (SVG, PNG)
+│   ├── logos/           # Logo files (SVG, PNG)
 │   ├── data/            # JSON data files
 │   ├── build/           # Compiled JS/CSS (generated)
 │   └── global.css       # Global styles
@@ -117,7 +101,7 @@ Run `make help` to see all available commands:
 - `make restart` - Restart the application
 - `make logs` - View the application logs
 - `make run CMD=<cmd>` - Run a command in the container
-- `make generate-logos` - Generate logos.json from assets directory
+- `make scan-logos-dev` - Scan logos directory and update logos.json
 - `make clean` - Clean up build artifacts
 - `make rebuild` - Completely rebuild from scratch
 
