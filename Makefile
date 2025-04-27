@@ -13,7 +13,7 @@ all: build start
 
 # Development mode with hot reloading
 dev:
-	docker compose -f compose.dev.yml up --build
+	$(DOCKER_COMPOSE) -f compose.dev.yml up --build
 
 # Build the Docker container
 build:
