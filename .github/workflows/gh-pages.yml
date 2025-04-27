@@ -30,11 +30,15 @@ jobs:
 
       - name: Prepare Pages artifact
         run: |
-            mkdir -p ./gh-pages-artifact
-            cp -r public/build/* ./gh-pages-artifact/
-            if [ -f public/CNAME ]; then
-                cp public/CNAME ./gh-pages-artifact/CNAME
-            fi
+          mkdir -p ./gh-pages-artifact
+          cp public/build/* ./gh-pages-artifact/
+          cp public/index.html ./gh-pages-artifact/
+          cp public/global.css ./gh-pages-artifact/
+          cp -r public/data ./gh-pages-artifact/
+          cp -r public/logos ./gh-pages-artifact/
+          if [ -f public/CNAME ]; then
+            cp public/CNAME ./gh-pages-artifact/CNAME
+          fi
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
