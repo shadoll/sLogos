@@ -61,6 +61,36 @@
     ]
   },
   {
+    "name": "Monobank (black)",
+    "path": "logos/mono_black.png",
+    "format": "PNG",
+    "disable": false,
+    "tags": [
+      "bank",
+      "finance"
+    ]
+  },
+  {
+    "name": "Monobank (white)",
+    "path": "logos/mono_white.png",
+    "format": "PNG",
+    "disable": false,
+    "tags": [
+      "bank",
+      "finance"
+    ]
+  },
+  {
+    "name": "Mono (yellow)",
+    "path": "logos/mono_yellow.png",
+    "format": "PNG",
+    "disable": false,
+    "tags": [
+      "bank",
+      "finance"
+    ]
+  },
+  {
     "name": "Novapay",
     "path": "logos/novapay.svg",
     "format": "SVG",
@@ -88,6 +118,39 @@
     "tags": [
       "bank",
       "finance"
+    ]
+  },
+  {
+    "name": "Revolut (black)",
+    "path": "logos/revolut_black.png",
+    "format": "PNG",
+    "disable": false,
+    "tags": [
+      "bank",
+      "finance",
+      "transfer"
+    ]
+  },
+  {
+    "name": "Revolut (white)",
+    "path": "logos/revolut_white.png",
+    "format": "PNG",
+    "disable": false,
+    "tags": [
+      "bank",
+      "finance",
+      "transfer"
+    ]
+  },
+  {
+    "name": "Revolut (yellow)",
+    "path": "logos/revolut_yellow.png",
+    "format": "PNG",
+    "disable": false,
+    "tags": [
+      "bank",
+      "finance",
+      "transfer"
     ]
   },
   {
@@ -135,6 +198,16 @@
     "tags": [
       "telecom",
       "mobile"
+    ]
+  },
+  {
+    "name": "Wise",
+    "path": "logos/wise.png",
+    "format": "PNG",
+    "disable": false,
+    "tags": [
+      "finance",
+      "transfer"
     ]
   }
 ]
