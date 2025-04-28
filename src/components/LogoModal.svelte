@@ -56,43 +56,41 @@
 {/if}
 
 <style>
-  .modal-backdrop {
+  :global(.modal-backdrop) {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    right: 0;
+    bottom: 0;
     background-color: rgba(0, 0, 0, 0.7);
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     z-index: 1000;
-    backdrop-filter: blur(3px);
   }
 
-  .modal-content {
-    background-color: white;
+  :global(.modal-content) {
+    background: var(--color-card);
+    color: var(--color-text);
     border-radius: 8px;
+    padding: 1rem;
+    max-width: 500px;
     width: 90%;
-    max-width: 900px;
-    max-height: 90vh;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--color-border);
+    transition: background 0.2s, color 0.2s;
   }
 
   .modal-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem;
-    border-bottom: 1px solid #eee;
+    margin-bottom: 1rem;
   }
 
   .modal-header h2 {
     margin: 0;
-    color: var(--secondary-color);
+    font-size: 1.5rem;
   }
 
   .close-btn {
@@ -100,29 +98,22 @@
     border: none;
     font-size: 1.5rem;
     cursor: pointer;
-    color: #666;
   }
 
-  .close-btn:hover {
-    color: #333;
-  }
-
-  .modal-body {
-    padding: 1rem;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+  .modal-body img {
+    max-width: 100%;
+    margin-bottom: 1rem;
   }
 
   .preview-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #f5f5f5;
+    background-color: var(--color-card);
     border-radius: 4px;
     padding: 2rem;
     min-height: 300px;
+    transition: background 0.2s, color 0.2s;
   }
 
   .preview-container img {
@@ -133,8 +124,10 @@
 
   .logo-details {
     padding: 1rem;
-    background-color: #f9f9f9;
+    background-color: var(--color-card);
+    color: var(--color-text);
     border-radius: 4px;
+    transition: background 0.2s, color 0.2s;
   }
 
   .logo-details p {

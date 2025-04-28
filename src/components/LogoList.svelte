@@ -23,7 +23,7 @@
 <div class="logo-list">
   {#each logos as logo}
     <div class="logo-item">
-      <div class="logo-image"
+      <div class="logo-preview"
         role="button"
         tabindex="0"
         aria-label="Preview {logo.name}"
@@ -52,94 +52,63 @@
 </div>
 
 <style>
-  .logo-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .logo-item {
-    display: flex;
-    align-items: center;
-    background: var(--card-background);
+  :global(.logo-item) {
+    background: var(--color-card);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
     border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s, box-shadow 0.2s;
-    width: 100%;
+    display: grid;
+    grid-template-columns: 80px 2fr 3fr 150px;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    transition: background 0.2s, color 0.2s;
   }
-
-  .logo-item:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
-  }
-
-  .logo-image {
-    width: 120px;
-    min-width: 120px;
+  .logo-preview {
     height: 100px;
-    padding: 0.5rem;
+    width: 80px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #f5f5f5;
-    position: relative;
+    background: var(--color-card);
+    color: var(--color-text);
+    border-radius: 4px;
     overflow: hidden;
-    border-right: 1px solid #eee;
     cursor: pointer;
+    transition: background 0.2s, color 0.2s;
   }
-
-  .logo-image img {
+  .logo-preview img {
     max-width: 80%;
     max-height: 80%;
     width: auto !important;
     height: auto !important;
     object-fit: contain;
+    object-position: center;
   }
-
   .logo-info {
-    flex-grow: 1;
-    padding: 1rem;
+    background: var(--color-card);
+    color: var(--color-text);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: background 0.2s, color 0.2s;
   }
-
   .logo-info h3 {
     margin-bottom: 0.5rem;
-    color: var(--secondary-color);
-    font-size: 1.2rem;
+    color: var(--color-accent, #4f8cff);
   }
-
   .logo-info p {
     font-size: 0.9rem;
-    color: #666;
+    color: var(--color-text);
+    margin-bottom: 1rem;
   }
-
   .logo-actions {
     display: flex;
+  }
+
+  .logo-list {
+    display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    padding: 1rem;
-    min-width: 120px;
-    border-left: 1px solid #eee;
-  }
-
-  .logo-actions button {
-    padding: 0.4rem 0.8rem;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    text-align: center;
-    transition: background-color 0.2s;
-  }
-
-  .copy-btn {
-    background-color: #f0f0f0;
-    color: #333;
-  }
-
-  .download-btn {
-    background-color: var(--secondary-color);
-    color: white;
+    gap: 1rem;
   }
 
   .no-results {

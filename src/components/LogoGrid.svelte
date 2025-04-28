@@ -52,25 +52,23 @@
 </div>
 
 <style>
+  :global(.logo-card) {
+    background: var(--color-card);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: background 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s;
+  }
+  :global(.logo-card:hover) {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
   .logo-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 1.5rem;
   }
-
-  .logo-card {
-    background: var(--card-background);
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-
-  .logo-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
-  }
-
   .logo-image {
     height: 160px;
     width: 100%;
@@ -78,12 +76,13 @@
     align-items: center;
     justify-content: center;
     padding: 1rem;
-    background-color: #f5f5f5;
+    background: var(--color-card);
+    color: var(--color-text);
     position: relative;
     overflow: hidden;
     cursor: pointer;
+    transition: background 0.2s, color 0.2s;
   }
-
   .logo-image img {
     max-width: 80%;
     max-height: 80%;
@@ -92,26 +91,25 @@
     object-fit: contain;
     object-position: center;
   }
-
   .logo-info {
     padding: 1rem;
+    background: var(--color-card);
+    color: var(--color-text);
+    border-top: 1px solid var(--color-border);
+    transition: background 0.2s, color 0.2s;
   }
-
   .logo-info h3 {
     margin-bottom: 0.5rem;
-    color: var(--secondary-color);
+    color: var(--color-accent, #4f8cff);
   }
-
   .logo-info p {
     font-size: 0.9rem;
-    color: #666;
+    color: var(--color-text);
     margin-bottom: 1rem;
   }
-
   .logo-actions {
     display: flex;
   }
-
   .no-results {
     grid-column: 1 / -1;
     text-align: center;
