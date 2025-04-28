@@ -11,6 +11,15 @@
     ]
   },
   {
+    "name": "Amazon",
+    "path": "logos/amazon.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "retail"
+    ]
+  },
+  {
     "name": "Apple (black)",
     "path": "logos/apple_black.svg",
     "format": "SVG",
@@ -62,6 +71,16 @@
     "tags": [
       "transport",
       "garage"
+    ]
+  },
+  {
+    "name": "Disney",
+    "path": "logos/disney.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "entertainment",
+      "streaming"
     ]
   },
   {
@@ -336,6 +355,16 @@
     "disable": false,
     "tags": [
       "furniture"
+    ]
+  },
+  {
+    "name": "Silpo",
+    "path": "logos/silpo.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "retail",
+      "grocery"
     ]
   },
   {
