@@ -25,7 +25,7 @@ No local Node.js installation is required as all operations run inside Docker co
    make start
    ```
 
-3. Access the application at http://localhost:5005
+3. Access the application at http://localhost:5006
 
 ## Common Development Tasks
 
@@ -72,24 +72,33 @@ logos/
 │   ├── App.svelte       # Main app component
 │   └── main.js          # App entry point
 ├── scripts/             # Utility scripts
-├── Dockerfile           # Docker configuration
-├── compose.yml          # Docker Compose configuration
+├── Dockerfile.dev       # Docker configuration for development
+├── compose.dev.yml      # Docker Compose configuration for development
 ├── Makefile             # Development commands
 └── README.md            # Project overview
 ```
 
 ## Deployment to GitHub Pages
 
-To deploy the application to GitHub Pages:
+Deployment is fully automated using GitHub Actions. On every push to the `main` branch:
 
-1. Build the application:
-   ```
-   make build
-   ```
+1. The application is built in a GitHub Actions workflow.
+2. The build output and all required static assets are prepared as an artifact.
+3. The workflow deploys the site to the `gh-pages` branch using the official GitHub Pages deployment action.
+4. If a custom domain is configured, the `CNAME` file is included automatically.
 
-2. The `public/` directory contains all files needed for deployment
+**You do not need to manually build or push anything for deployment.**
 
-3. Push the contents of the `public/` directory to the `gh-pages` branch of your repository
+To trigger a deployment, simply push your changes to the `main` branch:
+```
+git add .
+git commit -m "Your changes"
+git push
+```
+
+You can monitor deployment status in the GitHub Actions tab of your repository.
+
+For custom domain setup, ensure your `public/CNAME` file contains your domain and your DNS is configured to point to GitHub Pages.
 
 ## Available Make Commands
 
