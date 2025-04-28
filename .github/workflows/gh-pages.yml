@@ -28,6 +28,9 @@ jobs:
       - name: Build project
         run: npm run build
 
+      - name: Generate logos.json
+        run: node scripts/scanLogos.js
+
       - name: Prepare Pages artifact
         run: |
           mkdir -p ./gh-pages-artifact/build
