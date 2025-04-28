@@ -60,13 +60,70 @@ button:hover {
   font-size: 1rem;
 }
 
-.copy-btn {
-  background-color: var(--secondary-color);
-  margin-right: 0.5rem;
+.copy-btn,
+.copy-group .png-btn {
+  background-color: var(--secondary-color, #2c3e50);
+  color: #fff;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  min-width: 2.5em;
+  border-radius: 0;
+  margin: 0;
+  padding: 0.4em 1em;
+  font-size: 0.95em;
+  border-right: 1px solid var(--color-border, #ddd);
+  transition: background 0.2s, color 0.2s;
 }
 
-.download-btn {
-  background-color: #27ae60;
+.copy-btn:last-child,
+.copy-group .png-btn:last-child {
+  border-right: none;
+}
+
+.copy-btn:focus,
+.copy-btn:hover,
+.copy-group .png-btn:focus,
+.copy-group .png-btn:hover {
+  background: #222;
+  color: #fff;
+  outline: none;
+}
+
+.download-btn,
+.download-group .png-btn {
+  background: #27ae60;
+  color: #fff;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  min-width: 2.5em;
+  border-radius: 0;
+  margin: 0;
+  padding: 0.4em 1em;
+  font-size: 0.95em;
+  border-right: 1px solid var(--color-border, #ddd);
+  transition: background 0.2s, color 0.2s;
+}
+
+.download-btn:last-child,
+.download-group .png-btn:last-child {
+  border-right: none;
+}
+
+.download-btn:focus,
+.download-btn:hover,
+.download-group .png-btn:focus,
+.download-group .png-btn:hover {
+  background: #219150;
+  color: #fff;
+  outline: none;
+}
+
+.copy-group, .download-group {
+  display: inline-flex;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+  margin-right: 0.5em;
 }
 
 /* Direct logo image size constraints that will work with any component structure */

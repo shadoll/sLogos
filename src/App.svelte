@@ -52,7 +52,6 @@
   });
 
   $: {
-    console.log('[theme] reactive theme:', theme);
     applyTheme();
   }
 
@@ -108,7 +107,6 @@
       effectiveTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     }
     document.documentElement.setAttribute('data-theme', effectiveTheme);
-    console.log('[theme] theme:', theme, 'effectiveTheme:', effectiveTheme);
   }
 
   function setTheme(newTheme) {
@@ -490,13 +488,6 @@
 
   .logos-container {
     width: 100%;
-  }
-
-  .logo-card, .logo-item {
-    background: var(--color-card);
-    color: var(--color-text);
-    border: 1px solid var(--color-border);
-    transition: background 0.2s, color 0.2s;
   }
 
   :global(.logo-card), :global(.logo-item) {
