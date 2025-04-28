@@ -92,8 +92,8 @@
   },
   {
     "name": "Nationwide",
-    "path": "logos/nationwide.png",
-    "format": "PNG",
+    "path": "logos/nationwide.svg",
+    "format": "SVG",
     "disable": false,
     "tags": [
       "bank",
@@ -107,6 +107,16 @@
     "disable": false,
     "tags": [
       "payment",
+      "finance"
+    ]
+  },
+  {
+    "name": "Privat24 Bussiness",
+    "path": "logos/privat24bussiness.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "bank",
       "finance"
     ]
   },
@@ -131,6 +141,16 @@
     ]
   },
   {
+    "name": "Pumb",
+    "path": "logos/pumb.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "bank",
+      "finance"
+    ]
+  },
+  {
     "name": "Revolut (black)",
     "path": "logos/revolut_black.png",
     "format": "PNG",
@@ -142,9 +162,31 @@
     ]
   },
   {
+    "name": "Revolut Black",
+    "path": "logos/revolut_black.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "bank",
+      "finance",
+      "transfer"
+    ]
+  },
+  {
     "name": "Revolut (white)",
     "path": "logos/revolut_white.png",
     "format": "PNG",
+    "disable": false,
+    "tags": [
+      "bank",
+      "finance",
+      "transfer"
+    ]
+  },
+  {
+    "name": "Revolut White",
+    "path": "logos/revolut_white.svg",
+    "format": "SVG",
     "disable": false,
     "tags": [
       "bank",
