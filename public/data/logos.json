@@ -49,7 +49,13 @@
   },
   {
     "name": "Shkafnik",
-    "path": "logos/shkafnik.png",
+    "path": "logos/shkafnik.svg",
+    "format": "SVG",
+    "disable": false
+  },
+  {
+    "name": "Shkafnik Small",
+    "path": "logos/shkafnik_small.png",
     "format": "PNG",
     "disable": false
   }

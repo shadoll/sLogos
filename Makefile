@@ -6,7 +6,7 @@ CONTAINER_NAME = logo-gallery
 DEV_PORT = 5006
 
 # Main targets
-.PHONY: all build start stop restart logs clean scan-logos-dev dev
+.PHONY: all build start stop restart logs clean scan-logos dev
 
 all: build start
 
@@ -45,7 +45,7 @@ run:
 	$(DOCKER_COMPOSE) -f compose.dev.yml run --rm $(CONTAINER_NAME) $(CMD)
 
 # Scan logos.json from files in the logos directory (for dev mode)
-scan-logos-dev:
+scan-logos:
 	@echo "Scanning logos directory and updating logos.json for development..."
 	$(DOCKER_COMPOSE) -f compose.dev.yml run --rm logo-gallery-dev npm run scan-logos
 	@echo "Logos have been updated - refresh the browser to see changes"
