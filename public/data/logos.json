@@ -61,6 +61,16 @@
     ]
   },
   {
+    "name": "Kyivstar",
+    "path": "logos/kyivstar.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "telecom",
+      "mobile"
+    ]
+  },
+  {
     "name": "Monobank (black)",
     "path": "logos/mono_black.png",
     "format": "PNG",
@@ -84,6 +94,16 @@
     "name": "Mono (yellow)",
     "path": "logos/mono_yellow.png",
     "format": "PNG",
+    "disable": false,
+    "tags": [
+      "bank",
+      "finance"
+    ]
+  },
+  {
+    "name": "Monobank (paw)",
+    "path": "logos/monobank_paw.svg",
+    "format": "SVG",
     "disable": false,
     "tags": [
       "bank",
