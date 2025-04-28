@@ -61,9 +61,10 @@ function scanLogos() {
       const format = getFileExtension(file);
       const logoPath = `logos/${file}`;
       const existingItem = existingMap.get(logoPath);
+      let logoObj;
       if (existingItem) {
-        // Preserve name and disable, update format/path
-        return {
+        // Preserve name, tags, and disable, update format/path
+        logoObj = {
           ...existingItem,
           path: logoPath,
           format: format,
@@ -71,13 +72,18 @@ function scanLogos() {
         };
       } else {
         // New logo
-        return {
+        logoObj = {
           name: formatName(file),
           path: logoPath,
           format: format,
           disable: false
         };
       }
+      // Ensure tags field exists and is an array
+      if (!Array.isArray(logoObj.tags)) {
+        logoObj.tags = [];
+      }
+      return logoObj;
     });
     return logos;
   } catch (error) {

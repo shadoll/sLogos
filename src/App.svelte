@@ -9,6 +9,9 @@
   let filteredLogos = [];
   let theme = 'system';
   let mq;
+  let allTags = [];
+  let selectedTags = [];
+  let tagDropdownOpen = false;
 
   // Load logos from JSON file with cache busting
   onMount(async () => {
@@ -53,11 +56,21 @@
     applyTheme();
   }
 
-  $: {
-    filteredLogos = logos.filter(logo =>
-      logo.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-  }
+  // Compute all unique tags as objects with text and optional color
+  $: allTags = Array.from(
+    new Map(
+      logos.flatMap(logo => (logo.tags || []).map(tag => {
+        if (typeof tag === 'string') return [tag, { text: tag }];
+        return [tag.text, tag];
+      }))
+    ).values()
+  ).sort((a, b) => a.text.localeCompare(b.text));
+
+  $: filteredLogos = logos.filter(logo => {
+    const matchesSearch = logo.name.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesTags = !selectedTags.length || (logo.tags && logo.tags.some(tag => selectedTags.includes(typeof tag === 'string' ? tag : tag.text)));
+    return matchesSearch && matchesTags;
+  });
 
   function setGridView() {
     console.log('Setting view mode to: grid');
@@ -104,6 +117,46 @@
     console.log('[theme] setTheme:', newTheme);
     applyTheme();
   }
+
+  function toggleTag(tag) {
+    if (selectedTags.includes(tag)) {
+      selectedTags = selectedTags.filter(t => t !== tag);
+    } else {
+      selectedTags = [...selectedTags, tag];
+    }
+  }
+
+  function addTag(tag) {
+    if (!selectedTags.includes(tag)) {
+      selectedTags = [...selectedTags, tag];
+    }
+    tagDropdownOpen = false;
+  }
+
+  function removeTag(tag) {
+    selectedTags = selectedTags.filter(t => t !== tag);
+  }
+
+  function toggleDropdown() {
+    tagDropdownOpen = !tagDropdownOpen;
+  }
+
+  function closeDropdown(e) {
+    if (!e.target.closest('.tag-dropdown')) {
+      tagDropdownOpen = false;
+    }
+  }
+
+  function getTagObj(text) {
+    return allTags.find(t => t.text === text);
+  }
+
+  // Listen for outside click to close dropdown
+  $: if (tagDropdownOpen) {
+    window.addEventListener('click', closeDropdown);
+  } else {
+    window.removeEventListener('click', closeDropdown);
+  }
 </script>
 
 <main class="container">
@@ -125,6 +178,41 @@
     <div class="header-row header-controls">
       <div class="search-bar">
         <input type="text" placeholder="Search logos..." bind:value={searchQuery} />
+      </div>
+      <div class="tag-filter">
+        {#each selectedTags as tagText}
+          {#if getTagObj(tagText)}
+            <button
+              class="selected-tag"
+              style={getTagObj(tagText).color ? `background: ${getTagObj(tagText).color}; color: #fff;` : ''}
+              aria-label={`Remove tag: ${getTagObj(tagText).text}`}
+              on:click={() => removeTag(getTagObj(tagText).text)}
+            >
+              {getTagObj(tagText).text}
+              <span class="close">&times;</span>
+            </button>
+          {/if}
+        {/each}
+        <div class="tag-dropdown">
+          <button class="dropdown-toggle" on:click={toggleDropdown} aria-label="Add tag filter">
+            + Tag{selectedTags.length ? '' : 's'}
+          </button>
+          {#if tagDropdownOpen}
+            <div class="dropdown-list">
+              {#each allTags.filter(t => !selectedTags.includes(t.text)) as tagObj}
+                <button
+                  class="dropdown-tag"
+                  style={tagObj.color ? `background: ${tagObj.color}; color: #fff;` : ''}
+                  on:click={() => addTag(tagObj.text)}
+                  aria-label={`Add tag: ${tagObj.text}`}
+                >{tagObj.text}</button>
+              {/each}
+              {#if allTags.filter(t => !selectedTags.includes(t.text)).length === 0}
+                <span class="no-tags">No more tags</span>
+              {/if}
+            </div>
+          {/if}
+        </div>
       </div>
       <div class="view-toggle">
         <button class:active={viewMode === 'grid'} on:click={setGridView} aria-label="Grid view">
@@ -225,6 +313,108 @@
   .search-bar input::placeholder {
     color: #888;
     opacity: 1;
+  }
+
+  .tag-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    align-items: center;
+    margin-left: 1rem;
+    position: relative;
+  }
+
+  .tag-filter .selected-tag {
+    background: var(--color-accent, #4f8cff);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 0.2em 0.8em 0.2em 0.8em;
+    font-size: 0.85em;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.3em;
+    opacity: 1;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .tag-filter .selected-tag .close {
+    margin-left: 0.4em;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+
+  .tag-filter .selected-tag .close:hover {
+    opacity: 1;
+  }
+
+  .tag-dropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+  .tag-dropdown .dropdown-toggle {
+    background: var(--color-card);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: 0.2em 0.8em;
+    font-size: 0.85em;
+    font-weight: 500;
+    cursor: pointer;
+    margin-left: 0.2em;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .tag-dropdown .dropdown-list {
+    position: absolute;
+    left: 0;
+    top: 110%;
+    min-width: 120px;
+    background: var(--color-card);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    z-index: 10;
+    padding: 0.4em 0.2em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2em;
+  }
+
+  .tag-dropdown .dropdown-tag {
+    background: var(--color-accent, #4f8cff);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 0.2em 0.8em;
+    font-size: 0.85em;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    opacity: 0.85;
+    margin: 0.1em 0;
+    text-align: left;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .tag-dropdown .dropdown-tag:hover {
+    opacity: 1;
+    background: var(--color-accent, #4f8cff);
+  }
+
+  .tag-dropdown .no-tags {
+    color: #888;
+    font-size: 0.85em;
+    padding: 0.3em 0.8em;
+    text-align: center;
   }
 
   .view-toggle {

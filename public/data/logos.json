@@ -3,60 +3,90 @@
     "name": "Apple (black)",
     "path": "logos/apple_black.svg",
     "format": "SVG",
-    "disable": false
+    "disable": false,
+    "tags": [
+      {"text":"tech", "color": "silver"}
+    ]
   },
   {
     "name": "ATB",
     "path": "logos/atb.svg",
     "format": "SVG",
-    "disable": false
+    "disable": false,
+    "tags": [
+      "retail"
+    ]
   },
   {
     "name": "Binance",
     "path": "logos/binance.svg",
     "format": "SVG",
-    "disable": false
+    "disable": false,
+    "tags": [
+      "crypto",
+      "finance",
+      "exchange"
+    ]
   },
   {
     "name": "Dalnoboy Service",
     "path": "logos/dalnoboy-service.svg",
     "format": "SVG",
-    "disable": false
+    "disable": false,
+    "tags": []
   },
   {
     "name": "Google",
     "path": "logos/google.svg",
     "format": "SVG",
-    "disable": false
+    "disable": false,
+    "tags": []
   },
   {
     "name": "Privatbank",
     "path": "logos/privatbank.png",
     "format": "PNG",
-    "disable": false
+    "disable": false,
+    "tags": [
+      "bank",
+      "finance"
+    ]
   },
   {
     "name": "Pumb",
     "path": "logos/pumb.png",
     "format": "PNG",
-    "disable": false
+    "disable": false,
+    "tags": [
+      "bank",
+      "finance"
+    ]
   },
   {
     "name": "Roomerin",
     "path": "logos/roomerin.svg",
     "format": "SVG",
-    "disable": false
+    "disable": false,
+    "tags": [
+      "furniture"
+    ]
   },
   {
     "name": "Shkafnik",
     "path": "logos/shkafnik.svg",
     "format": "SVG",
-    "disable": false
+    "disable": false,
+    "tags": [
+      "furniture"
+    ]
   },
   {
     "name": "Shkafnik Small",
     "path": "logos/shkafnik_small.png",
     "format": "PNG",
-    "disable": false
+    "disable": false,
+    "tags": [
+      "furniture"
+    ]
   }
 ]

@@ -49,6 +49,13 @@
         <div class="logo-details">
           <p><strong>Format:</strong> {logo.format}</p>
           <p><strong>Path:</strong> {logo.path}</p>
+          {#if logo.tags && logo.tags.length}
+            <div class="logo-tags">
+              {#each logo.tags as tagObj}
+                <span class="logo-tag" style={tagObj.color ? `background:${tagObj.color}` : ''}>{tagObj.text || tagObj}</span>
+              {/each}
+            </div>
+          {/if}
         </div>
       </div>
     </div>
@@ -132,5 +139,24 @@
 
   .logo-details p {
     margin-bottom: 0.5rem;
+  }
+
+  .logo-tags {
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .logo-tag {
+    display: inline-block;
+    background: var(--color-accent, #4f8cff);
+    color: #fff;
+    border-radius: 12px;
+    padding: 0.2em 0.8em;
+    font-size: 0.85em;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    transition: background 0.2s;
   }
 </style>
