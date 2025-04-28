@@ -16,6 +16,38 @@
   function closeModal() {
     showModal = false;
   }
+
+  function downloadPng(logo) {
+    // Only for SVG
+    if (logo.format !== 'SVG') return;
+    fetch(logo.path)
+      .then(res => res.text())
+      .then(svgText => {
+        const svg = new Blob([svgText], { type: 'image/svg+xml' });
+        const url = URL.createObjectURL(svg);
+        const img = new window.Image();
+        img.onload = function () {
+          const canvas = document.createElement('canvas');
+          canvas.width = img.width;
+          canvas.height = img.height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0);
+          canvas.toBlob(blob => {
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = logo.name.replace(/\s+/g, '_').toLowerCase() + '.png';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+          }, 'image/png');
+        };
+        img.onerror = function () {
+          alert('Failed to convert SVG to PNG.');
+        };
+        img.src = url;
+      });
+  }
 </script>
 
 <LogoModal show={showModal} logo={selectedLogo} on:close={closeModal} />
@@ -41,9 +73,16 @@
         <button class="copy-btn" on:click={() => onCopy(logo.path)}>
           Copy URL
         </button>
-        <button class="download-btn" on:click={() => onDownload(logo.path, logo.name)}>
-          Download
-        </button>
+        <span class="download-group">
+          <button class="download-btn" on:click={() => onDownload(logo.path, logo.name)}>
+            Download
+          </button>
+          {#if logo.format === 'SVG'}
+            <button class="download-btn png-btn" on:click={() => downloadPng(logo)}>
+              PNG
+            </button>
+          {/if}
+        </span>
       </div>
     </div>
   {:else}
@@ -103,8 +142,40 @@
   }
   .logo-actions {
     display: flex;
+    align-items: center;
+    gap: 0.5em;
   }
-
+  .download-group {
+    display: inline-flex;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+  }
+  .download-group button,
+  .download-group .png-btn {
+    background: #27ae60;
+    color: #fff;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    min-width: 2.5em;
+    border-radius: 0;
+    margin: 0;
+    padding: 0.4em 1em;
+    font-size: 0.95em;
+    border-right: 1px solid var(--color-border);
+    transition: background 0.2s, color 0.2s;
+  }
+  .download-group button:last-child {
+    border-right: none;
+  }
+  .download-group button:focus,
+  .download-group button:hover,
+  .download-group .png-btn:focus,
+  .download-group .png-btn:hover {
+    background: #219150;
+    color: #fff;
+    outline: none;
+  }
   .logo-list {
     display: flex;
     flex-direction: column;

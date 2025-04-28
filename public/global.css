@@ -89,7 +89,7 @@ div.logo-image img {
 
 /* Grid specific */
 .logo-grid .logo-item .logo-image {
-  height: 160px;
+  /* height: 160px; */
   width: 100%;
 }
 
