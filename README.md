@@ -10,6 +10,10 @@ A collection of company and brand logos hosted on GitHub Pages. This project pro
 
 For setup, development, and deployment instructions, see [DEVELOPMENT.md](./DEVELOPMENT.md).
 
+## AI-Generated Code Notice
+
+All project code was created by AI (GitHub Copilot) with my coaching, explanations, and guidance, involving minimal human coding. The process focused on iterative improvement and collaboration between human and AI.
+
 ## License
 
 This project is MIT licensed. Please note that the logos themselves are property of their respective owners and should be used according to their brand guidelines.
