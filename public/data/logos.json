@@ -5,7 +5,10 @@
     "format": "SVG",
     "disable": false,
     "tags": [
-      {"text":"tech", "color": "silver"}
+      {
+        "text": "tech",
+        "color": "silver"
+      }
     ]
   },
   {
@@ -40,7 +43,32 @@
     "path": "logos/google.svg",
     "format": "SVG",
     "disable": false,
-    "tags": []
+    "tags": [
+      {
+        "text": "tech",
+        "color": "silver"
+      }
+    ]
+  },
+  {
+    "name": "IBKR",
+    "path": "logos/ibkr.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "finance",
+      "brokerage"
+    ]
+  },
+  {
+    "name": "Novapay",
+    "path": "logos/novapay.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "payment",
+      "finance"
+    ]
   },
   {
     "name": "Privatbank",
@@ -87,6 +115,26 @@
     "disable": false,
     "tags": [
       "furniture"
+    ]
+  },
+  {
+    "name": "Viber",
+    "path": "logos/viber.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "messaging",
+      "communication"
+    ]
+  },
+  {
+    "name": "Vodafone",
+    "path": "logos/vodafone.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "telecom",
+      "mobile"
     ]
   }
 ]
