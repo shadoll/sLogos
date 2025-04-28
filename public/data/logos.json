@@ -91,6 +91,16 @@
     ]
   },
   {
+    "name": "Nationwide",
+    "path": "logos/nationwide.png",
+    "format": "PNG",
+    "disable": false,
+    "tags": [
+      "bank",
+      "finance"
+    ]
+  },
+  {
     "name": "Novapay",
     "path": "logos/novapay.svg",
     "format": "SVG",
