@@ -1,7 +1,30 @@
 [
   {
+    "name": "Adidas",
+    "path": "logos/adidas.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "clothing",
+      "sports",
+      "footwear"
+    ]
+  },
+  {
     "name": "Apple (black)",
     "path": "logos/apple_black.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      {
+        "text": "tech",
+        "color": "silver"
+      }
+    ]
+  },
+  {
+    "name": "Apple (silver)",
+    "path": "logos/apple_silver.svg",
     "format": "SVG",
     "disable": false,
     "tags": [
@@ -28,7 +51,7 @@
     "tags": [
       "crypto",
       "finance",
-      "exchange"
+      "trading"
     ]
   },
   {
@@ -36,7 +59,20 @@
     "path": "logos/dalnoboy-service.svg",
     "format": "SVG",
     "disable": false,
-    "tags": []
+    "tags": [
+      "transport",
+      "garage"
+    ]
+  },
+  {
+    "name": "Dodge",
+    "path": "logos/dodge.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "automobile",
+      "transport"
+    ]
   },
   {
     "name": "Google",
@@ -57,12 +93,41 @@
     "disable": false,
     "tags": [
       "finance",
-      "brokerage"
+      "trading"
+    ]
+  },
+  {
+    "name": "Instagram",
+    "path": "logos/instagram.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "social"
+    ]
+  },
+  {
+    "name": "Jeep",
+    "path": "logos/jeep.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "automobile",
+      "transport"
     ]
   },
   {
     "name": "Kyivstar",
     "path": "logos/kyivstar.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "telecom",
+      "mobile"
+    ]
+  },
+  {
+    "name": "Lifecell",
+    "path": "logos/lifecell.svg",
     "format": "SVG",
     "disable": false,
     "tags": [
@@ -131,6 +196,16 @@
     ]
   },
   {
+    "name": "Netflix",
+    "path": "logos/netflix.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "streaming",
+      "entertainment"
+    ]
+  },
+  {
     "name": "Novapay",
     "path": "logos/novapay.svg",
     "format": "SVG",
@@ -162,8 +237,8 @@
   },
   {
     "name": "Pumb",
-    "path": "logos/pumb.png",
-    "format": "PNG",
+    "path": "logos/pumb.svg",
+    "format": "SVG",
     "disable": false,
     "tags": [
       "bank",
@@ -171,13 +246,14 @@
     ]
   },
   {
-    "name": "Pumb",
-    "path": "logos/pumb.svg",
+    "name": "Reebok",
+    "path": "logos/reebok.svg",
     "format": "SVG",
     "disable": false,
     "tags": [
-      "bank",
-      "finance"
+      "clothing",
+      "sports",
+      "footwear"
     ]
   },
   {
