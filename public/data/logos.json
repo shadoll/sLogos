@@ -225,6 +225,15 @@
     ]
   },
   {
+    "name": "Nikamebel",
+    "path": "logos/nikamebel.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "furniture"
+    ]
+  },
+  {
     "name": "Novapay",
     "path": "logos/novapay.svg",
     "format": "SVG",
@@ -276,17 +285,6 @@
     ]
   },
   {
-    "name": "Revolut (black)",
-    "path": "logos/revolut_black.png",
-    "format": "PNG",
-    "disable": false,
-    "tags": [
-      "bank",
-      "finance",
-      "transfer"
-    ]
-  },
-  {
     "name": "Revolut Black",
     "path": "logos/revolut_black.svg",
     "format": "SVG",
@@ -298,31 +296,9 @@
     ]
   },
   {
-    "name": "Revolut (white)",
-    "path": "logos/revolut_white.png",
-    "format": "PNG",
-    "disable": false,
-    "tags": [
-      "bank",
-      "finance",
-      "transfer"
-    ]
-  },
-  {
     "name": "Revolut White",
     "path": "logos/revolut_white.svg",
     "format": "SVG",
-    "disable": false,
-    "tags": [
-      "bank",
-      "finance",
-      "transfer"
-    ]
-  },
-  {
-    "name": "Revolut (yellow)",
-    "path": "logos/revolut_yellow.png",
-    "format": "PNG",
     "disable": false,
     "tags": [
       "bank",
