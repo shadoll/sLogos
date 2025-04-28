@@ -91,6 +91,16 @@
     ]
   },
   {
+    "name": "Monobank (text)",
+    "path": "logos/monobank_text.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "bank",
+      "finance"
+    ]
+  },
+  {
     "name": "Nationwide",
     "path": "logos/nationwide.svg",
     "format": "SVG",
