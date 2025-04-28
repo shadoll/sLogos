@@ -3,7 +3,8 @@ FROM node:slim
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm install || true
+
+RUN npm install
 
 # Only copy minimal files for initial build, source will be mounted
 COPY public/index.html public/global.css ./public/

@@ -1,6 +1,6 @@
 <script>
   export let logo;
-  export let onCopy;
+  // export let onCopy; // No longer needed, handled locally
   export let onDownload;
 
   // Download menu state
@@ -10,6 +10,22 @@
   // Copy menu state
   let showCopyMenu = false;
   let copyMenuAnchor;
+
+  // Notification state
+  let showNotification = false;
+  let notificationText = '';
+  let notificationType = 'success'; // 'success' or 'error'
+  let notificationTimeout;
+
+  function showCopyNotification(text, type = 'success') {
+    notificationText = text;
+    notificationType = type;
+    showNotification = true;
+    clearTimeout(notificationTimeout);
+    notificationTimeout = setTimeout(() => {
+      showNotification = false;
+    }, 10000);
+  }
 
   function toggleDownloadMenu() {
     showDownloadMenu = !showDownloadMenu;
@@ -46,162 +62,150 @@
     return !!(navigator.clipboard && typeof window.ClipboardItem === 'function');
   }
 
-  function getSvgSize(svgText) {
-    // Try to extract width/height from SVG attributes
+  // Utility: Convert SVG to PNG Blob URL and Blob
+  async function svgToPngUrl(svgPath, pngName) {
+    const res = await fetch(svgPath);
+    const svgText = await res.text();
+    // Parse width/height from SVG or use viewBox fallback
     const widthMatch = svgText.match(/width=["']([0-9.]+)(px)?["']/i);
     const heightMatch = svgText.match(/height=["']([0-9.]+)(px)?["']/i);
+    let width, height;
     if (widthMatch && heightMatch) {
-      return { width: parseFloat(widthMatch[1]), height: parseFloat(heightMatch[1]) };
-    }
-    // Fallback: parse viewBox
-    const viewBoxMatch = svgText.match(/viewBox=["']([0-9.\s]+)["']/i);
-    if (viewBoxMatch) {
-      const parts = viewBoxMatch[1].split(/\s+/);
-      if (parts.length === 4) {
-        return { width: parseFloat(parts[2]), height: parseFloat(parts[3]) };
+      width = parseFloat(widthMatch[1]);
+      height = parseFloat(heightMatch[1]);
+    } else {
+      const viewBoxMatch = svgText.match(/viewBox=["']([0-9.\s]+)["']/i);
+      if (viewBoxMatch) {
+        const parts = viewBoxMatch[1].split(/\s+/);
+        if (parts.length === 4) {
+          width = parseFloat(parts[2]);
+          height = parseFloat(parts[3]);
+        }
       }
     }
-    // Default fallback
-    return { width: 256, height: 256 };
-  }
+    width = width || 256;
+    height = height || 256;
 
-  function downloadPng(logo) {
-    if (logo.format !== 'SVG') return;
-    fetch(logo.path)
-      .then(res => res.text())
-      .then(svgText => {
-        const svg = new Blob([svgText], { type: 'image/svg+xml' });
-        const url = URL.createObjectURL(svg);
-        const img = new window.Image();
-        const { width, height } = getSvgSize(svgText);
-        img.onload = function () {
-          const canvas = document.createElement('canvas');
-          canvas.width = width || img.width;
-          canvas.height = height || img.height;
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-          canvas.toBlob(blob => {
-            const a = document.createElement('a');
-            a.href = URL.createObjectURL(blob);
-            a.download = logo.name.replace(/\s+/g, '_').toLowerCase() + '.png';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-          }, 'image/png');
-        };
-        img.onerror = function () {
-          alert('Failed to convert SVG to PNG.');
-        };
-        img.src = url;
-      });
-  }
+    const svgBlob = new Blob([svgText], { type: 'image/svg+xml' });
+    const url = URL.createObjectURL(svgBlob);
+    const img = new window.Image();
+    img.crossOrigin = 'anonymous';
 
-  function downloadJpg(logo) {
-    if (logo.format !== 'SVG') return;
-    fetch(logo.path)
-      .then(res => res.text())
-      .then(svgText => {
-        const svg = new Blob([svgText], { type: 'image/svg+xml' });
-        const url = URL.createObjectURL(svg);
-        const img = new window.Image();
-        const { width, height } = getSvgSize(svgText);
-        img.onload = function () {
-          const canvas = document.createElement('canvas');
-          canvas.width = width || img.width;
-          canvas.height = height || img.height;
-          const ctx = canvas.getContext('2d');
-          ctx.fillStyle = '#fff'; // white background for JPG
-          ctx.fillRect(0, 0, canvas.width, canvas.height);
-          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-          canvas.toBlob(blob => {
-            const a = document.createElement('a');
-            a.href = URL.createObjectURL(blob);
-            a.download = logo.name.replace(/\s+/g, '_').toLowerCase() + '.jpg';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-          }, 'image/jpeg', 0.92);
-        };
-        img.onerror = function () {
-          alert('Failed to convert SVG to JPG.');
-        };
-        img.src = url;
-      });
-  }
-
-  function copyPngToClipboard(logo) {
-    if (logo.format !== 'SVG') return;
-    if (!canCopyPng()) {
-      alert('Clipboard image copy is not supported in this browser. This feature requires HTTPS and a supported browser (Chrome 76+, Edge 79+, Safari 14+).');
-      return;
-    }
-    fetch(logo.path)
-      .then(res => res.text())
-      .then(svgText => {
-        const svg = new Blob([svgText], { type: 'image/svg+xml' });
-        const url = URL.createObjectURL(svg);
-        const img = new window.Image();
-        img.crossOrigin = 'anonymous';
-        const { width, height } = getSvgSize(svgText);
-        img.onload = function () {
-          const canvas = document.createElement('canvas');
-          canvas.width = width || img.width;
-          canvas.height = height || img.height;
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-          canvas.toBlob(blob => {
-            if (!blob || blob.size === 0) {
-              alert('Failed to create PNG blob. (Blob is empty, possibly due to CORS or Safari bug)');
-              URL.revokeObjectURL(url);
-              return;
-            }
-            (async () => {
-              try {
-                await navigator.clipboard.write([
-                  new window.ClipboardItem({ 'image/png': blob })
-                ]);
-                alert('PNG image copied to clipboard!');
-              } catch (err) {
-                if (err && err.name === 'NotAllowedError') {
-                  alert('Clipboard access was denied. Please check your browser permissions, use HTTPS, and ensure you are clicking the button directly.');
-                } else {
-                  alert('Failed to copy PNG image. This feature requires HTTPS and a supported browser (Chrome 76+, Edge 79+, Safari 14+). If you are on Safari, check CORS and try reloading the page.');
-                }
-              }
-              URL.revokeObjectURL(url);
-            })();
-          }, 'image/png');
-        };
-        img.onerror = function (e) {
-          alert('Failed to convert SVG to PNG.');
+    return new Promise((resolve, reject) => {
+      img.onload = function () {
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+        canvas.toBlob(blob => {
+          if (!blob) return reject('Failed to create PNG blob');
+          const pngUrl = URL.createObjectURL(blob);
+          resolve({ pngUrl, blob });
           URL.revokeObjectURL(url);
-        };
-        img.src = url;
-      });
+        }, 'image/png');
+      };
+      img.onerror = reject;
+      img.src = url;
+    });
   }
 
-  function handleCopyPngClick(e) {
+  function getBaseName(filename) {
+    return filename.split('/').pop().replace(/\.[^.]+$/, '');
+  }
+
+  function getPngUrl(logo) {
+    // Adjust this endpoint to match your backend
+    return `/api/svg2png?file=${encodeURIComponent(logo.path)}`;
+  }
+
+  function getPngLink(logo) {
+    return `${window.location.origin}/logos_gen/${getBaseName(logo.path)}.png`;
+  }
+
+  function getJpgLink(logo) {
+    return `${window.location.origin}/logos_gen/${getBaseName(logo.path)}.jpg`;
+  }
+
+  async function handleCopyPngUrlClick(e) {
     e.stopPropagation();
-    console.log('Copy as PNG clicked', logo);
+    const pngUrl = getPngUrl(logo);
+    const fullUrl = window.location.origin + pngUrl;
     try {
-      copyPngToClipboard(logo);
+      await navigator.clipboard.writeText(fullUrl);
+      showCopyNotification('PNG URL copied!', 'success');
     } catch (err) {
-      console.error('copyPngToClipboard error:', err);
+      showCopyNotification('Failed to copy PNG URL', 'error');
+      window.prompt('Copy this PNG URL:', fullUrl);
     }
     closeCopyMenu();
   }
 
-  function handleDownloadPngClick(e) {
+  async function handleCopyPngLinkClick(e) {
     e.stopPropagation();
-    console.log('Download PNG clicked', logo);
+    const url = getPngLink(logo);
     try {
-      downloadPng(logo);
+      await navigator.clipboard.writeText(url);
+      showCopyNotification('PNG link copied!', 'success');
     } catch (err) {
-      console.error('downloadPng error:', err);
+      showCopyNotification('Failed to copy PNG link', 'error');
+      window.prompt('Copy this PNG link:', url);
+    }
+    closeCopyMenu();
+  }
+
+  async function handleCopyJpgLinkClick(e) {
+    e.stopPropagation();
+    const url = getJpgLink(logo);
+    try {
+      await navigator.clipboard.writeText(url);
+      showCopyNotification('JPG link copied!', 'success');
+    } catch (err) {
+      showCopyNotification('Failed to copy JPG link', 'error');
+      window.prompt('Copy this JPG link:', url);
+    }
+    closeCopyMenu();
+  }
+
+  async function handleCopyUrlClick(e) {
+    e.stopPropagation();
+    const url = window.location.origin + '/' + logo.path;
+    navigator.clipboard.writeText(url)
+      .then(() => showCopyNotification('URL copied!', 'success'))
+      .catch(() => showCopyNotification('Failed to copy URL', 'error'));
+    closeCopyMenu();
+  }
+
+  // Download PNG using the utility
+  async function handleDownloadPngClick(e) {
+    e.stopPropagation();
+    try {
+      const { pngUrl } = await svgToPngUrl(logo.path, logo.name);
+      const a = document.createElement('a');
+      a.href = pngUrl;
+      a.download = logo.name.replace(/\s+/g, '_').toLowerCase() + '.png';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(pngUrl), 1000);
+    } catch (err) {
+      alert('Failed to generate PNG: ' + err);
     }
     closeDownloadMenu();
+  }
+
+  // Copy as PNG using the utility
+  async function handleCopyPngClick(e) {
+    e.stopPropagation();
+    try {
+      const { blob } = await svgToPngUrl(logo.path, logo.name);
+      await navigator.clipboard.write([new window.ClipboardItem({ 'image/png': blob })]);
+      showCopyNotification('PNG image copied!', 'success');
+    } catch (err) {
+      showCopyNotification('Failed to copy PNG image', 'error');
+      alert('Failed to copy PNG image. ' + err);
+    }
+    closeCopyMenu();
   }
 
   function handleDownloadJpgClick(e) {
@@ -217,17 +221,20 @@
 </script>
 
 <span class="action-group">
-  <button class="copy-btn" on:click={() => onCopy(logo.path)}>
+  <button class="copy-btn" on:click={handleCopyUrlClick}>
     Copy URL
   </button>
   {#if logo.format === 'SVG'}
-    <button class="menu-btn" bind:this={copyMenuAnchor} aria-label="More copy options" on:click={toggleCopyMenu}>
+    <button class="menu-btn copy-menu" bind:this={copyMenuAnchor} aria-label="More copy options" on:click={toggleCopyMenu}>
       <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="4" r="1.5" fill="currentColor"/><circle cx="10" cy="10" r="1.5" fill="currentColor"/><circle cx="10" cy="16" r="1.5" fill="currentColor"/></svg>
     </button>
     {#if showCopyMenu}
       <div class="dropdown-menu">
-        <button class="dropdown-item" on:click={handleCopyPngClick}>
-          Copy as PNG
+        <button class="dropdown-item" on:click={handleCopyPngLinkClick}>
+          Copy PNG Link
+        </button>
+        <button class="dropdown-item" on:click={handleCopyJpgLinkClick}>
+          Copy JPG Link
         </button>
       </div>
     {/if}
@@ -239,7 +246,7 @@
     Download
   </button>
   {#if logo.format === 'SVG'}
-    <button class="menu-btn" bind:this={downloadMenuAnchor} aria-label="More download options" on:click={toggleDownloadMenu}>
+    <button class="menu-btn download-menu" bind:this={downloadMenuAnchor} aria-label="More download options" on:click={toggleDownloadMenu}>
       <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="4" r="1.5" fill="currentColor"/><circle cx="10" cy="10" r="1.5" fill="currentColor"/><circle cx="10" cy="16" r="1.5" fill="currentColor"/></svg>
     </button>
     {#if showDownloadMenu}
@@ -254,6 +261,18 @@
     {/if}
   {/if}
 </span>
+
+{#if showNotification}
+  <div class="copy-notification {notificationType}">
+    {notificationText}
+  </div>
+{/if}
+
+{#if showNotification}
+  <div class="notification-badge">
+    {notificationText}
+  </div>
+{/if}
 
 <style>
   .action-group {
@@ -303,27 +322,26 @@
     color: #fff;
     outline: none;
   }
-  /* Menu button for copy group: secondary color */
-  .action-group:first-of-type .menu-btn {
-    background: var(--secondary-color, #2c3e50);
-    color: #fff;
+  /* Fix: rounded corners for single and grouped buttons
+     - If only one button (no menu), fully rounded
+     - If menu present, main button: left rounded, menu: right rounded
+     - If menu present but only menu button, menu: fully rounded
+  */
+  .action-group .copy-btn:only-child,
+  .action-group .download-btn:only-child {
+    border-radius: 6px;
   }
-  .action-group:first-of-type .menu-btn:focus,
-  .action-group:first-of-type .menu-btn:hover {
-    background: #222;
-    color: #fff;
+  .action-group .copy-btn:not(:only-child),
+  .action-group .download-btn:not(:only-child) {
+    border-radius: 6px 0 0 6px;
   }
-  /* Menu button for download group: green */
-  .action-group:last-of-type .menu-btn {
-    background: #27ae60;
-    color: #fff;
+  .action-group .menu-btn:not(:only-child) {
+    border-radius: 0 6px 6px 0;
   }
-  .action-group:last-of-type .menu-btn:focus,
-  .action-group:last-of-type .menu-btn:hover {
-    background: #219150;
-    color: #fff;
+  .action-group .menu-btn:only-child {
+    border-radius: 6px;
   }
-  .menu-btn {
+  .action-group .menu-btn {
     border: none;
     border-left: 1px solid var(--color-border, #ddd);
     border-radius: 0 6px 6px 0;
@@ -338,6 +356,31 @@
     line-height: 1.5;
     transition: background 0.2s, color 0.2s;
     /* Visual separator between main button and menu */
+  }
+  /* Make menu button match main button color for each group */
+  .action-group .copy-btn,
+  .action-group .menu-btn.copy-menu {
+    background: var(--secondary-color, #2c3e50);
+    color: #fff;
+  }
+  .action-group .copy-btn:focus,
+  .action-group .copy-btn:hover,
+  .action-group .menu-btn.copy-menu:focus,
+  .action-group .menu-btn.copy-menu:hover {
+    background: #222;
+    color: #fff;
+  }
+  .action-group .download-btn,
+  .action-group .menu-btn.download-menu {
+    background: #27ae60;
+    color: #fff;
+  }
+  .action-group .download-btn:focus,
+  .action-group .download-btn:hover,
+  .action-group .menu-btn.download-menu:focus,
+  .action-group .menu-btn.download-menu:hover {
+    background: #219150;
+    color: #fff;
   }
   .dropdown-menu {
     position: absolute;
@@ -373,5 +416,53 @@
     background: var(--color-accent, #4f8cff);
     color: #fff;
     outline: none;
+  }
+  .notification-badge {
+    position: fixed;
+    bottom: 1em;
+    right: 1em;
+    background: var(--color-accent, #4f8cff);
+    color: #fff;
+    padding: 0.8em 1.2em;
+    border-radius: 8px;
+    box-shadow: 0 2px 16px 4px rgba(0,0,0,0.18);
+    font-size: 0.95em;
+    z-index: 9999;
+    animation: fadeInOut 10s ease-in-out;
+  }
+  @keyframes fadeInOut {
+    0%, 90% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+  .copy-notification {
+    position: fixed;
+    top: 2.5rem;
+    right: 2.5rem;
+    color: #fff;
+    padding: 0.9em 2em;
+    border-radius: 2em;
+    font-size: 1.1em;
+    font-weight: 600;
+    box-shadow: 0 2px 16px 4px rgba(0,0,0,0.18);
+    z-index: 99999;
+    opacity: 0.97;
+    pointer-events: none;
+    transition: opacity 0.3s, background 0.3s;
+  }
+  .copy-notification.success {
+    background: #27ae60;
+  }
+  .copy-notification.error {
+    background: #e74c3c;
+  }
+  .copy-notification.success {
+    background: #27ae60;
+  }
+  .copy-notification.error {
+    background: #e74c3c;
   }
 </style>

@@ -19,6 +19,7 @@
     "svelte": "3.59.2"
   },
   "dependencies": {
+    "@resvg/resvg-js": "^2.0.1",
     "sirv-cli": "^1.0.0"
   }
 }

@@ -1,14 +1,15 @@
 services:
-  logo-gallery-dev:
+  slogos-dev:
     build:
       context: .
       dockerfile: Dockerfile.dev
-    container_name: logo-gallery-dev
+    container_name: slogos-dev
     ports:
       - "5006:5000"
       - "35729:35729"
     volumes:
       - ./:/app
+      - /app/node_modules
     working_dir: /app
     environment:
       - NODE_ENV=development

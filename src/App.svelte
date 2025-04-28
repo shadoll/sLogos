@@ -83,13 +83,41 @@
 
   function copyUrl(logoPath) {
     const url = `${window.location.origin}/${logoPath}`;
-    navigator.clipboard.writeText(url)
-      .then(() => {
+    // Try modern clipboard API first
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(url)
+        .then(() => {
+          alert('URL copied to clipboard!');
+        })
+        .catch(err => {
+          // Fallback: use execCommand for legacy support
+          try {
+            const input = document.createElement('input');
+            input.value = url;
+            document.body.appendChild(input);
+            input.select();
+            document.execCommand('copy');
+            document.body.removeChild(input);
+            alert('URL copied to clipboard!');
+          } catch (fallbackErr) {
+            // Final fallback: show prompt for manual copy
+            window.prompt('Copy this URL:', url);
+          }
+        });
+    } else {
+      // Fallback for non-secure context or missing clipboard API
+      try {
+        const input = document.createElement('input');
+        input.value = url;
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand('copy');
+        document.body.removeChild(input);
         alert('URL copied to clipboard!');
-      })
-      .catch(err => {
-        console.error('Failed to copy URL: ', err);
-      });
+      } catch (fallbackErr) {
+        window.prompt('Copy this URL:', url);
+      }
+    }
   }
 
   function downloadLogo(logoPath, logoName) {

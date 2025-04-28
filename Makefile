@@ -6,7 +6,7 @@ CONTAINER_NAME = logo-gallery
 DEV_PORT = 5006
 
 # Main targets
-.PHONY: all build start stop restart logs clean scan-logos dev
+.PHONY: all build start stop restart logs clean scan-logos dev rebuild
 
 all: build start
 
@@ -47,7 +47,7 @@ run:
 # Scan logos.json from files in the logos directory (for dev mode)
 scan-logos:
 	@echo "Scanning logos directory and updating logos.json for development..."
-	$(DOCKER_COMPOSE) -f compose.dev.yml run --rm logo-gallery-dev npm run scan-logos
+	$(DOCKER_COMPOSE) -f compose.dev.yml run --rm slogos-dev npm run scan-logos
 	@echo "Logos have been updated - refresh the browser to see changes"
 
 # Clean up build artifacts and temporary files
@@ -58,9 +58,5 @@ clean:
 
 # Complete rebuild from scratch
 rebuild:
-	@echo "Performing complete rebuild..."
-	$(DOCKER_COMPOSE) -f compose.dev.yml down
-	docker builder prune -f
+	$(DOCKER_COMPOSE) -f compose.dev.yml down -v
 	$(DOCKER_COMPOSE) -f compose.dev.yml build --no-cache
-	$(DOCKER_COMPOSE) -f compose.dev.yml up -d
-	@echo "Rebuild complete. Application is running at http://localhost:$(DEV_PORT)"
