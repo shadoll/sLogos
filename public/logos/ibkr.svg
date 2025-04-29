@@ -1,27 +1,21 @@
 <svg
 	xmlns="http://www.w3.org/2000/svg"
-	viewBox="0 0 69 69" style="enable-background:new 0 0 69 69;" xml:space="preserve"
+	viewBox="0 0 69 69"
+	xml:space="preserve"
 >
-	<style type="text/css">
-		.st1 {
-			fill: url(#SVGID_1_);
-		}
+	<defs>
+		<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="3864.9817" y1="49.0008" x2="3893.3887"
+			y2="49.0008" gradientTransform="matrix(-1 0 0 1 3894.2446 0)">
+			<stop offset="0" stop-color="#D81222" />
+			<stop offset="1" stop-color="#960B1A" />
+		</linearGradient>
+	</defs>
 
-		.st2 {
-			fill: #D81222;
-		}
-	</style>
 	<g>
 		<g>
-
-			<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="3864.9817" y1="49.0008" x2="3893.3887"
-				y2="49.0008" gradientTransform="matrix(-1 0 0 1 3894.2446 0)">
-				<stop offset="0" style="stop-color:#D81222" />
-				<stop offset="1" style="stop-color:#960B1A" />
-			</linearGradient>
-			<polygon class="st1" points="29.3,64.6 0.9,64.6 0.9,33.4 		" />
-			<circle class="st2" cx="25.3" cy="41" r="8.5" />
-			<polygon class="st2" points="29.3,0.5 0.9,33.4 0.9,64.6 		" />
+			<polygon fill="url(#SVGID_1_)" points="29.3,64.6 0.9,64.6 0.9,33.4" />
+			<circle fill="#D81222" cx="25.3" cy="41" r="8.5" />
+			<polygon fill="#D81222" points="29.3,0.5 0.9,33.4 0.9,64.6" />
 		</g>
 	</g>
 </svg>

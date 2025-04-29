@@ -8,7 +8,20 @@
       "clothing",
       "sports",
       "footwear"
-    ]
+    ],
+    "colors": [
+      {
+        "label": "Black",
+        "value": "#000"
+      },
+      {
+        "label": "White",
+        "value": "#fff"
+      }
+    ],
+    "colorConfig": {
+      "target": "path"
+    }
   },
   {
     "name": "Amazon",
@@ -17,7 +30,20 @@
     "disable": false,
     "tags": [
       "retail"
-    ]
+    ],
+    "colors": [
+      {
+        "label": "Black",
+        "value": "#000"
+      },
+      {
+        "label": "White",
+        "value": "#fff"
+      }
+    ],
+    "colorConfig": {
+      "selector": "#path12, #path14, #path16, #path18, #path28, #path30"
+    }
   },
   {
     "name": "Apple",
@@ -31,13 +57,21 @@
       }
     ],
     "colors": [
-      { "label": "Silver", "value": "#999" },
-      { "label": "White", "value": "#fff" },
-      { "label": "Black", "value": "#000" }
+      {
+        "label": "Silver",
+        "value": "#999"
+      },
+      {
+        "label": "White",
+        "value": "#fff"
+      },
+      {
+        "label": "Black",
+        "value": "#000"
+      }
     ],
     "colorConfig": {
-      "target": "path",
-      "attribute": "fill"
+      "target": "path"
     }
   },
   {
@@ -78,7 +112,20 @@
     "tags": [
       "entertainment",
       "streaming"
-    ]
+    ],
+    "colors": [
+      {
+        "label": "Black",
+        "value": "#000"
+      },
+      {
+        "label": "White",
+        "value": "#fff"
+      }
+    ],
+    "colorConfig": {
+      "target": "path"
+    }
   },
   {
     "name": "Dodge",
@@ -129,7 +176,24 @@
     "tags": [
       "automobile",
       "transport"
-    ]
+    ],
+    "colors": [
+      {
+        "label": "Green",
+        "value": "#424d07"
+      },
+      {
+        "label": "Black",
+        "value": "#000"
+      },
+      {
+        "label": "White",
+        "value": "#fff"
+      }
+    ],
+    "colorConfig": {
+      "target": "g"
+    }
   },
   {
     "name": "Kyivstar",
@@ -199,7 +263,20 @@
     "tags": [
       "bank",
       "finance"
-    ]
+    ],
+    "colors": [
+      {
+        "label": "Black",
+        "value": "#000"
+      },
+      {
+        "label": "White",
+        "value": "#fff"
+      }
+    ],
+    "colorConfig": {
+      "selector": "#text1"
+    }
   },
   {
     "name": "Nationwide",
@@ -279,29 +356,44 @@
       "clothing",
       "sports",
       "footwear"
-    ]
+    ],
+    "colors": [
+      {
+        "label": "Black",
+        "value": "#000"
+      },
+      {
+        "label": "White",
+        "value": "#fff"
+      }
+    ],
+    "colorConfig": {
+      "target": "path"
+    }
   },
   {
-    "name": "Revolut Black",
-    "path": "logos/revolut_black.svg",
+    "name": "Revolut",
+    "path": "logos/revolut.svg",
     "format": "SVG",
     "disable": false,
     "tags": [
       "bank",
       "finance",
       "transfer"
-    ]
-  },
-  {
-    "name": "Revolut White",
-    "path": "logos/revolut_white.svg",
-    "format": "SVG",
-    "disable": false,
-    "tags": [
-      "bank",
-      "finance",
-      "transfer"
-    ]
+    ],
+    "colors": [
+      {
+        "label": "Black",
+        "value": "#000"
+      },
+      {
+        "label": "White",
+        "value": "#fff"
+      }
+    ],
+    "colorConfig": {
+      "target": "path"
+    }
   },
   {
     "name": "Roomerin",
@@ -310,7 +402,28 @@
     "disable": false,
     "tags": [
       "furniture"
-    ]
+    ],
+    "colors": [
+      {
+        "label": "Brown",
+        "value": "#2b1c13"
+      },
+      {
+        "label": "Green",
+        "value": "#859310"
+      },
+      {
+        "label": "Black",
+        "value": "#000"
+      },
+      {
+        "label": "White",
+        "value": "#fff"
+      }
+    ],
+    "colorConfig": {
+      "target": "#text"
+    }
   },
   {
     "name": "Sendpulse Small",

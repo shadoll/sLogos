@@ -1,6 +1,5 @@
 <script>
   export let logo;
-  // export let onCopy; // No longer needed, handled locally
   export let onDownload;
 
   // Download menu state
@@ -322,11 +321,6 @@
     color: #fff;
     outline: none;
   }
-  /* Fix: rounded corners for single and grouped buttons
-     - If only one button (no menu), fully rounded
-     - If menu present, main button: left rounded, menu: right rounded
-     - If menu present but only menu button, menu: fully rounded
-  */
   .action-group .copy-btn:only-child,
   .action-group .download-btn:only-child {
     border-radius: 6px;

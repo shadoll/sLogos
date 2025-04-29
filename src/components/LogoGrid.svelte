@@ -49,8 +49,13 @@
         on:keydown={(e) => (e.key === 'Enter' || e.key === ' ') && openPreview(logo)}
         style="cursor:pointer;"
       >
-        {#if isSvgLogo(logo) && logo.colors}
-          <InlineSvg path={logo.path} color={logo._activeColor || logo.colors[0].value} colorConfig={logo.colorConfig} alt={logo.name} />
+        {#if isSvgLogo(logo)}
+          <InlineSvg
+            path={logo.path}
+            color={logo.colors ? (logo._activeColor || logo.colors[0].value) : undefined}
+            colorConfig={logo.colors ? logo.colorConfig : undefined}
+            alt={logo.name}
+          />
         {:else}
           <img src={logo.path} alt={logo.name} />
         {/if}
@@ -101,7 +106,6 @@
     transition: background 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s;
     min-width: 320px;
   }
-
   .logo-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -110,38 +114,8 @@
   .logo-image {
     height: 260px;
     width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     padding: 1rem;
-    background: var(--color-card);
-    color: var(--color-text);
     position: relative;
-    overflow: hidden;
-    cursor: pointer;
-    transition: background 0.2s, color 0.2s;
-  }
-  .logo-image img,
-.logo-image :global(svg) {
-  width: 100%;
-  height: 100%;
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-  object-position: center;
-  display: block;
-  margin: 0 auto;
-}
-  /* Make inline SVGs scale and fit like <img> */
-  .logo-image svg {
-    max-width: 80%;
-    max-height: 80%;
-    width: auto !important;
-    height: auto !important;
-    object-fit: contain;
-    object-position: center;
-    display: block;
-    margin: 0 auto;
   }
   .logo-info {
     padding: 1rem;
@@ -154,71 +128,10 @@
     margin-bottom: 0.5rem;
     color: var(--color-accent, #4f8cff);
   }
-  /* .logo-info p { font-size: 0.9rem; color: var(--color-text); margin-bottom: 1rem; } */
-  .logo-actions {
-    display: flex;
-    align-items: center;
-    gap: 0.5em;
-    flex-wrap: nowrap;
-  }
-  .format-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1em;
-    margin-bottom: 0.5em;
-  }
-  .color-switcher-inline {
-    display: flex;
-    gap: 0.4em;
-    align-items: center;
-    margin-left: auto;
-  }
-  .color-switcher {
-    display: flex;
-    gap: 0.4em;
-    margin: 0.5em 0 0.5em 0;
-    align-items: center;
-  }
-  .color-circle {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    border: 2px solid #eee;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.08);
-    cursor: pointer;
-    display: inline-block;
-    transition: border 0.2s, box-shadow 0.2s;
-  }
-  .color-circle:hover {
-    border: 2px solid #888;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-  }
   .no-results {
     grid-column: 1 / -1;
     text-align: center;
     padding: 2rem;
     color: #666;
-  }
-
-  .color-switcher {
-    display: flex;
-    gap: 0.4em;
-    margin: 0.5em 0 0.5em 0;
-    align-items: center;
-  }
-  .color-circle {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    border: 2px solid #eee;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.08);
-    cursor: pointer;
-    display: inline-block;
-    transition: border 0.2s, box-shadow 0.2s;
-  }
-  .color-circle:hover {
-    border: 2px solid #888;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
   }
 </style>

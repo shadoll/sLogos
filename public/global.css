@@ -126,12 +126,100 @@ button:hover {
   margin-right: 0.5em;
 }
 
+/* Shared color switcher and color circle styles */
+.color-circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+  cursor: pointer;
+  display: inline-block;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+.color-circle:hover {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
+.color-switcher-preview,
+.color-switcher-inline,
+.color-switcher-under {
+  display: flex;
+  gap: 0.4em;
+  align-items: center;
+}
+.color-switcher-preview {
+  justify-content: center;
+  margin: 1em 0 0.5em 0;
+}
+.color-switcher-inline {
+  margin-left: auto;
+}
+.color-switcher-under {
+  margin: 0.5em 0 0 0;
+}
+
+.logo-tag {
+  display: inline-block;
+  background: var(--color-accent, #4f8cff);
+  color: #fff;
+  border-radius: 12px;
+  padding: 0.2em 0.8em;
+  font-size: 0.85em;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  transition: background 0.2s;
+}
+
+.logo-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  flex-wrap: nowrap;
+}
+
+.logo-info {
+  background: var(--color-card);
+  color: var(--color-text);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.logo-image,
+.logo-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-card);
+  color: var(--color-text);
+  border-radius: 4px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.logo-preview img {
+  max-width: 80%;
+  max-height: 80%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+
+.format-row {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  margin-bottom: 0.5em;
+}
+
 /* Direct logo image size constraints that will work with any component structure */
 div.logo-image {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #f5f5f5;
+  /* background-color removed for theme support */
   position: relative;
   overflow: hidden;
 }
@@ -141,6 +229,15 @@ div.logo-image img {
   max-height: 80%;
   width: auto;
   height: auto;
+  object-fit: contain;
+}
+
+.logo-image svg {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
   object-fit: contain;
 }
 
@@ -156,4 +253,15 @@ div.logo-image img {
   min-width: 120px;
   height: 100px;
   border-right: 1px solid #eee;
+}
+
+/* Dark theme overrides */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-card: #23272e;
+    --background-color: #181a20;
+    --color-text: #f5f6fa;
+    --color-border: #333842;
+    --color-accent: #4f8cff;
+  }
 }

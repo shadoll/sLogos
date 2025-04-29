@@ -38,9 +38,13 @@
         on:keydown={(e) => (e.key === 'Enter' || e.key === ' ') && openPreview(logo)}
         style="cursor:pointer;"
       >
-      >
-        {#if isSvgLogo(logo) && logo.colors}
-          <InlineSvg path={logo.path} color={logo._activeColor || logo.colors[0].value} colorConfig={logo.colorConfig} alt={logo.name} />
+        {#if isSvgLogo(logo)}
+          <InlineSvg
+            path={logo.path}
+            color={logo.colors ? (logo._activeColor || logo.colors[0].value) : undefined}
+            colorConfig={logo.colors ? logo.colorConfig : undefined}
+            alt={logo.name}
+          />
         {:else}
           <img src={logo.path} alt={logo.name} />
         {/if}
@@ -97,83 +101,22 @@
   .logo-preview {
     height: 100px;
     width: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--color-card);
-    color: var(--color-text);
+    padding: 0;
     border-radius: 4px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: background 0.2s, color 0.2s;
-  }
-  .logo-preview img {
-    max-width: 80%;
-    max-height: 80%;
-    width: auto !important;
-    height: auto !important;
-    object-fit: contain;
-    object-position: center;
-  }
-  .color-switcher {
-    display: flex;
-    gap: 0.4em;
-    margin: 0.5em 0 0.5em 0;
-    align-items: center;
-  }
-  .color-circle {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    border: 2px solid #eee;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.08);
-    cursor: pointer;
-    display: inline-block;
-    transition: border 0.2s, box-shadow 0.2s;
-  }
-  .color-circle:hover {
-    border: 2px solid #888;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-  }
-  .logo-info {
-    background: var(--color-card);
-    color: var(--color-text);
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    transition: background 0.2s, color 0.2s;
+    position: relative;
   }
   .logo-info h3 {
     margin-bottom: 0.5rem;
     color: var(--color-accent, #4f8cff);
-  }
-  /* .logo-info p { font-size: 0.9rem; color: var(--color-text); margin-bottom: 1rem; } */
-  .logo-actions {
-    display: flex;
-    align-items: center;
-    gap: 0.5em;
   }
   .logo-list {
     display: flex;
     flex-direction: column;
     gap: 1rem;
   }
-
   .no-results {
     text-align: center;
     padding: 2rem;
     color: #666;
-  }
-
-  .format-row {
-    display: flex;
-    align-items: center;
-    gap: 1em;
-  }
-  /* .color-switcher-inline { display: flex; gap: 0.4em; align-items: center; margin-left: auto; } */
-  .color-switcher-under {
-    display: flex;
-    gap: 0.4em;
-    align-items: center;
-    margin: 0.5em 0 0 0;
   }
 </style>

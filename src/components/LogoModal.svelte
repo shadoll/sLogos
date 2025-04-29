@@ -49,8 +49,13 @@
           on:keydown={(e) => (e.key === 'Enter' || e.key === ' ') && close()}
           style="cursor:pointer;"
         >
-          {#if isSvgLogo(logo) && logo.colors}
-            <InlineSvg path={logo.path} color={logo._activeColor || logo.colors[0].value} colorConfig={logo.colorConfig} alt={logo.name} />
+          {#if isSvgLogo(logo)}
+            <InlineSvg
+              path={logo.path}
+              color={logo.colors ? (logo._activeColor || logo.colors[0].value) : undefined}
+              colorConfig={logo.colors ? logo.colorConfig : undefined}
+              alt={logo.name}
+            />
           {:else}
             <img src={logo.path} alt={logo.name} />
           {/if}
@@ -156,33 +161,6 @@
     object-fit: contain;
   }
 
-  /* .color-switcher { display: flex; gap: 0.4em; margin: 0.5em 0 0.5em 0; align-items: center; } */
-
-  .color-switcher-inline {
-    display: flex;
-    gap: 0.4em;
-    align-items: center;
-    margin-left: auto;
-  }
-
-  .color-circle {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    border: 2px solid #eee;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.08);
-    cursor: pointer;
-    display: inline-block;
-    transition: border 0.2s, box-shadow 0.2s;
-  }
-
-  .color-circle:hover {
-    border: 2px solid #888;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-  }
-
-  /* .format-row { display: flex; align-items: center; justify-content: space-between; gap: 1em; margin-bottom: 0.5em; } */
-
   .logo-details {
     padding: 1rem;
     background-color: var(--color-card);
@@ -202,53 +180,4 @@
     gap: 0.5rem;
   }
 
-  .logo-tag {
-    display: inline-block;
-    background: var(--color-accent, #4f8cff);
-    color: #fff;
-    border-radius: 12px;
-    padding: 0.2em 0.8em;
-    font-size: 0.85em;
-    font-weight: 500;
-    letter-spacing: 0.02em;
-    transition: background 0.2s;
-  }
-
-  /* .color-switcher-under { display: flex; gap: 0.4em; align-items: center; margin: 0.5em 0 0 0; } */
-
-  .color-switcher-inline {
-    display: flex;
-    gap: 0.4em;
-    align-items: center;
-    margin-left: auto;
-  }
-
-  .color-circle {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    border: 2px solid #eee;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.08);
-    cursor: pointer;
-    display: inline-block;
-    transition: border 0.2s, box-shadow 0.2s;
-  }
-
-  .color-circle:hover {
-    border: 2px solid #888;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-  }
-
-  .format-value {
-    font-weight: 400;
-    margin-left: 0.3em;
-  }
-
-  .color-switcher-preview {
-    display: flex;
-    justify-content: center;
-    gap: 0.4em;
-    align-items: center;
-    margin: 1em 0 0.5em 0;
-  }
 </style>
