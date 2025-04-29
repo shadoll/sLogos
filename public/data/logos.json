@@ -12,11 +12,13 @@
     "colors": [
       {
         "label": "Black",
-        "value": "#000"
+        "value": "#000",
+        "theme": "light"
       },
       {
         "label": "White",
-        "value": "#fff"
+        "value": "#fff",
+        "theme": "dark"
       }
     ],
     "colorConfig": {
@@ -34,15 +36,17 @@
     "colors": [
       {
         "label": "Black",
-        "value": "#000"
+        "value": "#000",
+        "theme": "light"
       },
       {
         "label": "White",
-        "value": "#fff"
+        "value": "#fff",
+        "theme": "dark"
       }
     ],
     "colorConfig": {
-      "selector": "#path12, #path14, #path16, #path18, #path28, #path30"
+      "selector": "#text"
     }
   },
   {
@@ -116,11 +120,13 @@
     "colors": [
       {
         "label": "Black",
-        "value": "#000"
+        "value": "#000",
+        "theme": "light"
       },
       {
         "label": "White",
-        "value": "#fff"
+        "value": "#fff",
+        "theme": "dark"
       }
     ],
     "colorConfig": {
@@ -135,7 +141,26 @@
     "tags": [
       "automobile",
       "transport"
-    ]
+    ],
+    "colors": [
+      {
+        "label": "Grey",
+        "value": "#2b2a29",
+        "theme": "light"
+      },
+      {
+        "label": "Red",
+        "value": "#e22b28"
+      },
+      {
+        "label": "White",
+        "value": "#fff",
+        "theme": "dark"
+      }
+    ],
+    "colorConfig": {
+      "selector": "#text"
+    }
   },
   {
     "name": "Google",
@@ -184,11 +209,13 @@
       },
       {
         "label": "Black",
-        "value": "#000"
+        "value": "#000",
+        "theme": "light"
       },
       {
         "label": "White",
-        "value": "#fff"
+        "value": "#fff",
+        "theme": "dark"
       }
     ],
     "colorConfig": {
@@ -216,9 +243,9 @@
     ]
   },
   {
-    "name": "Monobank (black)",
-    "path": "logos/mono_black.png",
-    "format": "PNG",
+    "name": "Mono Black",
+    "path": "logos/mono_black.svg",
+    "format": "SVG",
     "disable": false,
     "tags": [
       "bank",
@@ -226,9 +253,9 @@
     ]
   },
   {
-    "name": "Monobank (white)",
-    "path": "logos/mono_white.png",
-    "format": "PNG",
+    "name": "Mono White",
+    "path": "logos/mono_white.svg",
+    "format": "SVG",
     "disable": false,
     "tags": [
       "bank",
@@ -236,9 +263,9 @@
     ]
   },
   {
-    "name": "Mono (yellow)",
-    "path": "logos/mono_yellow.png",
-    "format": "PNG",
+    "name": "Mono Yellow",
+    "path": "logos/mono_yellow.svg",
+    "format": "SVG",
     "disable": false,
     "tags": [
       "bank",
@@ -246,7 +273,7 @@
     ]
   },
   {
-    "name": "Monobank (paw)",
+    "name": "Monobank paw",
     "path": "logos/monobank_paw.svg",
     "format": "SVG",
     "disable": false,
@@ -267,11 +294,13 @@
     "colors": [
       {
         "label": "Black",
-        "value": "#000"
+        "value": "#000",
+        "theme": "light"
       },
       {
         "label": "White",
-        "value": "#fff"
+        "value": "#fff",
+        "theme": "dark"
       }
     ],
     "colorConfig": {
@@ -360,11 +389,13 @@
     "colors": [
       {
         "label": "Black",
-        "value": "#000"
+        "value": "#000",
+        "theme": "light"
       },
       {
         "label": "White",
-        "value": "#fff"
+        "value": "#fff",
+        "theme": "dark"
       }
     ],
     "colorConfig": {
@@ -384,11 +415,13 @@
     "colors": [
       {
         "label": "Black",
-        "value": "#000"
+        "value": "#000",
+        "theme": "light"
       },
       {
         "label": "White",
-        "value": "#fff"
+        "value": "#fff",
+        "theme": "dark"
       }
     ],
     "colorConfig": {
@@ -406,7 +439,8 @@
     "colors": [
       {
         "label": "Brown",
-        "value": "#2b1c13"
+        "value": "#2b1c13",
+        "theme": "light"
       },
       {
         "label": "Green",
@@ -418,7 +452,8 @@
       },
       {
         "label": "White",
-        "value": "#fff"
+        "value": "#fff",
+        "theme": "dark"
       }
     ],
     "colorConfig": {

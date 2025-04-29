@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="150mm" height="150mm" style="fill-rule:evenodd"
     viewBox="0 0 15000 15000">
     <g>
-        <polygon fill=none points="0,0 15000,0 15000,15000 0,15000 " />
+        <polygon fill="none" points="0,0 15000,0 15000,15000 0,15000 " />
         <rect fill="#256BB1" x="1290" y="1290" width="12421" height="12421" rx="1402" ry="1402" />
         <path fill="#FEFEFE"
             d="M7500 1942c3070,0 5559,2488 5559,5558 0,3070 -2489,5559 -5559,5559 -3070,0 -5558,-2489 -5558,-5559 0,-3070 2488,-5558 5558,-5558z" />
