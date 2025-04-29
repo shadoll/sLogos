@@ -4,252 +4,241 @@
     "path": "logos/adidas.svg",
     "format": "SVG",
     "disable": false,
-    "tags": [
-      "clothing",
-      "sports",
-      "footwear"
-    ],
-    "colors": [
+    "tags": ["clothing", "sports", "footwear"],
+    "colorSets": [
       {
         "label": "Black",
-        "value": "#000",
-        "theme": "light"
+        "theme": "light",
+        "colors": [
+          { "selector": "path", "value": "#000" }
+        ]
       },
       {
         "label": "White",
-        "value": "#fff",
-        "theme": "dark"
+        "theme": "dark",
+        "colors": [
+          { "selector": "path", "value": "#fff" }
+        ]
       }
-    ],
-    "colorConfig": {
-      "target": "path"
-    }
+    ]
   },
   {
     "name": "Amazon",
     "path": "logos/amazon.svg",
     "format": "SVG",
     "disable": false,
-    "tags": [
-      "retail"
-    ],
-    "colors": [
+    "tags": ["retail"],
+    "colorSets": [
       {
         "label": "Black",
-        "value": "#000",
-        "theme": "light"
+        "theme": "light",
+        "colors": [
+          { "selector": "#text", "value": "#000" }
+        ]
       },
       {
         "label": "White",
-        "value": "#fff",
-        "theme": "dark"
+        "theme": "dark",
+        "colors": [
+          { "selector": "#text", "value": "#fff" }
+        ]
       }
-    ],
-    "colorConfig": {
-      "selector": "#text"
-    }
+    ]
   },
   {
     "name": "Apple",
     "path": "logos/apple.svg",
     "format": "SVG",
     "disable": false,
-    "tags": [
-      {
-        "text": "tech",
-        "color": "silver"
-      }
-    ],
-    "colors": [
+    "tags": ["tech"],
+    "colorSets": [
       {
         "label": "Silver",
-        "value": "#999"
+        "colors": [
+          { "selector": "path", "value": "#999" }
+        ]
       },
       {
         "label": "White",
-        "value": "#fff"
+        "colors": [
+          { "selector": "path", "value": "#fff" }
+        ]
       },
       {
         "label": "Black",
-        "value": "#000"
+        "colors": [
+          { "selector": "path", "value": "#000" }
+        ]
       }
-    ],
-    "colorConfig": {
-      "target": "path"
-    }
+    ]
   },
   {
     "name": "ATB",
     "path": "logos/atb.svg",
     "format": "SVG",
     "disable": false,
-    "tags": [
-      "retail"
-    ]
+    "tags": ["retail"]
   },
   {
     "name": "Binance",
     "path": "logos/binance.svg",
     "format": "SVG",
     "disable": false,
-    "tags": [
-      "crypto",
-      "finance",
-      "trading"
-    ]
+    "tags": ["crypto", "finance", "trading"]
   },
   {
     "name": "Dalnoboy Service",
     "path": "logos/dalnoboy-service.svg",
     "format": "SVG",
     "disable": false,
-    "tags": [
-      "transport",
-      "garage"
-    ]
+    "tags": ["transport", "garage"]
   },
   {
     "name": "Disney",
     "path": "logos/disney.svg",
     "format": "SVG",
     "disable": false,
-    "tags": [
-      "entertainment",
-      "streaming"
-    ],
-    "colors": [
+    "tags": ["entertainment", "streaming"],
+    "colorSets": [
       {
         "label": "Black",
-        "value": "#000",
-        "theme": "light"
+        "theme": "light",
+        "colors": [
+          { "selector": "path", "value": "#000" }
+        ]
       },
       {
         "label": "White",
-        "value": "#fff",
-        "theme": "dark"
+        "theme": "dark",
+        "colors": [
+          { "selector": "path", "value": "#fff" }
+        ]
       }
-    ],
-    "colorConfig": {
-      "target": "path"
-    }
+    ]
   },
   {
     "name": "Dodge",
     "path": "logos/dodge.svg",
     "format": "SVG",
     "disable": false,
-    "tags": [
-      "automobile",
-      "transport"
-    ],
-    "colors": [
+    "tags": ["automotive"],
+    "colorSets": [
       {
         "label": "Grey",
-        "value": "#2b2a29",
-        "theme": "light"
+        "theme": "light",
+        "colors": [
+          { "selector": "#text", "value": "#2b2a29" }
+        ]
       },
       {
         "label": "Red",
-        "value": "#e22b28"
+        "colors": [
+          { "selector": "#text", "value": "#e22b28" }
+        ]
       },
       {
         "label": "White",
-        "value": "#fff",
-        "theme": "dark"
+        "theme": "dark",
+        "colors": [
+          { "selector": "#text", "value": "#fff" }
+        ]
       }
-    ],
-    "colorConfig": {
-      "selector": "#text"
-    }
+    ]
   },
   {
     "name": "Google",
     "path": "logos/google.svg",
     "format": "SVG",
     "disable": false,
-    "tags": [
-      {
-        "text": "tech",
-        "color": "silver"
-      }
-    ]
+    "tags": ["tech", "search"]
   },
   {
     "name": "IBKR",
     "path": "logos/ibkr.svg",
     "format": "SVG",
     "disable": false,
-    "tags": [
-      "finance",
-      "trading"
-    ]
+    "tags": ["finance", "trading"]
   },
   {
     "name": "Instagram",
     "path": "logos/instagram.svg",
     "format": "SVG",
     "disable": false,
-    "tags": [
-      "social"
-    ]
+    "tags": ["social", "media"]
   },
   {
     "name": "Jeep",
     "path": "logos/jeep.svg",
     "format": "SVG",
     "disable": false,
-    "tags": [
-      "automobile",
-      "transport"
-    ],
-    "colors": [
+    "tags": ["automotive"],
+    "colorSets": [
       {
         "label": "Green",
-        "value": "#424d07"
+        "colors": [
+          { "selector": "g", "value": "#424d07" }
+        ]
       },
       {
         "label": "Black",
-        "value": "#000",
-        "theme": "light"
+        "theme": "light",
+        "colors": [
+          { "selector": "g", "value": "#000" }
+        ]
       },
       {
         "label": "White",
-        "value": "#fff",
-        "theme": "dark"
+        "theme": "dark",
+        "colors": [
+          { "selector": "g", "value": "#fff" }
+        ]
       }
-    ],
-    "colorConfig": {
-      "target": "g"
-    }
+    ]
   },
   {
     "name": "Kyivstar",
     "path": "logos/kyivstar.svg",
     "format": "SVG",
     "disable": false,
-    "tags": [
-      "telecom",
-      "mobile"
-    ]
+    "tags": ["telecom"]
   },
   {
     "name": "Lifecell",
     "path": "logos/lifecell.svg",
     "format": "SVG",
     "disable": false,
-    "tags": [
-      "telecom",
-      "mobile"
-    ]
+    "tags": ["telecom"]
   },
   {
     "name": "Mono Black",
     "path": "logos/mono_black.svg",
     "format": "SVG",
     "disable": false,
-    "tags": [
-      "bank",
-      "finance"
+    "tags": ["finance", "banking"],
+    "colorSets": [
+      {
+        "label": "Black background, White text",
+        "colors": [
+          { "selector": "#background", "value": "#000" },
+          { "selector": "#text", "value": "#fff" }
+        ],
+        "theme": "light"
+      },
+      {
+        "label": "White background, Black text",
+        "colors": [
+          { "selector": "#background", "value": "#fff" },
+          { "selector": "#text", "value": "#000" }
+        ],
+        "theme": "dark"
+      },
+      {
+        "label": "Yellow background, White text",
+        "colors": [
+          { "selector": "#background", "value": "#f2bd2b" },
+          { "selector": "#text", "value": "#fff" }
+        ]
+      }
     ]
   },
   {
@@ -257,285 +246,229 @@
     "path": "logos/mono_white.svg",
     "format": "SVG",
     "disable": false,
-    "tags": [
-      "bank",
-      "finance"
-    ]
+    "tags": ["finance", "banking"]
   },
   {
     "name": "Mono Yellow",
     "path": "logos/mono_yellow.svg",
     "format": "SVG",
     "disable": false,
-    "tags": [
-      "bank",
-      "finance"
-    ]
+    "tags": ["finance", "banking"]
   },
   {
     "name": "Monobank paw",
     "path": "logos/monobank_paw.svg",
     "format": "SVG",
     "disable": false,
-    "tags": [
-      "bank",
-      "finance"
-    ]
+    "tags": ["finance", "banking"]
   },
   {
     "name": "Monobank (text)",
     "path": "logos/monobank_text.svg",
     "format": "SVG",
     "disable": false,
-    "tags": [
-      "bank",
-      "finance"
-    ],
-    "colors": [
+    "tags": ["finance", "banking"],
+    "colorSets": [
       {
         "label": "Black",
-        "value": "#000",
-        "theme": "light"
+        "theme": "light",
+        "colors": [
+          { "selector": "#text1", "value": "#000" }
+        ]
       },
       {
         "label": "White",
-        "value": "#fff",
-        "theme": "dark"
+        "theme": "dark",
+        "colors": [
+          { "selector": "#text1", "value": "#fff" }
+        ]
       }
-    ],
-    "colorConfig": {
-      "selector": "#text1"
-    }
+    ]
   },
   {
     "name": "Nationwide",
     "path": "logos/nationwide.svg",
     "format": "SVG",
     "disable": false,
-    "tags": [
-      "bank",
-      "finance"
-    ]
+    "tags": ["finance", "banking"]
   },
   {
     "name": "Netflix",
     "path": "logos/netflix.svg",
     "format": "SVG",
     "disable": false,
-    "tags": [
-      "streaming",
-      "entertainment"
-    ]
+    "tags": ["entertainment", "streaming"]
   },
   {
     "name": "Nikamebel",
     "path": "logos/nikamebel.svg",
     "format": "SVG",
     "disable": false,
-    "tags": [
-      "furniture"
-    ]
+    "tags": ["furniture"]
   },
   {
     "name": "Novapay",
     "path": "logos/novapay.svg",
     "format": "SVG",
     "disable": false,
-    "tags": [
-      "payment",
-      "finance"
-    ]
+    "tags": ["finance", "payments"]
   },
   {
     "name": "Privat24 Bussiness",
     "path": "logos/privat24bussiness.svg",
     "format": "SVG",
     "disable": false,
-    "tags": [
-      "bank",
-      "finance"
-    ]
+    "tags": ["finance", "banking"]
   },
   {
     "name": "Privatbank",
     "path": "logos/privatbank.png",
     "format": "PNG",
     "disable": false,
-    "tags": [
-      "bank",
-      "finance"
-    ]
+    "tags": ["finance", "banking"]
   },
   {
     "name": "Pumb",
     "path": "logos/pumb.svg",
     "format": "SVG",
     "disable": false,
-    "tags": [
-      "bank",
-      "finance"
-    ]
+    "tags": ["finance", "banking"]
   },
   {
     "name": "Reebok",
     "path": "logos/reebok.svg",
     "format": "SVG",
     "disable": false,
-    "tags": [
-      "clothing",
-      "sports",
-      "footwear"
-    ],
-    "colors": [
+    "tags": ["clothing", "sports", "footwear"],
+    "colorSets": [
       {
         "label": "Black",
-        "value": "#000",
-        "theme": "light"
+        "theme": "light",
+        "colors": [
+          { "selector": "path", "value": "#000" }
+        ]
       },
       {
         "label": "White",
-        "value": "#fff",
-        "theme": "dark"
+        "theme": "dark",
+        "colors": [
+          { "selector": "path", "value": "#fff" }
+        ]
       }
-    ],
-    "colorConfig": {
-      "target": "path"
-    }
+    ]
   },
   {
     "name": "Revolut",
     "path": "logos/revolut.svg",
     "format": "SVG",
     "disable": false,
-    "tags": [
-      "bank",
-      "finance",
-      "transfer"
-    ],
-    "colors": [
+    "tags": ["finance", "payments"],
+    "colorSets": [
       {
         "label": "Black",
-        "value": "#000",
-        "theme": "light"
+        "theme": "light",
+        "colors": [
+          { "selector": "path", "value": "#000" }
+        ]
       },
       {
         "label": "White",
-        "value": "#fff",
-        "theme": "dark"
+        "theme": "dark",
+        "colors": [
+          { "selector": "path", "value": "#fff" }
+        ]
       }
-    ],
-    "colorConfig": {
-      "target": "path"
-    }
+    ]
   },
   {
     "name": "Roomerin",
     "path": "logos/roomerin.svg",
     "format": "SVG",
     "disable": false,
-    "tags": [
-      "furniture"
-    ],
-    "colors": [
+    "tags": ["furniture"],
+    "colorSets": [
       {
         "label": "Brown",
-        "value": "#2b1c13",
-        "theme": "light"
+        "theme": "light",
+        "colors": [
+          { "selector": "#text", "value": "#2b1c13" }
+        ]
       },
       {
         "label": "Green",
-        "value": "#859310"
+        "colors": [
+          { "selector": "#text", "value": "#859310" }
+        ]
       },
       {
         "label": "Black",
-        "value": "#000"
+        "colors": [
+          { "selector": "#text", "value": "#000" }
+        ]
       },
       {
         "label": "White",
-        "value": "#fff",
-        "theme": "dark"
+        "theme": "dark",
+        "colors": [
+          { "selector": "#text", "value": "#fff" }
+        ]
       }
-    ],
-    "colorConfig": {
-      "target": "#text"
-    }
+    ]
   },
   {
     "name": "Sendpulse Small",
     "path": "logos/sendpulse-small.svg",
     "format": "SVG",
     "disable": false,
-    "tags": [
-      "marketing",
-      "email"
-    ]
+    "tags": ["email", "marketing"]
   },
   {
     "name": "Sendpulse",
     "path": "logos/sendpulse.svg",
     "format": "SVG",
     "disable": false,
-    "tags": [
-      "marketing",
-      "email"
-    ]
+    "tags": ["email", "marketing"]
   },
   {
     "name": "Shkafnik",
     "path": "logos/shkafnik.svg",
     "format": "SVG",
     "disable": false,
-    "tags": [
-      "furniture"
-    ]
+    "tags": ["furniture"]
   },
   {
     "name": "Shkafnik Small",
     "path": "logos/shkafnik_small.png",
     "format": "PNG",
     "disable": false,
-    "tags": [
-      "furniture"
-    ]
+    "tags": ["furniture"]
   },
   {
     "name": "Silpo",
     "path": "logos/silpo.svg",
     "format": "SVG",
     "disable": false,
-    "tags": [
-      "retail",
-      "grocery"
-    ]
+    "tags": ["retail"]
   },
   {
     "name": "Viber",
     "path": "logos/viber.svg",
     "format": "SVG",
     "disable": false,
-    "tags": [
-      "messaging",
-      "communication"
-    ]
+    "tags": ["messaging"]
   },
   {
     "name": "Vodafone",
     "path": "logos/vodafone.svg",
     "format": "SVG",
     "disable": false,
-    "tags": [
-      "telecom",
-      "mobile"
-    ]
+    "tags": ["telecom"]
   },
   {
     "name": "Wise",
     "path": "logos/wise.png",
     "format": "PNG",
     "disable": false,
-    "tags": [
-      "finance",
-      "transfer"
-    ]
+    "tags": ["finance", "payments"]
   }
 ]
