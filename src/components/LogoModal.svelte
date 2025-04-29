@@ -1,5 +1,6 @@
 <script>
   import { onMount, onDestroy, createEventDispatcher } from 'svelte';
+  import InlineSvg from './InlineSvg.svelte';
 
   export let show = false;
   export let logo = null;
@@ -14,6 +15,10 @@
     if (event.key === 'Escape') {
       close();
     }
+  }
+
+  function isSvgLogo(logo) {
+    return logo && logo.format && logo.format.toLowerCase() === 'svg';
   }
 
   onMount(() => {
@@ -44,10 +49,29 @@
           on:keydown={(e) => (e.key === 'Enter' || e.key === ' ') && close()}
           style="cursor:pointer;"
         >
-          <img src={logo.path} alt={logo.name} />
+          {#if isSvgLogo(logo) && logo.colors}
+            <InlineSvg path={logo.path} color={logo._activeColor || logo.colors[0].value} colorConfig={logo.colorConfig} alt={logo.name} />
+          {:else}
+            <img src={logo.path} alt={logo.name} />
+          {/if}
         </div>
         <div class="logo-details">
-          <p><strong>Format:</strong> {logo.format}</p>
+          {#if isSvgLogo(logo) && logo.colors}
+            <div class="color-switcher-preview">
+              {#each logo.colors as colorObj}
+                <span
+                  class="color-circle"
+                  title={colorObj.label}
+                  style="background:{colorObj.value}"
+                  tabindex="0"
+                  role="button"
+                  on:click|stopPropagation={() => logo._activeColor = colorObj.value}
+                  on:keydown|stopPropagation={(e) => (e.key === 'Enter' || e.key === ' ') && (logo._activeColor = colorObj.value)}
+                ></span>
+              {/each}
+            </div>
+          {/if}
+          <p><strong>Format:</strong> <span>{logo.format}</span></p>
           <p><strong>Path:</strong> {logo.path}</p>
           {#if logo.tags && logo.tags.length}
             <div class="logo-tags">
@@ -119,8 +143,11 @@
     background-color: var(--color-card);
     border-radius: 4px;
     padding: 2rem;
-    min-height: 300px;
+    min-height: 200px;
+    max-height: 60vh;
+    max-width: 100%;
     transition: background 0.2s, color 0.2s;
+    overflow: auto;
   }
 
   .preview-container img {
@@ -128,6 +155,33 @@
     max-height: 60vh;
     object-fit: contain;
   }
+
+  /* .color-switcher { display: flex; gap: 0.4em; margin: 0.5em 0 0.5em 0; align-items: center; } */
+
+  .color-switcher-inline {
+    display: flex;
+    gap: 0.4em;
+    align-items: center;
+    margin-left: auto;
+  }
+
+  .color-circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #eee;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+    cursor: pointer;
+    display: inline-block;
+    transition: border 0.2s, box-shadow 0.2s;
+  }
+
+  .color-circle:hover {
+    border: 2px solid #888;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  }
+
+  /* .format-row { display: flex; align-items: center; justify-content: space-between; gap: 1em; margin-bottom: 0.5em; } */
 
   .logo-details {
     padding: 1rem;
@@ -158,5 +212,43 @@
     font-weight: 500;
     letter-spacing: 0.02em;
     transition: background 0.2s;
+  }
+
+  /* .color-switcher-under { display: flex; gap: 0.4em; align-items: center; margin: 0.5em 0 0 0; } */
+
+  .color-switcher-inline {
+    display: flex;
+    gap: 0.4em;
+    align-items: center;
+    margin-left: auto;
+  }
+
+  .color-circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #eee;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+    cursor: pointer;
+    display: inline-block;
+    transition: border 0.2s, box-shadow 0.2s;
+  }
+
+  .color-circle:hover {
+    border: 2px solid #888;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  }
+
+  .format-value {
+    font-weight: 400;
+    margin-left: 0.3em;
+  }
+
+  .color-switcher-preview {
+    display: flex;
+    justify-content: center;
+    gap: 0.4em;
+    align-items: center;
+    margin: 1em 0 0.5em 0;
   }
 </style>

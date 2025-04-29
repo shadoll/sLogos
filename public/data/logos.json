@@ -20,8 +20,8 @@
     ]
   },
   {
-    "name": "Apple (black)",
-    "path": "logos/apple_black.svg",
+    "name": "Apple",
+    "path": "logos/apple.svg",
     "format": "SVG",
     "disable": false,
     "tags": [
@@ -29,19 +29,16 @@
         "text": "tech",
         "color": "silver"
       }
-    ]
-  },
-  {
-    "name": "Apple (silver)",
-    "path": "logos/apple_silver.svg",
-    "format": "SVG",
-    "disable": false,
-    "tags": [
-      {
-        "text": "tech",
-        "color": "silver"
-      }
-    ]
+    ],
+    "colors": [
+      { "label": "Silver", "value": "#999" },
+      { "label": "White", "value": "#fff" },
+      { "label": "Black", "value": "#000" }
+    ],
+    "colorConfig": {
+      "target": "path",
+      "attribute": "fill"
+    }
   },
   {
     "name": "ATB",
@@ -313,6 +310,26 @@
     "disable": false,
     "tags": [
       "furniture"
+    ]
+  },
+  {
+    "name": "Sendpulse Small",
+    "path": "logos/sendpulse-small.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "marketing",
+      "email"
+    ]
+  },
+  {
+    "name": "Sendpulse",
+    "path": "logos/sendpulse.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "marketing",
+      "email"
     ]
   },
   {
