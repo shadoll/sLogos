@@ -2,7 +2,8 @@
   import LogoModal from './LogoModal.svelte';
   import LogoActions from './LogoActions.svelte';
   import InlineSvg from './InlineSvg.svelte';
-  import { onMount } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
+  import { getDefaultLogoColor, getThemeColor } from '../utils/colorTheme.js';
 
   export let logos = [];
   export let onCopy;
@@ -24,6 +25,22 @@
     return logo.format && logo.format.toLowerCase() === 'svg';
   }
 
+  export let theme;
+$: getLogoThemeColor = logo => getDefaultLogoColor(logo.colors, theme);
+
+  // Improved debug logging for color and theme for each logo
+  $: {
+    if (logos && logos.length) {
+      logos.forEach(logo => {
+        if (logo.colors) {
+          const themeColor = getDefaultLogoColor(logo.colors, theme);
+          const fallbackColor = getThemeColor(logo.colors, theme);
+          const activeColor = logo._activeColor || themeColor;
+        }
+      });
+    }
+  }
+
   // Inline SVG logic for color switching
   let svgCache = {};
 
@@ -36,7 +53,7 @@
   }
 </script>
 
-<LogoModal show={showModal} logo={selectedLogo} on:close={closeModal} />
+<LogoModal show={showModal} logo={selectedLogo} theme={theme} on:close={closeModal} />
 
 <div class="logo-grid">
   {#each logos as logo}
@@ -50,12 +67,14 @@
         style="cursor:pointer;"
       >
         {#if isSvgLogo(logo)}
-          <InlineSvg
-            path={logo.path}
-            color={logo.colors ? (logo._activeColor || logo.colors[0].value) : undefined}
-            colorConfig={logo.colors ? logo.colorConfig : undefined}
-            alt={logo.name}
-          />
+          {#key theme + (logo._activeColor || '')}
+            <InlineSvg
+              path={logo.path}
+              color={logo.colors ? (logo._activeColor || getLogoThemeColor(logo)) : undefined}
+              colorConfig={logo.colors ? logo.colorConfig : undefined}
+              alt={logo.name}
+            />
+          {/key}
         {:else}
           <img src={logo.path} alt={logo.name} />
         {/if}

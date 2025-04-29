@@ -2,6 +2,8 @@
   import LogoModal from './LogoModal.svelte';
   import LogoActions from './LogoActions.svelte';
   import InlineSvg from './InlineSvg.svelte';
+  import { getThemeColor, getDefaultLogoColor } from '../utils/colorTheme.js';
+  import { onMount, onDestroy } from 'svelte';
 
   export let logos = [];
   export let onCopy;
@@ -9,6 +11,8 @@
 
   let showModal = false;
   let selectedLogo = null;
+
+  let theme = getTheme();
 
   function openPreview(logo) {
     selectedLogo = logo;
@@ -23,6 +27,41 @@
     return logo.format && logo.format.toLowerCase() === 'svg';
   }
 
+  function getTheme() {
+    if (typeof window !== 'undefined' && window.matchMedia) {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    return 'light';
+  }
+
+  function handleThemeChange(e) {
+    theme = e.matches ? 'dark' : 'light';
+  }
+
+  onMount(() => {
+    const mql = window.matchMedia('(prefers-color-scheme: dark)');
+    mql.addEventListener('change', handleThemeChange);
+  });
+
+  onDestroy(() => {
+    const mql = window.matchMedia('(prefers-color-scheme: dark)');
+    mql.removeEventListener('change', handleThemeChange);
+  });
+
+  $: getLogoThemeColor = logo => getDefaultLogoColor(logo.colors, theme);
+
+  // Debug logging for color and theme
+  $: {
+    if (logos && logos.length) {
+      logos.forEach(logo => {
+        if (logo.colors) {
+          const themeColor = getDefaultLogoColor(logo.colors, theme);
+          const activeColor = logo._activeColor || themeColor;
+          console.log('[LogoList] Logo:', logo.name, '| Theme:', theme, '| Theme color:', themeColor, '| Active color:', activeColor);
+        }
+      });
+    }
+  }
 </script>
 
 <LogoModal show={showModal} logo={selectedLogo} on:close={closeModal} />
@@ -41,7 +80,7 @@
         {#if isSvgLogo(logo)}
           <InlineSvg
             path={logo.path}
-            color={logo.colors ? (logo._activeColor || logo.colors[0].value) : undefined}
+            color={logo.colors ? (logo._activeColor || getLogoThemeColor(logo)) : undefined}
             colorConfig={logo.colors ? logo.colorConfig : undefined}
             alt={logo.name}
           />

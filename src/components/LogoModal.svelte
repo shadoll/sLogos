@@ -1,6 +1,7 @@
 <script>
   import { onMount, onDestroy, createEventDispatcher } from 'svelte';
   import InlineSvg from './InlineSvg.svelte';
+  import { getDefaultLogoColor, getThemeColor } from '../utils/colorTheme.js';
 
   export let show = false;
   export let logo = null;
@@ -21,6 +22,19 @@
     return logo && logo.format && logo.format.toLowerCase() === 'svg';
   }
 
+  // Always use $theme directly, do not cache in a function
+  export let theme;
+$: getLogoThemeColor = logo => getDefaultLogoColor(logo.colors, theme);
+
+  // Improved debug logging for color and theme
+  $: {
+    if (logo && logo.colors) {
+      const themeColor = getDefaultLogoColor(logo.colors, theme);
+      const fallbackColor = getThemeColor(logo.colors, theme);
+      const activeColor = logo._activeColor || themeColor;
+    }
+  }
+
   onMount(() => {
     document.addEventListener('keydown', handleKeydown);
   });
@@ -30,11 +44,12 @@
   });
 </script>
 
-{#if show && logo}
-  <div class="modal-backdrop"
-    role="dialog"
-    aria-modal="true"
-  >
+<div class="modal-backdrop"
+  style="display: {show && logo ? 'flex' : 'none'}"
+  role="dialog"
+  aria-modal="true"
+>
+  {#if logo}
     <div class="modal-content">
       <div class="modal-header">
         <h2>{logo.name}</h2>
@@ -52,7 +67,7 @@
           {#if isSvgLogo(logo)}
             <InlineSvg
               path={logo.path}
-              color={logo.colors ? (logo._activeColor || logo.colors[0].value) : undefined}
+              color={logo.colors ? (logo._activeColor || getLogoThemeColor(logo)) : undefined}
               colorConfig={logo.colors ? logo.colorConfig : undefined}
               alt={logo.name}
             />
@@ -88,8 +103,8 @@
         </div>
       </div>
     </div>
-  </div>
-{/if}
+  {/if}
+</div>
 
 <style>
   :global(.modal-backdrop) {
@@ -134,6 +149,12 @@
     border: none;
     font-size: 1.5rem;
     cursor: pointer;
+    color: var(--color-text, #222);
+    transition: color 0.2s;
+  }
+
+  .close-btn:hover {
+    color: var(--color-accent, #4f8cff);
   }
 
   .modal-body img {

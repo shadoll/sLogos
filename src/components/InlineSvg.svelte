@@ -3,6 +3,7 @@
   export let path;
   export let color;
   export let colorConfig = { target: 'path', attribute: 'fill' };
+  export let alt;
 
   let svgHtml = '';
 
@@ -54,18 +55,17 @@
         // Legacy: force a single attribute
         el.setAttribute(colorConfig.attribute, color);
       } else {
-        // Only set fill if no stroke attribute exists, and vice versa
-        const hasFill = el.hasAttribute('fill');
-        const hasStroke = el.hasAttribute('stroke');
-        if (hasFill && !hasStroke && el.getAttribute('fill') !== 'none') {
+        // Always override fill and stroke unless they are 'none'
+        if (el.hasAttribute('fill') && el.getAttribute('fill') !== 'none') {
           el.setAttribute('fill', color);
-        } else if (hasStroke && !hasFill && el.getAttribute('stroke') !== 'none') {
+        }
+        if (el.hasAttribute('stroke') && el.getAttribute('stroke') !== 'none') {
           el.setAttribute('stroke', color);
-        } else if (!hasFill && !hasStroke) {
+        }
+        if (!el.hasAttribute('fill') && !el.hasAttribute('stroke')) {
           // If neither, prefer fill
           el.setAttribute('fill', color);
         }
-        // If both fill and stroke exist, do not override either
       }
     });
     svgHtml = doc.documentElement.outerHTML;

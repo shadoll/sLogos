@@ -1,5 +1,6 @@
 <script>
   export let logo;
+  export let onCopy;
   export let onDownload;
 
   // Download menu state
@@ -209,7 +210,7 @@
 
   function handleDownloadJpgClick(e) {
     e.stopPropagation();
-    console.log('Download JPG clicked', logo);
+    // ...existing code...
     try {
       downloadJpg(logo);
     } catch (err) {
@@ -284,36 +285,13 @@
     margin-right: 0.5em;
   }
   .copy-btn {
-    background: var(--secondary-color, #2c3e50);
-    color: #fff;
-    font-weight: 500;
-    letter-spacing: 0.02em;
     min-width: 4em;
     border-radius: 6px 0 0 6px;
-    margin: 0;
-    padding: 0.4em 1em;
-    font-size: 0.95em;
     border: none;
-    transition: background 0.2s, color 0.2s;
-  }
-  .copy-btn:focus,
-  .copy-btn:hover {
-    background: #222;
-    color: #fff;
-    outline: none;
   }
   .download-btn {
-    background: #27ae60;
-    color: #fff;
-    font-weight: 500;
-    letter-spacing: 0.02em;
-    min-width: 4em;
     border-radius: 6px 0 0 6px;
-    margin: 0;
-    padding: 0.4em 1em;
-    font-size: 0.95em;
     border: none;
-    transition: background 0.2s, color 0.2s;
   }
   .download-btn:focus,
   .download-btn:hover {

@@ -71,6 +71,11 @@
     return matchesSearch && matchesTags;
   });
 
+  // Compute the effective theme for children
+  $: effectiveTheme = theme === 'system'
+    ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+    : theme;
+
   function setGridView() {
     console.log('Setting view mode to: grid');
     viewMode = 'grid';
@@ -257,6 +262,7 @@
         logos={filteredLogos}
         onCopy={copyUrl}
         onDownload={downloadLogo}
+        theme={effectiveTheme}
       />
     {:else}
       <LogoList
