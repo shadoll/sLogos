@@ -318,6 +318,16 @@
     ]
   },
   {
+    "name": "Neocom",
+    "path": "logos/neocom.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "telecom",
+      "provider"
+    ]
+  },
+  {
     "name": "Netflix",
     "path": "logos/netflix.svg",
     "format": "SVG",
@@ -347,6 +357,16 @@
     ]
   },
   {
+    "name": "Privat24",
+    "path": "logos/privat24.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "bank",
+      "finance"
+    ]
+  },
+  {
     "name": "Privat24 Bussiness",
     "path": "logos/privat24bussiness.svg",
     "format": "SVG",
@@ -358,8 +378,18 @@
   },
   {
     "name": "Privatbank",
-    "path": "logos/privatbank.png",
-    "format": "PNG",
+    "path": "logos/privatbank.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "bank",
+      "finance"
+    ]
+  },
+  {
+    "name": "Privatbank Logo",
+    "path": "logos/privatbank_logo.svg",
+    "format": "SVG",
     "disable": false,
     "tags": [
       "bank",
@@ -461,8 +491,8 @@
     }
   },
   {
-    "name": "Sendpulse Small",
-    "path": "logos/sendpulse-small.svg",
+    "name": "Sendpulse",
+    "path": "logos/sendpulse.svg",
     "format": "SVG",
     "disable": false,
     "tags": [
@@ -471,8 +501,8 @@
     ]
   },
   {
-    "name": "Sendpulse",
-    "path": "logos/sendpulse.svg",
+    "name": "Sendpulse Logo",
+    "path": "logos/sendpulse_logo.svg",
     "format": "SVG",
     "disable": false,
     "tags": [
@@ -490,9 +520,9 @@
     ]
   },
   {
-    "name": "Shkafnik Small",
-    "path": "logos/shkafnik_small.png",
-    "format": "PNG",
+    "name": "Shkafnik Logo",
+    "path": "logos/shkafnik_logo.svg",
+    "format": "SVG",
     "disable": false,
     "tags": [
       "furniture"
@@ -530,8 +560,8 @@
   },
   {
     "name": "Wise",
-    "path": "logos/wise.png",
-    "format": "PNG",
+    "path": "logos/wise.svg",
+    "format": "SVG",
     "disable": false,
     "tags": [
       "finance",
