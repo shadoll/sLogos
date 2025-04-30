@@ -213,6 +213,7 @@ button:hover {
   align-items: center;
   gap: 1em;
   margin-bottom: 0.5em;
+  justify-content: space-between;
 }
 
 /* Direct logo image size constraints that will work with any component structure */

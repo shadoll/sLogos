@@ -9,22 +9,7 @@
       "clothing",
       "sports",
       "footwear"
-    ],
-    "colors": [
-      {
-        "label": "Black",
-        "value": "#000",
-        "theme": "light"
-      },
-      {
-        "label": "White",
-        "value": "#fff",
-        "theme": "dark"
-      }
-    ],
-    "colorConfig": {
-      "target": "path"
-    }
+    ]
   },
   {
     "name": "Amazon",
@@ -34,22 +19,7 @@
     "brand": "Amazon",
     "tags": [
       "retail"
-    ],
-    "colors": [
-      {
-        "label": "Black",
-        "value": "#000",
-        "theme": "light"
-      },
-      {
-        "label": "White",
-        "value": "#fff",
-        "theme": "dark"
-      }
-    ],
-    "colorConfig": {
-      "selector": "#text"
-    }
+    ]
   },
   {
     "name": "Apple",
@@ -67,14 +37,6 @@
       {
         "label": "Silver",
         "value": "#999"
-      },
-      {
-        "label": "White",
-        "value": "#fff"
-      },
-      {
-        "label": "Black",
-        "value": "#000"
       }
     ],
     "colorConfig": {
@@ -123,22 +85,7 @@
     "tags": [
       "entertainment",
       "streaming"
-    ],
-    "colors": [
-      {
-        "label": "Black",
-        "value": "#000",
-        "theme": "light"
-      },
-      {
-        "label": "White",
-        "value": "#fff",
-        "theme": "dark"
-      }
-    ],
-    "colorConfig": {
-      "target": "path"
-    }
+    ]
   },
   {
     "name": "Dodge",
@@ -159,11 +106,6 @@
       {
         "label": "Red",
         "value": "#e22b28"
-      },
-      {
-        "label": "White",
-        "value": "#fff",
-        "theme": "dark"
       }
     ],
     "colorConfig": {
@@ -229,16 +171,6 @@
       {
         "label": "Green",
         "value": "#424d07"
-      },
-      {
-        "label": "Black",
-        "value": "#000",
-        "theme": "light"
-      },
-      {
-        "label": "White",
-        "value": "#fff",
-        "theme": "dark"
       }
     ],
     "colorConfig": {
@@ -265,22 +197,7 @@
     "tags": [
       "telecom",
       "mobile"
-    ],
-    "colors": [
-      {
-        "label": "Black",
-        "value": "#000",
-        "theme": "light"
-      },
-      {
-        "label": "White",
-        "value": "#fff",
-        "theme": "dark"
-      }
-    ],
-    "colorConfig": {
-      "selector": "#text"
-    }
+    ]
   },
   {
     "name": "Lifecell Logo",
@@ -292,6 +209,14 @@
       "telecom",
       "mobile"
     ]
+  },
+  {
+    "name": "Meest",
+    "path": "logos/meest.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [],
+    "brand": "Meest"
   },
   {
     "name": "Mikrotik",
@@ -362,22 +287,7 @@
     "tags": [
       "bank",
       "finance"
-    ],
-    "colors": [
-      {
-        "label": "Black",
-        "value": "#000",
-        "theme": "light"
-      },
-      {
-        "label": "White",
-        "value": "#fff",
-        "theme": "dark"
-      }
-    ],
-    "colorConfig": {
-      "selector": "#text1"
-    }
+    ]
   },
   {
     "name": "Nationwide",
@@ -450,6 +360,14 @@
     ]
   },
   {
+    "name": "Nvidia",
+    "path": "logos/nvidia.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [],
+    "brand": "Nvidia"
+  },
+  {
     "name": "Privat24",
     "path": "logos/privat24.svg",
     "format": "SVG",
@@ -514,22 +432,7 @@
       "clothing",
       "sports",
       "footwear"
-    ],
-    "colors": [
-      {
-        "label": "Black",
-        "value": "#000",
-        "theme": "light"
-      },
-      {
-        "label": "White",
-        "value": "#fff",
-        "theme": "dark"
-      }
-    ],
-    "colorConfig": {
-      "target": "path"
-    }
+    ]
   },
   {
     "name": "Revolut",
@@ -541,25 +444,10 @@
       "bank",
       "finance",
       "transfer"
-    ],
-    "colors": [
-      {
-        "label": "Black",
-        "value": "#000",
-        "theme": "light"
-      },
-      {
-        "label": "White",
-        "value": "#fff",
-        "theme": "dark"
-      }
-    ],
-    "colorConfig": {
-      "target": "path"
-    }
+    ]
   },
   {
-    "name": "Roomerin",
+    "name": "RoomerIN",
     "path": "logos/roomerin.svg",
     "format": "SVG",
     "disable": false,
@@ -575,21 +463,12 @@
       {
         "label": "Green",
         "value": "#859310"
-      },
-      {
-        "label": "Black",
-        "value": "#000"
-      },
-      {
-        "label": "White",
-        "value": "#fff",
-        "theme": "dark"
       }
     ],
     "colorConfig": {
       "target": "#text"
     },
-    "brand": "Roomerin"
+    "brand": "RoomerIN"
   },
   {
     "name": "Sendpulse",
@@ -619,22 +498,7 @@
     "format": "SVG",
     "disable": false,
     "brand": "shadoll",
-    "tags": [],
-    "colors": [
-      {
-        "label": "Black",
-        "value": "#000",
-        "theme": "light"
-      },
-      {
-        "label": "White",
-        "value": "#fff",
-        "theme": "dark"
-      }
-    ],
-    "colorConfig": {
-      "selector": "#l"
-    }
+    "tags": []
   },
   {
     "name": "Shkafnik",
@@ -685,6 +549,16 @@
       "messaging",
       "communication"
     ]
+  },
+  {
+    "name": "Vintage",
+    "path": "logos/vintage.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "furniture"
+    ],
+    "brand": "Vintage"
   },
   {
     "name": "Vodafone",

@@ -10,12 +10,12 @@
   async function fetchAndColorSvg() {
     const res = await fetch(path);
     let text = await res.text();
-    if (!color || !colorConfig) {
-      // No colorization, render as-is
+    if (!color) {
+      // No user-selected color, render as-is (SVG uses fill="currentColor")
       svgHtml = text;
       return;
     }
-    // Parse and update color
+    // Parse and update color only if user selected
     const parser = new DOMParser();
     const doc = parser.parseFromString(text, 'image/svg+xml');
     // 1. Parse <style> rules and apply as inline attributes before removing <style>
