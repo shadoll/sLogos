@@ -1,0 +1,2 @@
+- png/jpg genareto can generate image all colors
+- for color palette add support combination

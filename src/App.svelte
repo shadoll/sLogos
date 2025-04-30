@@ -141,6 +141,7 @@
       effectiveTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     }
     document.documentElement.setAttribute('data-theme', effectiveTheme);
+    console.log('[theme] Applied theme:', effectiveTheme, '(from', theme, ')');
   }
 
   function setTheme(newTheme) {
@@ -179,10 +180,6 @@
     }
   }
 
-  function getTagObj(text) {
-    return allTags.find(t => t.text === text);
-  }
-
   // Listen for outside click to close dropdown
   $: if (tagDropdownOpen) {
     window.addEventListener('click', closeDropdown);
@@ -207,7 +204,6 @@
     {addTag}
     {removeTag}
     {toggleTag}
-    {getTagObj}
     {closeDropdown}
     {filteredLogos}
   />

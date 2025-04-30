@@ -12,7 +12,6 @@
   export let toggleDropdown;
   export let addTag;
   export let removeTag;
-  export let getTagObj;
 </script>
 
 <header class="main-header">
@@ -39,17 +38,14 @@
     </div>
     <div class="tag-filter">
       {#each selectedTags as tagText}
-        {#if getTagObj(tagText)}
           <button
             class="selected-tag"
-            style={getTagObj(tagText).color ? `background: ${getTagObj(tagText).color}; color: #fff;` : ''}
-            aria-label={`Remove tag: ${getTagObj(tagText).text}`}
-            on:click={() => removeTag(getTagObj(tagText).text)}
+            aria-label={`Remove tag: ${tagText}`}
+            on:click={() => removeTag(tagText)}
           >
-            {getTagObj(tagText).text}
+            {tagText}
             <span class="close">&times;</span>
           </button>
-        {/if}
       {/each}
       <div class="tag-dropdown">
         <button class="dropdown-toggle" on:click={toggleDropdown} aria-label="Add tag filter">

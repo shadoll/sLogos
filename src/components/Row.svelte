@@ -1,21 +1,23 @@
 <script>
+  import { onMount } from 'svelte';
   export let logo;
   export let view = 'grid'; // or 'list'
   export let showActions = true;
   export let onPreview = null;
   import InlineSvg from './InlineSvg.svelte';
   import { getDefaultLogoColor } from '../utils/colorTheme.js';
-  import tagsData from '../../public/data/tags.json';
-  function getTagObj(text) {
-    return tagsData[text] ? { text, ...tagsData[text] } : { text };
-  }
+  import { loadTagsData, getTagObj } from '../utils/tagUtils.js';
+
+  onMount(async () => {
+    await loadTagsData();
+  });
 </script>
 
 <div class="logo-row {view}">
   <div
     class="logo-img"
     on:click={onPreview}
-    on:keydown={(e) => (e.key === 'Enter' || e.key === ' ') && onPreview && onPreview(e)}
+    on:keydown={(e) => (e.key === 'Enter' || e.key === ' ') && onPreview && onPreview()}
     tabindex="0"
     role="button"
     aria-label="Preview logo"
@@ -52,9 +54,9 @@
       <div class="logo-tags">
         {#each logo.tags as tag}
           {#if getTagObj(tag).color}
-            <span class="logo-tag" style={`background:${getTagObj(tag).color}`}>{getTagObj(tag).text}</span>
+            <span class="logo-tag" style={`background:${getTagObj(tag).color}`}>{tag}</span>
           {:else}
-            <span class="logo-tag">{getTagObj(tag).text}</span>
+            <span class="logo-tag">{tag}</span>
           {/if}
         {/each}
       </div>

@@ -3,7 +3,6 @@
   export let path;
   export let color;
   export let colorConfig = { target: 'path', attribute: 'fill' };
-  export let alt;
 
   let svgHtml = '';
 
