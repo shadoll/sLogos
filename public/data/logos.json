@@ -423,15 +423,31 @@
     "brand": "Nikamebel"
   },
   {
+    "name": "Nova Global",
+    "path": "logos/nova_global.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Nova Post",
+    "tags": []
+  },
+  {
+    "name": "Nova Post",
+    "path": "logos/nova_post.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Nova Post",
+    "tags": []
+  },
+  {
     "name": "Novapay",
     "path": "logos/novapay.svg",
     "format": "SVG",
     "disable": false,
+    "brand": "Nova Post",
     "tags": [
       "payment",
       "finance"
-    ],
-    "brand": "Novapay"
+    ]
   },
   {
     "name": "Privat24",
@@ -650,6 +666,14 @@
       "retail",
       "grocery"
     ]
+  },
+  {
+    "name": "Ukrposhta",
+    "path": "logos/ukrposhta.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [],
+    "brand": "Ukrposhta"
   },
   {
     "name": "Viber",

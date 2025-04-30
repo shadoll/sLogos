@@ -141,7 +141,6 @@ function scanLogos() {
           path: logoPath,
           format: format,
           disable: false,
-          brand: formatName(file)
         };
       }
       // Ensure tags field exists and is an array
