@@ -1,8 +1,7 @@
 <script>
   import { onMount } from 'svelte';
-  import LogoGrid from './components/Grid.svelte';
-  import LogoList from './components/List.svelte';
-  import Header from './components/Header.svelte';
+  import LogoGrid from './components/LogoGrid.svelte';
+  import LogoList from './components/LogoList.svelte';
 
   let viewMode = 'grid'; // 'grid' or 'list'
   let searchQuery = '';

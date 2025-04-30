@@ -1,8 +1,12 @@
 <script>
   import { onMount, onDestroy, createEventDispatcher } from 'svelte';
   import InlineSvg from './InlineSvg.svelte';
+<<<<<<< HEAD:src/components/Preview.svelte
   import { getDefaultLogoColor } from '../utils/colorTheme.js';
   import { loadTagsData, getTagObj } from '../utils/tagUtils.js';
+=======
+  import { getDefaultLogoColor, getThemeColor } from '../utils/colorTheme.js';
+>>>>>>> parent of aaf7db1 (feat: Refactor logo components into Grid and List views):src/components/LogoModal.svelte
 
   export let show = false;
   export let logo = null;
@@ -24,6 +28,7 @@
     return logo && logo.format && logo.format.toLowerCase() === 'svg';
   }
 
+<<<<<<< HEAD:src/components/Preview.svelte
   function getLogoThemeColor(logo) {
     return logo && logo.colors ? getDefaultLogoColor(logo.colors, theme) : undefined;
   }
@@ -31,6 +36,23 @@
   onMount(async () => {
     document.addEventListener('keydown', handleKeydown);
     await loadTagsData();
+=======
+  // Always use $theme directly, do not cache in a function
+  export let theme;
+$: getLogoThemeColor = logo => getDefaultLogoColor(logo.colors, theme);
+
+  // Improved debug logging for color and theme
+  $: {
+    if (logo && logo.colors) {
+      const themeColor = getDefaultLogoColor(logo.colors, theme);
+      const fallbackColor = getThemeColor(logo.colors, theme);
+      const activeColor = logo._activeColor || themeColor;
+    }
+  }
+
+  onMount(() => {
+    document.addEventListener('keydown', handleKeydown);
+>>>>>>> parent of aaf7db1 (feat: Refactor logo components into Grid and List views):src/components/LogoModal.svelte
   });
 
   onDestroy(() => {
@@ -94,12 +116,17 @@
           <p><strong>Path:</strong> {logo.path}</p>
           {#if logo.tags && logo.tags.length}
             <div class="logo-tags">
+<<<<<<< HEAD:src/components/Preview.svelte
               {#each logo.tags as tag}
                 {#if getTagObj(tag).color}
                   <span class="logo-tag" style={`background:${getTagObj(tag).color}`}>{tag}</span>
                 {:else}
                   <span class="logo-tag">{tag}</span>
                 {/if}
+=======
+              {#each logo.tags as tagObj}
+                <span class="logo-tag" style={tagObj.color ? `background:${tagObj.color}` : ''}>{tagObj.text || tagObj}</span>
+>>>>>>> parent of aaf7db1 (feat: Refactor logo components into Grid and List views):src/components/LogoModal.svelte
               {/each}
             </div>
           {/if}
