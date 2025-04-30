@@ -2,8 +2,6 @@
   import { onMount, onDestroy, createEventDispatcher } from 'svelte';
   import InlineSvg from './InlineSvg.svelte';
   import { getDefaultLogoColor } from '../utils/colorTheme.js';
-  import tagsData from '../../public/data/tags.json';
-  console.log('Loaded tagsData:', tagsData);
 
   export let show = false;
   export let logo = null;
@@ -24,11 +22,9 @@
     return logo && logo.format && logo.format.toLowerCase() === 'svg';
   }
 
-  // Helper to get tag object from tags.json by text
+  // Helper to get tag object - simplified without tags.json
   function getTagObj(text) {
-    const tag = tagsData && typeof tagsData === 'object' && tagsData[text] ? { text, ...tagsData[text] } : { text };
-    console.log('[LogoModal] Tag lookup:', text, tag, tagsData);
-    return tag;
+    return { text: typeof text === 'object' ? text.text : text };
   }
 
   // Always use $theme directly, do not cache in a function
@@ -45,7 +41,6 @@ $: getLogoThemeColor = logo => getDefaultLogoColor(logo.colors, theme);
   $: if (logo && logo.tags && logo.tags.length) {
     logo.tags.forEach(tag => {
       console.log('[LogoModal] Tag:', tag);
-      getTagObj(tag);
     });
   }
 
@@ -129,11 +124,7 @@ $: getLogoThemeColor = logo => getDefaultLogoColor(logo.colors, theme);
           {#if logo.tags && logo.tags.length}
             <div class="logo-tags">
               {#each logo.tags as tag}
-                {#if getTagObj(tag).color}
-                  <span class="logo-tag" style={`background:${getTagObj(tag).color}`}>{getTagObj(tag).text}</span>
-                {:else}
-                  <span class="logo-tag">{getTagObj(tag).text}</span>
-                {/if}
+                <span class="logo-tag">{typeof tag === 'object' ? tag.text : tag}</span>
               {/each}
             </div>
           {/if}

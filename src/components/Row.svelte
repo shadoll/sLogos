@@ -7,10 +7,6 @@
   export let onPreview = null;
   import InlineSvg from './InlineSvg.svelte';
   import { getDefaultLogoColor } from '../utils/colorTheme.js';
-  import tagsData from '../../public/data/tags.json';
-  function getTagObj(text) {
-    return tagsData[text] ? { text, ...tagsData[text] } : { text };
-  }
 </script>
 
 <div class="logo-row {view}">
@@ -53,11 +49,7 @@
     {#if logo.tags && logo.tags.length}
       <div class="logo-tags">
         {#each logo.tags as tag}
-          {#if getTagObj(tag).color}
-            <span class="logo-tag" style={`background:${getTagObj(tag).color}`}>{getTagObj(tag).text}</span>
-          {:else}
-            <span class="logo-tag">{getTagObj(tag).text}</span>
-          {/if}
+          <span class="logo-tag">{typeof tag === 'object' ? tag.text : tag}</span>
         {/each}
       </div>
     {/if}

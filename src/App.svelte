@@ -55,15 +55,12 @@
     applyTheme();
   }
 
-  // Compute all unique tags as objects with text and optional color
+  // Compute all unique tags as strings
   $: allTags = Array.from(
-    new Map(
-      logos.flatMap(logo => (logo.tags || []).map(tag => {
-        if (typeof tag === 'string') return [tag, { text: tag }];
-        return [tag.text, tag];
-      }))
-    ).values()
-  ).sort((a, b) => a.text.localeCompare(b.text));
+    new Set(
+      logos.flatMap(logo => (logo.tags || []))
+    )
+  ).map(tag => typeof tag === 'object' ? tag.text : tag);
 
   $: filteredLogos = logos.filter(logo => {
     const matchesSearch = logo.name.toLowerCase().includes(searchQuery.toLowerCase());
@@ -179,7 +176,7 @@
   }
 
   function getTagObj(text) {
-    return allTags.find(t => t.text === text);
+    return { text };
   }
 
   // Listen for outside click to close dropdown
@@ -215,17 +212,14 @@
       </div>
       <div class="tag-filter">
         {#each selectedTags as tagText}
-          {#if getTagObj(tagText)}
-            <button
-              class="selected-tag"
-              style={getTagObj(tagText).color ? `background: ${getTagObj(tagText).color}; color: #fff;` : ''}
-              aria-label={`Remove tag: ${getTagObj(tagText).text}`}
-              on:click={() => removeTag(getTagObj(tagText).text)}
-            >
-              {getTagObj(tagText).text}
-              <span class="close">&times;</span>
-            </button>
-          {/if}
+          <button
+            class="selected-tag"
+            aria-label={`Remove tag: ${tagText}`}
+            on:click={() => removeTag(tagText)}
+          >
+            <span>{tagText}</span>
+            <span class="close">×</span>
+          </button>
         {/each}
         <div class="tag-dropdown">
           <button class="dropdown-toggle" on:click={toggleDropdown} aria-label="Add tag filter">
@@ -233,15 +227,15 @@
           </button>
           {#if tagDropdownOpen}
             <div class="dropdown-list">
-              {#each allTags.filter(t => !selectedTags.includes(t.text)) as tagObj}
+              {#each allTags.filter(tag => !selectedTags.includes(tag)) as tag}
                 <button
                   class="dropdown-tag"
-                  style={tagObj.color ? `background: ${tagObj.color}; color: #fff;` : ''}
-                  on:click={() => addTag(tagObj.text)}
-                  aria-label={`Add tag: ${tagObj.text}`}
-                >{tagObj.text}</button>
+                  on:click={() => toggleTag(tag)}
+                >
+                  {tag}
+                </button>
               {/each}
-              {#if allTags.filter(t => !selectedTags.includes(t.text)).length === 0}
+              {#if allTags.filter(tag => !selectedTags.includes(tag)).length === 0}
                 <span class="no-tags">No more tags</span>
               {/if}
             </div>
