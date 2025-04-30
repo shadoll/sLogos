@@ -100,7 +100,8 @@
       "crypto",
       "finance",
       "trading"
-    ]
+    ],
+    "brand": "Binance"
   },
   {
     "name": "Dalnoboy Service",
@@ -110,7 +111,8 @@
     "tags": [
       "transport",
       "garage"
-    ]
+    ],
+    "brand": "Dalnoboy Service"
   },
   {
     "name": "Disney",
@@ -169,6 +171,17 @@
     }
   },
   {
+    "name": "Gitea",
+    "path": "logos/gitea.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Gitea",
+    "tags": [
+      "tech",
+      "software"
+    ]
+  },
+  {
     "name": "Google",
     "path": "logos/google.svg",
     "format": "SVG",
@@ -189,7 +202,8 @@
     "tags": [
       "finance",
       "trading"
-    ]
+    ],
+    "brand": "IBKR"
   },
   {
     "name": "Instagram",
@@ -198,7 +212,8 @@
     "disable": false,
     "tags": [
       "social"
-    ]
+    ],
+    "brand": "Instagram"
   },
   {
     "name": "Jeep",
@@ -266,6 +281,33 @@
     "colorConfig": {
       "selector": "#text"
     }
+  },
+  {
+    "name": "Lifecell Logo",
+    "path": "logos/lifecell_logo.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Lifecell",
+    "tags": [
+      "telecom",
+      "mobile"
+    ]
+  },
+  {
+    "name": "Mikrotik",
+    "path": "logos/mikrotik.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Mikrotik",
+    "tags": []
+  },
+  {
+    "name": "Mikrotik Logo",
+    "path": "logos/mikrotik_logo.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Mikrotik",
+    "tags": []
   },
   {
     "name": "Mono Black",
@@ -345,7 +387,8 @@
     "tags": [
       "bank",
       "finance"
-    ]
+    ],
+    "brand": "Nationwide"
   },
   {
     "name": "Neocom",
@@ -376,7 +419,8 @@
     "disable": false,
     "tags": [
       "furniture"
-    ]
+    ],
+    "brand": "Nikamebel"
   },
   {
     "name": "Novapay",
@@ -386,7 +430,8 @@
     "tags": [
       "payment",
       "finance"
-    ]
+    ],
+    "brand": "Novapay"
   },
   {
     "name": "Privat24",
@@ -527,7 +572,8 @@
     ],
     "colorConfig": {
       "target": "#text"
-    }
+    },
+    "brand": "Roomerin"
   },
   {
     "name": "Sendpulse",
