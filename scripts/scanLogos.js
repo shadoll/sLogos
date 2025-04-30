@@ -131,7 +131,8 @@ function scanLogos() {
           ...existingItem,
           path: logoPath,
           format: format,
-          disable: typeof existingItem.disable === 'boolean' ? existingItem.disable : false
+          disable: typeof existingItem.disable === 'boolean' ? existingItem.disable : false,
+          brand: existingItem.brand || existingItem.name || formatName(file)
         };
       } else {
         // New logo
@@ -139,7 +140,8 @@ function scanLogos() {
           name: formatName(file),
           path: logoPath,
           format: format,
-          disable: false
+          disable: false,
+          brand: formatName(file)
         };
       }
       // Ensure tags field exists and is an array

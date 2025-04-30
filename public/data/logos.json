@@ -3,6 +3,7 @@
     "name": "Adidas",
     "path": "logos/adidas.svg",
     "format": "SVG",
+    "brand": "Adidas",
     "disable": false,
     "tags": [
       "clothing",
@@ -30,6 +31,7 @@
     "path": "logos/amazon.svg",
     "format": "SVG",
     "disable": false,
+    "brand": "Amazon",
     "tags": [
       "retail"
     ],
@@ -54,6 +56,7 @@
     "path": "logos/apple.svg",
     "format": "SVG",
     "disable": false,
+    "brand": "Apple",
     "tags": [
       {
         "text": "tech",
@@ -83,6 +86,7 @@
     "path": "logos/atb.svg",
     "format": "SVG",
     "disable": false,
+    "brand": "ATB",
     "tags": [
       "retail"
     ]
@@ -113,6 +117,7 @@
     "path": "logos/disney.svg",
     "format": "SVG",
     "disable": false,
+    "brand": "Disney",
     "tags": [
       "entertainment",
       "streaming"
@@ -138,6 +143,7 @@
     "path": "logos/dodge.svg",
     "format": "SVG",
     "disable": false,
+    "brand": "Dodge",
     "tags": [
       "automobile",
       "transport"
@@ -167,6 +173,7 @@
     "path": "logos/google.svg",
     "format": "SVG",
     "disable": false,
+    "brand": "Google",
     "tags": [
       {
         "text": "tech",
@@ -198,6 +205,7 @@
     "path": "logos/jeep.svg",
     "format": "SVG",
     "disable": false,
+    "brand": "Jeep",
     "tags": [
       "automobile",
       "transport"
@@ -227,6 +235,7 @@
     "path": "logos/kyivstar.svg",
     "format": "SVG",
     "disable": false,
+    "brand": "Kyivstar",
     "tags": [
       "telecom",
       "mobile"
@@ -237,6 +246,7 @@
     "path": "logos/lifecell.svg",
     "format": "SVG",
     "disable": false,
+    "brand": "Lifecell",
     "tags": [
       "telecom",
       "mobile"
@@ -262,6 +272,7 @@
     "path": "logos/mono_black.svg",
     "format": "SVG",
     "disable": false,
+    "brand": "Monobank",
     "tags": [
       "bank",
       "finance"
@@ -272,6 +283,7 @@
     "path": "logos/mono_white.svg",
     "format": "SVG",
     "disable": false,
+    "brand": "Monobank",
     "tags": [
       "bank",
       "finance"
@@ -282,6 +294,7 @@
     "path": "logos/mono_yellow.svg",
     "format": "SVG",
     "disable": false,
+    "brand": "Monobank",
     "tags": [
       "bank",
       "finance"
@@ -292,6 +305,7 @@
     "path": "logos/monobank_paw.svg",
     "format": "SVG",
     "disable": false,
+    "brand": "Monobank",
     "tags": [
       "bank",
       "finance"
@@ -302,6 +316,7 @@
     "path": "logos/monobank_text.svg",
     "format": "SVG",
     "disable": false,
+    "brand": "Monobank",
     "tags": [
       "bank",
       "finance"
@@ -337,6 +352,7 @@
     "path": "logos/neocom.svg",
     "format": "SVG",
     "disable": false,
+    "brand": "Neocom",
     "tags": [
       "telecom",
       "provider"
@@ -347,6 +363,7 @@
     "path": "logos/netflix.svg",
     "format": "SVG",
     "disable": false,
+    "brand": "Netflix",
     "tags": [
       "streaming",
       "entertainment"
@@ -376,6 +393,7 @@
     "path": "logos/privat24.svg",
     "format": "SVG",
     "disable": false,
+    "brand": "PrivatBank",
     "tags": [
       "bank",
       "finance"
@@ -386,6 +404,7 @@
     "path": "logos/privat24bussiness.svg",
     "format": "SVG",
     "disable": false,
+    "brand": "PrivatBank",
     "tags": [
       "bank",
       "finance"
@@ -396,6 +415,7 @@
     "path": "logos/privatbank.svg",
     "format": "SVG",
     "disable": false,
+    "brand": "PrivatBank",
     "tags": [
       "bank",
       "finance"
@@ -406,6 +426,7 @@
     "path": "logos/privatbank_logo.svg",
     "format": "SVG",
     "disable": false,
+    "brand": "PrivatBank",
     "tags": [
       "bank",
       "finance"
@@ -416,6 +437,7 @@
     "path": "logos/pumb.svg",
     "format": "SVG",
     "disable": false,
+    "brand": "PUMB",
     "tags": [
       "bank",
       "finance"
@@ -426,6 +448,7 @@
     "path": "logos/reebok.svg",
     "format": "SVG",
     "disable": false,
+    "brand": "Reebok",
     "tags": [
       "clothing",
       "sports",
@@ -452,6 +475,7 @@
     "path": "logos/revolut.svg",
     "format": "SVG",
     "disable": false,
+    "brand": "Revolut",
     "tags": [
       "bank",
       "finance",
@@ -510,6 +534,7 @@
     "path": "logos/sendpulse.svg",
     "format": "SVG",
     "disable": false,
+    "brand": "Sendpulse",
     "tags": [
       "marketing",
       "email"
@@ -520,6 +545,7 @@
     "path": "logos/sendpulse_logo.svg",
     "format": "SVG",
     "disable": false,
+    "brand": "Sendpulse",
     "tags": [
       "marketing",
       "email"
@@ -530,6 +556,7 @@
     "path": "logos/shadoll.svg",
     "format": "SVG",
     "disable": false,
+    "brand": "shadoll",
     "tags": [],
     "colors": [
       {
@@ -552,6 +579,7 @@
     "path": "logos/shkafnik.svg",
     "format": "SVG",
     "disable": false,
+    "brand": "Shkafnik",
     "tags": [
       "furniture"
     ]
@@ -561,6 +589,7 @@
     "path": "logos/shkafnik_logo.svg",
     "format": "SVG",
     "disable": false,
+    "brand": "Shkafnik",
     "tags": [
       "furniture"
     ]
@@ -570,6 +599,7 @@
     "path": "logos/silpo.svg",
     "format": "SVG",
     "disable": false,
+    "brand": "Silpo",
     "tags": [
       "retail",
       "grocery"
@@ -580,6 +610,7 @@
     "path": "logos/viber.svg",
     "format": "SVG",
     "disable": false,
+    "brand": "Viber",
     "tags": [
       "messaging",
       "communication"
@@ -590,6 +621,7 @@
     "path": "logos/vodafone.svg",
     "format": "SVG",
     "disable": false,
+    "brand": "Vodafone",
     "tags": [
       "telecom",
       "mobile"
@@ -600,6 +632,7 @@
     "path": "logos/wise.svg",
     "format": "SVG",
     "disable": false,
+    "brand": "Wise",
     "tags": [
       "finance",
       "transfer"
