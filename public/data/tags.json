@@ -1,0 +1,11 @@
+{
+    "tech": {
+        "color": "silver"
+    },
+    "retail": {
+        "color": "#4f8cff"
+    },
+    "bank": {
+        "color": "#27ae60"
+    }
+}

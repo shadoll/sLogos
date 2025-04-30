@@ -28,10 +28,7 @@
     "disable": false,
     "brand": "Apple",
     "tags": [
-      {
-        "text": "tech",
-        "color": "silver"
-      }
+      "tech"
     ],
     "colors": [
       {
@@ -74,7 +71,13 @@
       "transport",
       "garage"
     ],
-    "brand": "Dalnoboy Service"
+    "brand": "Dalnoboy Service",
+    "colors": [
+      {
+        "label": "Orange",
+        "value": "#ee7800"
+      }
+    ]
   },
   {
     "name": "Disney",
@@ -130,10 +133,7 @@
     "disable": false,
     "brand": "Google",
     "tags": [
-      {
-        "text": "tech",
-        "color": "silver"
-      }
+      "tech"
     ]
   },
   {
@@ -368,6 +368,16 @@
     "brand": "Nvidia"
   },
   {
+    "name": "Okko",
+    "path": "logos/okko.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "fuel"
+    ],
+    "brand": "Okko"
+  },
+  {
     "name": "Privat24",
     "path": "logos/privat24.svg",
     "format": "SVG",
@@ -581,5 +591,15 @@
       "finance",
       "transfer"
     ]
+  },
+  {
+    "name": "WOG",
+    "path": "logos/wog.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "fuel"
+    ],
+    "brand": "WOG"
   }
 ]

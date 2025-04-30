@@ -359,7 +359,7 @@
     right: 0;
     min-width: 160px;
     background: var(--color-card, #fff);
-    color: var(--color-text, #222);
+    color: var(--text-color, #222);
     border: 1px solid var(--color-border, #ddd);
     border-radius: 8px;
     box-shadow: 0 2px 16px 4px rgba(0,0,0,0.18);

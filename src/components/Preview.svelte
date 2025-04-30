@@ -159,7 +159,7 @@ $: getLogoThemeColor = logo => getDefaultLogoColor(logo.colors, theme);
 
   :global(.modal-content) {
     background: var(--color-card);
-    color: var(--color-text);
+    color: var(--text-color);
     border-radius: 8px;
     padding: 1rem;
     max-width: 500px;
@@ -186,7 +186,7 @@ $: getLogoThemeColor = logo => getDefaultLogoColor(logo.colors, theme);
     border: none;
     font-size: 1.5rem;
     cursor: pointer;
-    color: var(--color-text, #222);
+    color: var(--text-color, #222);
     transition: color 0.2s;
   }
 
@@ -222,7 +222,7 @@ $: getLogoThemeColor = logo => getDefaultLogoColor(logo.colors, theme);
   .logo-details {
     padding: 1rem;
     background-color: var(--color-card);
-    color: var(--color-text);
+    color: var(--text-color);
     border-radius: 4px;
     transition: background 0.2s, color 0.2s;
   }
