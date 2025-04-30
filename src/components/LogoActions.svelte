@@ -1,5 +1,6 @@
 <script>
   export let logo;
+  export let onCopy;
   export let onDownload;
 
   // Download menu state

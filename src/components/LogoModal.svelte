@@ -1,9 +1,7 @@
 <script>
   import { onMount, onDestroy, createEventDispatcher } from 'svelte';
   import InlineSvg from './InlineSvg.svelte';
-  import { getDefaultLogoColor } from '../utils/colorTheme.js';
-  import tagsData from '../../public/data/tags.json';
-  console.log('Loaded tagsData:', tagsData);
+  import { getDefaultLogoColor, getThemeColor } from '../utils/colorTheme.js';
 
   export let show = false;
   export let logo = null;
@@ -24,34 +22,21 @@
     return logo && logo.format && logo.format.toLowerCase() === 'svg';
   }
 
-  // Helper to get tag object from tags.json by text
-  function getTagObj(text) {
-    const tag = tagsData && typeof tagsData === 'object' && tagsData[text] ? { text, ...tagsData[text] } : { text };
-    console.log('[LogoModal] Tag lookup:', text, tag, tagsData);
-    return tag;
-  }
-
   // Always use $theme directly, do not cache in a function
   export let theme;
 $: getLogoThemeColor = logo => getDefaultLogoColor(logo.colors, theme);
 
+  // Improved debug logging for color and theme
   $: {
     if (logo && logo.colors) {
       const themeColor = getDefaultLogoColor(logo.colors, theme);
+      const fallbackColor = getThemeColor(logo.colors, theme);
       const activeColor = logo._activeColor || themeColor;
     }
   }
 
-  $: if (logo && logo.tags && logo.tags.length) {
-    logo.tags.forEach(tag => {
-      console.log('[LogoModal] Tag:', tag);
-      getTagObj(tag);
-    });
-  }
-
   onMount(() => {
     document.addEventListener('keydown', handleKeydown);
-    console.log('[LogoModal] Mounted, added keydown event listener');
   });
 
   onDestroy(() => {
@@ -128,12 +113,8 @@ $: getLogoThemeColor = logo => getDefaultLogoColor(logo.colors, theme);
           <p><strong>Path:</strong> {logo.path}</p>
           {#if logo.tags && logo.tags.length}
             <div class="logo-tags">
-              {#each logo.tags as tag}
-                {#if getTagObj(tag).color}
-                  <span class="logo-tag" style={`background:${getTagObj(tag).color}`}>{getTagObj(tag).text}</span>
-                {:else}
-                  <span class="logo-tag">{getTagObj(tag).text}</span>
-                {/if}
+              {#each logo.tags as tagObj}
+                <span class="logo-tag" style={tagObj.color ? `background:${tagObj.color}` : ''}>{tagObj.text || tagObj}</span>
               {/each}
             </div>
           {/if}
