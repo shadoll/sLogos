@@ -195,15 +195,17 @@
     <div class="header-row">
       <h1>Logo Gallery</h1>
       <div class="theme-switcher">
-        <button on:click={() => setTheme('system')} class:active={theme === 'system'} aria-label="System theme">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="2"/><path d="M10 2a8 8 0 0 1 8 8" stroke="currentColor" stroke-width="2"/></svg>
-        </button>
-        <button on:click={() => setTheme('light')} class:active={theme === 'light'} aria-label="Light mode">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" r="5" stroke="currentColor" stroke-width="2"/><path d="M10 1v2M10 17v2M3.22 3.22l1.42 1.42M15.36 15.36l1.42 1.42M1 10h2M17 10h2M3.22 16.78l1.42-1.42M15.36 4.64l1.42-1.42" stroke="currentColor" stroke-width="2"/></svg>
-        </button>
-        <button on:click={() => setTheme('dark')} class:active={theme === 'dark'} aria-label="Dark mode">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15.5 13A7 7 0 0 1 7 4.5a7 7 0 1 0 8.5 8.5z" stroke="currentColor" stroke-width="2"/></svg>
-        </button>
+        <div class="theme-switch-group">
+          <button on:click={() => setTheme('system')} class:active={theme === 'system'} aria-label="System theme">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="2"/><path d="M10 2a8 8 0 0 1 8 8" stroke="currentColor" stroke-width="2"/></svg>
+          </button>
+          <button on:click={() => setTheme('light')} class:active={theme === 'light'} aria-label="Light mode">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" r="5" stroke="currentColor" stroke-width="2"/><path d="M10 1v2M10 17v2M3.22 3.22l1.42 1.42M15.36 15.36l1.42 1.42M1 10h2M17 10h2M3.22 16.78l1.42-1.42M15.36 4.64l1.42-1.42" stroke="currentColor" stroke-width="2"/></svg>
+          </button>
+          <button on:click={() => setTheme('dark')} class:active={theme === 'dark'} aria-label="Dark mode">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15.5 13A7 7 0 0 1 7 4.5a7 7 0 1 0 8.5 8.5z" stroke="currentColor" stroke-width="2"/></svg>
+          </button>
+        </div>
       </div>
     </div>
     <div class="header-row header-controls">
@@ -483,25 +485,48 @@
     margin-left: auto;
   }
 
-  .theme-switcher button {
+  .theme-switch-group {
+    display: flex;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid var(--color-border, #ccc);
+    background: var(--color-card, #fff);
+  }
+
+  .theme-switch-group button {
     background: none;
-    border: 1px solid var(--color-border);
+    border: none;
     color: var(--color-text);
-    padding: 0.2em 0.5em;
-    border-radius: 4px;
-    cursor: pointer;
+    padding: 0.2em 0.7em;
+    font-size: 1.1rem;
+    border-radius: 0;
     transition: background 0.2s, color 0.2s;
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  .theme-switcher button.active,
-  .theme-switcher button:focus {
+  .theme-switch-group button:first-child {
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+  }
+
+  .theme-switch-group button:last-child {
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+  }
+
+  .theme-switch-group button.active,
+  .theme-switch-group button:focus {
     background: var(--color-accent);
     color: #fff;
     font-weight: bold;
     outline: 2px solid var(--color-border);
+  }
+
+  .theme-switch-group button:hover {
+    background: var(--color-accent, #f0f0f0);
+    color: var(--color-accent-text, #4f8cff);
   }
 
   @media (max-width: 700px) {
