@@ -194,6 +194,7 @@
   <header class="main-header">
     <div class="header-row">
       <h1>Logo Gallery</h1>
+      <span class="logo-count">{logos.length} images in gallery</span>
       <div class="theme-switcher">
         <div class="theme-switch-group">
           <button on:click={() => setTheme('system')} class:active={theme === 'system'} aria-label="System theme">
@@ -325,6 +326,16 @@
     margin-bottom: 0;
     font-size: 1.3rem;
     font-weight: 700;
+  }
+
+  .logo-count {
+    font-family: system-ui, Arial, sans-serif;
+    font-size: 0.6rem;
+    font-weight: normal;
+    color: var(--color-text, #444);
+    margin-left: 1rem;
+    align-self: center;
+    opacity: 0.7;
   }
 
   .search-bar {
