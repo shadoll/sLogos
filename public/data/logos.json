@@ -240,7 +240,22 @@
     "tags": [
       "telecom",
       "mobile"
-    ]
+    ],
+    "colors": [
+      {
+        "label": "Black",
+        "value": "#000",
+        "theme": "light"
+      },
+      {
+        "label": "White",
+        "value": "#fff",
+        "theme": "dark"
+      }
+    ],
+    "colorConfig": {
+      "selector": "#text"
+    }
   },
   {
     "name": "Mono Black",
@@ -509,6 +524,28 @@
       "marketing",
       "email"
     ]
+  },
+  {
+    "name": "shadoll",
+    "path": "logos/shadoll.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [],
+    "colors": [
+      {
+        "label": "Black",
+        "value": "#000",
+        "theme": "light"
+      },
+      {
+        "label": "White",
+        "value": "#fff",
+        "theme": "dark"
+      }
+    ],
+    "colorConfig": {
+      "selector": "#l"
+    }
   },
   {
     "name": "Shkafnik",
