@@ -42,7 +42,6 @@
         {#if getTagObj(tagText)}
           <button
             class="selected-tag"
-            style={getTagObj(tagText).color ? `background: ${getTagObj(tagText).color}; color: #fff;` : ''}
             aria-label={`Remove tag: ${getTagObj(tagText).text}`}
             on:click={() => removeTag(getTagObj(tagText).text)}
           >
@@ -56,11 +55,10 @@
           + Tag{selectedTags.length ? '' : 's'}
         </button>
         {#if tagDropdownOpen}
-          <div class="dropdown-list">
+          <div class="dropdown-menu">
             {#each allTags.filter(t => !selectedTags.includes(t.text)) as tagObj}
               <button
-                class="dropdown-tag"
-                style={tagObj.color ? `background: ${tagObj.color}; color: #fff;` : ''}
+                class="dropdown-item"
                 on:click={() => addTag(tagObj.text)}
                 aria-label={`Add tag: ${tagObj.text}`}
               >{tagObj.text}</button>

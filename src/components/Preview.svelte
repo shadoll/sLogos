@@ -125,54 +125,17 @@ $: getLogoThemeColor = logo => getDefaultLogoColor(logo.colors, theme);
 </div>
 
 <style>
-  :global(.modal-backdrop) {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.7);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
+  /* Only component-specific styles that don't exist in global.css */
+  .preview-container {
+    min-height: 200px;
+    max-height: 60vh;
+    max-width: 100%;
+    padding: 2rem;
+    overflow: auto;
   }
 
-  :global(.modal-content) {
-    background: var(--color-card);
-    color: var(--color-text);
-    border-radius: 8px;
-    padding: 1rem;
-    max-width: 500px;
-    width: 90%;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    border: 1px solid var(--color-border);
-    transition: background 0.2s, color 0.2s;
-  }
-
-  .modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-  }
-
-  .modal-header h2 {
-    margin: 0;
-    font-size: 1.5rem;
-  }
-
-  .close-btn {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: var(--color-text);
-    transition: color 0.2s;
-  }
-
-  .close-btn:hover {
-    color: var(--color-accent, #4f8cff);
+  .preview-container img {
+    max-height: 60vh;
   }
 
   .modal-body img {
@@ -180,63 +143,9 @@ $: getLogoThemeColor = logo => getDefaultLogoColor(logo.colors, theme);
     margin-bottom: 1rem;
   }
 
-  .preview-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--color-card);
-    border-radius: 4px;
-    padding: 2rem;
-    min-height: 200px;
-    max-height: 60vh;
-    max-width: 100%;
-    transition: background 0.2s, color 0.2s;
-    overflow: auto;
-  }
-
-  .preview-container img {
-    max-width: 100%;
-    max-height: 60vh;
-    object-fit: contain;
-  }
-
-  .logo-details {
-    padding: 1rem;
-    background-color: var(--color-card);
-    color: var(--text-color);
-    border-radius: 4px;
-    transition: background 0.2s, color 0.2s;
-  }
-
-  .logo-details p {
-    margin-bottom: 0.5rem;
-  }
-
   .logo-tags {
-    margin-top: 1rem;
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-  }
-
-  .color-switcher-preview {
-    display: flex;
-    align-items: center;
-  }
-
-  .color-circle.color-reset {
-    background: none !important;
-  }
-
-  .color-circle {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 4px;
-    cursor: pointer;
-    box-sizing: border-box;
   }
 </style>
