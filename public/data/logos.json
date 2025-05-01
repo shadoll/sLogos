@@ -47,7 +47,8 @@
     "disable": false,
     "brand": "ATB",
     "tags": [
-      "retail"
+      "retail",
+      "grocery"
     ]
   },
   {
@@ -479,6 +480,26 @@
       "target": "#text"
     },
     "brand": "RoomerIN"
+  },
+  {
+    "name": "Sainsbury's",
+    "path": "logos/sainsburys.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "retail",
+      "grocery"
+    ],
+    "brand": "Sainsbury's",
+    "colors": [
+      {
+        "label": "Orange",
+        "value": "#F06C00"
+      }
+    ],
+    "colorConfig": {
+      "target": "g"
+    }
   },
   {
     "name": "Sendpulse",
