@@ -1,6 +1,6 @@
 <script>
-  import LogoModal from './LogoModal.svelte';
-  import LogoActions from './LogoActions.svelte';
+  import Preview from './Preview.svelte';
+  import Actions from './Actions.svelte';
   import InlineSvg from './InlineSvg.svelte';
   import { getThemeColor, getDefaultLogoColor } from '../utils/colorTheme.js';
   import { onMount, onDestroy } from 'svelte';
@@ -64,7 +64,7 @@
   }
 </script>
 
-<LogoModal show={showModal} logo={selectedLogo} on:close={closeModal} />
+<Preview show={showModal} logo={selectedLogo} on:close={closeModal} />
 
 <div class="logo-list">
   {#each logos as logo}
@@ -77,13 +77,12 @@
         on:keydown={(e) => (e.key === 'Enter' || e.key === ' ') && openPreview(logo)}
         style="cursor:pointer;"
       >
-        {#if isSvgLogo(logo)}
-          <InlineSvg
-            path={logo.path}
-            color={logo.colors ? (logo._activeColor || getLogoThemeColor(logo)) : undefined}
-            colorConfig={logo.colors ? logo.colorConfig : undefined}
-            alt={logo.name}
-          />
+        {#if isSvgLogo(logo)}              <InlineSvg
+                path={logo.path}
+                color={logo.colors ? (logo._activeColor || getLogoThemeColor(logo)) : undefined}
+                colorConfig={logo.colors ? logo.colorConfig : undefined}
+                alt={logo.name}
+              />
         {:else}
           <img src={logo.path} alt={logo.name} />
         {/if}
@@ -125,7 +124,7 @@
         {/if}
       </div>
       <div class="logo-actions">
-        <LogoActions {logo} {onCopy} {onDownload} />
+        <Actions {logo} {onCopy} {onDownload} />
       </div>
     </div>
   {:else}

@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte';
-  import LogoGrid from './components/LogoGrid.svelte';
-  import LogoList from './components/LogoList.svelte';
+  import Grid from './components/Grid.svelte';
+  import List from './components/List.svelte';
 
   let viewMode = 'grid'; // 'grid' or 'list'
   let searchQuery = '';
@@ -213,14 +213,14 @@
 
   <div class="logos-container">
     {#if viewMode === 'grid'}
-      <LogoGrid
+      <Grid
         logos={filteredLogos}
         onCopy={copyUrl}
         onDownload={downloadLogo}
         theme={effectiveTheme}
       />
     {:else}
-      <LogoList
+      <List
         logos={filteredLogos}
         onCopy={copyUrl}
         onDownload={downloadLogo}
