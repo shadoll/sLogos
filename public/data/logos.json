@@ -165,7 +165,8 @@
     "tags": [
       "automobile",
       "transport"
-    ]
+    ],
+    "brand": "Ford"
   },
   {
     "name": "Gitea",
@@ -695,5 +696,13 @@
       "fuel"
     ],
     "brand": "WOG"
+  },
+  {
+    "name": "Youtube",
+    "path": "logos/youtube.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+    ]
   }
 ]
