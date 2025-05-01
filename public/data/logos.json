@@ -41,6 +41,25 @@
     }
   },
   {
+    "name": "arm",
+    "path": "logos/arm.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "tech"
+    ],
+    "colors": [
+      {
+        "label": "Dark Blue",
+        "value": "#080225"
+      }
+    ],
+    "colorConfig": {
+      "target": "g"
+    },
+    "brand": "arm"
+  },
+  {
     "name": "ATB",
     "path": "logos/atb.svg",
     "format": "SVG",
