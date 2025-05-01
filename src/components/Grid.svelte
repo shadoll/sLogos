@@ -1,6 +1,6 @@
 <script>
-  import LogoModal from './LogoModal.svelte';
-  import LogoActions from './LogoActions.svelte';
+  import Preview from './Preview.svelte';
+  import Actions from './Actions.svelte';
   import InlineSvg from './InlineSvg.svelte';
   import { onMount, onDestroy } from 'svelte';
   import { getDefaultLogoColor, getThemeColor } from '../utils/colorTheme.js';
@@ -53,7 +53,7 @@ $: getLogoThemeColor = logo => getDefaultLogoColor(logo.colors, theme);
   }
 </script>
 
-<LogoModal show={showModal} logo={selectedLogo} theme={theme} on:close={closeModal} />
+<Preview show={showModal} logo={selectedLogo} theme={theme} on:close={closeModal} />
 
 <div class="logo-grid">
   {#each logos as logo}
@@ -115,7 +115,7 @@ $: getLogoThemeColor = logo => getDefaultLogoColor(logo.colors, theme);
           {/if}
         </div>
         <div class="logo-actions">
-          <LogoActions {logo} {onCopy} {onDownload} />
+          <Actions {logo} {onCopy} {onDownload} />
         </div>
       </div>
     </div>
