@@ -12,6 +12,7 @@
   const dispatch = createEventDispatcher();
 
   function close() {
+    show = false;
     dispatch('close');
     // Remove preview anchor from URL
     if (window.location.hash.startsWith('#preview-')) {
@@ -31,12 +32,25 @@
 
   $: getLogoThemeColor = logo => getDefaultLogoColor(logo.colors, theme);
 
+  $: validColorConfig = logo && typeof logo.colorConfig === 'object' && logo.colorConfig.selector ? logo.colorConfig : undefined;
+
   // Improved debug logging for color and theme
   $: {
     if (logo && logo.colors) {
       const themeColor = getDefaultLogoColor(logo.colors, theme);
       const fallbackColor = getThemeColor(logo.colors, theme);
       const activeColor = logo._activeColor || themeColor;
+    }
+  }
+
+  // Sync show state with URL hash
+  $: {
+    if (typeof window !== 'undefined') {
+      if (window.location.hash.startsWith('#preview-')) {
+        show = true;
+      } else {
+        show = false;
+      }
     }
   }
 
@@ -48,6 +62,13 @@
     }
   }
 
+  // Watch for show/close to update scroll lock
+  $: if (show && logo) {
+    document.body.style.overflow = 'hidden';
+  } else {
+    document.body.style.overflow = '';
+  }
+
   // On mount, check for preview anchor and open if present
   onMount(() => {
     document.addEventListener('keydown', handleKeydown);
@@ -55,11 +76,17 @@
       openLogoByAnchor(window.location.hash);
     }
     window.addEventListener('hashchange', onHashChange);
+    // Lock background scroll when preview is open
+    if (show && logo) {
+      document.body.style.overflow = 'hidden';
+    }
   });
 
   onDestroy(() => {
     document.removeEventListener('keydown', handleKeydown);
     window.removeEventListener('hashchange', onHashChange);
+    // Restore scroll when component is destroyed
+    document.body.style.overflow = '';
   });
 
   function onHashChange() {
@@ -114,7 +141,7 @@
               <InlineSvg
                 path={logo.path}
                 color={logo.colors ? (logo._activeColor || getLogoThemeColor(logo)) : undefined}
-                colorConfig={logo.colors ? logo.colorConfig : undefined}
+                colorConfig={validColorConfig}
                 alt={logo.name}
               />
             {:else}
@@ -182,7 +209,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: auto;
+    overflow: hidden;
   }
   .modal-content.fullscreen-modal {
     width: 100vw;
@@ -196,6 +223,7 @@
     flex-direction: column;
     padding: 0;
     border: none;
+    overflow: hidden;
   }
   .modal-header {
     display: flex;
@@ -205,6 +233,7 @@
     background: transparent;
     color: var(--color-text);
     z-index: 2;
+    flex: 0 0 auto;
   }
   .modal-header h2 {
     font-size: 2.2rem;
@@ -230,10 +259,11 @@
     align-items: stretch;
     justify-content: center;
     width: 100vw;
-    height: calc(100vh - 4.5rem);
+    height: 100%;
     background: transparent;
-    padding: 0 2.5rem 2.5rem 2.5rem;
+    padding: 0;
     gap: 2.5rem;
+    overflow: hidden;
   }
   .preview-container.fullscreen-preview {
     flex: 2 1 0;
@@ -245,7 +275,7 @@
     background: transparent;
     height: 100%;
     width: 100%;
-    overflow: auto;
+    overflow: hidden;
   }
   .preview-media-wrapper {
     width: 100%;
@@ -253,6 +283,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
   }
   .preview-media-wrapper img,
   .preview-media-wrapper svg {
@@ -263,6 +294,8 @@
     object-fit: contain;
     display: block;
     margin: 0;
+    max-width: 100%;
+    max-height: 100%;
   }
   .logo-details.fullscreen-details {
     flex: 1 1 350px;
@@ -272,11 +305,12 @@
     color: var(--color-text);
     border-radius: 12px;
     padding: 2rem 2rem 1.5rem 2rem;
-    margin: 2rem 0 2rem 0;
+    margin: 0;
     box-shadow: 0 2px 16px 4px rgba(0,0,0,0.18);
     overflow-y: auto;
     align-self: center;
     z-index: 1;
+    max-height: 100%;
   }
   .logo-tags {
     display: flex;
