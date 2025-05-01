@@ -83,6 +83,17 @@
     "brand": "Binance"
   },
   {
+    "name": "BMW",
+    "path": "logos/bmw.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "automobile",
+      "transport"
+    ],
+    "brand": "BMW"
+  },
+  {
     "name": "Dalnoboy Service",
     "path": "logos/dalnoboy-service.svg",
     "format": "SVG",
@@ -580,6 +591,28 @@
       "retail",
       "grocery"
     ]
+  },
+  {
+    "name": "Suzuki",
+    "path": "logos/suzuki.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "automobile",
+      "transport"
+    ],
+    "brand": "Suzuki"
+  },
+  {
+    "name": "Suzuki",
+    "path": "logos/suzuki_vertical.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "automobile",
+      "transport"
+    ],
+    "brand": "Suzuki"
   },
   {
     "name": "Ukrposhta",
