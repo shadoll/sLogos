@@ -5,11 +5,18 @@
 
   export let show = false;
   export let logo = null;
+  export let theme;
+  export let logos = [];
+  export let openLogoByAnchor = () => {};
 
   const dispatch = createEventDispatcher();
 
   function close() {
     dispatch('close');
+    // Remove preview anchor from URL
+    if (window.location.hash.startsWith('#preview-')) {
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
   }
 
   function handleKeydown(event) {
@@ -22,9 +29,7 @@
     return logo && logo.format && logo.format.toLowerCase() === 'svg';
   }
 
-  // Always use $theme directly, do not cache in a function
-  export let theme;
-$: getLogoThemeColor = logo => getDefaultLogoColor(logo.colors, theme);
+  $: getLogoThemeColor = logo => getDefaultLogoColor(logo.colors, theme);
 
   // Improved debug logging for color and theme
   $: {
@@ -35,47 +40,89 @@ $: getLogoThemeColor = logo => getDefaultLogoColor(logo.colors, theme);
     }
   }
 
+  // Update URL hash when opening/closing preview
+  $: if (show && logo) {
+    const anchor = '#preview-' + encodeURIComponent(logo.name.replace(/\s+/g, '-').toLowerCase());
+    if (window.location.hash !== anchor) {
+      history.replaceState(null, '', window.location.pathname + window.location.search + anchor);
+    }
+  }
+
+  // On mount, check for preview anchor and open if present
   onMount(() => {
     document.addEventListener('keydown', handleKeydown);
+    if (window.location.hash.startsWith('#preview-')) {
+      openLogoByAnchor(window.location.hash);
+    }
+    window.addEventListener('hashchange', onHashChange);
   });
 
   onDestroy(() => {
     document.removeEventListener('keydown', handleKeydown);
+    window.removeEventListener('hashchange', onHashChange);
   });
+
+  function onHashChange() {
+    if (window.location.hash.startsWith('#preview-')) {
+      openLogoByAnchor(window.location.hash);
+    } else {
+      dispatch('close');
+    }
+  }
+
+  // Svelte action to remove width/height from SVGs for responsive scaling
+  function removeSvgSize(node) {
+    function cleanSvg() {
+      const svgs = node.querySelectorAll('svg');
+      svgs.forEach(svg => {
+        svg.removeAttribute('width');
+        svg.removeAttribute('height');
+        svg.style.width = '100%';
+        svg.style.height = '100%';
+      });
+    }
+    cleanSvg();
+    // In case SVG is loaded async (e.g. InlineSvg), observe for changes
+    const observer = new MutationObserver(cleanSvg);
+    observer.observe(node, { childList: true, subtree: true });
+    return {
+      destroy() {
+        observer.disconnect();
+      }
+    };
+  }
 </script>
 
-<div class="modal-backdrop"
+<div class="modal-backdrop fullscreen"
   style="display: {show && logo ? 'flex' : 'none'}"
   role="dialog"
   aria-modal="true"
 >
   {#if logo}
-    <div class="modal-content">
+    <div class="modal-content fullscreen-modal">
       <div class="modal-header">
         <h2>{logo.name}</h2>
         <button class="close-btn" on:click={close} aria-label="Close preview">×</button>
       </div>
-      <div class="modal-body">
-        <div class="preview-container"
-          role="button"
-          tabindex="0"
-          aria-label="Close preview"
-          on:click={close}
-          on:keydown={(e) => (e.key === 'Enter' || e.key === ' ') && close()}
-          style="cursor:pointer;"
+      <div class="modal-body fullscreen-body">
+        <div class="preview-container fullscreen-preview"
+          role="img"
+          aria-label={logo.name}
         >
-          {#if isSvgLogo(logo)}
-            <InlineSvg
-              path={logo.path}
-              color={logo.colors ? (logo._activeColor || getLogoThemeColor(logo)) : undefined}
-              colorConfig={logo.colors ? logo.colorConfig : undefined}
-              alt={logo.name}
-            />
-          {:else}
-            <img src={logo.path} alt={logo.name} />
-          {/if}
+          <div class="preview-media-wrapper" use:removeSvgSize>
+            {#if isSvgLogo(logo)}
+              <InlineSvg
+                path={logo.path}
+                color={logo.colors ? (logo._activeColor || getLogoThemeColor(logo)) : undefined}
+                colorConfig={logo.colors ? logo.colorConfig : undefined}
+                alt={logo.name}
+              />
+            {:else}
+              <img src={logo.path} alt={logo.name} />
+            {/if}
+          </div>
         </div>
-        <div class="logo-details">
+        <div class="logo-details fullscreen-details">
           {#if isSvgLogo(logo) && logo.colors}
             <div class="color-switcher-preview">
               <span
@@ -125,27 +172,133 @@ $: getLogoThemeColor = logo => getDefaultLogoColor(logo.colors, theme);
 </div>
 
 <style>
-  /* Only component-specific styles that don't exist in global.css */
-  .preview-container {
-    min-height: 200px;
-    max-height: 60vh;
-    max-width: 100%;
-    padding: 2rem;
+  .modal-backdrop.fullscreen {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.95);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     overflow: auto;
   }
-
-  .preview-container img {
-    max-height: 60vh;
+  .modal-content.fullscreen-modal {
+    width: 100vw;
+    height: 100vh;
+    max-width: 100vw;
+    max-height: 100vh;
+    border-radius: 0;
+    box-shadow: none;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    border: none;
   }
-
-  .modal-body img {
-    max-width: 100%;
-    margin-bottom: 1rem;
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 2.5rem 1rem 2.5rem;
+    background: transparent;
+    color: var(--color-text);
+    z-index: 2;
   }
-
+  .modal-header h2 {
+    font-size: 2.2rem;
+    color: var(--color-accent, #4f8cff);
+    margin: 0;
+  }
+  .close-btn {
+    font-size: 2.5rem;
+    background: none;
+    border: none;
+    color: var(--color-text);
+    cursor: pointer;
+    transition: color 0.2s;
+    z-index: 2;
+  }
+  .close-btn:hover {
+    color: #f44336;
+  }
+  .modal-body.fullscreen-body {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: center;
+    width: 100vw;
+    height: calc(100vh - 4.5rem);
+    background: transparent;
+    padding: 0 2.5rem 2.5rem 2.5rem;
+    gap: 2.5rem;
+  }
+  .preview-container.fullscreen-preview {
+    flex: 2 1 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    min-height: 0;
+    background: transparent;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+  }
+  .preview-media-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .preview-media-wrapper img,
+  .preview-media-wrapper svg {
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
+    object-fit: contain;
+    display: block;
+    margin: 0;
+  }
+  .logo-details.fullscreen-details {
+    flex: 1 1 350px;
+    min-width: 320px;
+    max-width: 400px;
+    background: var(--color-card, #23272e);
+    color: var(--color-text);
+    border-radius: 12px;
+    padding: 2rem 2rem 1.5rem 2rem;
+    margin: 2rem 0 2rem 0;
+    box-shadow: 0 2px 16px 4px rgba(0,0,0,0.18);
+    overflow-y: auto;
+    align-self: center;
+    z-index: 1;
+  }
   .logo-tags {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
+  }
+  @media (max-width: 900px) {
+    .modal-body.fullscreen-body {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 1.5rem;
+      padding: 0 0.5rem 0.5rem 0.5rem;
+    }
+    .logo-details.fullscreen-details {
+      margin: 0 auto 1.5rem auto;
+      max-width: 100vw;
+      min-width: 0;
+      width: 100%;
+      padding: 1.2rem 0.7rem 1rem 0.7rem;
+    }
+    .modal-header {
+      padding: 1.2rem 0.7rem 0.7rem 0.7rem;
+    }
   }
 </style>

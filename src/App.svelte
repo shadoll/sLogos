@@ -3,6 +3,7 @@
   import Grid from './components/Grid.svelte';
   import List from './components/List.svelte';
   import Header from './components/Header.svelte';
+  import Preview from './components/Preview.svelte';
 
   let viewMode = 'grid'; // 'grid' or 'list'
   let searchQuery = '';
@@ -13,6 +14,8 @@
   let allTags = [];
   let selectedTags = [];
   let tagDropdownOpen = false;
+  let showModal = false;
+  let selectedLogo = null;
 
   // Load logos from JSON file with cache busting
   onMount(async () => {
@@ -50,6 +53,9 @@
     mq.addEventListener('change', () => {
       if (theme === 'system') applyTheme();
     });
+
+    // Open preview if URL contains anchor
+    openLogoByAnchor(window.location.hash);
   });
 
   // Make sure to apply theme whenever it changes
@@ -191,6 +197,20 @@
     return allTags.find(t => t.text === text);
   }
 
+  function openPreview(logo) {
+    selectedLogo = logo;
+    showModal = true;
+  }
+
+  function openLogoByAnchor(hash) {
+    if (!hash || !hash.startsWith('#preview-')) return;
+    const anchor = decodeURIComponent(hash.replace('#preview-', '').replace(/-/g, ' '));
+    const found = logos.find(l => l.name.replace(/\s+/g, '-').toLowerCase() === anchor.replace(/\s+/g, '-').toLowerCase());
+    if (found) {
+      openPreview(found);
+    }
+  }
+
   // Listen for outside click to close dropdown
   $: if (tagDropdownOpen) {
     window.addEventListener('click', closeDropdown);
@@ -220,6 +240,14 @@
     {filteredLogos}
   />
 
+  <Preview
+    bind:show={showModal}
+    bind:logo={selectedLogo}
+    {theme}
+    {logos}
+    openLogoByAnchor={openLogoByAnchor}
+  />
+
   <div class="logos-container">
     {#if viewMode === 'grid'}
       <Grid
@@ -227,12 +255,14 @@
         onCopy={copyUrl}
         onDownload={downloadLogo}
         theme={effectiveTheme}
+        on:openPreview={e => openPreview(e.detail)}
       />
     {:else}
       <List
         logos={filteredLogos}
         onCopy={copyUrl}
         onDownload={downloadLogo}
+        on:openPreview={e => openPreview(e.detail)}
       />
     {/if}
   </div>
