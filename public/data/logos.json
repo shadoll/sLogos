@@ -147,6 +147,27 @@
     }
   },
   {
+    "name": "Fiat",
+    "path": "logos/fiat.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "automobile",
+      "transport"
+    ],
+    "brand": "Fiat"
+  },
+  {
+    "name": "Ford",
+    "path": "logos/ford.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "automobile",
+      "transport"
+    ]
+  },
+  {
     "name": "Gitea",
     "path": "logos/gitea.svg",
     "format": "SVG",
