@@ -61,54 +61,6 @@
     return !!(navigator.clipboard && typeof window.ClipboardItem === 'function');
   }
 
-  // Utility: Convert SVG to PNG Blob URL and Blob
-  async function svgToPngUrl(svgPath, pngName) {
-    const res = await fetch(svgPath);
-    const svgText = await res.text();
-    // Parse width/height from SVG or use viewBox fallback
-    const widthMatch = svgText.match(/width=["']([0-9.]+)(px)?["']/i);
-    const heightMatch = svgText.match(/height=["']([0-9.]+)(px)?["']/i);
-    let width, height;
-    if (widthMatch && heightMatch) {
-      width = parseFloat(widthMatch[1]);
-      height = parseFloat(heightMatch[1]);
-    } else {
-      const viewBoxMatch = svgText.match(/viewBox=["']([0-9.\s]+)["']/i);
-      if (viewBoxMatch) {
-        const parts = viewBoxMatch[1].split(/\s+/);
-        if (parts.length === 4) {
-          width = parseFloat(parts[2]);
-          height = parseFloat(parts[3]);
-        }
-      }
-    }
-    width = width || 256;
-    height = height || 256;
-
-    const svgBlob = new Blob([svgText], { type: 'image/svg+xml' });
-    const url = URL.createObjectURL(svgBlob);
-    const img = new window.Image();
-    img.crossOrigin = 'anonymous';
-
-    return new Promise((resolve, reject) => {
-      img.onload = function () {
-        const canvas = document.createElement('canvas');
-        canvas.width = width;
-        canvas.height = height;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0, width, height);
-        canvas.toBlob(blob => {
-          if (!blob) return reject('Failed to create PNG blob');
-          const pngUrl = URL.createObjectURL(blob);
-          resolve({ pngUrl, blob });
-          URL.revokeObjectURL(url);
-        }, 'image/png');
-      };
-      img.onerror = reject;
-      img.src = url;
-    });
-  }
-
   function getBaseName(filename) {
     return filename.split('/').pop().replace(/\.[^.]+$/, '');
   }
@@ -175,47 +127,59 @@
     closeCopyMenu();
   }
 
-  // Download PNG using the utility
+  // Download PNG using the same logic as JPG
   async function handleDownloadPngClick(e) {
     e.stopPropagation();
+    const pngUrl = `/logos_gen/${getBaseName(logo.path)}.png`;
     try {
-      const { pngUrl } = await svgToPngUrl(logo.path, logo.name);
-      const a = document.createElement('a');
-      a.href = pngUrl;
-      a.download = logo.name.replace(/\s+/g, '_').toLowerCase() + '.png';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      setTimeout(() => URL.revokeObjectURL(pngUrl), 1000);
+      const res = await fetch(pngUrl, { method: 'HEAD' });
+      if (res.ok) {
+        const a = document.createElement('a');
+        a.href = pngUrl;
+        a.download = getBaseName(logo.path) + '.png';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      } else {
+        showCopyNotification('PNG file does not exist.', 'error');
+        alert('PNG file does not exist: ' + pngUrl);
+      }
     } catch (err) {
-      alert('Failed to generate PNG: ' + err);
+      showCopyNotification('Error checking PNG file.', 'error');
+      alert('Error checking PNG file: ' + err);
     }
     closeDownloadMenu();
   }
 
-  // Copy as PNG using the utility
-  async function handleCopyPngClick(e) {
-    e.stopPropagation();
-    try {
-      const { blob } = await svgToPngUrl(logo.path, logo.name);
-      await navigator.clipboard.write([new window.ClipboardItem({ 'image/png': blob })]);
-      showCopyNotification('PNG image copied!', 'success');
-    } catch (err) {
-      showCopyNotification('Failed to copy PNG image', 'error');
-      alert('Failed to copy PNG image. ' + err);
-    }
-    closeCopyMenu();
-  }
-
   function handleDownloadJpgClick(e) {
     e.stopPropagation();
-    // ...existing code...
     try {
       downloadJpg(logo);
     } catch (err) {
       console.error('downloadJpg error:', err);
     }
     closeDownloadMenu();
+  }
+
+  async function downloadJpg(logo) {
+    const jpgUrl = `/logos_gen/${getBaseName(logo.path)}.jpg`;
+    try {
+      const res = await fetch(jpgUrl, { method: 'HEAD' });
+      if (res.ok) {
+        const a = document.createElement('a');
+        a.href = jpgUrl;
+        a.download = getBaseName(logo.path) + '.jpg';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      } else {
+        showCopyNotification('JPG file does not exist.', 'error');
+        alert('JPG file does not exist: ' + jpgUrl);
+      }
+    } catch (err) {
+      showCopyNotification('Error checking JPG file.', 'error');
+      alert('Error checking JPG file: ' + err);
+    }
   }
 </script>
 
@@ -359,7 +323,7 @@
     right: 0;
     min-width: 160px;
     background: var(--color-card, #fff);
-    color: var(--text-color, #222);
+    color: var(--color-text, #222);
     border: 1px solid var(--color-border, #ddd);
     border-radius: 8px;
     box-shadow: 0 2px 16px 4px rgba(0,0,0,0.18);
@@ -372,7 +336,7 @@
   }
   .dropdown-item {
     background: none;
-    color: inherit;
+    color: var(--color-text, #222);
     border: none;
     text-align: left;
     padding: 0.6em 1em;

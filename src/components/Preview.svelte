@@ -199,12 +199,22 @@
 </div>
 
 <style>
+  :root,
+  :root.light,
+  [data-theme="light"] {
+    --color-backdrop: rgba(255,255,255,0.98);
+  }
+  :root.dark,
+  [data-theme="dark"] {
+    --color-backdrop: rgba(0,0,0,0.99);
+  }
+
   .modal-backdrop.fullscreen {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0,0,0,0.95);
+    background: var(--color-backdrop, rgba(0,0,0,0.95));
     z-index: 2000;
     display: flex;
     align-items: center;
