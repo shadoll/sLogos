@@ -15,7 +15,7 @@
   --color-accent-hover: var(--primary-color-hover);
 }
 
-/* Dark theme overrides */
+/* Dark theme overrides - using both media query and class-based approach */
 @media (prefers-color-scheme: dark) {
   :root {
     --color-card: #23272e;
@@ -24,6 +24,24 @@
     --color-border: #333842;
     --color-accent: #4f8cff;
   }
+}
+
+/* Class-based theme overrides for explicit theme switching */
+:root.dark, [data-theme="dark"] {
+  --color-card: #23272e;
+  --background-color: #181a20;
+  --color-text: #f5f6fa;
+  --color-border: #333842;
+  --color-accent: #4f8cff;
+}
+
+:root.light, [data-theme="light"] {
+  --color-bg: #fff;
+  --color-card: #f8f8f8;
+  --background-color: #f8f9fa;
+  --color-text: #333333;
+  --color-border: #ddd;
+  --color-accent: #4f8cff;
 }
 
 * {
@@ -300,6 +318,103 @@ div.logo-image img {
   max-height: 100%;
   display: block;
   object-fit: contain;
+  color: var(--color-text);
+}
+
+/* Modal styles */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: var(--color-card);
+  color: var(--color-text) !important;
+  border-radius: 8px;
+  padding: 1rem;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--color-border);
+  transition: background 0.2s, color 0.2s;
+}
+
+.modal-content * {
+  color: var(--color-text);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  color: var(--color-text);
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: var(--color-text);
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--color-text);
+  transition: color 0.2s;
+}
+
+.close-btn:hover {
+  color: #f44336;
+}
+
+.modal-body {
+  color: var(--color-text);
+}
+
+.preview-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background-color: var(--color-card);
+  color: var(--color-text);
+  margin-bottom: 1rem;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+}
+
+.preview-container img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.logo-details {
+  margin-top: 1rem;
+  color: var(--color-text);
+}
+
+.logo-details p {
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+  color: var(--color-text);
+}
+
+.logo-details strong,
+.logo-details span {
+  color: var(--color-text);
 }
 
 /* Grid specific */

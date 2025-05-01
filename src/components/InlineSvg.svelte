@@ -11,8 +11,17 @@
     const res = await fetch(path);
     let text = await res.text();
     if (!color) {
-      // No user-selected color, render as-is (SVG uses fill="currentColor")
-      svgHtml = text;
+      // No user-selected color, add currentColor to ensure theme colors are applied
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(text, "image/svg+xml");
+      const svg = doc.documentElement;
+
+      // Set currentColor on SVG element if no fill is specified
+      if (!svg.hasAttribute("fill")) {
+        svg.setAttribute("fill", "currentColor");
+      }
+
+      svgHtml = doc.documentElement.outerHTML;
       return;
     }
     // Parse and update color only if user selected

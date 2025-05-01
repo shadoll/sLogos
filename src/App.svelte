@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
   import Grid from './components/Grid.svelte';
   import List from './components/List.svelte';
+  import Header from './components/Header.svelte';
 
   let viewMode = 'grid'; // 'grid' or 'list'
   let searchQuery = '';
@@ -51,7 +52,9 @@
     });
   });
 
-  $: {
+  // Make sure to apply theme whenever it changes
+  $: if (theme) {
+    console.log('[Theme] Theme changed:', theme);
     applyTheme();
   }
 
@@ -139,14 +142,20 @@
     if (theme === 'system') {
       effectiveTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     }
+    // Apply theme both ways for compatibility
     document.documentElement.setAttribute('data-theme', effectiveTheme);
+    document.documentElement.className = effectiveTheme; // Add class-based theming
+    console.log('[Theme] Applied theme:', effectiveTheme);
   }
 
   function setTheme(newTheme) {
-    theme = newTheme;
-    localStorage.setItem('theme', newTheme);
-    console.log('[theme] setTheme:', newTheme);
-    applyTheme();
+    if (newTheme === 'light' || newTheme === 'dark' || newTheme === 'system') {
+      theme = newTheme;
+      localStorage.setItem('theme', newTheme);
+      console.log('[Theme] setTheme:', newTheme);
+      // Apply theme immediately after setting
+      setTimeout(() => applyTheme(), 0);
+    }
   }
 
   function toggleTag(tag) {
