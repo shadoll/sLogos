@@ -94,6 +94,18 @@
     "brand": "Binance"
   },
   {
+    "name": "Bitcoin",
+    "path": "logos/bitcoin.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "crypto",
+      "finance",
+      "trading"
+    ],
+    "brand": "Bitcoin"
+  },
+  {
     "name": "BMW",
     "path": "logos/bmw.svg",
     "format": "SVG",
@@ -122,6 +134,18 @@
     ]
   },
   {
+    "name": "Debian",
+    "path": "logos/debian.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "tech",
+      "software",
+      "linux"
+    ],
+    "brand": "Debian"
+  },
+  {
     "name": "Disney",
     "path": "logos/disney.svg",
     "format": "SVG",
@@ -131,6 +155,27 @@
       "entertainment",
       "streaming"
     ]
+  },
+  {
+    "name": "Docker",
+    "path": "logos/docker.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "tech",
+      "software",
+      "container"
+    ],
+    "brand": "Docker",
+    "colors": [
+      {
+        "label": "Blue",
+        "value": "#1d63ed"
+      }
+    ],
+    "colorConfig": {
+      "target": "path"
+    }
   },
   {
     "name": "Dodge",
@@ -156,6 +201,18 @@
     "colorConfig": {
       "selector": "#text"
     }
+  },
+  {
+    "name": "Fedora",
+    "path": "logos/fedora.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "tech",
+      "software",
+      "linux"
+    ],
+    "brand": "Fedora"
   },
   {
     "name": "Fiat",
@@ -337,6 +394,17 @@
     ]
   },
   {
+    "name": "Lego",
+    "path": "logos/lego.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "toys",
+      "games"
+    ],
+    "brand": "Lego"
+  },
+  {
     "name": "LG",
     "path": "logos/lg.svg",
     "format": "SVG",
@@ -370,11 +438,47 @@
     ]
   },
   {
+    "name": "Mattermost",
+    "path": "logos/mattermost.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "communication",
+      "software",
+      "messaging"
+    ],
+    "colors": [
+      {
+        "label": "Denim",
+        "value": "#1e325c"
+      }
+    ],
+    "colorConfig": {
+      "target": "g"
+    },
+    "brand": "Mattermost"
+  },
+  {
+    "name": "McDonald's",
+    "path": "logos/mcdonalds.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "food",
+      "fast food",
+      "restaurant"
+    ],
+    "brand": "McDonald's"
+  },
+  {
     "name": "Meest",
     "path": "logos/meest.svg",
     "format": "SVG",
     "disable": false,
-    "tags": [],
+    "tags": [
+      "postal",
+      "delivery"
+    ],
     "brand": "Meest"
   },
   {
@@ -541,12 +645,11 @@
     "path": "logos/postgresql.svg",
     "format": "SVG",
     "disable": false,
-    "tags":
-      [
-        "tech",
-        "software",
-        "database"
-      ],
+    "tags": [
+      "tech",
+      "software",
+      "database"
+    ],
     "brand": "PostgreSQL"
   },
   {
@@ -592,6 +695,18 @@
       "bank",
       "finance"
     ]
+  },
+  {
+    "name": "Puma",
+    "path": "logos/puma.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "clothing",
+      "sports",
+      "footwear"
+    ],
+    "brand": "Puma"
   },
   {
     "name": "Pumb",
@@ -816,11 +931,57 @@
     "brand": "Suzuki"
   },
   {
+    "name": "Tesla",
+    "path": "logos/tesla.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "automobile",
+      "transport"
+    ],
+    "brand": "Tesla",
+    "colors": [
+      {
+        "label": "Red",
+        "value": "#e82127"
+      }
+    ],
+    "colorConfig": {
+      "target": "path"
+    }
+  },
+  {
+    "name": "Threads",
+    "path": "logos/threads.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "social",
+      "communication"
+    ],
+    "brand": "Threads"
+  },
+  {
+    "name": "Ubuntu",
+    "path": "logos/ubuntu.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "tech",
+      "software",
+      "linux"
+    ],
+    "brand": "Ubuntu"
+  },
+  {
     "name": "Ukrposhta",
     "path": "logos/ukrposhta.svg",
     "format": "SVG",
     "disable": false,
-    "tags": [],
+    "tags": [
+      "postal",
+      "delivery"
+    ],
     "brand": "Ukrposhta"
   },
   {
