@@ -180,6 +180,17 @@
     "brand": "Ford"
   },
   {
+    "name": "Git",
+    "path": "logos/git.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "tech",
+      "software"
+    ],
+    "brand": "Git"
+  },
+  {
     "name": "Gitea",
     "path": "logos/gitea.svg",
     "format": "SVG",
@@ -189,6 +200,57 @@
       "tech",
       "software"
     ]
+  },
+  {
+    "name": "GitHub",
+    "path": "logos/github-logo.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "tech",
+      "software"
+    ],
+    "brand": "GitHub",
+    "colors": [
+      {
+        "label": "Dark Grey",
+        "value": "#24292f"
+      }
+    ],
+    "colorConfig": {
+      "target": "path"
+    }
+  },
+  {
+    "name": "Github",
+    "path": "logos/github.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "tech",
+      "software"
+    ],
+    "brand": "GitHub",
+    "colors": [
+      {
+        "label": "Dark Grey",
+        "value": "#24292f"
+      }
+    ],
+    "colorConfig": {
+      "target": "path"
+    }
+  },
+  {
+    "name": "GitLab",
+    "path": "logos/gitlab.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "tech",
+      "software"
+    ],
+    "brand": "GitLab"
   },
   {
     "name": "Google",
@@ -475,6 +537,19 @@
     "brand": "Okko"
   },
   {
+    "name": "PostgreSQL",
+    "path": "logos/postgresql.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags":
+      [
+        "tech",
+        "software",
+        "database"
+      ],
+    "brand": "PostgreSQL"
+  },
+  {
     "name": "Privat24",
     "path": "logos/privat24.svg",
     "format": "SVG",
@@ -528,6 +603,30 @@
       "bank",
       "finance"
     ]
+  },
+  {
+    "name": "Python",
+    "path": "logos/python-logo.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "tech",
+      "software",
+      "programming"
+    ],
+    "brand": "Python"
+  },
+  {
+    "name": "Python",
+    "path": "logos/python.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "tech",
+      "software",
+      "programming"
+    ],
+    "brand": "Python"
   },
   {
     "name": "Reebok",
