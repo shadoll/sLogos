@@ -320,6 +320,17 @@
     ]
   },
   {
+    "name": "Guinness",
+    "path": "logos/guinness.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "food",
+      "drink"
+    ],
+    "brand": "Guinness"
+  },
+  {
     "name": "Home Assistant",
     "path": "logos/home-assistant-logo.svg",
     "format": "SVG",
@@ -875,6 +886,46 @@
       "appliances"
     ],
     "brand": "Siemens"
+  },
+  {
+    "name": "Signal",
+    "path": "logos/signal-logo.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "messaging",
+      "communication"
+    ],
+    "brand": "Signal",
+    "colors": [
+      {
+        "label": "Ultramarine",
+        "value": "#3b45fd"
+      }
+    ],
+    "colorConfig": {
+      "target": "path"
+    }
+  },
+  {
+    "name": "Signal",
+    "path": "logos/signal.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "messaging",
+      "communication"
+    ],
+    "brand": "Signal",
+    "colors": [
+      {
+        "label": "Ultramarine",
+        "value": "#3b45fd"
+      }
+    ],
+    "colorConfig": {
+      "target": "path"
+    }
   },
   {
     "name": "Silpo",
