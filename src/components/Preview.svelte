@@ -214,7 +214,7 @@
     top: 0; left: 0; right: 0; bottom: 0;
     width: 100vw;
     height: 100vh;
-    background: var(--color-backdrop, rgba(0,0,0,0.95));
+    background: rgba(0,0,0,0.7); /* match .modal-backdrop in global.css */
     z-index: 2000;
     display: flex;
     align-items: center;
@@ -228,7 +228,8 @@
     max-height: 100vh;
     border-radius: 0;
     box-shadow: none;
-    background: transparent;
+    background: var(--color-card);
+    color: var(--color-text);
     display: flex;
     flex-direction: column;
     padding: 0;
@@ -240,7 +241,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 2rem 2.5rem 1rem 2.5rem;
-    background: transparent;
+    background: var(--color-card);
     color: var(--color-text);
     z-index: 2;
     flex: 0 0 auto;
@@ -270,7 +271,7 @@
     justify-content: center;
     width: 100vw;
     height: 100%;
-    background: transparent;
+    background: var(--color-card);
     padding: 0;
     gap: 2.5rem;
     overflow: hidden;
@@ -282,7 +283,7 @@
     justify-content: center;
     min-width: 0;
     min-height: 0;
-    background: transparent;
+    background: var(--color-card);
     height: 100%;
     width: 100%;
     overflow: hidden;
@@ -308,14 +309,14 @@
     max-height: 100%;
   }
   .logo-details.fullscreen-details {
-    flex: 1 1 350px;
-    min-width: 320px;
-    max-width: 400px;
-    background: var(--color-card, #23272e);
+    flex: 1 1 300px;
+    min-width: 220px;
+    max-width: 300px;
+    background: var(--color-card);
     color: var(--color-text);
     border-radius: 12px;
     padding: 2rem 2rem 1.5rem 2rem;
-    margin: 0;
+    margin: 0 2rem 0 0;
     box-shadow: 0 2px 16px 4px rgba(0,0,0,0.18);
     overflow-y: auto;
     align-self: center;
