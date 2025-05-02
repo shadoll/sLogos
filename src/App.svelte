@@ -245,7 +245,7 @@
   }
 </script>
 
-<main class="container">
+<main class="container app-flex">
   <Header
     {logos}
     {theme}
@@ -274,7 +274,7 @@
     {openLogoByAnchor}
   />
 
-  <div class="logos-container">
+  <div class="logos-container main-content">
     {#if viewMode === "grid"}
       <Grid
         logos={filteredLogos}
@@ -317,6 +317,17 @@
   </footer>
 
   <style>
+    .app-flex {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .main-content {
+      flex: 1 0 auto;
+    }
+    footer {
+      flex: 0 0 auto;
+    }
     .footer-flex {
       display: flex;
       align-items: center;
