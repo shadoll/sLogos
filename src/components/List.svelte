@@ -152,10 +152,7 @@
     border-radius: 4px;
     position: relative;
   }
-  .logo-info h3 {
-    margin-bottom: 0.5rem;
-    color: var(--color-accent, #4f8cff);
-  }
+
   .logo-list {
     display: flex;
     flex-direction: column;
@@ -166,21 +163,7 @@
     padding: 2rem;
     color: #666;
   }
-  .color-circle {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 4px;
-    cursor: pointer;
-    box-sizing: border-box;
-  }
   .color-switcher-preview.align-left {
     justify-content: flex-start;
-  }
-  .color-circle.color-reset {
-    background: none !important;
   }
 </style>

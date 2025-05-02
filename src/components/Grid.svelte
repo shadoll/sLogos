@@ -125,15 +125,7 @@ $: getLogoThemeColor = logo => getDefaultLogoColor(logo.colors, theme);
 </div>
 
 <style>
-  :global(.logo-card) {
-    background: var(--color-card);
-    color: var(--color-text);
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
-    /* overflow: hidden; removed to allow dropdown menus to escape the card */
-    transition: background 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s;
-    min-width: 320px;
-  }
+
   .logo-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -147,47 +139,16 @@ $: getLogoThemeColor = logo => getDefaultLogoColor(logo.colors, theme);
   }
   .logo-info {
     padding: 1rem;
-    background: var(--color-card);
-    color: var(--color-text);
     border-top: 1px solid var(--color-border);
-    transition: background 0.2s, color 0.2s;
   }
-  .logo-info h3 {
-    margin-bottom: 0.5rem;
-    color: var(--color-accent, #4f8cff);
-  }
+
   .no-results {
     grid-column: 1 / -1;
     text-align: center;
     padding: 2rem;
     color: #666;
   }
-  .color-circle.color-reset {
-    background: none !important;
-    width: 24px;
-    height: 24px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    margin: 0;
-    border: none;
-  }
-  .color-circle.color-reset svg {
-    pointer-events: none;
-  }
-  .color-circle {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 4px;
-    cursor: pointer;
-    box-sizing: border-box;
-    padding: 0;
-  }
+
   .color-switcher-preview.align-right {
     display: flex;
     align-items: center;
