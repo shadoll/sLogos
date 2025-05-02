@@ -542,16 +542,7 @@
       "retail",
       "grocery"
     ],
-    "brand": "Sainsbury's",
-    "colors": [
-      {
-        "label": "Orange",
-        "value": "#F06C00"
-      }
-    ],
-    "colorConfig": {
-      "target": "g"
-    }
+    "brand": "Sainsbury's"
   },
   {
     "name": "Sendpulse",
