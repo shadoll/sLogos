@@ -6,7 +6,6 @@
   export let show = false;
   export let logo = null;
   export let theme;
-  export let logos = [];
   export let openLogoByAnchor = () => {};
 
   const dispatch = createEventDispatcher();
@@ -199,16 +198,6 @@
 </div>
 
 <style>
-  :root,
-  :root.light,
-  [data-theme="light"] {
-    --color-backdrop: rgba(255,255,255,0.98);
-  }
-  :root.dark,
-  [data-theme="dark"] {
-    --color-backdrop: rgba(0,0,0,0.99);
-  }
-
   .modal-backdrop.fullscreen {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
@@ -296,8 +285,7 @@
     justify-content: center;
     overflow: hidden;
   }
-  .preview-media-wrapper img,
-  .preview-media-wrapper svg {
+  .preview-media-wrapper img {
     width: 100%;
     height: 100%;
     min-width: 0;
