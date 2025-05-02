@@ -41,6 +41,17 @@
     }
   },
   {
+    "name": "Apple Homekit",
+    "path": "logos/apple_homekit_logo.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "automation",
+      "smart home"
+    ],
+    "brand": "Apple"
+  },
+  {
     "name": "arm",
     "path": "logos/arm.svg",
     "format": "SVG",
@@ -190,6 +201,28 @@
     ]
   },
   {
+    "name": "Home Assistant",
+    "path": "logos/home-assistant-logo.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "automation",
+      "smart home"
+    ],
+    "brand": "Home Assistant"
+  },
+  {
+    "name": "Home Assistant",
+    "path": "logos/home-assistant.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "automation",
+      "smart home"
+    ],
+    "brand": "Home Assistant"
+  },
+  {
     "name": "IBKR",
     "path": "logos/ibkr.svg",
     "format": "SVG",
@@ -240,6 +273,17 @@
       "telecom",
       "mobile"
     ]
+  },
+  {
+    "name": "LG",
+    "path": "logos/lg.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "electronics",
+      "appliances"
+    ],
+    "brand": "LG"
   },
   {
     "name": "Lifecell",
@@ -545,6 +589,19 @@
     "brand": "Sainsbury's"
   },
   {
+    "name": "Samsung",
+    "path": "logos/samsung.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "tech",
+      "electronics",
+      "mobile",
+      "appliances"
+    ],
+    "brand": "Samsung"
+  },
+  {
     "name": "Sendpulse",
     "path": "logos/sendpulse.svg",
     "format": "SVG",
@@ -595,6 +652,17 @@
     ]
   },
   {
+    "name": "Siemens",
+    "path": "logos/siemens.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "electronics",
+      "appliances"
+    ],
+    "brand": "Siemens"
+  },
+  {
     "name": "Silpo",
     "path": "logos/silpo.svg",
     "format": "SVG",
@@ -604,6 +672,27 @@
       "retail",
       "grocery"
     ]
+  },
+  {
+    "name": "Skechers",
+    "path": "logos/skechers.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "clothing",
+      "sports",
+      "footwear"
+    ],
+    "brand": "Skechers",
+    "colors": [
+      {
+        "label": "Deep Blue",
+        "value": "#062849"
+      }
+    ],
+    "colorConfig": {
+      "selector": "#text, #logo_int"
+    }
   },
   {
     "name": "Suzuki",
@@ -668,6 +757,17 @@
     ]
   },
   {
+    "name": "WhatsApp",
+    "path": "logos/whatsapp.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "messaging",
+      "communication"
+    ],
+    "brand": "WhatsApp"
+  },
+  {
     "name": "Wise",
     "path": "logos/wise.svg",
     "format": "SVG",
@@ -693,7 +793,7 @@
     "path": "logos/youtube.svg",
     "format": "SVG",
     "disable": false,
-    "tags": [
-    ]
+    "tags": [],
+    "brand": "Youtube"
   }
 ]
