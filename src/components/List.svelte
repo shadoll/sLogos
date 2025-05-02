@@ -50,7 +50,6 @@
 
   $: getLogoThemeColor = logo => getDefaultLogoColor(logo.colors, theme);
 
-  // Debug logging for color and theme
   $: {
     if (logos && logos.length) {
       logos.forEach(logo => {

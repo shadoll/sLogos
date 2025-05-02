@@ -28,7 +28,6 @@
   export let theme;
 $: getLogoThemeColor = logo => getDefaultLogoColor(logo.colors, theme);
 
-  // Improved debug logging for color and theme for each logo
   $: {
     if (logos && logos.length) {
       logos.forEach(logo => {
@@ -39,17 +38,6 @@ $: getLogoThemeColor = logo => getDefaultLogoColor(logo.colors, theme);
         }
       });
     }
-  }
-
-  // Inline SVG logic for color switching
-  let svgCache = {};
-
-  async function fetchInlineSvg(path) {
-    if (svgCache[path]) return svgCache[path];
-    const res = await fetch(path);
-    const text = await res.text();
-    svgCache[path] = text;
-    return text;
   }
 </script>
 
