@@ -1,13 +1,14 @@
 <script>
-  import Preview from './Preview.svelte';
-  import Actions from './Actions.svelte';
-  import InlineSvg from './InlineSvg.svelte';
-  import { getThemeColor, getDefaultLogoColor } from '../utils/colorTheme.js';
-  import { onMount, onDestroy } from 'svelte';
+  import Preview from "./Preview.svelte";
+  import Actions from "./Actions.svelte";
+  import InlineSvg from "./InlineSvg.svelte";
+  import { getThemeColor, getDefaultLogoColor } from "../utils/colorTheme.js";
+  import { onMount, onDestroy } from "svelte";
 
   export let logos = [];
   export let onCopy;
   export let onDownload;
+  export let setSearchQuery;
 
   let showModal = false;
   let selectedLogo = null;
@@ -24,39 +25,50 @@
   }
 
   function isSvgLogo(logo) {
-    return logo.format && logo.format.toLowerCase() === 'svg';
+    return logo.format && logo.format.toLowerCase() === "svg";
   }
 
   function getTheme() {
-    if (typeof window !== 'undefined' && window.matchMedia) {
-      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    if (typeof window !== "undefined" && window.matchMedia) {
+      return window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
     }
-    return 'light';
+    return "light";
   }
 
   function handleThemeChange(e) {
-    theme = e.matches ? 'dark' : 'light';
+    theme = e.matches ? "dark" : "light";
   }
 
   onMount(() => {
-    const mql = window.matchMedia('(prefers-color-scheme: dark)');
-    mql.addEventListener('change', handleThemeChange);
+    const mql = window.matchMedia("(prefers-color-scheme: dark)");
+    mql.addEventListener("change", handleThemeChange);
   });
 
   onDestroy(() => {
-    const mql = window.matchMedia('(prefers-color-scheme: dark)');
-    mql.removeEventListener('change', handleThemeChange);
+    const mql = window.matchMedia("(prefers-color-scheme: dark)");
+    mql.removeEventListener("change", handleThemeChange);
   });
 
-  $: getLogoThemeColor = logo => getDefaultLogoColor(logo.colors, theme);
+  $: getLogoThemeColor = (logo) => getDefaultLogoColor(logo.colors, theme);
 
   $: {
     if (logos && logos.length) {
-      logos.forEach(logo => {
+      logos.forEach((logo) => {
         if (logo.colors) {
           const themeColor = getDefaultLogoColor(logo.colors, theme);
           const activeColor = logo._activeColor || themeColor;
-          console.log('[LogoList] Logo:', logo.name, '| Theme:', theme, '| Theme color:', themeColor, '| Active color:', activeColor);
+          console.log(
+            "[LogoList] Logo:",
+            logo.name,
+            "| Theme:",
+            theme,
+            "| Theme color:",
+            themeColor,
+            "| Active color:",
+            activeColor,
+          );
         }
       });
     }
@@ -68,26 +80,33 @@
 <div class="logo-list">
   {#each logos as logo}
     <div class="logo-item">
-      <div class="logo-preview"
+      <div
+        class="logo-preview"
         role="button"
         tabindex="0"
         aria-label="Preview {logo.name}"
         on:click={() => openPreview(logo)}
-        on:keydown={(e) => (e.key === 'Enter' || e.key === ' ') && openPreview(logo)}
+        on:keydown={(e) =>
+          (e.key === "Enter" || e.key === " ") && openPreview(logo)}
         style="cursor:pointer;"
       >
-        {#if isSvgLogo(logo)}              <InlineSvg
-                path={logo.path}
-                color={logo.colors ? (logo._activeColor || getLogoThemeColor(logo)) : undefined}
-                colorConfig={logo.colors ? logo.colorConfig : undefined}
-                alt={logo.name}
-              />
+        {#if isSvgLogo(logo)}
+          <InlineSvg
+            path={logo.path}
+            color={logo.colors
+              ? logo._activeColor || getLogoThemeColor(logo)
+              : undefined}
+            colorConfig={logo.colors ? logo.colorConfig : undefined}
+            alt={logo.name}
+          />
         {:else}
           <img src={logo.path} alt={logo.name} />
         {/if}
       </div>
       <div class="logo-info">
-        <h3>{logo.name}</h3>
+        <div class="logo-list-title-row">
+          <h3>{logo.name}</h3>
+        </div>
         <div class="format-row">
           <span><strong>Format:</strong> {logo.format}</span>
         </div>
@@ -100,12 +119,26 @@
               role="button"
               aria-label="Reset to theme color"
               style="background: none; width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center; padding: 0; margin: 0; border: none;"
-              on:click|stopPropagation={() => logo._activeColor = undefined}
-              on:keydown|stopPropagation={(e) => (e.key === 'Enter' || e.key === ' ') && (logo._activeColor = undefined)}
+              on:click|stopPropagation={() => (logo._activeColor = undefined)}
+              on:keydown|stopPropagation={(e) =>
+                (e.key === "Enter" || e.key === " ") &&
+                (logo._activeColor = undefined)}
             >
-              <svg width="100%" height="100%" viewBox="0 0 800 800" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
-                <circle cx="400" cy="400" r="400" style="fill:#d6d6d6;"/>
-                <path d="M682.843,117.843l-565.686,565.685c-156.209,-156.21 -156.209,-409.476 0,-565.685c156.21,-156.21 409.476,-156.21 565.686,-0Z" style="fill:#33363f;"/>
+              <svg
+                width="100%"
+                height="100%"
+                viewBox="0 0 800 800"
+                version="1.1"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                xml:space="preserve"
+                style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"
+              >
+                <circle cx="400" cy="400" r="400" style="fill:#d6d6d6;" />
+                <path
+                  d="M682.843,117.843l-565.686,565.685c-156.209,-156.21 -156.209,-409.476 0,-565.685c156.21,-156.21 409.476,-156.21 565.686,-0Z"
+                  style="fill:#33363f;"
+                />
               </svg>
             </span>
             {#each logo.colors as colorObj}
@@ -115,14 +148,26 @@
                 style={`background:${colorObj.value}`}
                 tabindex="0"
                 role="button"
-                on:click|stopPropagation={() => logo._activeColor = colorObj.value}
-                on:keydown|stopPropagation={(e) => (e.key === 'Enter' || e.key === ' ') && (logo._activeColor = colorObj.value)}
+                on:click|stopPropagation={() =>
+                  (logo._activeColor = colorObj.value)}
+                on:keydown|stopPropagation={(e) =>
+                  (e.key === "Enter" || e.key === " ") &&
+                  (logo._activeColor = colorObj.value)}
               ></span>
             {/each}
           </div>
         {/if}
       </div>
       <div class="logo-actions">
+        <button
+          class="brand-filter-btn common-btn"
+          title="Filter by brand"
+          on:click={() => setSearchQuery(logo.brand)}
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M20 4H4v2l6 6v8.5l4-2.5v-6l6-6V4z"/>
+          </svg>
+        </button>
         <Actions {logo} {onCopy} {onDownload} />
       </div>
     </div>
@@ -142,7 +187,9 @@
     align-items: center;
     gap: 1rem;
     padding: 1rem;
-    transition: background 0.2s, color 0.2s;
+    transition:
+      background 0.2s,
+      color 0.2s;
   }
   .logo-preview {
     height: 100px;
@@ -164,5 +211,46 @@
   }
   .color-switcher-preview.align-left {
     justify-content: flex-start;
+  }
+  .brand-filter-btn {
+    background: none;
+    border: none;
+    color: var(--color-text);
+    cursor: pointer;
+    padding: 0.2em;
+    border-radius: 4px;
+    transition:
+      background 0.2s,
+      color 0.2s;
+    z-index: 2;
+    margin-left: 0.5em;
+  }
+  .brand-filter-btn:hover {
+    background: var(--color-accent, #4f8cff);
+    color: #fff;
+  }
+  .brand-filter-btn.common-btn {
+    background: var(--color-accent, #4f8cff);
+    color: #fff;
+    border: none;
+    padding: 0.4em 0.6em;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1em;
+    transition: background 0.2s, color 0.2s;
+    margin-left: 0.5em;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  }
+  .brand-filter-btn.common-btn:hover {
+    background: var(--color-accent-dark, #3576c7);
+    color: #fff;
+  }
+  .logo-list-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5em;
   }
 </style>

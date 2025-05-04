@@ -292,6 +292,7 @@
         onCopy={copyUrl}
         onDownload={downloadLogo}
         theme={effectiveTheme}
+        setSearchQuery={setSearchQuery}
         on:openPreview={(e) => openPreview(e.detail)}
       />
     {:else}
@@ -299,6 +300,7 @@
         logos={filteredLogos}
         onCopy={copyUrl}
         onDownload={downloadLogo}
+        setSearchQuery={setSearchQuery}
         on:openPreview={(e) => openPreview(e.detail)}
       />
     {/if}
