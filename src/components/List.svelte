@@ -163,7 +163,14 @@
         <button
           class="brand-filter-btn common-btn"
           title="Filter by brand"
-          on:click={() => setSearchQuery(logo.brand)}
+          on:click={() => {
+            setSearchQuery(logo.brand);
+            // Update URL with search param
+            const params = new URLSearchParams(window.location.search);
+            params.set('search', logo.brand);
+            const newUrl = window.location.pathname + (params.toString() ? '?' + params.toString() : '');
+            history.replaceState(null, '', newUrl);
+          }}
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
             <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M20 4H4v2l6 6v8.5l4-2.5v-6l6-6V4z"/>
