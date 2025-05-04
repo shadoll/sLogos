@@ -119,36 +119,54 @@ function scanLogos() {
 
     console.log(`Found ${logoFiles.length} logo files`);
 
-    // Create logo objects
-    const logos = logoFiles.map(file => {
-      const format = getFileExtension(file);
-      const logoPath = `logos/${file}`;
-      const existingItem = existingMap.get(logoPath);
-      let logoObj;
-      if (existingItem) {
-        // Preserve name, tags, and disable, update format/path
-        logoObj = {
-          ...existingItem,
-          path: logoPath,
-          format: format,
-          disable: typeof existingItem.disable === 'boolean' ? existingItem.disable : false,
-          brand: existingItem.brand || existingItem.name || formatName(file)
-        };
-      } else {
-        // New logo
-        logoObj = {
+    // Create a Set of all logo paths in the directory
+    const logoPathsSet = new Set(logoFiles.map(file => `logos/${file}`));
+
+    // 1. Keep all existing logos that still exist in the directory, in their original order
+    const keptLogos = existing.filter(item => logoPathsSet.has(item.path));
+    const keptPaths = new Set(keptLogos.map(item => item.path));
+
+    // 2. Add new logos (not present in existing) and sort them alphabetically by name
+    const newLogos = logoFiles
+      .filter(file => !keptPaths.has(`logos/${file}`))
+      .map(file => {
+        const format = getFileExtension(file);
+        const logoPath = `logos/${file}`;
+        return {
           name: formatName(file),
           path: logoPath,
           format: format,
           disable: false,
+          tags: [],
         };
+      })
+      .sort((a, b) => a.name.localeCompare(b.name));
+
+    // 3. Merge: existing (kept) + new (sorted)
+    // Instead of just appending newLogos, insert each new logo in the correct sorted position by name
+    let merged = [...keptLogos];
+    for (const newLogo of newLogos) {
+      // Find the first index where newLogo.name < merged[i].name
+      let insertIdx = merged.findIndex(l => newLogo.name.localeCompare(l.name) < 0);
+      if (insertIdx === -1) {
+        merged.push(newLogo);
+      } else {
+        merged.splice(insertIdx, 0, newLogo);
       }
-      // Ensure tags field exists and is an array
-      if (!Array.isArray(logoObj.tags)) {
-        logoObj.tags = [];
-      }
-      return logoObj;
-    });
+    }
+    const logos = merged;
+
+    // 4. For all, update format/path/brand fields if needed
+    for (const logoObj of logos) {
+      const file = path.basename(logoObj.path);
+      logoObj.format = getFileExtension(file);
+      logoObj.path = `logos/${file}`;
+      if (!logoObj.name) logoObj.name = formatName(file);
+      if (!logoObj.brand) logoObj.brand = logoObj.name;
+      if (!Array.isArray(logoObj.tags)) logoObj.tags = [];
+      if (typeof logoObj.disable !== 'boolean') logoObj.disable = false;
+    }
+
     return logos;
   } catch (error) {
     console.error('Error scanning logos directory:', error);

@@ -509,6 +509,17 @@
     "tags": []
   },
   {
+    "name": "Monobank",
+    "path": "logos/monobank_text.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Monobank",
+    "tags": [
+      "bank",
+      "finance"
+    ]
+  },
+  {
     "name": "Mono Black",
     "path": "logos/mono_black.svg",
     "format": "SVG",
@@ -553,15 +564,15 @@
     ]
   },
   {
-    "name": "Monobank (text)",
-    "path": "logos/monobank_text.svg",
+    "name": "MySQL",
+    "path": "logos/mysql.svg",
     "format": "SVG",
     "disable": false,
-    "brand": "Monobank",
     "tags": [
-      "bank",
-      "finance"
-    ]
+      "software",
+      "database"
+    ],
+    "brand": "MySQL"
   },
   {
     "name": "Nationwide",
@@ -607,16 +618,16 @@
     "brand": "Nikamebel"
   },
   {
-    "name": "Nova Global",
-    "path": "logos/nova_global.svg",
+    "name": "Nova Post",
+    "path": "logos/nova_post.svg",
     "format": "SVG",
     "disable": false,
     "brand": "Nova Post",
     "tags": []
   },
   {
-    "name": "Nova Post",
-    "path": "logos/nova_post.svg",
+    "name": "Nova Global",
+    "path": "logos/nova_global.svg",
     "format": "SVG",
     "disable": false,
     "brand": "Nova Post",
@@ -657,7 +668,6 @@
     "format": "SVG",
     "disable": false,
     "tags": [
-      "tech",
       "software",
       "database"
     ],
@@ -732,11 +742,10 @@
   },
   {
     "name": "Python",
-    "path": "logos/python-logo.svg",
+    "path": "logos/python.svg",
     "format": "SVG",
     "disable": false,
     "tags": [
-      "tech",
       "software",
       "programming"
     ],
@@ -744,23 +753,14 @@
   },
   {
     "name": "Python",
-    "path": "logos/python.svg",
+    "path": "logos/python-logo.svg",
     "format": "SVG",
     "disable": false,
     "tags": [
-      "tech",
       "software",
       "programming"
     ],
     "brand": "Python"
-  },
-  {
-    "name": "RabbitMQ",
-    "path": "logos/rabbitmq-logo.svg",
-    "format": "SVG",
-    "disable": false,
-    "tags": [],
-    "brand": "RabbitMQ"
   },
   {
     "name": "RabbitMQ",
@@ -771,16 +771,12 @@
     "brand": "RabbitMQ"
   },
   {
-    "name": "Redis",
-    "path": "logos/redis-logo.svg",
+    "name": "RabbitMQ",
+    "path": "logos/rabbitmq-logo.svg",
     "format": "SVG",
     "disable": false,
-    "tags": [
-      "tech",
-      "software",
-      "database"
-    ],
-    "brand": "Redis"
+    "tags": [],
+    "brand": "RabbitMQ"
   },
   {
     "name": "Redis",
@@ -788,7 +784,6 @@
     "format": "SVG",
     "disable": false,
     "tags": [
-      "tech",
       "software",
       "database"
     ],
@@ -802,6 +797,18 @@
     "colorConfig": {
       "selector": "#text"
     }
+  },
+  {
+    "name": "Redis",
+    "path": "logos/redis-logo.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "tech",
+      "software",
+      "database"
+    ],
+    "brand": "Redis"
   },
   {
     "name": "Reebok",
@@ -938,7 +945,7 @@
   },
   {
     "name": "Signal",
-    "path": "logos/signal-logo.svg",
+    "path": "logos/signal.svg",
     "format": "SVG",
     "disable": false,
     "tags": [
@@ -958,7 +965,7 @@
   },
   {
     "name": "Signal",
-    "path": "logos/signal.svg",
+    "path": "logos/signal-logo.svg",
     "format": "SVG",
     "disable": false,
     "tags": [
