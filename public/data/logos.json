@@ -755,6 +755,22 @@
     "brand": "Python"
   },
   {
+    "name": "RabbitMQ",
+    "path": "logos/rabbitmq-logo.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [],
+    "brand": "RabbitMQ"
+  },
+  {
+    "name": "RabbitMQ",
+    "path": "logos/rabbitmq.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [],
+    "brand": "RabbitMQ"
+  },
+  {
     "name": "Redis",
     "path": "logos/redis-logo.svg",
     "format": "SVG",
