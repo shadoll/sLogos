@@ -34,6 +34,10 @@
       {
         "label": "Silver",
         "value": "#999"
+      },
+      {
+        "label": "Dark Grey",
+        "value": "#666"
       }
     ],
     "colorConfig": {
@@ -41,14 +45,51 @@
     }
   },
   {
+    "name": "Apple Rainbow",
+    "path": "logos/apple_rainbow.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "tech"
+    ],
+    "brand": "Apple"
+  },
+  {
+    "name": "Apple App Store",
+    "path": "logos/apple_app_store.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [],
+    "brand": "Apple"
+  },
+  {
     "name": "Apple Homekit",
-    "path": "logos/apple_homekit_logo.svg",
+    "path": "logos/apple_homekit.svg",
     "format": "SVG",
     "disable": false,
     "tags": [
       "automation",
       "smart home"
     ],
+    "brand": "Apple"
+  },
+  {
+    "name": "Apple Music",
+    "path": "logos/apple_music.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "music",
+      "streaming"
+    ],
+    "brand": "Apple"
+  },
+  {
+    "name": "Apple Books",
+    "path": "logos/apple_books.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [],
     "brand": "Apple"
   },
   {
