@@ -1,7 +1,8 @@
 <script>
-  import { onMount } from 'svelte';
+  import { onMount } from "svelte";
 
   export let logos = [];
+  export let displayLogos = [];
   export let theme;
   export let setTheme;
   export let viewMode;
@@ -16,6 +17,8 @@
   export let addTag;
   export let removeTag;
   export let getTagObj;
+  export let compactMode = false;
+  export let setCompactMode = () => {};
 
   function onInput(event) {
     searchQuery = event.target.value;
@@ -23,19 +26,27 @@
     // Update URL with search param
     const params = new URLSearchParams(window.location.search);
     if (searchQuery) {
-      params.set('search', searchQuery);
+      params.set("search", searchQuery);
     } else {
-      params.delete('search');
+      params.delete("search");
     }
-    const newUrl = window.location.pathname + (params.toString() ? '?' + params.toString() : '');
-    history.replaceState(null, '', newUrl);
+    const newUrl =
+      window.location.pathname +
+      (params.toString() ? "?" + params.toString() : "");
+    history.replaceState(null, "", newUrl);
   }
 </script>
 
 <header class="main-header">
   <div class="header-row">
     <h1>Logo Gallery</h1>
-    <span class="logo-count">{logos.length} images in gallery</span>
+    <span class="logo-count">
+      {#if displayLogos && logos && displayLogos.length === logos.length}
+        {logos.length} images in gallery
+      {:else}
+        {displayLogos ? displayLogos.length : 0} of {logos ? logos.length : 0} images displayed
+      {/if}
+    </span>
     <div class="theme-switcher">
       <div class="theme-switch-group">
         <button
@@ -117,9 +128,33 @@
         aria-label="Search logos"
       />
       {#if searchQuery}
-        <button class="clear-btn" on:click={() => { searchQuery = ''; setSearchQuery(''); const params = new URLSearchParams(window.location.search); params.delete('search'); const newUrl = window.location.pathname + (params.toString() ? '?' + params.toString() : ''); history.replaceState(null, '', newUrl); }} aria-label="Clear search">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M4 4L12 12M12 4L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <button
+          class="clear-btn"
+          on:click={() => {
+            searchQuery = "";
+            setSearchQuery("");
+            const params = new URLSearchParams(window.location.search);
+            params.delete("search");
+            const newUrl =
+              window.location.pathname +
+              (params.toString() ? "?" + params.toString() : "");
+            history.replaceState(null, "", newUrl);
+          }}
+          aria-label="Clear search"
+        >
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M4 4L12 12M12 4L4 12"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
           </svg>
         </button>
       {/if}
@@ -164,6 +199,47 @@
     </div>
     <div class="view-toggle">
       <button
+        class="compact-switch-btn"
+        aria-label="Toggle compact mode"
+        class:active={compactMode}
+        on:click={() => setCompactMode(!compactMode)}
+        title="Show only one logo per brand (compact mode)"
+      >
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M10 11L3 11"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+          />
+          <path
+            d="M10 16H3"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+          />
+          <path
+            d="M14 13.5L16.1 16L20 11"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M3 6L13.5 6M20 6L17.75 6"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+          />
+        </svg>
+      </button>
+      <button
         class:active={viewMode === "grid"}
         on:click={setGridView}
         aria-label="Grid view"
@@ -184,7 +260,8 @@
             x="11"
             y="11"
             width="6"
-            height="6" fill="currentColor"
+            height="6"
+            fill="currentColor"
           /></svg
         >
       </button>
@@ -237,5 +314,25 @@
   }
   .clear-btn:hover {
     color: #f44336;
+  }
+  .compact-switch-btn {
+    background: none;
+    border: none;
+    color: var(--color-text);
+    cursor: pointer;
+    padding: 0.3em 0.6em;
+    border-radius: 6px;
+    margin-right: 0.5em;
+    font-size: 1.1em;
+    display: inline-flex;
+    align-items: center;
+    transition:
+      background 0.2s,
+      color 0.2s;
+  }
+  .compact-switch-btn.active,
+  .compact-switch-btn:hover {
+    background: var(--color-accent, #4f8cff);
+    color: #fff;
   }
 </style>

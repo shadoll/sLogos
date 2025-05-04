@@ -226,7 +226,7 @@
     margin-left: 0.5em;
   }
   .brand-filter-btn:hover {
-    background: var(--color-accent, #4f8cff);
+    background: var(--color-accent-light, #e0f0ff);
     color: #fff;
   }
   .brand-filter-btn.common-btn {

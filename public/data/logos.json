@@ -664,28 +664,6 @@
     "brand": "PostgreSQL"
   },
   {
-    "name": "Privat24",
-    "path": "logos/privat24.svg",
-    "format": "SVG",
-    "disable": false,
-    "brand": "PrivatBank",
-    "tags": [
-      "bank",
-      "finance"
-    ]
-  },
-  {
-    "name": "Privat24 Bussiness",
-    "path": "logos/privat24bussiness.svg",
-    "format": "SVG",
-    "disable": false,
-    "brand": "PrivatBank",
-    "tags": [
-      "bank",
-      "finance"
-    ]
-  },
-  {
     "name": "Privatbank",
     "path": "logos/privatbank.svg",
     "format": "SVG",
@@ -699,6 +677,28 @@
   {
     "name": "Privatbank",
     "path": "logos/privatbank_logo.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "PrivatBank",
+    "tags": [
+      "bank",
+      "finance"
+    ]
+  },
+  {
+    "name": "Privat24",
+    "path": "logos/privat24.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "PrivatBank",
+    "tags": [
+      "bank",
+      "finance"
+    ]
+  },
+  {
+    "name": "Privat24 Bussiness",
+    "path": "logos/privat24bussiness.svg",
     "format": "SVG",
     "disable": false,
     "brand": "PrivatBank",

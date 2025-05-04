@@ -9,6 +9,7 @@
   let searchQuery = "";
   let logos = [];
   let filteredLogos = [];
+  let displayLogos = [];
   let theme = "system";
   let mq;
   let allTags = [];
@@ -16,9 +17,15 @@
   let tagDropdownOpen = false;
   let showModal = false;
   let selectedLogo = null;
+  let compactMode = false;
 
   function setSearchQuery(val) {
     searchQuery = val;
+  }
+
+  function setCompactMode(val) {
+    compactMode = val;
+    localStorage.setItem("compactMode", String(val));
   }
 
   // Load logos from JSON file with cache busting
@@ -72,6 +79,16 @@
     if (searchParam) {
       searchQuery = searchParam;
     }
+
+    // Restore view mode and compact mode from localStorage
+    const savedViewMode = localStorage.getItem("viewMode");
+    if (savedViewMode === "grid" || savedViewMode === "list") {
+      viewMode = savedViewMode;
+    }
+    const savedCompact = localStorage.getItem("compactMode");
+    if (savedCompact === "true" || savedCompact === "false") {
+      setCompactMode(savedCompact === "true");
+    }
   });
 
   // Make sure to apply theme whenever it changes
@@ -104,6 +121,11 @@
     return matchesSearch && matchesTags;
   });
 
+  $: displayLogos = (!searchQuery && compactMode)
+    ? filteredLogos.filter((logo, idx, arr) =>
+        arr.findIndex(l => (l.brand || l.name) === (logo.brand || logo.name)) === idx)
+    : filteredLogos;
+
   // Compute the effective theme for children
   $: effectiveTheme =
     theme === "system"
@@ -115,11 +137,13 @@
   function setGridView() {
     console.log("Setting view mode to: grid");
     viewMode = "grid";
+    localStorage.setItem("viewMode", "grid");
   }
 
   function setListView() {
     console.log("Setting view mode to: list");
     viewMode = "list";
+    localStorage.setItem("viewMode", "list");
   }
 
   function copyUrl(logoPath) {
@@ -257,7 +281,8 @@
 
 <main class="container app-flex">
   <Header
-    {logos}
+    logos={logos}
+    displayLogos={displayLogos}
     {theme}
     {setTheme}
     {viewMode}
@@ -275,6 +300,8 @@
     {getTagObj}
     {closeDropdown}
     {filteredLogos}
+    {compactMode}
+    setCompactMode={setCompactMode}
   />
 
   <Preview
@@ -288,20 +315,22 @@
   <div class="logos-container main-content">
     {#if viewMode === "grid"}
       <Grid
-        logos={filteredLogos}
+        logos={displayLogos}
         onCopy={copyUrl}
         onDownload={downloadLogo}
         theme={effectiveTheme}
         setSearchQuery={setSearchQuery}
         on:openPreview={(e) => openPreview(e.detail)}
+        {compactMode}
       />
     {:else}
       <List
-        logos={filteredLogos}
+        logos={displayLogos}
         onCopy={copyUrl}
         onDownload={downloadLogo}
         setSearchQuery={setSearchQuery}
         on:openPreview={(e) => openPreview(e.detail)}
+        {compactMode}
       />
     {/if}
   </div>
