@@ -697,7 +697,7 @@
     ]
   },
   {
-    "name": "Privatbank Logo",
+    "name": "Privatbank",
     "path": "logos/privatbank_logo.svg",
     "format": "SVG",
     "disable": false,
@@ -753,6 +753,39 @@
       "programming"
     ],
     "brand": "Python"
+  },
+  {
+    "name": "Redis",
+    "path": "logos/redis-logo.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "tech",
+      "software",
+      "database"
+    ],
+    "brand": "Redis"
+  },
+  {
+    "name": "Redis",
+    "path": "logos/redis.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "tech",
+      "software",
+      "database"
+    ],
+    "brand": "Redis",
+    "colors": [
+      {
+        "label": "Grey",
+        "value": "#636466"
+      }
+    ],
+    "colorConfig": {
+      "selector": "#text"
+    }
   },
   {
     "name": "Reebok",
