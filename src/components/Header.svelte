@@ -1,4 +1,6 @@
 <script>
+  import { onMount } from 'svelte';
+
   export let logos = [];
   export let theme;
   export let setTheme;
@@ -6,6 +8,7 @@
   export let setGridView;
   export let setListView;
   export let searchQuery;
+  export let setSearchQuery;
   export let allTags = [];
   export let selectedTags = [];
   export let tagDropdownOpen;
@@ -16,6 +19,16 @@
 
   function onInput(event) {
     searchQuery = event.target.value;
+    setSearchQuery(searchQuery);
+    // Update URL with search param
+    const params = new URLSearchParams(window.location.search);
+    if (searchQuery) {
+      params.set('search', searchQuery);
+    } else {
+      params.delete('search');
+    }
+    const newUrl = window.location.pathname + (params.toString() ? '?' + params.toString() : '');
+    history.replaceState(null, '', newUrl);
   }
 </script>
 
@@ -104,7 +117,7 @@
         aria-label="Search logos"
       />
       {#if searchQuery}
-        <button class="clear-btn" on:click={() => searchQuery = ''} aria-label="Clear search">
+        <button class="clear-btn" on:click={() => { searchQuery = ''; setSearchQuery(''); const params = new URLSearchParams(window.location.search); params.delete('search'); const newUrl = window.location.pathname + (params.toString() ? '?' + params.toString() : ''); history.replaceState(null, '', newUrl); }} aria-label="Clear search">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M4 4L12 12M12 4L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
           </svg>

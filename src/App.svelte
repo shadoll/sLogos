@@ -17,6 +17,10 @@
   let showModal = false;
   let selectedLogo = null;
 
+  function setSearchQuery(val) {
+    searchQuery = val;
+  }
+
   // Load logos from JSON file with cache busting
   onMount(async () => {
     try {
@@ -61,6 +65,13 @@
 
     // Open preview if URL contains anchor
     openLogoByAnchor(window.location.hash);
+
+    // On mount, check for search param in URL and set searchQuery
+    const params = new URLSearchParams(window.location.search);
+    const searchParam = params.get("search");
+    if (searchParam) {
+      searchQuery = searchParam;
+    }
   });
 
   // Make sure to apply theme whenever it changes
@@ -253,6 +264,7 @@
     {setGridView}
     {setListView}
     bind:searchQuery
+    setSearchQuery={setSearchQuery}
     {allTags}
     {selectedTags}
     {tagDropdownOpen}
