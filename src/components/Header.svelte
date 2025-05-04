@@ -13,6 +13,10 @@
   export let addTag;
   export let removeTag;
   export let getTagObj;
+
+  function onInput(event) {
+    searchQuery = event.target.value;
+  }
 </script>
 
 <header class="main-header">
@@ -96,7 +100,16 @@
         type="text"
         placeholder="Search logos..."
         bind:value={searchQuery}
+        on:input={onInput}
+        aria-label="Search logos"
       />
+      {#if searchQuery}
+        <button class="clear-btn" on:click={() => searchQuery = ''} aria-label="Clear search">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 4L12 12M12 4L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      {/if}
     </div>
     <div class="tag-filter">
       {#each selectedTags as tagText}
@@ -158,8 +171,7 @@
             x="11"
             y="11"
             width="6"
-            height="6"
-            fill="currentColor"
+            height="6" fill="currentColor"
           /></svg
         >
       </button>
@@ -186,3 +198,31 @@
     </div>
   </div>
 </header>
+
+<style>
+  .search-bar {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .search-bar input {
+    padding-right: 2em;
+  }
+  .clear-btn {
+    position: absolute;
+    right: 0.5em;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    color: #888;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+  .clear-btn:hover {
+    color: #f44336;
+  }
+</style>

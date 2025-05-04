@@ -82,9 +82,8 @@
   ).sort((a, b) => a.text.localeCompare(b.text));
 
   $: filteredLogos = logos.filter((logo) => {
-    const matchesSearch = logo.name
-      .toLowerCase()
-      .includes(searchQuery.toLowerCase());
+    const matchesSearch = logo.name.toLowerCase().includes(searchQuery.toLowerCase())
+      || (logo.brand && logo.brand.toLowerCase().includes(searchQuery.toLowerCase()));
     const matchesTags =
       !selectedTags.length ||
       (logo.tags &&
