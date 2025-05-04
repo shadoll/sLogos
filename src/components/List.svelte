@@ -6,6 +6,7 @@
   import { onMount, onDestroy } from "svelte";
 
   export let logos = [];
+  export let allLogos = [];
   export let onCopy;
   export let onDownload;
   export let setSearchQuery;
@@ -167,6 +168,9 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
             <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M20 4H4v2l6 6v8.5l4-2.5v-6l6-6V4z"/>
           </svg>
+          {#if allLogos && allLogos.filter(l => l.brand === logo.brand).length > 1}
+            <span class="brand-count-index">{allLogos.filter(l => l.brand === logo.brand).length}</span>
+          {/if}
         </button>
         <Actions {logo} {onCopy} {onDownload} />
       </div>
@@ -230,10 +234,10 @@
     color: #fff;
   }
   .brand-filter-btn.common-btn {
-    background: var(--color-accent, #4f8cff);
+    background: var(--secondary-color);
     color: #fff;
     border: none;
-    padding: 0.4em 0.6em;
+    padding: 0.4em 0.8em 0.4em 0.3em;
     border-radius: 6px;
     display: inline-flex;
     align-items: center;
@@ -242,10 +246,17 @@
     transition: background 0.2s, color 0.2s;
     margin-left: 0.5em;
     box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    position: relative;
   }
   .brand-filter-btn.common-btn:hover {
     background: var(--color-accent-dark, #3576c7);
     color: #fff;
+  }
+  .brand-count-index {
+    position: absolute;
+    font-size: 0.85em;
+    bottom: 0.1em;
+    right: 0.3em;
   }
   .logo-list-title-row {
     display: flex;

@@ -9,6 +9,7 @@
   export let onCopy;
   export let onDownload;
   export let setSearchQuery;
+  export let allLogos = [];
 
   let showModal = false;
   let selectedLogo = null;
@@ -73,6 +74,9 @@ $: getLogoThemeColor = logo => getDefaultLogoColor(logo.colors, theme);
           <h3>{logo.name}</h3>
           <button class="brand-filter-btn" title="Filter by brand" on:click={() => setSearchQuery(logo.brand)}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M20 4H4v2l6 6v8.5l4-2.5v-6l6-6V4z"/></svg>
+            {#if allLogos && allLogos.filter(l => l.brand === logo.brand).length > 1}
+              <span class="brand-count">{allLogos.filter(l => l.brand === logo.brand).length}</span>
+            {/if}
           </button>
         </div>
         <div class="format-row">
@@ -161,14 +165,21 @@ $: getLogoThemeColor = logo => getDefaultLogoColor(logo.colors, theme);
     border: none;
     color: var(--color-text);
     cursor: pointer;
-    padding: 0.2em;
+    padding: 0.3em 0.8em 0.1em 0.3em;
     border-radius: 4px;
     transition: background 0.2s, color 0.2s;
     z-index: 2;
     margin-left: 0.5em;
+    position: relative;
   }
   .brand-filter-btn:hover {
     background: var(--color-accent, #4f8cff);
     color: #fff;
+  }
+
+  .brand-count {
+    font-size: 0.85em;
+    position: absolute;
+    bottom: 0;
   }
 </style>

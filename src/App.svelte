@@ -316,16 +316,18 @@
     {#if viewMode === "grid"}
       <Grid
         logos={displayLogos}
+        allLogos={logos}
         onCopy={copyUrl}
         onDownload={downloadLogo}
-        theme={effectiveTheme}
         setSearchQuery={setSearchQuery}
+        theme={effectiveTheme}
         on:openPreview={(e) => openPreview(e.detail)}
         {compactMode}
       />
     {:else}
       <List
         logos={displayLogos}
+        allLogos={logos}
         onCopy={copyUrl}
         onDownload={downloadLogo}
         setSearchQuery={setSearchQuery}
