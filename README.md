@@ -16,4 +16,6 @@ All project code was created by AI (GitHub Copilot) with my coaching, explanatio
 
 ## License
 
-This project is MIT licensed. Please note that the logos themselves are property of their respective owners and should be used according to their brand guidelines.
+This project is MIT licensed. See [LICENSE](./LICENSE) for details.
+
+**Note:** The logos themselves are the property of their respective owners and are provided here for informational and illustrative purposes only. Usage of these logos must comply with each brand's guidelines and does not imply endorsement or affiliation.
