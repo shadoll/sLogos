@@ -361,6 +361,18 @@
     ]
   },
   {
+    "name": "Gmail",
+    "path": "logos/gmail.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "web",
+      "software",
+      "email"
+    ],
+    "brand": "Google"
+  },
+  {
     "name": "Guinness",
     "path": "logos/guinness.svg",
     "format": "SVG",
@@ -532,6 +544,30 @@
       "delivery"
     ],
     "brand": "Meest"
+  },
+  {
+    "name": "Microsoft Office Outlook",
+    "path": "logos/microsoft_office_outlook.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "software",
+      "office",
+      "email"
+    ],
+    "brand": "Microsoft"
+  },
+  {
+    "name": "Microsoft Outlook",
+    "path": "logos/microsoft_outlook.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "software",
+      "web",
+      "email"
+    ],
+    "brand": "Microsoft"
   },
   {
     "name": "Mikrotik",
@@ -1120,6 +1156,18 @@
       "linux"
     ],
     "brand": "Ubuntu"
+  },
+  {
+    "name": "@UKR.NET Mail",
+    "path": "logos/ukrnet.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "web",
+      "software",
+      "email"
+    ],
+    "brand": "Ukrnet"
   },
   {
     "name": "Ukrposhta",
