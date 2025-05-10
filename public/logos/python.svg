@@ -25,18 +25,18 @@
    <g id="logo">
       <path id="path1948"
          d="M57.51,4.898c-4.583,0.021 -8.961,0.412 -12.812,1.094c-11.347,2.004 -13.407,6.2 -13.407,13.937l0,10.219l26.813,-0l-0,3.406l-36.875,0c-7.793,0 -14.616,4.684 -16.75,13.594c-2.462,10.213 -2.571,16.586 -0,27.25c1.906,7.938 6.457,13.594 14.25,13.594l9.219,-0l-0,-12.25c-0,-8.85 7.657,-16.657 16.75,-16.657l26.781,0c7.455,0 13.406,-6.138 13.406,-13.625l0,-25.531c0,-7.266 -6.13,-12.725 -13.406,-13.937c-4.606,-0.767 -9.385,-1.115 -13.969,-1.094Zm-14.5,8.219c2.77,-0 5.031,2.298 5.031,5.125c0,2.816 -2.261,5.093 -5.031,5.093c-2.779,0 -5.031,-2.277 -5.031,-5.093c-0,-2.827 2.252,-5.125 5.031,-5.125Z"
-         style="fill:url(#_Linear1);fill-rule:nonzero;" />
+         style="fill:url(#_LinearGradientMain_78364);fill-rule:nonzero;" />
       <path id="path1950"
          d="M88.229,33.554l-0,11.906c-0,9.231 -7.826,17 -16.75,17l-26.781,0c-7.336,0 -13.407,6.279 -13.407,13.625l0,25.532c0,7.266 6.319,11.54 13.407,13.625c8.487,2.495 16.626,2.946 26.781,-0c6.75,-1.955 13.406,-5.888 13.406,-13.625l0,-10.219l-26.781,-0l-0,-3.406l40.187,-0c7.793,-0 10.697,-5.436 13.407,-13.594c2.799,-8.399 2.68,-16.476 -0,-27.25c-1.926,-7.757 -5.604,-13.594 -13.407,-13.594l-10.062,0Zm-15.063,64.656c2.78,0 5.032,2.278 5.032,5.094c-0,2.827 -2.252,5.125 -5.032,5.125c-2.769,0 -5.031,-2.298 -5.031,-5.125c0,-2.816 2.262,-5.094 5.031,-5.094Z"
-         style="fill:url(#_Linear2);fill-rule:nonzero;" />
+         style="fill:url(#_LinearGradientMain_48957);fill-rule:nonzero;" />
    </g>
    <defs>
-      <linearGradient id="_Linear1" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse"
+      <linearGradient id="_LinearGradientMain_78364" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse"
          gradientTransform="matrix(61.3261,53.2723,-53.2723,61.3261,2.59137,4.89705)">
          <stop offset="0" style="stop-color:#5a9fd4;stop-opacity:1" />
          <stop offset="1" style="stop-color:#306998;stop-opacity:1" />
       </linearGradient>
-      <linearGradient id="_Linear2" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse"
+      <linearGradient id="_LinearGradientMain_48957" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse"
          gradientTransform="matrix(-21.8995,-31.2832,31.2832,-21.8995,72.5221,102.445)">
          <stop offset="0" style="stop-color:#ffd43b;stop-opacity:1" />
          <stop offset="1" style="stop-color:#ffe873;stop-opacity:1" />
