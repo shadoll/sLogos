@@ -557,7 +557,16 @@
       "electronics",
       "appliances"
     ],
-    "brand": "LG"
+    "brand": "LG",
+    "colors": [
+      {
+        "label": "Grey",
+        "value": "#6b6c6b"
+      }
+    ],
+    "colorConfig": {
+      "target": "#text"
+    }
   },
   {
     "name": "Lifecell",
@@ -818,6 +827,17 @@
       "fuel"
     ],
     "brand": "Okko"
+  },
+  {
+    "name": "PHP",
+    "path": "logos/php.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "programming",
+      "language"
+    ],
+    "brand": "Php"
   },
   {
     "name": "PostgreSQL",
