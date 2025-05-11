@@ -158,6 +158,17 @@
     "brand": "BMW"
   },
   {
+    "name": "Chromium",
+    "path": "logos/chromium.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "web",
+      "browser"
+    ],
+    "brand": "Chromium"
+  },
+  {
     "name": "Dalnoboy Service",
     "path": "logos/dalnoboy-service.svg",
     "format": "SVG",
@@ -267,6 +278,17 @@
     "brand": "Fiat"
   },
   {
+    "name": "Firefox",
+    "path": "logos/firefox.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "web",
+      "browser"
+    ],
+    "brand": "Firefox"
+  },
+  {
     "name": "Ford",
     "path": "logos/ford.svg",
     "format": "SVG",
@@ -369,6 +391,28 @@
       "web",
       "software",
       "email"
+    ],
+    "brand": "Google"
+  },
+  {
+    "name": "Google Chrome",
+    "path": "logos/google_chrome.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "web",
+      "browser"
+    ],
+    "brand": "Google"
+  },
+  {
+    "name": "Google Chrome",
+    "path": "logos/google_chrome_icon.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "web",
+      "browser"
     ],
     "brand": "Google"
   },
@@ -824,7 +868,8 @@
     "disable": false,
     "tags": [
       "software",
-      "programming"
+      "programming",
+      "language"
     ],
     "brand": "Python"
   },
@@ -835,7 +880,8 @@
     "disable": false,
     "tags": [
       "software",
-      "programming"
+      "programming",
+      "language"
     ],
     "brand": "Python"
   },
@@ -1113,6 +1159,18 @@
       "transport"
     ],
     "brand": "Suzuki"
+  },
+  {
+    "name": "Swift",
+    "path": "logos/swift.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "software",
+      "programming",
+      "language"
+    ],
+    "brand": "Apple"
   },
   {
     "name": "Tesla",
