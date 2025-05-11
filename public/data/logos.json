@@ -373,6 +373,42 @@
     "brand": "GitLab"
   },
   {
+    "name": "Go",
+    "path": "logos/go.dev.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "programming",
+      "language"
+    ],
+    "brand": "Go",
+    "colors": [
+      {
+        "label": "Aqua",
+        "value": "#2DBCAF"
+      },
+      {
+        "label": "Blue",
+        "value": "#00ACD7"
+      },
+      {
+        "label": "Fuchsia",
+        "value": "#CE3262"
+      },
+      {
+        "label": "LightBlue",
+        "value": "#5DC9E1"
+      },
+      {
+        "label": "Yellow",
+        "value": "#FDDD00"
+      }
+    ],
+    "colorConfig": {
+      "target": "g"
+    }
+  },
+  {
     "name": "Google",
     "path": "logos/google.svg",
     "format": "SVG",
@@ -1166,7 +1202,6 @@
     "format": "SVG",
     "disable": false,
     "tags": [
-      "software",
       "programming",
       "language"
     ],
