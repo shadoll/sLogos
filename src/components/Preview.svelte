@@ -2,6 +2,7 @@
   import { onMount, onDestroy, createEventDispatcher } from 'svelte';
   import InlineSvg from './InlineSvg.svelte';
   import { getDefaultLogoColor, getThemeColor } from '../utils/colorTheme.js';
+  import { generateColorSetCircle } from "../utils/colorCircles.js";
 
   export let show = false;
   export let logo = null;
@@ -165,16 +166,13 @@
                 on:click|stopPropagation={() => logo._activeColor = undefined}
                 on:keydown|stopPropagation={(e) => (e.key === 'Enter' || e.key === ' ') && (logo._activeColor = undefined)}
               >
-                <svg width="100%" height="100%" viewBox="0 0 800 800" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
-                  <circle cx="400" cy="400" r="400" style="fill:#d6d6d6;"/>
-                  <path d="M682.843,117.843l-565.686,565.685c-156.209,-156.21 -156.209,-409.476 0,-565.685c156.21,-156.21 409.476,-156.21 565.686,-0Z" style="fill:#33363f;"/>
-                </svg>
+                <svg width="100%" height="100%" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg"><path d="M400,0c220.766,0 400,179.234 400,400c0,220.766 -179.234,400 -400,400c-220.766,0 -400,-179.234 -400,-400c0,-220.766 179.234,-400 400,-400Zm-251.006,583.082l434.088,-434.088c-51.359,-37.541 -114.652,-59.71 -183.082,-59.71c-171.489,0 -310.716,139.227 -310.716,310.716c0,68.43 22.169,131.723 59.71,183.082Zm502.495,-365.501l-433.908,433.908c51.241,37.248 114.283,59.227 182.419,59.227c171.489,-0 310.716,-139.227 310.716,-310.716c-0,-68.136 -21.979,-131.178 -59.227,-182.419Z" fill="#33363f"/></svg>
               </span>
               {#if logo.sets}
                 {#each Object.entries(logo.sets) as [setName, setConfig], i}
                   <span
                     class="color-circle set-circle"
-                    title={`Color Set ${i + 1}`}
+                    title={`Color Set ${i + 1}: ${setName}`}
                     tabindex="0"
                     role="button"
                     on:click|stopPropagation={() => {
@@ -187,8 +185,9 @@
                         logo._activeSet = setName;
                       }
                     }}
+                    style="padding: 0; overflow: hidden;"
                   >
-                    {i + 1}
+                    {@html generateColorSetCircle(logo.colors, setConfig)}
                   </span>
                 {/each}
               {:else}
