@@ -7,7 +7,8 @@
     "dev": "rollup -c -w",
     "start": "sirv public --host 0.0.0.0 --dev --single",
     "scan-logos": "node scripts/scanLogos.js",
-    "generate-favicons": "node scripts/generateFavicons.js"
+    "generate-favicons": "node scripts/generateFavicons.js",
+    "convert-colors": "node scripts/convertColorsFormat.js"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.0.0",

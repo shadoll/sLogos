@@ -98,6 +98,10 @@
               ? logo._activeColor || getLogoThemeColor(logo)
               : undefined}
             colorConfig={logo.colors ? logo.colorConfig : undefined}
+            targets={logo.targets}
+            sets={logo.sets}
+            colors={logo.colors}
+            activeSet={logo._activeSet}
             alt={logo.name}
           />
         {:else}
@@ -142,20 +146,43 @@
                 />
               </svg>
             </span>
-            {#each logo.colors as colorObj}
-              <span
-                class="color-circle"
-                title={colorObj.label}
-                style={`background:${colorObj.value}`}
-                tabindex="0"
-                role="button"
-                on:click|stopPropagation={() =>
-                  (logo._activeColor = colorObj.value)}
-                on:keydown|stopPropagation={(e) =>
-                  (e.key === "Enter" || e.key === " ") &&
-                  (logo._activeColor = colorObj.value)}
-              ></span>
-            {/each}
+            {#if logo.sets}
+              {#each Object.entries(logo.sets) as [setName, setConfig], i}
+                <span
+                  class="color-circle set-circle"
+                  title={`Color Set ${i + 1}`}
+                  tabindex="0"
+                  role="button"
+                  on:click|stopPropagation={() => {
+                    logo._activeColor = Object.values(logo.colors)[i % Object.keys(logo.colors).length];
+                    logo._activeSet = setName;
+                  }}
+                  on:keydown|stopPropagation={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      logo._activeColor = Object.values(logo.colors)[i % Object.keys(logo.colors).length];
+                      logo._activeSet = setName;
+                    }
+                  }}
+                >
+                  {i + 1}
+                </span>
+              {/each}
+            {:else}
+              {#each Object.entries(logo.colors) as [colorName, colorValue]}
+                <span
+                  class="color-circle"
+                  title={colorName.replace('_', ' ')}
+                  style={`background:${colorValue}`}
+                  tabindex="0"
+                  role="button"
+                  on:click|stopPropagation={() =>
+                    (logo._activeColor = colorValue)}
+                  on:keydown|stopPropagation={(e) =>
+                    (e.key === "Enter" || e.key === " ") &&
+                    (logo._activeColor = colorValue)}
+                ></span>
+              {/each}
+            {/if}
           </div>
         {/if}
       </div>
@@ -270,5 +297,20 @@
     align-items: center;
     justify-content: space-between;
     gap: 0.5em;
+  }
+  .set-circle {
+    background: var(--color-border);
+    color: var(--color-text);
+    font-size: 10px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Dark theme variation */
+  :global(.dark-theme) .set-circle {
+    background: #444;
+    color: #eee;
   }
 </style>

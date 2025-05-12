@@ -6,7 +6,7 @@ CONTAINER_NAME = logo-gallery
 DEV_PORT = 5006
 
 # Main targets
-.PHONY: all build start stop restart logs clean scan-logos dev rebuild favicon deps-favicon build-with-favicons sync-packages
+.PHONY: all build start stop restart logs clean scan-logos dev rebuild favicon deps-favicon build-with-favicons sync-packages convert-colors
 
 all: build start
 
@@ -49,6 +49,12 @@ scan-logos:
 	@echo "Scanning logos directory and updating logos.json for development..."
 	$(DOCKER_COMPOSE) -f compose.dev.yml run --rm slogos-dev npm run scan-logos
 	@echo "Logos have been updated - refresh the browser to see changes"
+
+# Convert logo colors format from array to object
+convert-colors:
+	@echo "Converting logo colors format in logos.json..."
+	$(DOCKER_COMPOSE) -f compose.dev.yml run --rm slogos-dev npm run convert-colors
+	@echo "Color format conversion complete"
 
 # Clean up build artifacts and temporary files
 clean:

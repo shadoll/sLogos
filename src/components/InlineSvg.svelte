@@ -3,6 +3,10 @@
   export let path;
   export let color;
   export let colorConfig = { target: "path", attribute: "fill" };
+  export let targets = null;
+  export let sets = null;
+  export let activeSet = null;
+  export let colors = null; // Add colors object for access to all color values
   export const alt = "";
 
   let svgHtml = "";
@@ -54,36 +58,70 @@
     });
     // Remove all <style> elements
     styleEls.forEach((styleEl) => styleEl.remove());
-    let targets;
-    if (colorConfig.selector) {
-      targets = doc.querySelectorAll(colorConfig.selector);
-    } else if (colorConfig.target) {
-      targets = doc.querySelectorAll(colorConfig.target);
-    } else {
-      targets = [];
-    }
-    targets.forEach((el) => {
-      if (colorConfig.attribute) {
-        // Legacy: force a single attribute
-        el.setAttribute(colorConfig.attribute, color);
-      } else {
-        // Always override fill and stroke unless they are 'none'
-        if (el.hasAttribute("fill") && el.getAttribute("fill") !== "none") {
-          el.setAttribute("fill", color);
-        }
-        if (el.hasAttribute("stroke") && el.getAttribute("stroke") !== "none") {
-          el.setAttribute("stroke", color);
-        }
-        if (!el.hasAttribute("fill") && !el.hasAttribute("stroke")) {
-          // If neither, prefer fill
-          el.setAttribute("fill", color);
+    // Handle the new format with targets and sets if available
+    if (targets && sets && activeSet && sets[activeSet]) {
+      // Get the color assignments from the active set
+      const colorAssignments = sets[activeSet];
+
+      // Apply each target-color pair
+      for (const [targetName, colorName] of Object.entries(colorAssignments)) {
+        if (targets[targetName] && colors && colors[colorName]) {
+          // Get the selector for this target
+          const selector = targets[targetName];
+          const targetElements = doc.querySelectorAll(selector);
+          // Get the actual color value for this target
+          const targetColor = colors[colorName];
+
+          // Apply the color to all elements matching this selector
+          targetElements.forEach(el => {
+            // Always override fill and stroke unless they are 'none'
+            if (el.hasAttribute("fill") && el.getAttribute("fill") !== "none") {
+              el.setAttribute("fill", targetColor);
+            }
+            if (el.hasAttribute("stroke") && el.getAttribute("stroke") !== "none") {
+              el.setAttribute("stroke", targetColor);
+            }
+            if (!el.hasAttribute("fill") && !el.hasAttribute("stroke")) {
+              // If neither, prefer fill
+              el.setAttribute("fill", targetColor);
+            }
+          });
         }
       }
-    });
+    }
+    // Otherwise, use the legacy format for backward compatibility
+    else {
+      let targetElements;
+      if (colorConfig.selector) {
+        targetElements = doc.querySelectorAll(colorConfig.selector);
+      } else if (colorConfig.target) {
+        targetElements = doc.querySelectorAll(colorConfig.target);
+      } else {
+        targetElements = [];
+      }
+      targetElements.forEach((el) => {
+        if (colorConfig.attribute) {
+          // Legacy: force a single attribute
+          el.setAttribute(colorConfig.attribute, color);
+        } else {
+          // Always override fill and stroke unless they are 'none'
+          if (el.hasAttribute("fill") && el.getAttribute("fill") !== "none") {
+            el.setAttribute("fill", color);
+          }
+          if (el.hasAttribute("stroke") && el.getAttribute("stroke") !== "none") {
+            el.setAttribute("stroke", color);
+          }
+          if (!el.hasAttribute("fill") && !el.hasAttribute("stroke")) {
+            // If neither, prefer fill
+            el.setAttribute("fill", color);
+          }
+        }
+      });
+    }
     svgHtml = doc.documentElement.outerHTML;
   }
 
-  $: path, color, colorConfig, fetchAndColorSvg();
+  $: path, color, colorConfig, targets, sets, activeSet, colors, fetchAndColorSvg();
 </script>
 
 {@html svgHtml}

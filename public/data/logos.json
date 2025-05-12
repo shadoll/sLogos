@@ -30,18 +30,23 @@
     "tags": [
       "tech"
     ],
-    "colors": [
-      {
-        "label": "Silver",
-        "value": "#999"
-      },
-      {
-        "label": "Dark Grey",
-        "value": "#666"
-      }
-    ],
+    "colors": {
+      "silver": "#999",
+      "dark_grey": "#666"
+    },
     "colorConfig": {
       "target": "path"
+    },
+    "targets": {
+      "main": "path"
+    },
+    "sets": {
+      "set_1": {
+        "main": "silver"
+      },
+      "set_2": {
+        "main": "dark_grey"
+      }
     }
   },
   {
@@ -100,16 +105,21 @@
     "tags": [
       "tech"
     ],
-    "colors": [
-      {
-        "label": "Dark Blue",
-        "value": "#080225"
-      }
-    ],
+    "colors": {
+      "dark_blue": "#080225"
+    },
     "colorConfig": {
       "target": "g"
     },
-    "brand": "arm"
+    "brand": "arm",
+    "targets": {
+      "main": "g"
+    },
+    "sets": {
+      "set_1": {
+        "main": "dark_blue"
+      }
+    }
   },
   {
     "name": "ATB",
@@ -200,12 +210,9 @@
       "garage"
     ],
     "brand": "Dalnoboy Service",
-    "colors": [
-      {
-        "label": "Orange",
-        "value": "#ee7800"
-      }
-    ]
+    "colors": {
+      "orange": "#ee7800"
+    }
   },
   {
     "name": "Debian",
@@ -241,14 +248,19 @@
       "container"
     ],
     "brand": "Docker",
-    "colors": [
-      {
-        "label": "Blue",
-        "value": "#1d63ed"
-      }
-    ],
+    "colors": {
+      "blue": "#1d63ed"
+    },
     "colorConfig": {
       "target": "path"
+    },
+    "targets": {
+      "main": "path"
+    },
+    "sets": {
+      "set_1": {
+        "main": "blue"
+      }
     }
   },
   {
@@ -261,19 +273,23 @@
       "automobile",
       "transport"
     ],
-    "colors": [
-      {
-        "label": "Grey",
-        "value": "#2b2a29",
-        "theme": "light"
-      },
-      {
-        "label": "Red",
-        "value": "#e22b28"
-      }
-    ],
+    "colors": {
+      "grey": "#2b2a29",
+      "red": "#e22b28"
+    },
     "colorConfig": {
       "selector": "#text"
+    },
+    "targets": {
+      "selector_1": "#text"
+    },
+    "sets": {
+      "set_1": {
+        "selector_1": "grey"
+      },
+      "set_2": {
+        "selector_1": "red"
+      }
     }
   },
   {
@@ -353,14 +369,19 @@
       "software"
     ],
     "brand": "GitHub",
-    "colors": [
-      {
-        "label": "Dark Grey",
-        "value": "#24292f"
-      }
-    ],
+    "colors": {
+      "dark_grey": "#24292f"
+    },
     "colorConfig": {
       "target": "path"
+    },
+    "targets": {
+      "main": "path"
+    },
+    "sets": {
+      "set_1": {
+        "main": "dark_grey"
+      }
     }
   },
   {
@@ -373,14 +394,19 @@
       "software"
     ],
     "brand": "GitHub",
-    "colors": [
-      {
-        "label": "Dark Grey",
-        "value": "#24292f"
-      }
-    ],
+    "colors": {
+      "dark_grey": "#24292f"
+    },
     "colorConfig": {
       "target": "path"
+    },
+    "targets": {
+      "main": "path"
+    },
+    "sets": {
+      "set_1": {
+        "main": "dark_grey"
+      }
     }
   },
   {
@@ -404,30 +430,35 @@
       "language"
     ],
     "brand": "Go",
-    "colors": [
-      {
-        "label": "Aqua",
-        "value": "#2DBCAF"
-      },
-      {
-        "label": "Blue",
-        "value": "#00ACD7"
-      },
-      {
-        "label": "Fuchsia",
-        "value": "#CE3262"
-      },
-      {
-        "label": "LightBlue",
-        "value": "#5DC9E1"
-      },
-      {
-        "label": "Yellow",
-        "value": "#FDDD00"
-      }
-    ],
+    "colors": {
+      "aqua": "#2DBCAF",
+      "blue": "#00ACD7",
+      "fuchsia": "#CE3262",
+      "lightblue": "#5DC9E1",
+      "yellow": "#FDDD00"
+    },
     "colorConfig": {
       "target": "g"
+    },
+    "targets": {
+      "main": "g"
+    },
+    "sets": {
+      "set_1": {
+        "main": "aqua"
+      },
+      "set_2": {
+        "main": "blue"
+      },
+      "set_3": {
+        "main": "fuchsia"
+      },
+      "set_4": {
+        "main": "lightblue"
+      },
+      "set_5": {
+        "main": "yellow"
+      }
     }
   },
   {
@@ -560,14 +591,19 @@
       "automobile",
       "transport"
     ],
-    "colors": [
-      {
-        "label": "Green",
-        "value": "#424d07"
-      }
-    ],
+    "colors": {
+      "green": "#424d07"
+    },
     "colorConfig": {
       "target": "g"
+    },
+    "targets": {
+      "main": "g"
+    },
+    "sets": {
+      "set_1": {
+        "main": "green"
+      }
     }
   },
   {
@@ -602,14 +638,19 @@
       "appliances"
     ],
     "brand": "LG",
-    "colors": [
-      {
-        "label": "Grey",
-        "value": "#6b6c6b"
-      }
-    ],
+    "colors": {
+      "grey": "#6b6c6b"
+    },
     "colorConfig": {
       "target": "#text"
+    },
+    "targets": {
+      "main": "#text"
+    },
+    "sets": {
+      "set_1": {
+        "main": "grey"
+      }
     }
   },
   {
@@ -644,16 +685,21 @@
       "software",
       "messaging"
     ],
-    "colors": [
-      {
-        "label": "Denim",
-        "value": "#1e325c"
-      }
-    ],
+    "colors": {
+      "denim": "#1e325c"
+    },
     "colorConfig": {
       "target": "g"
     },
-    "brand": "Mattermost"
+    "brand": "Mattermost",
+    "targets": {
+      "main": "g"
+    },
+    "sets": {
+      "set_1": {
+        "main": "denim"
+      }
+    }
   },
   {
     "name": "McDonald's",
@@ -739,30 +785,32 @@
       "bank",
       "finance"
     ],
-    "colors": [
-      {
-        "label": "Black",
-        "value": "#000"
-      },
-      {
-        "label": "Yellow",
-        "value": "#f2bd2b"
-      }
-    ],
+    "colors": {
+      "black": "#000",
+      "yellow": "#f2bd2b",
+      "white": "#fff"
+    },
     "colorConfig": {
       "target": "#background"
+    },
+    "targets": {
+      "background": "#background",
+      "text": "#text"
+    },
+    "sets": {
+      "black": {
+        "background": "black",
+        "text": "white"
+      },
+      "white": {
+        "background": "white",
+        "text": "black"
+      },
+      "yellow": {
+        "background": "yellow",
+        "text": "white"
+      }
     }
-  },
-  {
-    "name": "Mono White",
-    "path": "logos/mono_white.svg",
-    "format": "SVG",
-    "disable": false,
-    "brand": "Monobank",
-    "tags": [
-      "bank",
-      "finance"
-    ]
   },
   {
     "name": "Monobank paw",
@@ -1035,14 +1083,19 @@
       "database"
     ],
     "brand": "Redis",
-    "colors": [
-      {
-        "label": "Grey",
-        "value": "#636466"
-      }
-    ],
+    "colors": {
+      "grey": "#636466"
+    },
     "colorConfig": {
       "selector": "#text"
+    },
+    "targets": {
+      "selector_1": "#text"
+    },
+    "sets": {
+      "set_1": {
+        "selector_1": "grey"
+      }
     }
   },
   {
@@ -1089,21 +1142,25 @@
     "tags": [
       "furniture"
     ],
-    "colors": [
-      {
-        "label": "Brown",
-        "value": "#2b1c13",
-        "theme": "light"
-      },
-      {
-        "label": "Green",
-        "value": "#859310"
-      }
-    ],
+    "colors": {
+      "brown": "#2b1c13",
+      "green": "#859310"
+    },
     "colorConfig": {
       "target": "#text"
     },
-    "brand": "RoomerIN"
+    "brand": "RoomerIN",
+    "targets": {
+      "main": "#text"
+    },
+    "sets": {
+      "set_1": {
+        "main": "brown"
+      },
+      "set_2": {
+        "main": "green"
+      }
+    }
   },
   {
     "name": "Sainsbury's",
@@ -1200,14 +1257,19 @@
       "communication"
     ],
     "brand": "Signal",
-    "colors": [
-      {
-        "label": "Ultramarine",
-        "value": "#3b45fd"
-      }
-    ],
+    "colors": {
+      "ultramarine": "#3b45fd"
+    },
     "colorConfig": {
       "target": "path"
+    },
+    "targets": {
+      "main": "path"
+    },
+    "sets": {
+      "set_1": {
+        "main": "ultramarine"
+      }
     }
   },
   {
@@ -1220,14 +1282,19 @@
       "communication"
     ],
     "brand": "Signal",
-    "colors": [
-      {
-        "label": "Ultramarine",
-        "value": "#3b45fd"
-      }
-    ],
+    "colors": {
+      "ultramarine": "#3b45fd"
+    },
     "colorConfig": {
       "target": "path"
+    },
+    "targets": {
+      "main": "path"
+    },
+    "sets": {
+      "set_1": {
+        "main": "ultramarine"
+      }
     }
   },
   {
@@ -1252,14 +1319,21 @@
       "footwear"
     ],
     "brand": "Skechers",
-    "colors": [
-      {
-        "label": "Deep Blue",
-        "value": "#062849"
-      }
-    ],
+    "colors": {
+      "deep_blue": "#062849"
+    },
     "colorConfig": {
       "selector": "#text, #logo_int"
+    },
+    "targets": {
+      "selector_1": "#text",
+      "selector_2": "#logo_int"
+    },
+    "sets": {
+      "set_1": {
+        "selector_1": "deep_blue",
+        "selector_2": "deep_blue"
+      }
     }
   },
   {
@@ -1317,14 +1391,19 @@
       "transport"
     ],
     "brand": "Tesla",
-    "colors": [
-      {
-        "label": "Red",
-        "value": "#e82127"
-      }
-    ],
+    "colors": {
+      "red": "#e82127"
+    },
     "colorConfig": {
       "target": "path"
+    },
+    "targets": {
+      "main": "path"
+    },
+    "sets": {
+      "set_1": {
+        "main": "red"
+      }
     }
   },
   {
@@ -1348,14 +1427,19 @@
       "transport"
     ],
     "brand": "Toyota",
-    "colors": [
-      {
-        "label": "Red",
-        "value": "#EB0A1E"
-      }
-    ],
+    "colors": {
+      "red": "#EB0A1E"
+    },
     "colorConfig": {
       "target": "path"
+    },
+    "targets": {
+      "main": "path"
+    },
+    "sets": {
+      "set_1": {
+        "main": "red"
+      }
     }
   },
   {
@@ -1368,14 +1452,19 @@
       "transport"
     ],
     "brand": "Toyota",
-    "colors": [
-      {
-        "label": "Red",
-        "value": "#EB0A1E"
-      }
-    ],
+    "colors": {
+      "red": "#EB0A1E"
+    },
     "colorConfig": {
       "target": "path"
+    },
+    "targets": {
+      "main": "path"
+    },
+    "sets": {
+      "set_1": {
+        "main": "red"
+      }
     }
   },
   {

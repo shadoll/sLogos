@@ -171,6 +171,52 @@ function scanLogos() {
       if (!logoObj.brand) logoObj.brand = logoObj.name;
       if (!Array.isArray(logoObj.tags)) logoObj.tags = [];
       if (typeof logoObj.disable !== 'boolean') logoObj.disable = false;
+
+      // Set default colorConfig, targets, and sets for SVGs
+      if (logoObj.format.toLowerCase() === 'svg') {
+        // Maintain backward compatibility
+        if (!logoObj.colorConfig) {
+          logoObj.colorConfig = { target: 'path', attribute: 'fill' };
+        }
+
+        // Add new format targets if not already present
+        if (!logoObj.targets && (logoObj.colorConfig.target || logoObj.colorConfig.selector)) {
+          logoObj.targets = {};
+
+          if (logoObj.colorConfig.selector) {
+            // Split multiple selectors (e.g., "#text, #logo_int")
+            const selectors = logoObj.colorConfig.selector.split(',').map(s => s.trim());
+
+            // Create a target for each selector
+            selectors.forEach((selector, index) => {
+              logoObj.targets[`selector_${index + 1}`] = selector;
+            });
+          } else if (logoObj.colorConfig.target) {
+            logoObj.targets.main = logoObj.colorConfig.target;
+          } else {
+            logoObj.targets.main = 'path';
+          }
+        }
+
+        // Create sets if there are colors but no sets
+        if (logoObj.colors && !logoObj.sets) {
+          logoObj.sets = {};
+          let setIndex = 1;
+
+          // Create a set for each color
+          for (const [colorName, colorValue] of Object.entries(logoObj.colors)) {
+            const setName = `set_${setIndex}`;
+            logoObj.sets[setName] = {};
+
+            // Apply this color to all targets
+            Object.keys(logoObj.targets || {}).forEach(targetName => {
+              logoObj.sets[setName][targetName] = colorName;
+            });
+
+            setIndex++;
+          }
+        }
+      }
     }
 
     return logos;
