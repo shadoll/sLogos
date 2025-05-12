@@ -169,6 +169,17 @@
     "brand": "Chromium"
   },
   {
+    "name": "Coca-Cola",
+    "path": "logos/coca-cola.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "food",
+      "drink"
+    ],
+    "brand": "Coca-Cola"
+  },
+  {
     "name": "Dalnoboy Service",
     "path": "logos/dalnoboy-service.svg",
     "format": "SVG",
@@ -458,8 +469,8 @@
     "format": "SVG",
     "disable": false,
     "tags": [
-      "food",
-      "drink"
+      "drink",
+      "alcohol"
     ],
     "brand": "Guinness"
   },
@@ -516,6 +527,17 @@
       "social"
     ],
     "brand": "Instagram"
+  },
+  {
+    "name": "Jägermeister",
+    "path": "logos/jägermeister.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "drink",
+      "alcohol"
+    ],
+    "brand": "Jägermeister"
   },
   {
     "name": "Jeep",
@@ -838,6 +860,28 @@
       "fuel"
     ],
     "brand": "Okko"
+  },
+  {
+    "name": "Pepsi",
+    "path": "logos/pepsi.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "food",
+      "drink"
+    ],
+    "brand": "Pepsi"
+  },
+  {
+    "name": "Pepsi (2014-2023)",
+    "path": "logos/pepsi_2014-2023.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "food",
+      "drink"
+    ],
+    "brand": "Pepsi"
   },
   {
     "name": "PHP",
@@ -1204,6 +1248,18 @@
     "colorConfig": {
       "selector": "#text, #logo_int"
     }
+  },
+  {
+    "name": "Starbucks",
+    "path": "logos/starbucks.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "food",
+      "drink",
+      "coffee"
+    ],
+    "brand": "Starbucks"
   },
   {
     "name": "Suzuki",
