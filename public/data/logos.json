@@ -162,11 +162,155 @@
     "brand": "BMW"
   },
   {
+    "name": "Docker Icon",
+    "path": "logos/docker-icon.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Docker"
+  },
+  {
     "name": "DuckDuckGo",
     "path": "logos/duckduckgo.svg",
     "format": "SVG",
     "disable": false,
     "brand": "DuckDuckGo"
+  },
+  {
+    "name": "Freebsd",
+    "path": "logos/freebsd.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Freebsd"
+  },
+  {
+    "name": "Gitlab",
+    "path": "logos/gitlab-logo.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "GitLab",
+    "tags": [
+      "tech",
+      "software"
+    ]
+  },
+  {
+    "name": "Google Cloud",
+    "path": "logos/google-cloud.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Google"
+  },
+  {
+    "name": "Google Drive",
+    "path": "logos/google-drive.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Google"
+  },
+  {
+    "name": "Google Fit",
+    "path": "logos/google-fit.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Google"
+  },
+  {
+    "name": "Google Home",
+    "path": "logos/google-home.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Google"
+  },
+  {
+    "name": "Google Maps",
+    "path": "logos/google-maps.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Google"
+  },
+  {
+    "name": "Google Meet",
+    "path": "logos/google-meet.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Google"
+  },
+  {
+    "name": "Google Photos",
+    "path": "logos/google-photos.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Google"
+  },
+  {
+    "name": "Google Play",
+    "path": "logos/google-play-icon.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Google"
+  },
+  {
+    "name": "GraphQL",
+    "path": "logos/graphql.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "GraphQL"
+  },
+  {
+    "name": "Kubernetes",
+    "path": "logos/kubernetes.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Kubernetes"
+  },
+  {
+    "name": "Languagetool",
+    "path": "logos/languagetool.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Languagetool"
+  },
+  {
+    "name": "Laravel",
+    "path": "logos/laravel.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Laravel"
+  },
+  {
+    "name": "Letsencrypt",
+    "path": "logos/letsencrypt.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Letsencrypt"
+  },
+  {
+    "name": "Linux Mint",
+    "path": "logos/linux-mint.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Linux Mint"
+  },
+  {
+    "name": "Linux Tux",
+    "path": "logos/linux-tux.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Tux"
+  },
+  {
+    "name": "MariaDB",
+    "path": "logos/mariadb.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "MariaDB"
+  },
+  {
+    "name": "MariaDB",
+    "path": "logos/mariadb-icon.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "MariaDB"
   },
   {
     "name": "Mastercard",
@@ -301,6 +445,18 @@
       "linux"
     ],
     "brand": "Fedora"
+  },
+  {
+    "name": "Fedora",
+    "path": "logos/fedora_logo.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Fedora",
+    "tags": [
+      "tech",
+      "software",
+      "linux"
+    ]
   },
   {
     "name": "Fiat",
@@ -550,16 +706,6 @@
     "brand": "IBKR"
   },
   {
-    "name": "Instagram",
-    "path": "logos/instagram.svg",
-    "format": "SVG",
-    "disable": false,
-    "tags": [
-      "social"
-    ],
-    "brand": "Instagram"
-  },
-  {
     "name": "Jägermeister",
     "path": "logos/jägermeister.svg",
     "format": "SVG",
@@ -705,6 +851,114 @@
     "brand": "Meest"
   },
   {
+    "name": "Meta",
+    "path": "logos/meta.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Meta"
+  },
+  {
+    "name": "Facebook",
+    "path": "logos/meta-facebook.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Meta"
+  },
+  {
+    "name": "Meta",
+    "path": "logos/meta-icon.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Meta"
+  },
+  {
+    "name": "Instagram",
+    "path": "logos/meta-instagram.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Meta",
+    "tags": [
+      "social",
+      "media"
+    ],
+    "colors": {
+      "white": "#fff",
+      "black": "#000"
+    },
+    "targets": {
+      "lines": ".lines_76843"
+    },
+    "sets": {
+      "white": {
+        "lines": "white"
+      },
+      "black": {
+        "lines": "black"
+      }
+    }
+  },
+  {
+    "name": "Whatsapp",
+    "path": "logos/meta-whatsapp-icon.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Meta",
+    "tags": [
+      "messaging",
+      "communication"
+    ],
+    "colors": {
+      "green": "#25D366",
+      "white": "#f9f9f9",
+      "none": "none"
+    },
+    "targets": {
+      "background": "#inner",
+      "outer": "#outer",
+      "headset": "#headset"
+    },
+    "sets": {
+      "set_1": {
+        "background": "green",
+        "outer": "white",
+        "headset": "white"
+      },
+      "set_2": {
+        "background": "none",
+        "outer": "green",
+        "headset": "green"
+      }
+    }
+  },
+  {
+    "name": "Microsoft",
+    "path": "logos/microsoft.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Microsoft"
+  },
+  {
+    "name": "Microsoft Edge",
+    "path": "logos/microsoft-edge.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Microsoft"
+  },
+  {
+    "name": "Linkedin",
+    "path": "logos/microsoft-linkedin.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Microsoft"
+  },
+  {
+    "name": "Linkedin",
+    "path": "logos/microsoft-linkedin-icon.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Microsoft"
+  },
+  {
     "name": "Microsoft Office Outlook",
     "path": "logos/microsoft_office_outlook.svg",
     "format": "SVG",
@@ -717,6 +971,13 @@
     "brand": "Microsoft"
   },
   {
+    "name": "Microsoft Onedrive",
+    "path": "logos/microsoft-onedrive.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Microsoft"
+  },
+  {
     "name": "Microsoft Outlook",
     "path": "logos/microsoft_outlook.svg",
     "format": "SVG",
@@ -726,6 +987,27 @@
       "web",
       "email"
     ],
+    "brand": "Microsoft"
+  },
+  {
+    "name": "Microsoft Teams",
+    "path": "logos/microsoft-teams.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Microsoft"
+  },
+  {
+    "name": "Microsoft Windows",
+    "path": "logos/microsoft-windows.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Microsoft"
+  },
+  {
+    "name": "Microsoft Windows",
+    "path": "logos/microsoft-windows-icon.svg",
+    "format": "SVG",
+    "disable": false,
     "brand": "Microsoft"
   },
   {
@@ -812,6 +1094,20 @@
     "brand": "MySQL"
   },
   {
+    "name": "Mysql",
+    "path": "logos/mysql-icon.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "MySQL"
+  },
+  {
+    "name": "Namecheap",
+    "path": "logos/namecheap.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Namecheap"
+  },
+  {
     "name": "Nationwide",
     "path": "logos/nationwide.svg",
     "format": "SVG",
@@ -890,6 +1186,13 @@
     "brand": "Nvidia"
   },
   {
+    "name": "Nvidia",
+    "path": "logos/nvidia_vertical.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Nvidia"
+  },
+  {
     "name": "Okko",
     "path": "logos/okko.svg",
     "format": "SVG",
@@ -898,6 +1201,27 @@
       "fuel"
     ],
     "brand": "Okko"
+  },
+  {
+    "name": "OpenAI",
+    "path": "logos/openai-icon.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "OpenAI"
+  },
+  {
+    "name": "Opera",
+    "path": "logos/opera.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Opera"
+  },
+  {
+    "name": "Paypal",
+    "path": "logos/paypal.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Paypal"
   },
   {
     "name": "Pepsi",
@@ -930,7 +1254,7 @@
       "programming",
       "language"
     ],
-    "brand": "Php"
+    "brand": "PHP"
   },
   {
     "name": "PostgreSQL",
@@ -1049,6 +1373,27 @@
     "disable": false,
     "tags": [],
     "brand": "RabbitMQ"
+  },
+  {
+    "name": "Raspberry Pi",
+    "path": "logos/raspberry-pi.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Raspberry Pi"
+  },
+  {
+    "name": "React",
+    "path": "logos/react.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "React"
+  },
+  {
+    "name": "Reddit",
+    "path": "logos/reddit-icon.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Reddit"
   },
   {
     "name": "Redis",
@@ -1341,6 +1686,34 @@
     }
   },
   {
+    "name": "Spotify",
+    "path": "logos/spotify.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Spotify"
+  },
+  {
+    "name": "Spotify",
+    "path": "logos/spotify-icon.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Spotify"
+  },
+  {
+    "name": "Stackoverflow",
+    "path": "logos/stackoverflow.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Stackoverflow"
+  },
+  {
+    "name": "Stackoverflow",
+    "path": "logos/stackoverflow-icon.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Stackoverflow"
+  },
+  {
     "name": "Starbucks",
     "path": "logos/starbucks.svg",
     "format": "SVG",
@@ -1373,6 +1746,20 @@
       "transport"
     ],
     "brand": "Suzuki"
+  },
+  {
+    "name": "Svelte",
+    "path": "logos/svelte-icon.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Svelte"
+  },
+  {
+    "name": "Swagger",
+    "path": "logos/swagger.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Swagger"
   },
   {
     "name": "Swift",
@@ -1409,14 +1796,14 @@
   },
   {
     "name": "Threads",
-    "path": "logos/threads.svg",
+    "path": "logos/meta-threads.svg",
     "format": "SVG",
     "disable": false,
     "tags": [
       "social",
       "communication"
     ],
-    "brand": "Threads"
+    "brand": "Meta"
   },
   {
     "name": "Toyota",
@@ -1441,7 +1828,7 @@
     }
   },
   {
-    "name": "Toyota Logo",
+    "name": "Toyota",
     "path": "logos/toyota_logo.svg",
     "format": "SVG",
     "disable": false,
@@ -1487,6 +1874,13 @@
     "brand": "Ukrnet"
   },
   {
+    "name": "Ubuntu",
+    "path": "logos/ubuntu-logo.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Ubuntu"
+  },
+  {
     "name": "Ukrposhta",
     "path": "logos/ukrposhta.svg",
     "format": "SVG",
@@ -1519,6 +1913,13 @@
     "brand": "Vintage"
   },
   {
+    "name": "Visual Studio Code",
+    "path": "logos/visual-studio-code.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Microsoft"
+  },
+  {
     "name": "Vodafone",
     "path": "logos/vodafone.svg",
     "format": "SVG",
@@ -1541,15 +1942,39 @@
     "brand": "Visa"
   },
   {
-    "name": "WhatsApp",
-    "path": "logos/whatsapp.svg",
+    "name": "Vue",
+    "path": "logos/vue.svg",
     "format": "SVG",
     "disable": false,
-    "tags": [
-      "messaging",
-      "communication"
-    ],
-    "brand": "WhatsApp"
+    "brand": "Vue"
+  },
+  {
+    "name": "Webhooks",
+    "path": "logos/webhooks.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Webhooks"
+  },
+  {
+    "name": "Webkit",
+    "path": "logos/webkit.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Webkit"
+  },
+  {
+    "name": "Webtorrent",
+    "path": "logos/webtorrent.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Webtorrent"
+  },
+  {
+    "name": "Wifi",
+    "path": "logos/wifi.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Wifi"
   },
   {
     "name": "Wise",
@@ -1561,6 +1986,13 @@
       "finance",
       "transfer"
     ]
+  },
+  {
+    "name": "Wise",
+    "path": "logos/wise-icon.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Wise"
   },
   {
     "name": "WOG",
@@ -1581,11 +2013,28 @@
     "brand": "Youtube"
   },
   {
+    "name": "Zoom",
+    "path": "logos/zoom.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Zoom"
+  },
+  {
+    "name": "Zoom",
+    "path": "logos/zoom-icon.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Zoom"
+  },
+  {
     "name": "Банк Власний Рахунок",
     "path": "logos/bvr.svg",
     "format": "SVG",
     "disable": false,
-    "tags": [],
+    "tags": [
+      "bank",
+      "finance"
+    ],
     "brand": "Bvr"
   }
 ]
