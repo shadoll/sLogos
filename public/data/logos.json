@@ -1181,7 +1181,43 @@
     "format": "SVG",
     "disable": false,
     "brand": "shadoll",
-    "tags": []
+    "tags": [],
+    "colors": {
+      "red": "#dc2108",
+      "white": "#eee",
+      "black": "#222",
+      "uk_red": "#C8102E",
+      "uk_blue": "#012169",
+      "ua_blue": "#0057B7",
+      "ua_yellow": "#FFDD00"
+    },
+    "targets": {
+      "part_s1": "#s1",
+      "part_s2": "#s2",
+      "part_l": "#l"
+    },
+    "sets": {
+      "light": {
+        "part_s1": "red",
+        "part_s2": "red",
+        "part_l": "white"
+      },
+      "dark": {
+        "part_s1": "red",
+        "part_s2": "red",
+        "part_l": "black"
+      },
+      "uk": {
+        "part_s1": "uk_red",
+        "part_s2": "uk_red",
+        "part_l": "uk_blue"
+      },
+      "ua": {
+        "part_s1": "ua_blue",
+        "part_s2": "ua_blue",
+        "part_l": "ua_yellow"
+      }
+    }
   },
   {
     "name": "Shkafnik",
