@@ -162,6 +162,13 @@
     "brand": "BMW"
   },
   {
+    "name": "DuckDuckGo",
+    "path": "logos/duckduckgo.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "DuckDuckGo"
+  },
+  {
     "name": "Mastercard",
     "path": "logos/mastercard.svg",
     "format": "SVG",

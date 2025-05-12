@@ -1,4 +1,4 @@
-// This file has been renamed and updated. See scanLogos.js in the same directory for the new script.
+#!/usr/bin/env node
 
 const fs = require('fs');
 const path = require('path');
@@ -106,10 +106,6 @@ function scanLogos() {
       console.error('Could not parse existing logos.json:', e);
     }
   }
-  const existingMap = new Map();
-  for (const item of existing) {
-    existingMap.set(item.path, item);
-  }
 
   try {
     if (!fs.existsSync(logosDir)) {
@@ -128,31 +124,40 @@ function scanLogos() {
     // Create a Set of all logo paths in the directory
     const logoPathsSet = new Set(logoFiles.map(file => `logos/${file}`));
 
-    // 1. Keep all existing logos that still exist in the directory, in their original order
-    const keptLogos = existing.filter(item => logoPathsSet.has(item.path));
-    const keptPaths = new Set(keptLogos.map(item => item.path));
+    // Mark existing records as disabled if they are not found in the directory
+    for (const logo of existing) {
+      if (!logoPathsSet.has(logo.path)) {
+        logo.disable = true;
+      }
+    }
 
-    // 2. Add new logos (not present in existing) and sort them alphabetically by name
+    // Create a Set of existing paths to avoid duplication
+    const existingPathsSet = new Set(existing.map(logo => logo.path));
+
+    // Create new minimal logo objects for files that don't have records yet
     const newLogos = logoFiles
-      .filter(file => !keptPaths.has(`logos/${file}`))
+      .filter(file => !existingPathsSet.has(`logos/${file}`))
       .map(file => {
         const format = getFileExtension(file);
         const logoPath = `logos/${file}`;
+
+        // Create minimal object for new logos - just the essential fields
         return {
           name: formatName(file),
           path: logoPath,
           format: format,
           disable: false,
-          tags: [],
+          brand: formatName(file)
         };
       })
       .sort((a, b) => a.name.localeCompare(b.name));
 
-    // 3. Merge: existing (kept) + new (sorted)
-    // Instead of just appending newLogos, insert each new logo in the correct sorted position by name
-    let merged = [...keptLogos];
+    // Merge existing and new logos
+    let merged = [...existing];
+
+    // Add new logos in alphabetical order
     for (const newLogo of newLogos) {
-      // Find the first index where newLogo.name < merged[i].name
+      // Find the position to insert based on name
       let insertIdx = merged.findIndex(l => newLogo.name.localeCompare(l.name) < 0);
       if (insertIdx === -1) {
         merged.push(newLogo);
@@ -160,27 +165,20 @@ function scanLogos() {
         merged.splice(insertIdx, 0, newLogo);
       }
     }
-    const logos = merged;
 
-    // 4. For all, update format/path/brand fields if needed
-    for (const logoObj of logos) {
-      const file = path.basename(logoObj.path);
-      logoObj.format = getFileExtension(file);
-      logoObj.path = `logos/${file}`;
-      if (!logoObj.name) logoObj.name = formatName(file);
-      if (!logoObj.brand) logoObj.brand = logoObj.name;
-      if (!Array.isArray(logoObj.tags)) logoObj.tags = [];
-      if (typeof logoObj.disable !== 'boolean') logoObj.disable = false;
+    // Force-upgrade SVGs with older colorConfig format to the new targets+sets format
+    // but ONLY if they have colors and either a target or selector defined
+    // Don't add empty objects to logos that don't need them
+    for (const logoObj of merged) {
+      // Only proceed if this is an SVG with existing color info that needs upgrading
+      if (logoObj.format?.toLowerCase() === 'svg' &&
+          logoObj.colors &&
+          Object.keys(logoObj.colors).length > 0 &&
+          logoObj.colorConfig &&
+          !logoObj.sets) {
 
-      // Set default colorConfig, targets, and sets for SVGs
-      if (logoObj.format.toLowerCase() === 'svg') {
-        // Maintain backward compatibility
-        if (!logoObj.colorConfig) {
-          logoObj.colorConfig = { target: 'path', attribute: 'fill' };
-        }
-
-        // Add new format targets if not already present
-        if (!logoObj.targets && (logoObj.colorConfig.target || logoObj.colorConfig.selector)) {
+        // Initialize targets only if needed
+        if (!logoObj.targets) {
           logoObj.targets = {};
 
           if (logoObj.colorConfig.selector) {
@@ -193,13 +191,11 @@ function scanLogos() {
             });
           } else if (logoObj.colorConfig.target) {
             logoObj.targets.main = logoObj.colorConfig.target;
-          } else {
-            logoObj.targets.main = 'path';
           }
         }
 
-        // Create sets if there are colors but no sets
-        if (logoObj.colors && !logoObj.sets) {
+        // Initialize sets only if we have both colors and targets
+        if (logoObj.targets && Object.keys(logoObj.targets).length > 0) {
           logoObj.sets = {};
           let setIndex = 1;
 
@@ -209,7 +205,7 @@ function scanLogos() {
             logoObj.sets[setName] = {};
 
             // Apply this color to all targets
-            Object.keys(logoObj.targets || {}).forEach(targetName => {
+            Object.keys(logoObj.targets).forEach(targetName => {
               logoObj.sets[setName][targetName] = colorName;
             });
 
@@ -219,7 +215,7 @@ function scanLogos() {
       }
     }
 
-    return logos;
+    return merged;
   } catch (error) {
     console.error('Error scanning logos directory:', error);
     return [];
