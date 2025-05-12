@@ -1900,7 +1900,22 @@
     "tags": [
       "messaging",
       "communication"
-    ]
+    ],
+    "colors": {
+      "purple": "#7d3daf",
+      "none": "none"
+    },
+    "targets": {
+      "logo": "#logo",
+      "background": "#background"
+    },
+    "sets": {
+      "pirple": {
+        "logo": "purple",
+        "background": "none"
+      }
+    }
+
   },
   {
     "name": "Vintage",
