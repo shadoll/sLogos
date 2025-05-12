@@ -6,7 +6,7 @@ CONTAINER_NAME = logo-gallery
 DEV_PORT = 5006
 
 # Main targets
-.PHONY: all build start stop restart logs clean scan-logos dev rebuild
+.PHONY: all build start stop restart logs clean scan-logos dev rebuild favicon deps-favicon build-with-favicons
 
 all: build start
 
@@ -60,3 +60,12 @@ clean:
 rebuild:
 	$(DOCKER_COMPOSE) -f compose.dev.yml down -v
 	$(DOCKER_COMPOSE) -f compose.dev.yml build --no-cache
+
+# Generate favicons
+favicon:
+	@echo "Generating favicons..."
+	$(DOCKER_COMPOSE) -f compose.dev.yml run --rm slogos-dev npm run generate-favicons
+	@echo "Favicons have been generated"
+
+# Build with favicons
+build-with-favicons: favicon build

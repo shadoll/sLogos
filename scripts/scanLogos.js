@@ -51,17 +51,23 @@ function cleanDir(dir) {
   }
 }
 
-// Convert SVG to PNG
+// Convert SVG to PNG with transparency
 function svgToPng(svgBuffer, width, height) {
-  const resvg = new Resvg(svgBuffer, { fitTo: { mode: 'width', value: width || 256 } });
+  // No background specified to maintain transparency
+  const resvg = new Resvg(svgBuffer, {
+    fitTo: { mode: 'width', value: width || 256 }
+  });
   const pngData = resvg.render().asPng();
   return pngData;
 }
 
 // Convert SVG to JPG
 function svgToJpg(svgBuffer, width, height) {
-  const resvg = new Resvg(svgBuffer, { fitTo: { mode: 'width', value: width || 256 } });
-  // Convert PNG buffer to JPEG using a pure JS lib, or just save as PNG (JPEG is optional)
+  // For JPGs we need a white background since JPG doesn't support transparency
+  const resvg = new Resvg(svgBuffer, {
+    background: 'white',
+    fitTo: { mode: 'width', value: width || 256 }
+  });
   const pngData = resvg.render().asPng();
   return pngData;
 }

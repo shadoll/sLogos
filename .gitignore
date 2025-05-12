@@ -51,3 +51,6 @@ Temporary Items
 .env.development
 .env.test
 .env.production
+
+# Make favicon generation script executable
+chmod +x ./scripts/generateFavicons.js

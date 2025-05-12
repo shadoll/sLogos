@@ -486,6 +486,17 @@
     "brand": "Home Assistant"
   },
   {
+    "name": "Honda",
+    "path": "logos/honda.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "automobile",
+      "transport"
+    ],
+    "brand": "Honda"
+  },
+  {
     "name": "IBKR",
     "path": "logos/ibkr.svg",
     "format": "SVG",
@@ -1257,6 +1268,46 @@
       "communication"
     ],
     "brand": "Threads"
+  },
+  {
+    "name": "Toyota",
+    "path": "logos/toyota.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "automobile",
+      "transport"
+    ],
+    "brand": "Toyota",
+    "colors": [
+      {
+        "label": "Red",
+        "value": "#EB0A1E"
+      }
+    ],
+    "colorConfig": {
+      "target": "path"
+    }
+  },
+  {
+    "name": "Toyota Logo",
+    "path": "logos/toyota_logo.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "automobile",
+      "transport"
+    ],
+    "brand": "Toyota",
+    "colors": [
+      {
+        "label": "Red",
+        "value": "#EB0A1E"
+      }
+    ],
+    "colorConfig": {
+      "target": "path"
+    }
   },
   {
     "name": "Ubuntu",

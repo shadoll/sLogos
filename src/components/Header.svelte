@@ -39,7 +39,12 @@
 
 <header class="main-header">
   <div class="header-row">
-    <h1>Logo Gallery</h1>
+    <div class="header-title">
+      <div class="header-icon">
+        <img src="favicon.svg" alt="Logo Gallery icon" />
+      </div>
+      <h1>Logo Gallery</h1>
+    </div>
     <span class="logo-count">
       {#if displayLogos && logos && displayLogos.length === logos.length}
         {logos.length} images in gallery
@@ -290,6 +295,23 @@
 </header>
 
 <style>
+  .header-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+  }
+
+  .header-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+  }
+
+  .header-icon {
+    width: 28px;
+    height: 28px;
+  }
+
   .search-bar {
     position: relative;
     display: flex;
