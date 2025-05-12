@@ -40,6 +40,10 @@ jobs:
           cp public/build/* ./gh-pages-artifact/build/
           cp public/index.html ./gh-pages-artifact/
           cp public/global.css ./gh-pages-artifact/
+          cp public/favicon.svg ./gh-pages-artifact/
+          cp public/favicon.png ./gh-pages-artifact/
+          cp public/favicon.ico ./gh-pages-artifact/
+          cp public/apple-touch-icon.png ./gh-pages-artifact/
           cp -r public/data ./gh-pages-artifact/
           cp -r public/logos ./gh-pages-artifact/
           cp -r public/logos_gen ./gh-pages-artifact/
