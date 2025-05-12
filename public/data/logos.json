@@ -34,9 +34,6 @@
       "silver": "#999",
       "dark_grey": "#666"
     },
-    "colorConfig": {
-      "target": "path"
-    },
     "targets": {
       "main": "path"
     },
@@ -107,9 +104,6 @@
     ],
     "colors": {
       "dark_blue": "#080225"
-    },
-    "colorConfig": {
-      "target": "g"
     },
     "brand": "arm",
     "targets": {
@@ -251,9 +245,6 @@
     "colors": {
       "blue": "#1d63ed"
     },
-    "colorConfig": {
-      "target": "path"
-    },
     "targets": {
       "main": "path"
     },
@@ -372,9 +363,6 @@
     "colors": {
       "dark_grey": "#24292f"
     },
-    "colorConfig": {
-      "target": "path"
-    },
     "targets": {
       "main": "path"
     },
@@ -396,9 +384,6 @@
     "brand": "GitHub",
     "colors": {
       "dark_grey": "#24292f"
-    },
-    "colorConfig": {
-      "target": "path"
     },
     "targets": {
       "main": "path"
@@ -436,9 +421,6 @@
       "fuchsia": "#CE3262",
       "lightblue": "#5DC9E1",
       "yellow": "#FDDD00"
-    },
-    "colorConfig": {
-      "target": "g"
     },
     "targets": {
       "main": "g"
@@ -594,9 +576,6 @@
     "colors": {
       "green": "#424d07"
     },
-    "colorConfig": {
-      "target": "g"
-    },
     "targets": {
       "main": "g"
     },
@@ -641,9 +620,6 @@
     "colors": {
       "grey": "#6b6c6b"
     },
-    "colorConfig": {
-      "target": "#text"
-    },
     "targets": {
       "main": "#text"
     },
@@ -687,9 +663,6 @@
     ],
     "colors": {
       "denim": "#1e325c"
-    },
-    "colorConfig": {
-      "target": "g"
     },
     "brand": "Mattermost",
     "targets": {
@@ -789,9 +762,6 @@
       "black": "#000",
       "yellow": "#f2bd2b",
       "white": "#fff"
-    },
-    "colorConfig": {
-      "target": "#background"
     },
     "targets": {
       "background": "#background",
@@ -1142,14 +1112,11 @@
     "tags": [
       "furniture"
     ],
+    "brand": "RoomerIN",
     "colors": {
       "brown": "#2b1c13",
       "green": "#859310"
     },
-    "colorConfig": {
-      "target": "#text"
-    },
-    "brand": "RoomerIN",
     "targets": {
       "main": "#text"
     },
@@ -1260,9 +1227,6 @@
     "colors": {
       "ultramarine": "#3b45fd"
     },
-    "colorConfig": {
-      "target": "path"
-    },
     "targets": {
       "main": "path"
     },
@@ -1284,9 +1248,6 @@
     "brand": "Signal",
     "colors": {
       "ultramarine": "#3b45fd"
-    },
-    "colorConfig": {
-      "target": "path"
     },
     "targets": {
       "main": "path"
@@ -1394,9 +1355,6 @@
     "colors": {
       "red": "#e82127"
     },
-    "colorConfig": {
-      "target": "path"
-    },
     "targets": {
       "main": "path"
     },
@@ -1430,9 +1388,6 @@
     "colors": {
       "red": "#EB0A1E"
     },
-    "colorConfig": {
-      "target": "path"
-    },
     "targets": {
       "main": "path"
     },
@@ -1454,9 +1409,6 @@
     "brand": "Toyota",
     "colors": {
       "red": "#EB0A1E"
-    },
-    "colorConfig": {
-      "target": "path"
     },
     "targets": {
       "main": "path"
