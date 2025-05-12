@@ -54,3 +54,4 @@ Temporary Items
 
 # Make favicon generation script executable
 chmod +x ./scripts/generateFavicons.js
+chmod +x ./scripts/scanLogos.js

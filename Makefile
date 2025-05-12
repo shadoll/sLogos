@@ -6,7 +6,7 @@ CONTAINER_NAME = logo-gallery
 DEV_PORT = 5006
 
 # Main targets
-.PHONY: all build start stop restart logs clean scan-logos dev rebuild favicon deps-favicon build-with-favicons
+.PHONY: all build start stop restart logs clean scan-logos dev rebuild favicon deps-favicon build-with-favicons sync-packages
 
 all: build start
 
@@ -69,3 +69,9 @@ favicon:
 
 # Build with favicons
 build-with-favicons: favicon build
+
+# Update package-lock.json by running npm install in Docker
+update-lock:
+	@echo "Updating package-lock.json to match package.json..."
+	$(DOCKER_COMPOSE) -f compose.dev.yml run --rm slogos-dev npm install
+	@echo "Package lock file has been updated"
