@@ -158,6 +158,17 @@
     "brand": "BMW"
   },
   {
+    "name": "Mastercard",
+    "path": "logos/mastercard.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "finance",
+      "payment"
+    ],
+    "brand": "Mastercard"
+  },
+  {
     "name": "Chromium",
     "path": "logos/chromium.svg",
     "format": "SVG",
@@ -719,30 +730,32 @@
     ]
   },
   {
-    "name": "Mono Black",
-    "path": "logos/mono_black.svg",
+    "name": "Mono",
+    "path": "logos/mono.svg",
     "format": "SVG",
     "disable": false,
     "brand": "Monobank",
     "tags": [
       "bank",
       "finance"
-    ]
+    ],
+    "colors": [
+      {
+        "label": "Black",
+        "value": "#000"
+      },
+      {
+        "label": "Yellow",
+        "value": "#f2bd2b"
+      }
+    ],
+    "colorConfig": {
+      "target": "#background"
+    }
   },
   {
     "name": "Mono White",
     "path": "logos/mono_white.svg",
-    "format": "SVG",
-    "disable": false,
-    "brand": "Monobank",
-    "tags": [
-      "bank",
-      "finance"
-    ]
-  },
-  {
-    "name": "Mono Yellow",
-    "path": "logos/mono_yellow.svg",
     "format": "SVG",
     "disable": false,
     "brand": "Monobank",
@@ -1433,6 +1446,17 @@
     ]
   },
   {
+    "name": "Visa",
+    "path": "logos/visa.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "finance",
+      "payment"
+    ],
+    "brand": "Visa"
+  },
+  {
     "name": "WhatsApp",
     "path": "logos/whatsapp.svg",
     "format": "SVG",
@@ -1471,5 +1495,13 @@
     "disable": false,
     "tags": [],
     "brand": "Youtube"
+  },
+  {
+    "name": "Банк Власний Рахунок",
+    "path": "logos/bvr.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [],
+    "brand": "Bvr"
   }
 ]
