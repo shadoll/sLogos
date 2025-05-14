@@ -1915,7 +1915,6 @@
         "background": "none"
       }
     }
-
   },
   {
     "name": "Vintage",
@@ -2018,6 +2017,27 @@
       "fuel"
     ],
     "brand": "WOG"
+  },
+  {
+    "name": "Yahoo",
+    "path": "logos/yahoo.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Yahoo"
+  },
+  {
+    "name": "Yahoo Logo",
+    "path": "logos/yahoo_logo.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Yahoo"
+  },
+  {
+    "name": "Yahoo Mail",
+    "path": "logos/yahoo_mail.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Yahoo"
   },
   {
     "name": "Youtube",
