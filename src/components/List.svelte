@@ -1,6 +1,7 @@
 <script>
+  import Actions from './Actions.svelte';
   import Preview from "./Preview.svelte";
-  import Actions from "./Actions.svelte";
+
   import InlineSvg from "./InlineSvg.svelte";
   import { getThemeColor, getDefaultLogoColor } from "../utils/colorTheme.js";
   import { generateColorSetCircle } from "../utils/colorCircles.js";

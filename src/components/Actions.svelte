@@ -1,4 +1,7 @@
 <script>
+  import { copySvgSource } from '../utils/svgSource.js';
+  import Notification from './Notification.svelte';
+
   export let logo;
   export let onDownload;
 
@@ -14,16 +17,15 @@
   let showNotification = false;
   let notificationText = '';
   let notificationType = 'success'; // 'success' or 'error'
-  let notificationTimeout;
 
   function showCopyNotification(text, type = 'success') {
     notificationText = text;
     notificationType = type;
     showNotification = true;
-    clearTimeout(notificationTimeout);
-    notificationTimeout = setTimeout(() => {
-      showNotification = false;
-    }, 10000);
+  }
+
+  function hideNotification() {
+    showNotification = false;
   }
 
   function toggleDownloadMenu() {
@@ -181,23 +183,49 @@
       alert('Error checking JPG file: ' + err);
     }
   }
+
+  // Handler for the source button click
+  async function handleSourceClick(e) {
+    e.stopPropagation();
+    if (logo.format !== 'SVG') return;
+
+    try {
+      const success = await copySvgSource(logo.path);
+      if (success) {
+        showCopyNotification('SVG source copied!', 'success');
+      } else {
+        showCopyNotification('Failed to copy SVG source', 'error');
+      }
+    } catch (err) {
+      showCopyNotification('Error copying SVG source', 'error');
+      console.error('Error copying SVG source:', err);
+    }
+  }
 </script>
 
 <span class="action-group">
   <button class="copy-btn" on:click={handleCopyUrlClick}>
-    Copy URL
+    Copy Link
   </button>
   {#if logo.format === 'SVG'}
     <button class="menu-btn copy-menu" bind:this={copyMenuAnchor} aria-label="More copy options" on:click={toggleCopyMenu}>
       <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="4" r="1.5" fill="currentColor"/><circle cx="10" cy="10" r="1.5" fill="currentColor"/><circle cx="10" cy="16" r="1.5" fill="currentColor"/></svg>
     </button>
     {#if showCopyMenu}
-      <div class="dropdown-menu">
+    <div class="dropdown-menu">
+        <button class="dropdown-item" on:click={handleSourceClick}>
+          <span class="icon-wrapper">
+            <svg style="margin-right: 5px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M14.5 4H17a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3v-5m2-7L4 7l2 2"/><path d="m10 9l2-2l-2-2"/></g></svg>
+          </span>
+          <span class="dropdown-text">Copy SVG Source</span>
+        </button>
         <button class="dropdown-item" on:click={handleCopyPngLinkClick}>
-          Copy PNG Link
+          <span class="icon-wrapper"></span>
+          <span class="dropdown-text">Copy PNG Link</span>
         </button>
         <button class="dropdown-item" on:click={handleCopyJpgLinkClick}>
-          Copy JPG Link
+          <span class="icon-wrapper"></span>
+          <span class="dropdown-text">Copy JPG Link</span>
         </button>
       </div>
     {/if}
@@ -215,27 +243,27 @@
     {#if showDownloadMenu}
       <div class="dropdown-menu">
         <button class="dropdown-item" on:click={handleDownloadPngClick}>
-          Download PNG
+          <span class="icon-wrapper"></span>
+          <span class="dropdown-text">Download PNG</span>
         </button>
         <button class="dropdown-item" on:click={handleDownloadJpgClick}>
-          Download JPG
+          <span class="icon-wrapper"></span>
+          <span class="dropdown-text">Download JPG</span>
         </button>
       </div>
     {/if}
   {/if}
 </span>
 
-{#if showNotification}
-  <div class="copy-notification {notificationType}">
-    {notificationText}
-  </div>
-{/if}
 
-{#if showNotification}
-  <div class="notification-badge">
-    {notificationText}
-  </div>
-{/if}
+
+<Notification
+  text={notificationText}
+  type={notificationType}
+  show={showNotification}
+  onClose={hideNotification}
+  duration={3000}
+/>
 
 <style>
   .action-group {
@@ -320,8 +348,9 @@
   .dropdown-menu {
     position: absolute;
     top: 110%;
-    right: 0;
-    min-width: 160px;
+    right: auto;
+    left: 0;
+    min-width: 200px; /* Increased width from 160px */
     background: var(--color-card, #fff);
     color: var(--color-text, #222);
     border: 1px solid var(--color-border, #ddd);
@@ -334,6 +363,12 @@
     gap: 0.1em;
     pointer-events: auto;
   }
+
+  /* Position the download menu on the right side */
+  .download-group .dropdown-menu {
+    right: 0;
+    left: auto;
+  }
   .dropdown-item {
     background: none;
     color: var(--color-text, #222);
@@ -345,6 +380,8 @@
     transition: background 0.2s, color 0.2s;
     border-radius: 4px;
     pointer-events: auto;
+    display: flex;
+    align-items: center;
   }
   .dropdown-item:focus,
   .dropdown-item:hover {
@@ -352,52 +389,16 @@
     color: #fff;
     outline: none;
   }
-  .notification-badge {
-    position: fixed;
-    bottom: 1em;
-    right: 1em;
-    background: var(--color-accent, #4f8cff);
-    color: #fff;
-    padding: 0.8em 1.2em;
-    border-radius: 8px;
-    box-shadow: 0 2px 16px 4px rgba(0,0,0,0.18);
-    font-size: 0.95em;
-    z-index: 9999;
-    animation: fadeInOut 10s ease-in-out;
+  .icon-wrapper {
+    width: 20px;
+    min-width: 20px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
   }
-  @keyframes fadeInOut {
-    0%, 90% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
-    }
+  .dropdown-text {
+    padding-left: 5px;
+    white-space: nowrap;
   }
-  .copy-notification {
-    position: fixed;
-    top: 2.5rem;
-    right: 2.5rem;
-    color: #fff;
-    padding: 0.9em 2em;
-    border-radius: 2em;
-    font-size: 1.1em;
-    font-weight: 600;
-    box-shadow: 0 2px 16px 4px rgba(0,0,0,0.18);
-    z-index: 99999;
-    opacity: 0.97;
-    pointer-events: none;
-    transition: opacity 0.3s, background 0.3s;
-  }
-  .copy-notification.success {
-    background: #27ae60;
-  }
-  .copy-notification.error {
-    background: #e74c3c;
-  }
-  .copy-notification.success {
-    background: #27ae60;
-  }
-  .copy-notification.error {
-    background: #e74c3c;
-  }
+  /* Notification styles moved to Notification.svelte */
 </style>
