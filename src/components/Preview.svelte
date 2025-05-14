@@ -10,7 +10,6 @@
   export let logo = null;
   export let theme;
   export let openLogoByAnchor = () => {};
-  export let onCopy = () => {};
   export let onDownload = (path, name) => {
     const a = document.createElement('a');
     a.href = path;
@@ -24,7 +23,7 @@
   let svgSource = '';
   let isFetchingSvgSource = false;
 
-  const dispatch = createEventDispatcher();  // We no longer need the notification state and handlers since Actions component handles this
+  const dispatch = createEventDispatcher();
 
   function close() {
     show = false;
@@ -43,20 +42,25 @@
 
   function isSvgLogo(logo) {
     return logo && logo.format && logo.format.toLowerCase() === 'svg';
+  }  // Function to copy SVG source from textarea
+  function copySvgSourceFromTextarea() {
+    if (svgSource) {
+      try {
+        navigator.clipboard.writeText(svgSource);
+        return true;
+      } catch (err) {
+        console.error('Error copying from textarea:', err);
+        // Show content in prompt as fallback
+        window.prompt('Copy the SVG source code:', svgSource);
+        return false;
+      }
+    }
+    return false;
   }
 
   $: getLogoThemeColor = logo => getDefaultLogoColor(logo.colors, theme);
 
   $: validColorConfig = logo && typeof logo.colorConfig === 'object' && logo.colorConfig.selector ? logo.colorConfig : undefined;
-
-  // Improved debug logging for color and theme
-  $: {
-    if (logo && logo.colors) {
-      const themeColor = getDefaultLogoColor(logo.colors, theme);
-      const fallbackColor = getThemeColor(logo.colors, theme);
-      const activeColor = logo._activeColor || themeColor;
-    }
-  }
 
   // Sync show state with URL hash
   $: {
@@ -254,6 +258,8 @@
             <Actions
               logo={logo}
               onDownload={onDownload}
+              onCopySource={copySvgSourceFromTextarea}
+              inPreview={true}
             />
           </div>
         </div>
@@ -272,9 +278,8 @@
   {/if}
 </div>
 
-
-
 <style>
+
   .preview-actions-container {
     width: 100%;
     background: var(--color-card);

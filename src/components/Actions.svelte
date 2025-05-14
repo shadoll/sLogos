@@ -4,6 +4,8 @@
 
   export let logo;
   export let onDownload;
+  export let onCopySource = undefined;
+  export let inPreview = false;
 
   // Download menu state
   let showDownloadMenu = false;
@@ -22,6 +24,11 @@
     notificationText = text;
     notificationType = type;
     showNotification = true;
+
+    // Force the notification to be visible in the preview
+    setTimeout(() => {
+      showNotification = true; // Re-trigger the notification in case it was missed
+    }, 50);
   }
 
   function hideNotification() {
@@ -190,11 +197,22 @@
     if (logo.format !== 'SVG') return;
 
     try {
-      const success = await copySvgSource(logo.path);
-      if (success) {
-        showCopyNotification('SVG source copied!', 'success');
+      // Check if we're in preview mode and have a custom handler
+      if (inPreview && typeof onCopySource === 'function') {
+        const success = onCopySource();
+        if (success) {
+          showCopyNotification('SVG source copied!', 'success');
+        } else {
+          showCopyNotification('Failed to copy SVG source', 'error');
+        }
       } else {
-        showCopyNotification('Failed to copy SVG source', 'error');
+        // Use the standard method for grid/list view
+        const success = await copySvgSource(logo.path);
+        if (success) {
+          showCopyNotification('SVG source copied!', 'success');
+        } else {
+          showCopyNotification('Failed to copy SVG source', 'error');
+        }
       }
     } catch (err) {
       showCopyNotification('Error copying SVG source', 'error');
@@ -255,15 +273,15 @@
   {/if}
 </span>
 
-
-
-<Notification
-  text={notificationText}
-  type={notificationType}
-  show={showNotification}
-  onClose={hideNotification}
-  duration={3000}
-/>
+<div class="notification-overlay">
+  <Notification
+    text={notificationText}
+    type={notificationType}
+    show={showNotification}
+    onClose={hideNotification}
+    duration={3000}
+  />
+</div>
 
 <style>
   .action-group {
@@ -401,4 +419,11 @@
     white-space: nowrap;
   }
   /* Notification styles moved to Notification.svelte */
+  .notification-overlay {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10000;
+    pointer-events: none;
+  }
 </style>
