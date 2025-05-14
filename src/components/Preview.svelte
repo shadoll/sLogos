@@ -1,15 +1,30 @@
 <script>
   import { onMount, onDestroy, createEventDispatcher } from 'svelte';
   import InlineSvg from './InlineSvg.svelte';
+  import Actions from './Actions.svelte';
   import { getDefaultLogoColor, getThemeColor } from '../utils/colorTheme.js';
   import { generateColorSetCircle } from "../utils/colorCircles.js";
+  import { fetchSvgSource } from "../utils/svgSource.js";
 
   export let show = false;
   export let logo = null;
   export let theme;
   export let openLogoByAnchor = () => {};
+  export let onCopy = () => {};
+  export let onDownload = (path, name) => {
+    const a = document.createElement('a');
+    a.href = path;
+    a.download = name;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  };
 
-  const dispatch = createEventDispatcher();
+  // For SVG source code display
+  let svgSource = '';
+  let isFetchingSvgSource = false;
+
+  const dispatch = createEventDispatcher();  // We no longer need the notification state and handlers since Actions component handles this
 
   function close() {
     show = false;
@@ -65,6 +80,20 @@
   // Watch for show/close to update scroll lock
   $: if (show && logo) {
     document.body.style.overflow = 'hidden';
+
+    // Fetch SVG source when logo is displayed and is an SVG
+    if (logo.format === 'SVG' && !svgSource) {
+      isFetchingSvgSource = true;
+      fetchSvgSource(logo.path)
+        .then(source => {
+          svgSource = source;
+          isFetchingSvgSource = false;
+        })
+        .catch(err => {
+          console.error('Error fetching SVG source:', err);
+          isFetchingSvgSource = false;
+        });
+    }
   } else {
     document.body.style.overflow = '';
   }
@@ -153,9 +182,10 @@
             {/if}
           </div>
         </div>
-        <div class="logo-details fullscreen-details">
-          {#if isSvgLogo(logo) && logo.colors}
-            <div class="color-switcher-preview">
+        <div class="right-column">
+          <div class="logo-details fullscreen-details">
+            {#if isSvgLogo(logo) && logo.colors}
+              <div class="color-switcher-preview">
               <span
                 class="color-circle color-reset"
                 title="Reset to theme color"
@@ -218,12 +248,51 @@
             </div>
           {/if}
         </div>
+
+        <div class="preview-actions-container">
+          <div class="actions-wrapper">
+            <Actions
+              logo={logo}
+              onDownload={onDownload}
+            />
+          </div>
+        </div>
+
+        {#if isSvgLogo(logo) && svgSource}
+          <div class="source-code-container">
+            <h3>SVG Source Code</h3>
+            <div class="source-code-wrapper">
+              <textarea class="source-code" readonly>{svgSource}</textarea>
+            </div>
+          </div>
+        {/if}
+      </div>
       </div>
     </div>
   {/if}
 </div>
 
+
+
 <style>
+  .preview-actions-container {
+    width: 100%;
+    background: var(--color-card);
+    color: var(--color-text);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 16px 4px rgba(0,0,0,0.18);
+    z-index: 1;
+    position: relative;
+  }
+
+  .actions-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
   .set-circle {
     background: var(--color-border);
     color: var(--color-text);
@@ -297,12 +366,12 @@
     flex: 1 1 auto;
     display: flex;
     flex-direction: row;
-    align-items: stretch;
+    align-items: flex-start;
     justify-content: center;
     width: 100vw;
     height: 100%;
     background: var(--color-card);
-    padding: 0;
+    padding: 0 2rem 2rem 2rem;
     gap: 2.5rem;
     overflow: hidden;
   }
@@ -338,25 +407,21 @@
     max-height: 100%;
   }
   .logo-details.fullscreen-details {
-    flex: 1 1 300px;
-    min-width: 220px;
-    max-width: 300px;
+    width: 100%;
     background: var(--color-card);
     color: var(--color-text);
     border-radius: 12px;
-    padding: 2rem 2rem 1.5rem 2rem;
-    margin: 0 2rem 0 0;
+    padding: 1.5rem;
     box-shadow: 0 2px 16px 4px rgba(0,0,0,0.18);
     overflow-y: auto;
-    align-self: center;
     z-index: 1;
-    max-height: 100%;
   }
   .logo-tags {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
   }
+
   .set-circle {
     background: var(--color-border);
     color: var(--color-text);
@@ -372,6 +437,14 @@
     background: #444;
     color: #eee;
   }
+
+  .preview-actions-container {
+    margin-top: 2rem;
+    border-top: 1px solid var(--color-border);
+    padding-top: 1rem;
+  }
+
+  /* These styles are no longer needed as we're using the Actions component */
 
   @media (max-width: 900px) {
     .modal-body.fullscreen-body {
@@ -390,5 +463,60 @@
     .modal-header {
       padding: 1.2rem 0.7rem 0.7rem 0.7rem;
     }
+    .right-column {
+      max-width: 100%;
+      width: 100%;
+    }
+    .preview-actions-container {
+      margin: 0 auto;
+      width: 100%;
+    }
+  }
+
+  .right-column {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 300px;
+  }
+
+  .source-code-container {
+    width: 100%;
+    background: var(--color-card);
+    color: var(--color-text);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 16px 4px rgba(0,0,0,0.18);
+    z-index: 1;
+    position: relative;
+    margin-top: 2rem;
+  }
+
+  .source-code-container h3 {
+    font-size: 1rem;
+    margin: 0 0 1rem 0;
+    color: var(--color-text);
+  }
+
+  .source-code-wrapper {
+    position: relative;
+    width: 100%;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid var(--color-border, #ddd);
+  }
+
+  .source-code {
+    width: 100%;
+    min-height: 180px;
+    max-height: 300px;
+    padding: 1rem;
+    font-family: monospace;
+    font-size: 0.6rem;
+    line-height: 1.4;
+    border: none;
+    border-radius: 6px;
+    resize: none;
+    overflow-y: auto;
   }
 </style>

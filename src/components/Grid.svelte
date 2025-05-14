@@ -44,7 +44,14 @@ $: getLogoThemeColor = logo => getDefaultLogoColor(logo.colors, theme);
   }
 </script>
 
-<Preview show={showModal} logo={selectedLogo} theme={theme} on:close={closeModal} />
+<Preview
+  show={showModal}
+  logo={selectedLogo}
+  theme={theme}
+  {onCopy}
+  {onDownload}
+  on:close={closeModal}
+/>
 
 <div class="logo-grid">
   {#each logos as logo}

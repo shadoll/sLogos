@@ -21,15 +21,13 @@ export async function fetchSvgSource(path) {
  * Copy SVG source to clipboard
  *
  * @param {string} path - Path to the SVG file
- * @returns {Promise<boolean>} - True if successful, false otherwise
+ * @returns {Promise<string>} - The SVG source code
  */
 export async function copySvgSource(path) {
   try {
-    const svgSource = await fetchSvgSource(path);
-    await navigator.clipboard.writeText(svgSource);
-    return true;
+    return await fetchSvgSource(path);
   } catch (error) {
-    console.error('Error copying SVG source:', error);
-    return false;
+    console.error('Error fetching SVG source:', error);
+    throw error;
   }
 }
