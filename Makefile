@@ -2,7 +2,7 @@
 
 # Configuration
 DOCKER_COMPOSE = docker compose
-CONTAINER_NAME = logo-gallery
+CONTAINER_NAME = slogos-dev
 DEV_PORT = 5006
 
 # Main targets
@@ -47,14 +47,8 @@ run:
 # Scan logos.json from files in the logos directory (for dev mode)
 scan-logos:
 	@echo "Scanning logos directory and updating logos.json for development..."
-	$(DOCKER_COMPOSE) -f compose.dev.yml run --rm slogos-dev npm run scan-logos
+	$(DOCKER_COMPOSE) -f compose.dev.yml run --rm $(CONTAINER_NAME) npm run scan-logos
 	@echo "Logos have been updated - refresh the browser to see changes"
-
-# Convert logo colors format from array to object
-convert-colors:
-	@echo "Converting logo colors format in logos.json..."
-	$(DOCKER_COMPOSE) -f compose.dev.yml run --rm slogos-dev npm run convert-colors
-	@echo "Color format conversion complete"
 
 # Clean up build artifacts and temporary files
 clean:
@@ -70,7 +64,7 @@ rebuild:
 # Generate favicons
 favicon:
 	@echo "Generating favicons..."
-	$(DOCKER_COMPOSE) -f compose.dev.yml run --rm slogos-dev npm run generate-favicons
+	$(DOCKER_COMPOSE) -f compose.dev.yml run --rm $(CONTAINER_NAME) npm run generate-favicons
 	@echo "Favicons have been generated"
 
 # Build with favicons
@@ -79,5 +73,5 @@ build-with-favicons: favicon build
 # Update package-lock.json by running npm install in Docker
 update-lock:
 	@echo "Updating package-lock.json to match package.json..."
-	$(DOCKER_COMPOSE) -f compose.dev.yml run --rm slogos-dev npm install
+	$(DOCKER_COMPOSE) -f compose.dev.yml run --rm $(CONTAINER_NAME) npm install
 	@echo "Package lock file has been updated"

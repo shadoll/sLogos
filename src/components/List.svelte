@@ -1,7 +1,6 @@
 <script>
-  import Actions from './Actions.svelte';
   import Preview from "./Preview.svelte";
-
+  import Actions from "./Actions.svelte";
   import InlineSvg from "./InlineSvg.svelte";
   import { getThemeColor, getDefaultLogoColor } from "../utils/colorTheme.js";
   import { generateColorSetCircle } from "../utils/colorCircles.js";
@@ -16,15 +15,10 @@
   let showModal = false;
   let selectedLogo = null;
 
-  let theme = getTheme();
-
-  function openPreview(logo) {
-    selectedLogo = logo;
-    showModal = true;
-  }
-
-  function closeModal() {
-    showModal = false;
+  let theme = getTheme();  function openPreview(logo) {
+    // Navigate to preview page instead of showing modal
+    const previewUrl = `#/preview/${encodeURIComponent(logo.name.replace(/\s+/g, '-').toLowerCase())}`;
+    window.location.href = previewUrl;
   }
 
   function isSvgLogo(logo) {
@@ -77,8 +71,6 @@
     }
   }
 </script>
-
-<Preview show={showModal} logo={selectedLogo} on:close={closeModal} />
 
 <div class="logo-list">
   {#each logos as logo}
@@ -179,6 +171,7 @@
           class="brand-filter-btn common-btn"
           title="Filter by brand"
           on:click={() => {
+            console.log("List: Filtering by brand:", logo.brand);
             setSearchQuery(logo.brand);
             // Update URL with search param
             const params = new URLSearchParams(window.location.search);

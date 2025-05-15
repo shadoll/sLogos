@@ -1,9 +1,15 @@
 <script>
   import { onMount } from "svelte";
-  import Grid from "./components/Grid.svelte";
-  import List from "./components/List.svelte";
-  import Header from "./components/Header.svelte";
-  import Preview from "./components/Preview.svelte";
+  import Router from 'svelte-spa-router';
+
+  // Import pages for routing
+  import Home from './pages/Home.svelte';
+  import PreviewPage from './pages/Preview.svelte';
+
+  const routes = {
+    '/': Home,
+    '/preview/:id': PreviewPage,
+  };
 
   let viewMode = "grid"; // 'grid' or 'list'
   let searchQuery = "";
@@ -21,15 +27,82 @@
 
   function setSearchQuery(val) {
     searchQuery = val;
+    console.log("App: searchQuery set to:", val);
+    // Update window.appData immediately
+    if (typeof window !== 'undefined' && window.appData) {
+      window.appData.searchQuery = val;
+
+      // Also update filtered/display logos immediately for reactive UI
+      window.appData.filteredLogos = window.appData.logos.filter((logo) => {
+        const matchesSearch = logo.name.toLowerCase().includes(val.toLowerCase())
+          || (logo.brand && logo.brand.toLowerCase().includes(val.toLowerCase()));
+        const matchesTags =
+          !selectedTags.length ||
+          (logo.tags &&
+            logo.tags.some((tag) =>
+              selectedTags.includes(typeof tag === "string" ? tag : tag.text),
+            ));
+        return matchesSearch && matchesTags;
+      });
+
+      window.appData.displayLogos = (!val && compactMode)
+        ? window.appData.filteredLogos.filter((logo, idx, arr) =>
+            arr.findIndex(l => (l.brand || l.name) === (logo.brand || logo.name)) === idx)
+        : window.appData.filteredLogos;
+
+      console.log("App: Updated filtered/display logos directly:",
+        window.appData.filteredLogos.length, window.appData.displayLogos.length);
+    }
   }
 
   function setCompactMode(val) {
     compactMode = val;
     localStorage.setItem("compactMode", String(val));
+
+    // Update window.appData immediately on compact mode change
+    if (typeof window !== 'undefined' && window.appData) {
+      window.appData.compactMode = val;
+      console.log("App: Updated compactMode in window.appData to", val);
+
+      // Also update filtered/display logos immediately
+      updateFilteredLogosImmediate();
+    }
   }
 
   // Load logos from JSON file with cache busting
   onMount(async () => {
+    console.log("App: onMount start - before loading logos");
+
+    // Set initial empty app data
+    if (typeof window !== 'undefined') {
+      window.appData = {
+        logos: [],
+        filteredLogos: [],
+        displayLogos: [],
+        theme,
+        effectiveTheme: 'light',
+        viewMode,
+        searchQuery,
+        allTags: [],
+        selectedTags: [],
+        tagDropdownOpen,
+        compactMode,
+        setSearchQuery,
+        setGridView,
+        setListView,
+        setTheme,
+        toggleDropdown,
+        addTag,
+        removeTag,
+        toggleTag,
+        getTagObj,
+        closeDropdown,
+        setCompactMode,
+        onCopy: copyUrl,
+        onDownload: downloadLogo
+      };
+    }
+
     try {
       // Add timestamp as cache-busting query parameter
       const timestamp = new Date().getTime();
@@ -45,12 +118,44 @@
       if (response.ok) {
         logos = await response.json();
         filteredLogos = logos;
+        displayLogos = logos;
         console.log(
           "Loaded logos:",
           logos.length,
           "at",
           new Date().toLocaleTimeString(),
         );
+
+        // Update app data immediately after logos are loaded
+        if (typeof window !== 'undefined') {
+          window.appData = {
+            logos,
+            filteredLogos,
+            displayLogos,
+            theme,
+            effectiveTheme,
+            viewMode,
+            searchQuery,
+            allTags,
+            selectedTags,
+            tagDropdownOpen,
+            compactMode,
+            setSearchQuery,
+            setGridView,
+            setListView,
+            setTheme,
+            toggleDropdown,
+            addTag,
+            removeTag,
+            toggleTag,
+            getTagObj,
+            closeDropdown,
+            setCompactMode,
+            onCopy: copyUrl,
+            onDownload: downloadLogo
+          };
+          console.log("App: Updated window.appData after loading with", logos.length, "logos");
+        }
       } else {
         console.error("Failed to load logos data", response.status);
       }
@@ -134,16 +239,59 @@
         : "light"
       : theme;
 
+  // Make app data available globally for components
+  $: if (typeof window !== 'undefined') {
+    window.appData = {
+      logos,
+      filteredLogos,
+      displayLogos,
+      theme,
+      effectiveTheme,
+      viewMode,
+      searchQuery,
+      allTags,
+      selectedTags,
+      tagDropdownOpen,
+      compactMode,
+      setSearchQuery,
+      setGridView,
+      setListView,
+      setTheme,
+      toggleDropdown,
+      addTag,
+      removeTag,
+      toggleTag,
+      getTagObj,
+      closeDropdown,
+      setCompactMode,
+      onCopy: copyUrl,
+      onDownload: downloadLogo
+    };
+    console.log("App: Updated window.appData with", logos.length, "logos,", displayLogos.length, "display logos");
+  }
+
   function setGridView() {
     console.log("Setting view mode to: grid");
     viewMode = "grid";
     localStorage.setItem("viewMode", "grid");
+
+    // Update window.appData immediately on view change
+    if (typeof window !== 'undefined' && window.appData) {
+      window.appData.viewMode = "grid";
+      console.log("App: Updated viewMode in window.appData to grid");
+    }
   }
 
   function setListView() {
     console.log("Setting view mode to: list");
     viewMode = "list";
     localStorage.setItem("viewMode", "list");
+
+    // Update window.appData immediately on view change
+    if (typeof window !== 'undefined' && window.appData) {
+      window.appData.viewMode = "list";
+      console.log("App: Updated viewMode in window.appData to list");
+    }
   }
 
   function copyUrl(logoPath) {
@@ -219,31 +367,101 @@
   }
 
   function toggleTag(tag) {
+    console.log("App: Toggling tag:", tag);
     if (selectedTags.includes(tag)) {
       selectedTags = selectedTags.filter((t) => t !== tag);
     } else {
       selectedTags = [...selectedTags, tag];
     }
-  }
 
-  function addTag(tag) {
+    // Update window.appData immediately
+    if (typeof window !== 'undefined' && window.appData) {
+      window.appData.selectedTags = [...selectedTags];
+
+      // Update filtered logos immediately
+      updateFilteredLogosImmediate();
+    }
+  }  function addTag(tag) {
+    console.log("App: Adding tag:", tag);
     if (!selectedTags.includes(tag)) {
       selectedTags = [...selectedTags, tag];
+
+      // Update window.appData immediately
+      if (typeof window !== 'undefined' && window.appData) {
+        window.appData.selectedTags = [...selectedTags];
+
+        // Update filtered logos immediately
+        updateFilteredLogosImmediate();
+      }
     }
+    // Close dropdown after adding tag
     tagDropdownOpen = false;
+
+    // Also update the dropdown state in window.appData
+    if (typeof window !== 'undefined' && window.appData) {
+      window.appData.tagDropdownOpen = false;
+      console.log("App: Closed tag dropdown after adding tag");
+    }
   }
 
   function removeTag(tag) {
+    console.log("App: Removing tag:", tag);
     selectedTags = selectedTags.filter((t) => t !== tag);
+
+    // Update window.appData immediately
+    if (typeof window !== 'undefined' && window.appData) {
+      window.appData.selectedTags = [...selectedTags];
+
+      // Update filtered logos immediately
+      updateFilteredLogosImmediate();
+    }
+  }
+
+  // Helper function to immediately update filtered/display logos in window.appData
+  function updateFilteredLogosImmediate() {
+    if (typeof window !== 'undefined' && window.appData && window.appData.logos) {
+      window.appData.filteredLogos = window.appData.logos.filter((logo) => {
+        const matchesSearch = logo.name.toLowerCase().includes(searchQuery.toLowerCase())
+          || (logo.brand && logo.brand.toLowerCase().includes(searchQuery.toLowerCase()));
+        const matchesTags =
+          !selectedTags.length ||
+          (logo.tags &&
+            logo.tags.some((tag) =>
+              selectedTags.includes(typeof tag === "string" ? tag : tag.text),
+            ));
+        return matchesSearch && matchesTags;
+      });
+
+      window.appData.displayLogos = (!searchQuery && compactMode)
+        ? window.appData.filteredLogos.filter((logo, idx, arr) =>
+            arr.findIndex(l => (l.brand || l.name) === (logo.brand || logo.name)) === idx)
+        : window.appData.filteredLogos;
+
+      console.log("App: Updated filtered logos:", window.appData.filteredLogos.length,
+        "display logos:", window.appData.displayLogos.length);
+    }
   }
 
   function toggleDropdown() {
+    console.log("App: Toggling tag dropdown, current state:", tagDropdownOpen);
     tagDropdownOpen = !tagDropdownOpen;
+
+    // Update window.appData immediately
+    if (typeof window !== 'undefined' && window.appData) {
+      window.appData.tagDropdownOpen = tagDropdownOpen;
+      console.log("App: Updated tagDropdownOpen in window.appData to", tagDropdownOpen);
+    }
   }
 
   function closeDropdown(e) {
     if (!e.target.closest(".tag-dropdown")) {
       tagDropdownOpen = false;
+
+      // Update window.appData immediately
+      if (typeof window !== 'undefined' && window.appData) {
+        window.appData.tagDropdownOpen = false;
+        console.log("App: Closed dropdown, updated in window.appData");
+      }
     }
   }
 
@@ -252,22 +470,35 @@
   }
 
   function openPreview(logo) {
-    selectedLogo = logo;
-    showModal = true;
+    // Use the routing approach
+    const previewUrl = `#/preview/${encodeURIComponent(logo.name.replace(/\s+/g, '-').toLowerCase())}`;
+    window.location.href = previewUrl;
   }
 
   function openLogoByAnchor(hash) {
-    if (!hash || !hash.startsWith("#preview-")) return;
-    const anchor = decodeURIComponent(
-      hash.replace("#preview-", "").replace(/-/g, " "),
-    );
+    if (!hash) return;
+
+    let anchor = "";
+    // Handle both old and new formats
+    if (hash.startsWith("#preview-")) {
+      anchor = decodeURIComponent(hash.replace("#preview-", "").replace(/-/g, " "));
+    } else if (hash.startsWith("#/preview/")) {
+      anchor = decodeURIComponent(hash.replace("#/preview/", "").replace(/-/g, " "));
+    } else {
+      return;
+    }
+
     const found = logos.find(
       (l) =>
         l.name.replace(/\s+/g, "-").toLowerCase() ===
         anchor.replace(/\s+/g, "-").toLowerCase(),
     );
+
     if (found) {
-      openPreview(found);
+      // Use routing approach - use router format
+      const previewUrl = `#/preview/${encodeURIComponent(found.name.replace(/\s+/g, '-').toLowerCase())}`;
+      console.log("App: Navigating to router URL:", previewUrl);
+      window.location.href = previewUrl;
     }
   }
 
@@ -280,85 +511,7 @@
 </script>
 
 <main class="container app-flex">
-  <Header
-    logos={logos}
-    displayLogos={displayLogos}
-    {theme}
-    {setTheme}
-    {viewMode}
-    {setGridView}
-    {setListView}
-    bind:searchQuery
-    setSearchQuery={setSearchQuery}
-    {allTags}
-    {selectedTags}
-    {tagDropdownOpen}
-    {toggleDropdown}
-    {addTag}
-    {removeTag}
-    {toggleTag}
-    {getTagObj}
-    {closeDropdown}
-    {filteredLogos}
-    {compactMode}
-    setCompactMode={setCompactMode}
-  />
-
-  <Preview
-    bind:show={showModal}
-    bind:logo={selectedLogo}
-    {theme}
-    {logos}
-    {openLogoByAnchor}
-  />
-
-  <div class="logos-container main-content">
-    {#if viewMode === "grid"}
-      <Grid
-        logos={displayLogos}
-        allLogos={logos}
-        onCopy={copyUrl}
-        onDownload={downloadLogo}
-        setSearchQuery={setSearchQuery}
-        theme={effectiveTheme}
-        on:openPreview={(e) => openPreview(e.detail)}
-        {compactMode}
-      />
-    {:else}
-      <List
-        logos={displayLogos}
-        allLogos={logos}
-        onCopy={copyUrl}
-        onDownload={downloadLogo}
-        setSearchQuery={setSearchQuery}
-        on:openPreview={(e) => openPreview(e.detail)}
-        {compactMode}
-      />
-    {/if}
-  </div>
-
-  <footer>
-    <div class="footer-flex">
-      <span class="footer-left">shadoll Logo Gallery</span>
-      <span class="footer-center">All logos are property of their respective owners.</span>
-      <a
-        href="https://github.com/shadoll/sLogos"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="footer-github"
-      >
-        <svg
-          width="22"
-          height="22"
-          viewBox="0 0 24 24"
-          fill="#ccc"
-          style="margin-right:0.3em;"
-        ><path
-            d="M12 0.297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.387 0.6 0.113 0.82-0.258 0.82-0.577 0-0.285-0.011-1.04-0.017-2.04-3.338 0.726-4.042-1.61-4.042-1.61-0.546-1.387-1.333-1.756-1.333-1.756-1.089-0.745 0.084-0.729 0.084-0.729 1.205 0.084 1.84 1.236 1.84 1.236 1.07 1.834 2.809 1.304 3.495 0.997 0.108-0.775 0.418-1.305 0.762-1.605-2.665-0.305-5.466-1.334-5.466-5.931 0-1.311 0.469-2.381 1.236-3.221-0.124-0.303-0.535-1.523 0.117-3.176 0 0 1.008-0.322 3.301 1.23 0.957-0.266 1.983-0.399 3.003-0.404 1.02 0.005 2.047 0.138 3.006 0.404 2.291-1.553 3.297-1.23 3.297-1.23 0.653 1.653 0.242 2.873 0.119 3.176 0.77 0.84 1.235 1.91 1.235 3.221 0 4.609-2.803 5.624-5.475 5.921 0.43 0.372 0.823 1.102 0.823 2.222 0 1.606-0.015 2.898-0.015 3.293 0 0.322 0.216 0.694 0.825 0.576 4.765-1.589 8.199-6.085 8.199-11.386 0-6.627-5.373-12-12-12z"
-        /></svg>
-      </a>
-    </div>
-  </footer>
+  <Router {routes} />
 
   <style>
     .app-flex {

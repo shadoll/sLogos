@@ -13,19 +13,14 @@
   export let allLogos = [];
 
   let showModal = false;
-  let selectedLogo = null;
-
-  function openPreview(logo) {
-    selectedLogo = logo;
-    showModal = true;
-  }
-
-  function closeModal() {
-    showModal = false;
+  let selectedLogo = null;  function openPreview(logo) {
+    // Navigate to preview page using router
+    const routerPath = `/preview/${encodeURIComponent(logo.name.replace(/\s+/g, '-').toLowerCase())}`;
+    window.location.hash = routerPath;
   }
 
   function isSvgLogo(logo) {
-    return logo.format && logo.format.toLowerCase() === 'svg';
+    return logo && logo.format && logo.format.toLowerCase() === 'svg';
   }
 
   export let theme;
@@ -44,23 +39,20 @@ $: getLogoThemeColor = logo => getDefaultLogoColor(logo.colors, theme);
   }
 </script>
 
-<Preview
-  show={showModal}
-  logo={selectedLogo}
-  theme={theme}
-  {onCopy}
-  {onDownload}
-  on:close={closeModal}
-/>
+<!-- Preview is now handled via the standalone page, no longer needed here -->
 
 <div class="logo-grid">
   {#each logos as logo}
+    <!-- For debugging: {console.log("Grid: rendering logo", logo)} -->
     <div class="logo-card">
       <div class="logo-image"
         role="button"
         tabindex="0"
         aria-label="Preview {logo.name}"
-        on:click={() => openPreview(logo)}
+        on:click={() => {
+          console.log("Logo clicked, calling openPreview");
+          openPreview(logo);
+        }}
         on:keydown={(e) => (e.key === 'Enter' || e.key === ' ') && openPreview(logo)}
         style="cursor:pointer;"
       >
@@ -85,6 +77,7 @@ $: getLogoThemeColor = logo => getDefaultLogoColor(logo.colors, theme);
         <div class="logo-title-row">
           <h3>{logo.name}</h3>
           <button class="brand-filter-btn" title="Filter by brand" on:click={() => {
+            console.log("Grid: Filtering by brand:", logo.brand);
             setSearchQuery(logo.brand);
             // Update URL with search param
             const params = new URLSearchParams(window.location.search);

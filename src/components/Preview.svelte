@@ -1,5 +1,5 @@
 <script>
-  import { onMount, onDestroy, createEventDispatcher } from 'svelte';
+  import { onMount } from 'svelte';
   import InlineSvg from './InlineSvg.svelte';
   import Actions from './Actions.svelte';
   import { getDefaultLogoColor, getThemeColor } from '../utils/colorTheme.js';
@@ -9,7 +9,7 @@
   export let show = false;
   export let logo = null;
   export let theme;
-  export let openLogoByAnchor = () => {};
+  export const openLogoByAnchor = () => {};
   export let onDownload = (path, name) => {
     const a = document.createElement('a');
     a.href = path;
@@ -23,22 +23,7 @@
   let svgSource = '';
   let isFetchingSvgSource = false;
 
-  const dispatch = createEventDispatcher();
-
-  function close() {
-    show = false;
-    dispatch('close');
-    // Remove preview anchor from URL
-    if (window.location.hash.startsWith('#preview-')) {
-      history.replaceState(null, '', window.location.pathname + window.location.search);
-    }
-  }
-
-  function handleKeydown(event) {
-    if (event.key === 'Escape') {
-      close();
-    }
-  }
+  // No event dispatching, parent is fully responsible for controlling the component
 
   function isSvgLogo(logo) {
     return logo && logo.format && logo.format.toLowerCase() === 'svg';
@@ -62,29 +47,11 @@
 
   $: validColorConfig = logo && typeof logo.colorConfig === 'object' && logo.colorConfig.selector ? logo.colorConfig : undefined;
 
-  // Sync show state with URL hash
-  $: {
-    if (typeof window !== 'undefined') {
-      if (window.location.hash.startsWith('#preview-')) {
-        show = true;
-      } else {
-        show = false;
-      }
-    }
-  }
+  // No URL manipulation in the component anymore
+  // Parent components should handle all URL and navigation concerns
 
-  // Update URL hash when opening/closing preview
+  // Only fetch SVG source when displayed
   $: if (show && logo) {
-    const anchor = '#preview-' + encodeURIComponent(logo.name.replace(/\s+/g, '-').toLowerCase());
-    if (window.location.hash !== anchor) {
-      history.replaceState(null, '', window.location.pathname + window.location.search + anchor);
-    }
-  }
-
-  // Watch for show/close to update scroll lock
-  $: if (show && logo) {
-    document.body.style.overflow = 'hidden';
-
     // Fetch SVG source when logo is displayed and is an SVG
     if (logo.format === 'SVG' && !svgSource) {
       isFetchingSvgSource = true;
@@ -98,37 +65,10 @@
           isFetchingSvgSource = false;
         });
     }
-  } else {
-    document.body.style.overflow = '';
   }
 
-  // On mount, check for preview anchor and open if present
-  onMount(() => {
-    document.addEventListener('keydown', handleKeydown);
-    if (window.location.hash.startsWith('#preview-')) {
-      openLogoByAnchor(window.location.hash);
-    }
-    window.addEventListener('hashchange', onHashChange);
-    // Lock background scroll when preview is open
-    if (show && logo) {
-      document.body.style.overflow = 'hidden';
-    }
-  });
-
-  onDestroy(() => {
-    document.removeEventListener('keydown', handleKeydown);
-    window.removeEventListener('hashchange', onHashChange);
-    // Restore scroll when component is destroyed
-    document.body.style.overflow = '';
-  });
-
-  function onHashChange() {
-    if (window.location.hash.startsWith('#preview-')) {
-      openLogoByAnchor(window.location.hash);
-    } else {
-      dispatch('close');
-    }
-  }
+  // Component doesn't handle any window events or URL changes
+  // Parent should handle all navigation logic
 
   // Svelte action to remove width/height from SVGs for responsive scaling
   function removeSvgSize(node) {
@@ -154,15 +94,16 @@
 </script>
 
 <div class="modal-backdrop fullscreen"
-  style="display: {show && logo ? 'flex' : 'none'}"
+  style="display: {show === true ? 'flex' : 'none'}"
   role="dialog"
   aria-modal="true"
 >
   {#if logo}
     <div class="modal-content fullscreen-modal">
       <div class="modal-header">
+        <div class="header-spacer"></div>
         <h2>{logo.name}</h2>
-        <button class="close-btn" on:click={close} aria-label="Close preview">×</button>
+        <div class="header-spacer"></div>
       </div>
       <div class="modal-body fullscreen-body">
         <div class="preview-container fullscreen-preview"
@@ -355,17 +296,9 @@
     color: var(--color-accent, #4f8cff);
     margin: 0;
   }
-  .close-btn {
-    font-size: 2.5rem;
-    background: none;
-    border: none;
-    color: var(--color-text);
-    cursor: pointer;
-    transition: color 0.2s;
-    z-index: 2;
-  }
-  .close-btn:hover {
-    color: #f44336;
+  .header-spacer {
+    /* This empty div helps maintain the centered title with the back button on the left */
+    width: 70px;
   }
   .modal-body.fullscreen-body {
     flex: 1 1 auto;

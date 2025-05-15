@@ -7,8 +7,7 @@
     "dev": "rollup -c -w",
     "start": "sirv public --host 0.0.0.0 --dev --single",
     "scan-logos": "node scripts/scanLogos.js",
-    "generate-favicons": "node scripts/generateFavicons.js",
-    "convert-colors": "node scripts/convertColorsFormat.js"
+    "generate-favicons": "node scripts/generateFavicons.js"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.0.0",
@@ -23,6 +22,7 @@
   "dependencies": {
     "@resvg/resvg-js": "^2.0.1",
     "jimp": "^0.22.10",
-    "sirv-cli": "^1.0.0"
+    "sirv-cli": "^1.0.0",
+    "svelte-spa-router": "^3.3.0"
   }
 }

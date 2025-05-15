@@ -6,9 +6,8 @@
   export let targets = null;
   export let sets = null;
   export let activeSet = null;
-  export let colors = null; // Add colors object for access to all color values
-  export const alt = "";
-
+  export let colors = null;
+  export let alt = "";
   let svgHtml = "";
 
   async function fetchAndColorSvg() {
@@ -89,39 +88,29 @@
         }
       }
     }
-    // Otherwise, use the legacy format for backward compatibility
-    else {
-      let targetElements;
-      if (colorConfig.selector) {
-        targetElements = doc.querySelectorAll(colorConfig.selector);
-      } else if (colorConfig.target) {
-        targetElements = doc.querySelectorAll(colorConfig.target);
-      } else {
-        targetElements = [];
-      }
-      targetElements.forEach((el) => {
-        if (colorConfig.attribute) {
-          // Legacy: force a single attribute
-          el.setAttribute(colorConfig.attribute, color);
-        } else {
-          // Always override fill and stroke unless they are 'none'
-          if (el.hasAttribute("fill") && el.getAttribute("fill") !== "none") {
-            el.setAttribute("fill", color);
-          }
-          if (el.hasAttribute("stroke") && el.getAttribute("stroke") !== "none") {
-            el.setAttribute("stroke", color);
-          }
-          if (!el.hasAttribute("fill") && !el.hasAttribute("stroke")) {
-            // If neither, prefer fill
-            el.setAttribute("fill", color);
-          }
-        }
-      });
-    }
     svgHtml = doc.documentElement.outerHTML;
   }
 
   $: path, color, colorConfig, targets, sets, activeSet, colors, fetchAndColorSvg();
 </script>
 
-{@html svgHtml}
+<div class="svg-wrapper" role="img" aria-label={alt || "SVG image"}>
+  {@html svgHtml}
+</div>
+
+<style>
+  .svg-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .svg-wrapper :global(svg) {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+</style>

@@ -12,11 +12,11 @@
   export let setSearchQuery;
   export let allTags = [];
   export let selectedTags = [];
-  export let tagDropdownOpen;
-  export let toggleDropdown;
-  export let addTag;
-  export let removeTag;
-  export let getTagObj;
+  export let tagDropdownOpen = false;
+  export let toggleDropdown = () => console.log("toggleDropdown not provided");
+  export let addTag = () => console.log("addTag not provided");
+  export let removeTag = () => console.log("removeTag not provided");
+  export let getTagObj = (tag) => ({ text: tag });
   export let compactMode = false;
   export let setCompactMode = () => {};
 
@@ -34,6 +34,8 @@
       window.location.pathname +
       (params.toString() ? "?" + params.toString() : "");
     history.replaceState(null, "", newUrl);
+
+    console.log("Header: Search query set to:", searchQuery);
   }
 </script>
 
@@ -144,6 +146,7 @@
               window.location.pathname +
               (params.toString() ? "?" + params.toString() : "");
             history.replaceState(null, "", newUrl);
+            console.log("Header: Search query cleared");
           }}
           aria-label="Clear search"
         >
