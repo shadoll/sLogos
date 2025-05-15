@@ -21,13 +21,10 @@
 
   // For SVG source code display
   let svgSource = "";
-  let isFetchingSvgSource = false;
-
-  // No event dispatching, parent is fully responsible for controlling the component
 
   function isSvgLogo(logo) {
     return logo && logo.format && logo.format.toLowerCase() === "svg";
-  } // Function to copy SVG source from textarea
+  }
   function copySvgSourceFromTextarea() {
     if (svgSource) {
       try {
@@ -35,7 +32,6 @@
         return true;
       } catch (err) {
         console.error("Error copying from textarea:", err);
-        // Show content in prompt as fallback
         window.prompt("Copy the SVG source code:", svgSource);
         return false;
       }
@@ -52,7 +48,6 @@
 
   // Only fetch SVG source when displayed
   $: if (show && logo) {
-    // Fetch SVG source when logo is displayed and is an SVG
     if (logo.format === "SVG" && !svgSource) {
       isFetchingSvgSource = true;
       fetchSvgSource(logo.path)
@@ -106,29 +101,23 @@
       <div class="header-spacer"></div>
     </div>
     <div class="preview-body">
-      <div
-        class="preview-container fullscreen-preview"
-        role="img"
-        aria-label={logo.name}
-      >
-        <div class="preview-media-wrapper" use:removeSvgSize>
-          {#if isSvgLogo(logo)}
-            <InlineSvg
-              path={logo.path}
-              color={logo.colors
-                ? logo._activeColor || getLogoThemeColor(logo)
-                : undefined}
-              colorConfig={validColorConfig}
-              targets={logo.targets}
-              sets={logo.sets}
-              colors={logo.colors}
-              activeSet={logo._activeSet}
-              alt={logo.name}
-            />
-          {:else}
-            <img src={logo.path} alt={logo.name} />
-          {/if}
-        </div>
+      <div class="preview-container" use:removeSvgSize>
+        {#if isSvgLogo(logo)}
+          <InlineSvg
+            path={logo.path}
+            color={logo.colors
+              ? logo._activeColor || getLogoThemeColor(logo)
+              : undefined}
+            colorConfig={validColorConfig}
+            targets={logo.targets}
+            sets={logo.sets}
+            colors={logo.colors}
+            activeSet={logo._activeSet}
+            alt={logo.name}
+          />
+        {:else}
+          <img src={logo.path} alt={logo.name} />
+        {/if}
       </div>
       <div class="right-column">
         <div class="logo-details fullscreen-details">
@@ -277,6 +266,7 @@
     color: #eee;
   }
   .preview-container {
+    flex: 3;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -284,14 +274,17 @@
     background-color: var(--color-card);
     color: var(--color-text);
     border-radius: 4px;
+    height: 100%;
+    width: 100%;
     overflow: hidden;
   }
 
   .preview-container img {
-    max-width: 100%;
-    max-height: 100%;
+    max-width: 80%;
+    max-height: 80%;
     object-fit: contain;
   }
+
   .preview-wrapper {
     position: relative;
     width: 100%;
@@ -303,6 +296,7 @@
     border: none;
     overflow: visible;
   }
+
   .modal-header {
     display: flex;
     justify-content: space-between;
@@ -313,19 +307,22 @@
     z-index: 2;
     flex: 0 0 auto;
   }
+
   .modal-header h2 {
     font-size: 2.2rem;
     color: var(--color-accent, #4f8cff);
     margin: 0;
   }
+
   .header-spacer {
     width: 70px;
   }
+
   .preview-body {
     flex: 1 1 auto;
     display: flex;
     flex-direction: row;
-    align-items: stretch;
+    align-items: center;
     justify-content: space-between;
     width: 100%;
     height: 100%;
@@ -333,37 +330,6 @@
     gap: 2.5rem;
     overflow: visible;
     padding: 1rem;
-  }
-  .preview-container.fullscreen-preview {
-    flex: 3;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 0;
-    min-height: 0;
-    background: var(--color-card);
-    height: 100%;
-    width: 100%;
-    overflow: visible;
-  }
-  .preview-media-wrapper {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: visible;
-  }
-  .preview-media-wrapper img {
-    width: 100%;
-    height: 100%;
-    min-width: 0;
-    min-height: 0;
-    object-fit: contain;
-    display: block;
-    margin: 0;
-    max-width: 100%;
-    max-height: 100%;
   }
   .logo-details.fullscreen-details {
     width: 100%;
@@ -380,16 +346,12 @@
     gap: 0.5rem;
   }
 
-  /* Moved to global.css */
 
   .preview-actions-container {
     margin-top: 2rem;
     border-top: 1px solid var(--color-border);
     padding-top: 1rem;
   }
-
-  /* These styles are no longer needed as we're using the Actions component */
-
   @media (max-width: 900px) {
     .preview-body {
       flex-direction: column;
@@ -417,8 +379,7 @@
       width: 100%;
     }
 
-    /* Mobile-specific styles for the preview container */
-    .preview-container.fullscreen-preview {
+    .preview-container {
       width: 100%;
       height: auto;
       aspect-ratio: 1 / 1; /* Create a square container */
@@ -428,13 +389,13 @@
 
     /* For browsers that don't support aspect-ratio */
     @supports not (aspect-ratio: 1 / 1) {
-      .preview-container.fullscreen-preview {
+      .preview-container {
         height: 0;
         padding-bottom: 100%;
         position: relative;
       }
 
-      .preview-media-wrapper {
+      .preview-container > :global(*) {
         position: absolute;
         top: 0;
         left: 0;
@@ -483,7 +444,6 @@
     overflow-y: auto;
   }
 
-  /* Moved common color switcher styles to global.css */
 
   .logo-details {
     margin-top: 1rem;
