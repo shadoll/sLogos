@@ -1,6 +1,6 @@
 <script>
   import { onMount } from 'svelte';
-  import PreviewComponent from '../components/Preview.svelte';
+  import CardFull from '../components/CardFull.svelte';
   import Footer from '../components/Footer.svelte';
   import { push } from 'svelte-spa-router';
 
@@ -70,7 +70,7 @@
   </div>
 
   <div class="preview-container">
-    <PreviewComponent logo={logo} {theme} {onDownload} show={true} {setTheme} />
+    <CardFull logo={logo} {theme} {onDownload} show={true} {setTheme} />
   </div>
 
   <Footer />

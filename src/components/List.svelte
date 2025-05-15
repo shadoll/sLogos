@@ -1,6 +1,6 @@
 <script>
-  import CardList from './CardList.svelte';
-  import CardSquare from './CardSquare.svelte';
+  import CardSmall from './CardSmall.svelte';
+  import CardMiddle from './CardMiddle.svelte';
   import { getDefaultLogoColor } from '../utils/colorTheme.js';
 
   export let logos = [];
@@ -18,7 +18,7 @@
 <div class={`logos-container ${viewMode}-view`}>
   {#each logos as logo}
     {#if viewMode === "grid"}
-      <CardSquare
+      <CardMiddle
         {logo}
         {theme}
         {onCopy}
@@ -28,7 +28,7 @@
         {setTheme}
       />
     {:else}
-      <CardList
+      <CardSmall
         {logo}
         {theme}
         {onCopy}
