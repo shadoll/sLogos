@@ -387,21 +387,7 @@
     gap: 0.5rem;
   }
 
-  .set-circle {
-    background: var(--color-border);
-    color: var(--color-text);
-    font-size: 10px;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  /* Dark theme variation */
-  :global(.dark-theme) .set-circle {
-    background: #444;
-    color: #eee;
-  }
+  /* Moved to global.css */
 
   .preview-actions-container {
     margin-top: 2rem;
@@ -503,5 +489,23 @@
     border-radius: 6px;
     resize: none;
     overflow-y: auto;
+  }
+
+  /* Moved common color switcher styles to global.css */
+
+  .logo-details {
+    margin-top: 1rem;
+    color: var(--color-text);
+  }
+
+  .logo-details p {
+    margin: 0.5rem 0;
+    font-size: 0.9rem;
+    color: var(--color-text);
+  }
+
+  .logo-details strong,
+  .logo-details span {
+    color: var(--color-text);
   }
 </style>

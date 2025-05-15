@@ -5,11 +5,9 @@
   import Header from "../components/Header.svelte";
   import Footer from "../components/Footer.svelte";
 
-  // Use the app's global data without reloading
   let appData = {};
   let initialized = false;
 
-  // Simple function to get data from the global app object
   function getAppData() {
     if (typeof window !== "undefined" && window.appData) {
       console.log("Home: Using app data with",
@@ -30,11 +28,9 @@
     }
   }
 
-  // Consolidate the onMount functions into a single one
   onMount(() => {
     getAppData();
 
-    // If not initialized yet, set up an interval to check for data
     if (!initialized) {
       console.log("Home: Setting up retry interval for logos data");
       const interval = setInterval(() => {
@@ -49,11 +45,8 @@
             window.appData ? `${window.appData.logos?.length || 0} logos` : "no window.appData");
         }
       }, 200); // Increased interval for better logging
-
-      // No cleanup here - we'll handle in the second part
     }
 
-    // Also watch for changes to window.appData
   let logoCheckInterval;
   let lastViewMode = '';
   let lastCompactMode = false;
@@ -126,7 +119,6 @@
     }
   }, 100); // Faster interval for UI responsiveness
 
-  // Cleanup function to clear the interval when component is destroyed
   return () => clearInterval(logoCheckInterval);
 });
 </script>

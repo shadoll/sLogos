@@ -186,6 +186,8 @@ $: getLogoThemeColor = logo => getDefaultLogoColor(logo.colors, theme);
     justify-content: flex-end;
   }
 
+  /* Removed unused styles */
+
   .logo-title-row {
     display: flex;
     align-items: center;
@@ -220,5 +222,18 @@ $: getLogoThemeColor = logo => getDefaultLogoColor(logo.colors, theme);
     justify-content: center;
     overflow: hidden;
     padding: 0;
+  }
+
+  .logo-card {
+    background: var(--color-card);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    transition: background 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s;
+    min-width: 320px;
+  }
+
+  .logo-grid .logo-item .logo-image {
+    width: 100%;
   }
 </style>

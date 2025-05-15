@@ -208,41 +208,36 @@ button:hover {
   justify-content: space-between;
 }
 
+/* Global color circle and switcher styles */
 .color-circle {
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 4px;
+  border: 1px solid var(--color-border, #ddd);
   cursor: pointer;
+  transition: transform 0.2s;
   box-sizing: border-box;
-  padding: 0;
-  transition: box-shadow 0.2s;
+  display: inline-block;
 }
 
 .color-circle:hover {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  transform: scale(1.1);
 }
 
-.color-circle.color-reset {
-  background: none !important;
-}
-
-.color-switcher-preview,
-.color-switcher-inline,
-.color-switcher-under {
-  display: flex;
-  gap: 0.4em;
-  align-items: center;
+.color-circle:last-child {
+  margin-right: 0;
 }
 
 .color-switcher-preview {
+  display: flex;
+  gap: 0.4em;
+  align-items: center;
   justify-content: center;
 }
 
 .color-switcher-preview.align-right {
+  display: flex;
+  align-items: center;
   justify-content: flex-end;
 }
 
@@ -250,22 +245,11 @@ button:hover {
   justify-content: flex-start;
 }
 
-.color-switcher-inline {
-  margin-left: auto;
+.color-circle.color-reset {
+  background: none !important;
 }
 
-.color-switcher-under {
-  margin: 0.5em 0 0 0;
-}
-
-.logo-card {
-  background: var(--color-card);
-  color: var(--color-text);
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-  transition: background 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s;
-  min-width: 320px;
-}
+/* Moved to component-specific style */
 
 .logo-tag {
   display: inline-block;
@@ -316,6 +300,7 @@ button:hover {
   transition: background 0.2s, color 0.2s;
 }
 
+/* Logo image styles - used in multiple components */
 .logo-preview img,
 div.logo-image img {
   max-width: 80%;
@@ -398,64 +383,11 @@ div.logo-image img {
   color: var(--color-text);
 }
 
+/* Removed grid-specific styles */
 
+/* Removed list-specific styles */
 
-.logo-details {
-  margin-top: 1rem;
-  color: var(--color-text);
-}
-
-.logo-details p {
-  margin: 0.5rem 0;
-  font-size: 0.9rem;
-  color: var(--color-text);
-}
-
-.logo-details strong,
-.logo-details span {
-  color: var(--color-text);
-}
-
-/* Grid specific */
-.logo-grid .logo-item .logo-image {
-  width: 100%;
-}
-
-/* List specific */
-.logo-list .logo-item .logo-image {
-  width: 120px;
-  min-width: 120px;
-  height: 100px;
-  border-right: 1px solid var(--color-border);
-}
-
-/* Row specific */
-.logo-row {
-  display: flex;
-  align-items: center;
-  padding: 0.5em 0.5em;
-  border-bottom: 1px solid var(--color-border);
-  gap: 1em;
-}
-
-.logo-row.grid {
-  flex-direction: column;
-  align-items: stretch;
-  border-bottom: none;
-  border-radius: 10px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
-  margin-bottom: 1em;
-  padding: 1em;
-}
-
-.logo-row.list {
-  flex-direction: row;
-  align-items: center;
-  border-radius: 0;
-  box-shadow: none;
-  margin-bottom: 0;
-  padding: 0.5em 0.5em;
-}
+/* Removed unused row-specific styles */
 
 .logo-img {
   flex-shrink: 0;
@@ -581,7 +513,6 @@ footer {
   }
 }
 
-
 .tag-filter {
   display: flex;
   flex-wrap: wrap;
@@ -687,4 +618,23 @@ footer {
 textarea {
     background-color: var(--background-color);
     color: var(--color-text);
+}
+
+.set-circle {
+  background: var(--color-border);
+  color: var(--color-text);
+  font-size: 10px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 0;
+}
+
+/* Dark theme variation */
+:root.dark-theme .set-circle,
+.dark-theme .set-circle {
+  background: #444;
+  color: #eee;
 }

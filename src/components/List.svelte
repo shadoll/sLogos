@@ -278,7 +278,9 @@
     align-items: center;
     justify-content: space-between;
     gap: 0.5em;
-  }  .set-circle {
+  }
+
+  .set-circle {
     display: flex;
     align-items: center;
     justify-content: center;
