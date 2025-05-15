@@ -3,7 +3,6 @@
   // Import Router component directly with explicit path
   import Router from 'svelte-spa-router/Router.svelte';
 
-  // Import routes from centralized router.js file
   import { routes } from './router.js';
 
   let viewMode = "grid"; // 'grid' or 'list'
@@ -251,7 +250,10 @@
       setSearchQuery,
       setGridView,
       setListView,
-      setTheme,
+      setTheme: (newTheme) => {
+        console.log("window.appData.setTheme called with:", newTheme);
+        setTheme(newTheme);
+      },
       toggleDropdown,
       addTag,
       removeTag,
@@ -354,6 +356,7 @@
 
   function setTheme(newTheme) {
     if (newTheme === "light" || newTheme === "dark" || newTheme === "system") {
+      console.log("App.svelte: Setting theme to:", newTheme);
       theme = newTheme;
       localStorage.setItem("theme", newTheme);
       console.log("[Theme] setTheme:", newTheme);
@@ -439,13 +442,18 @@
   }
 
   function toggleDropdown() {
-    console.log("App: Toggling tag dropdown, current state:", tagDropdownOpen);
     tagDropdownOpen = !tagDropdownOpen;
+    console.log("App: Toggling tag dropdown, current state:", tagDropdownOpen);
 
     // Update window.appData immediately
     if (typeof window !== 'undefined' && window.appData) {
       window.appData.tagDropdownOpen = tagDropdownOpen;
-      console.log("App: Updated tagDropdownOpen in window.appData to", tagDropdownOpen);
+      console.log("App: Updated tagDropdownOpen in window.appData to:", tagDropdownOpen);
+
+      // Force immediate update
+      setTimeout(() => {
+        if (window.appData) window.appData.tagDropdownOpen = tagDropdownOpen;
+      }, 0);
     }
   }
 

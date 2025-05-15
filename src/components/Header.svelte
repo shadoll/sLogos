@@ -3,8 +3,8 @@
 
   export let logos = [];
   export let displayLogos = [];
-  export let theme;
-  export let setTheme;
+  export let theme = "system";
+  export let setTheme = () => {}; // Added default function to prevent errors
   export let viewMode;
   export let setGridView;
   export let setListView;
@@ -187,7 +187,7 @@
           + Tag{selectedTags.length ? "" : "s"}
         </button>
         {#if tagDropdownOpen}
-          <div class="dropdown-list">
+          <div class="dropdown-list" style="z-index: 100;">
             {#each allTags.filter((t) => !selectedTags.includes(t.text)) as tagObj}
               <button
                 class="dropdown-tag"

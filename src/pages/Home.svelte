@@ -1,189 +1,170 @@
 <script>
-  import { onMount } from "svelte";
-  import Grid from "../components/Grid.svelte";
-  import List from "../components/List.svelte";
-  import Header from "../components/Header.svelte";
-  import Footer from "../components/Footer.svelte";
+  import { onMount } from 'svelte';
+  import Header from '../components/Header.svelte';
+  import List from '../components/List.svelte';
+  import Footer from '../components/Footer.svelte';
+  import { push } from 'svelte-spa-router';
 
-  let appData = {};
-  let initialized = false;
+  let logos = [];
+  let allLogos = [];
+  let viewMode = "grid";
+  let theme = "system";
+  let searchQuery = "";
+  let compactMode = false;
+  let tagDropdownOpen = false;
+  let selectedTags = [];
+  let allTags = [];
+  let setTheme = () => {};
 
-  function getAppData() {
-    if (typeof window !== "undefined" && window.appData) {
-      console.log("Home: Using app data with",
-        window.appData.logos ? window.appData.logos.length : 0, "logos",
-        "displayLogos:", window.appData.displayLogos ? window.appData.displayLogos.length : 0);
+  onMount(() => {
+    if (typeof window !== 'undefined' && window.appData) {
+      logos = window.appData.displayLogos || [];
+      allLogos = window.appData.logos || [];
+      viewMode = window.appData.viewMode || "grid";
+      theme = window.appData.theme || "system";
+      searchQuery = window.appData.searchQuery || "";
+      compactMode = window.appData.compactMode || false;
+      tagDropdownOpen = window.appData.tagDropdownOpen || false;
+      selectedTags = window.appData.selectedTags || [];
+      allTags = window.appData.allTags || [];
 
-      // Create a fresh copy to trigger reactivity
-      appData = {
-        ...window.appData,
-        logos: [...(window.appData.logos || [])],
-        displayLogos: [...(window.appData.displayLogos || [])],
-        filteredLogos: [...(window.appData.filteredLogos || [])]
-      };
+      if (window.appData.setTheme && typeof window.appData.setTheme === 'function') {
+        console.log("Home: Found window.appData.setTheme function");
+        setTheme = window.appData.setTheme;
+      } else {
+        console.warn("Home: window.appData.setTheme not found or not a function");
+      }
 
-      initialized = true;
-    } else {
-      console.log("Home: window.appData not available yet");
+      // Set up reactivity with window.appData
+      const interval = setInterval(() => {
+        if (window.appData) {
+          logos = window.appData.displayLogos || logos;
+          allLogos = window.appData.logos || allLogos;
+          viewMode = window.appData.viewMode || viewMode;
+          theme = window.appData.theme || theme;
+          searchQuery = window.appData.searchQuery || searchQuery;
+          compactMode = window.appData.compactMode || compactMode;
+
+          if (typeof window.appData.tagDropdownOpen === 'boolean') {
+            tagDropdownOpen = window.appData.tagDropdownOpen;
+          }
+
+          if (window.appData.selectedTags) {
+            selectedTags = [...window.appData.selectedTags];
+          }
+
+          if (window.appData.allTags) {
+            allTags = [...window.appData.allTags];
+          }
+        }
+      }, 100);
+
+      return () => clearInterval(interval);
+    }
+  });
+
+  function setSearchQuery(query) {
+    searchQuery = query;
+    if (typeof window !== 'undefined' && window.appData && window.appData.setSearchQuery) {
+      window.appData.setSearchQuery(query);
     }
   }
 
-  onMount(() => {
-    getAppData();
-
-    if (!initialized) {
-      console.log("Home: Setting up retry interval for logos data");
-      const interval = setInterval(() => {
-        if (window.appData && window.appData.logos && window.appData.logos.length > 0) {
-          console.log("Home: Data now available:",
-            window.appData.logos.length, "logos");
-          getAppData();
-          initialized = true;
-          clearInterval(interval);
-        } else {
-          console.log("Home: Waiting for logo data, current status:",
-            window.appData ? `${window.appData.logos?.length || 0} logos` : "no window.appData");
-        }
-      }, 200); // Increased interval for better logging
+  function onCopy(path) {
+    if (typeof window !== 'undefined' && window.appData && window.appData.onCopy) {
+      window.appData.onCopy(path);
     }
+  }
 
-  let logoCheckInterval;
-  let lastViewMode = '';
-  let lastCompactMode = false;
-  let lastSearchQuery = '';
-  let lastSelectedTags = [];
-  let lastTagDropdownOpen = false;
-  let lastDisplayLogosCount = 0;
-
-  // Set up the interval for watching changes
-  logoCheckInterval = setInterval(() => {
-    if (window.appData) {
-      // Check for logo updates
-      if (window.appData.logos &&
-          window.appData.logos.length > 0 &&
-          (!appData.logos || appData.logos.length === 0)) {
-        console.log("Home: Detected logos update in window.appData:", window.appData.logos.length);
-        getAppData();
-        initialized = true;
-      }
-
-      // Check for view mode changes
-      if (window.appData.viewMode !== lastViewMode) {
-        console.log("Home: Detected viewMode change:",
-          lastViewMode, "→", window.appData.viewMode);
-        lastViewMode = window.appData.viewMode;
-        getAppData();
-      }
-
-      // Check for compact mode changes
-      if (window.appData.compactMode !== lastCompactMode) {
-        console.log("Home: Detected compactMode change:",
-          lastCompactMode, "→", window.appData.compactMode);
-        lastCompactMode = window.appData.compactMode;
-        getAppData();
-      }
-
-      // Check for search query changes
-      if (window.appData.searchQuery !== lastSearchQuery) {
-        console.log("Home: Detected searchQuery change:",
-          lastSearchQuery, "→", window.appData.searchQuery);
-        lastSearchQuery = window.appData.searchQuery;
-        getAppData();
-      }
-
-      // Check for display logos count changes
-      if (window.appData.displayLogos &&
-          window.appData.displayLogos.length !== lastDisplayLogosCount) {
-        console.log("Home: Detected displayLogos count change:",
-          lastDisplayLogosCount, "→", window.appData.displayLogos.length);
-        lastDisplayLogosCount = window.appData.displayLogos.length;
-        getAppData();
-      }
-
-      // Check for tag selection changes
-      const currentSelectedTags = window.appData.selectedTags || [];
-      if (JSON.stringify(currentSelectedTags) !== JSON.stringify(lastSelectedTags)) {
-        console.log("Home: Detected selectedTags change, now:",
-          currentSelectedTags.length, "tags");
-        lastSelectedTags = [...currentSelectedTags];
-        getAppData();
-      }
-
-      // Check for tag dropdown state changes
-      if (window.appData.tagDropdownOpen !== lastTagDropdownOpen) {
-        console.log("Home: Detected tagDropdownOpen change:",
-          lastTagDropdownOpen, "→", window.appData.tagDropdownOpen);
-        lastTagDropdownOpen = window.appData.tagDropdownOpen;
-        getAppData();
-      }
+  function onDownload(path, name) {
+    if (typeof window !== 'undefined' && window.appData && window.appData.onDownload) {
+      window.appData.onDownload(path, name);
     }
-  }, 100); // Faster interval for UI responsiveness
+  }
 
-  return () => clearInterval(logoCheckInterval);
-});
+  function setGridView() {
+    if (typeof window !== 'undefined' && window.appData && window.appData.setGridView) {
+      window.appData.setGridView();
+    }
+  }
+
+  function setListView() {
+    if (typeof window !== 'undefined' && window.appData && window.appData.setListView) {
+      window.appData.setListView();
+    }
+  }
+
+  function toggleDropdown() {
+    tagDropdownOpen = !tagDropdownOpen;
+    console.log("Home: Toggle dropdown to:", tagDropdownOpen);
+
+    if (typeof window !== 'undefined' && window.appData && window.appData.toggleDropdown) {
+      window.appData.toggleDropdown();
+    }
+  }
+
+  function addTag(tag) {
+    if (typeof window !== 'undefined' && window.appData && window.appData.addTag) {
+      window.appData.addTag(tag);
+    }
+  }
+
+  function removeTag(tag) {
+    if (typeof window !== 'undefined' && window.appData && window.appData.removeTag) {
+      window.appData.removeTag(tag);
+    }
+  }
+
+  function setCompactMode(value) {
+    if (typeof window !== 'undefined' && window.appData && window.appData.setCompactMode) {
+      window.appData.setCompactMode(value);
+    }
+  }
 </script>
 
-{#if initialized}
+<div class="container">
   <Header
-    logos={appData.logos || []}
-    displayLogos={appData.displayLogos || []}
-    theme={appData.theme || "light"}
-    setTheme={appData.setTheme || ((t) => {})}
-    viewMode={appData.viewMode || "grid"}
-    setGridView={appData.setGridView || (() => {})}
-    setListView={appData.setListView || (() => {})}
-    searchQuery={appData.searchQuery || ""}
-    setSearchQuery={appData.setSearchQuery || ((q) => {})}
-    allTags={appData.allTags || []}
-    selectedTags={appData.selectedTags || []}
-    tagDropdownOpen={appData.tagDropdownOpen || false}
-    toggleDropdown={appData.toggleDropdown || (() => {})}
-    addTag={appData.addTag || (() => {})}
-    removeTag={appData.removeTag || (() => {})}
-    getTagObj={appData.getTagObj || ((t) => ({text: t}))}
-    compactMode={appData.compactMode || false}
-    setCompactMode={appData.setCompactMode || ((val) => {})}
+    {searchQuery}
+    {setSearchQuery}
+    {viewMode}
+    {theme}
+    {setTheme}
+    {setGridView}
+    {setListView}
+    logos={allLogos}
+    displayLogos={logos}
+    {toggleDropdown}
+    {addTag}
+    {removeTag}
+    allTags={allTags}
+    selectedTags={selectedTags}
+    tagDropdownOpen={tagDropdownOpen}
+    {compactMode}
+    {setCompactMode}
+    getTagObj={(tag) => (window.appData?.getTagObj ? window.appData.getTagObj(tag) : {text: tag})}
   />
 
-  <main class="logos-container">
-    {#if appData.viewMode === "grid"}
-      <Grid
-        logos={appData.displayLogos || []}
-        allLogos={appData.logos || []}
-        onCopy={appData.onCopy || ((p) => {})}
-        onDownload={appData.onDownload || ((p, n) => {})}
-        setSearchQuery={appData.setSearchQuery || ((q) => {})}
-        theme={appData.effectiveTheme || "light"}
-      />
-    {:else}
-      <List
-        logos={appData.displayLogos || []}
-        allLogos={appData.logos || []}
-        onCopy={appData.onCopy || ((p) => {})}
-        onDownload={appData.onDownload || ((p, n) => {})}
-        setSearchQuery={appData.setSearchQuery || ((q) => {})}
-      />
-    {/if}
+  <main>
+    <List
+      logos={logos}
+      {theme}
+      {viewMode}
+      {onCopy}
+      {onDownload}
+      {setSearchQuery}
+      {allLogos}
+      {setTheme}
+    />
   </main>
 
   <Footer />
-{:else}
-  <div class="loading">
-    <p>Loading...</p>
-  </div>
-{/if}
+</div>
 
 <style>
-  .logos-container {
-    padding: 1rem;
-  }
-
-  .loading {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    font-size: 1.5rem;
-    color: var(--color-text);
+  main {
+    padding: 0 1rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
   }
 </style>

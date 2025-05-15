@@ -37,15 +37,40 @@
 
   function toggleDownloadMenu() {
     showDownloadMenu = !showDownloadMenu;
-    if (showDownloadMenu) showCopyMenu = false;
+    if (showDownloadMenu) {
+      showCopyMenu = false;
+      // Position the dropdown menu
+      setTimeout(() => {
+        const anchor = downloadMenuAnchor;
+        const dropdown = document.querySelector('.download-group .dropdown-menu');
+        if (anchor && dropdown) {
+          const rect = anchor.getBoundingClientRect();
+          dropdown.style.top = rect.bottom + 5 + 'px';
+          dropdown.style.left = rect.left + 'px';
+        }
+      }, 10);
+    }
   }
   function closeDownloadMenu() {
     showDownloadMenu = false;
   }
   function toggleCopyMenu() {
     showCopyMenu = !showCopyMenu;
-    if (showCopyMenu) showDownloadMenu = false;
+    if (showCopyMenu) {
+      showDownloadMenu = false;
+      // Position the dropdown menu
+      setTimeout(() => {
+        const anchor = copyMenuAnchor;
+        const dropdown = document.querySelector('.dropdown-menu');
+        if (anchor && dropdown) {
+          const rect = anchor.getBoundingClientRect();
+          dropdown.style.top = rect.bottom + 5 + 'px';
+          dropdown.style.left = rect.left + 'px';
+        }
+      }, 10);
+    }
   }
+
   function closeCopyMenu() {
     showCopyMenu = false;
   }
@@ -230,7 +255,7 @@
       <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="4" r="1.5" fill="currentColor"/><circle cx="10" cy="10" r="1.5" fill="currentColor"/><circle cx="10" cy="16" r="1.5" fill="currentColor"/></svg>
     </button>
     {#if showCopyMenu}
-    <div class="dropdown-menu">
+    <div class="dropdown-menu" style="position: fixed">
         <button class="dropdown-item" on:click={handleSourceClick}>
           <span class="icon-wrapper">
             <svg style="margin-right: 5px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M14.5 4H17a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3v-5m2-7L4 7l2 2"/><path d="m10 9l2-2l-2-2"/></g></svg>
@@ -259,7 +284,7 @@
       <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="4" r="1.5" fill="currentColor"/><circle cx="10" cy="10" r="1.5" fill="currentColor"/><circle cx="10" cy="16" r="1.5" fill="currentColor"/></svg>
     </button>
     {#if showDownloadMenu}
-      <div class="dropdown-menu">
+      <div class="dropdown-menu" style="position: fixed">
         <button class="dropdown-item" on:click={handleDownloadPngClick}>
           <span class="icon-wrapper"></span>
           <span class="dropdown-text">Download PNG</span>
@@ -374,7 +399,7 @@
     border: 1px solid var(--color-border, #ddd);
     border-radius: 8px;
     box-shadow: 0 2px 16px 4px rgba(0,0,0,0.18);
-    z-index: 9999;
+    z-index: 10;
     padding: 0.3em 0;
     display: flex;
     flex-direction: column;
@@ -382,11 +407,7 @@
     pointer-events: auto;
   }
 
-  /* Position the download menu on the right side */
-  .download-group .dropdown-menu {
-    right: 0;
-    left: auto;
-  }
+  /* Dropdown menus are positioned with JavaScript instead of CSS */
   .dropdown-item {
     background: none;
     color: var(--color-text, #222);
@@ -423,7 +444,7 @@
     position: fixed;
     top: 20px;
     right: 20px;
-    z-index: 10000;
+    z-index: 1000;
     pointer-events: none;
   }
 </style>

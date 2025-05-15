@@ -1,8 +1,11 @@
+// Import pages for routing
 import Home from './pages/Home.svelte';
 import Preview from './pages/Preview.svelte';
+import NotFound from './pages/NotFound.svelte';
 
-// Define all routes for the application
+// Define routes
 export const routes = {
   '/': Home,
-  '/preview/:id': Preview
+  '/preview/:logoName': Preview,
+  '*': NotFound
 };
