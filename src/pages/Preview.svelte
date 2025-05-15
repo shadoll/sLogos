@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
   import { push, pop } from 'svelte-spa-router';
   import PreviewComponent from '../components/Preview.svelte';
+  import Footer from '../components/Footer.svelte';
   import { getDefaultLogoColor } from '../utils/colorTheme.js';
 
   // Get preview ID from URL parameter
@@ -71,6 +72,9 @@
     // Initialize theme
     initTheme();
 
+    // Ensure page starts at the top
+    window.scrollTo(0, 0);
+
     // First try to get logos from window.appData if available
     if (window.appData && window.appData.logos && window.appData.logos.length > 0) {
       console.log("Preview page: Using logos from window.appData:", window.appData.logos.length);
@@ -122,16 +126,16 @@
 </script>
 
 {#if logo}
-  <div class="preview-page">
-    <div class="back-button-container">
-      <button class="back-button" on:click={goBack}>
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M19 12H5M12 19l-7-7 7-7"></path>
-        </svg>
-        Back to Gallery
-      </button>
-    </div>
+  <header class="back-button-container">
+    <button class="back-button" on:click={goBack}>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M19 12H5M12 19l-7-7 7-7"></path>
+      </svg>
+      Back to Gallery
+    </button>
+  </header>
 
+  <main class="preview-content">
     <PreviewComponent
       show={true}
       {logo}
@@ -139,7 +143,9 @@
       {onDownload}
       on:close={handleClose}
     />
-  </div>
+  </main>
+
+  <Footer />
 {:else}
   <div class="loading-container">
     <p>Loading logo...</p>
@@ -147,11 +153,7 @@
 {/if}
 
 <style>
-  .preview-page {
-    width: 100%;
-    min-height: 100vh;
-    position: relative;
-  }
+  /* Page level styles applied to body in global.css */
 
   .back-button-container {
     position: fixed;
@@ -188,4 +190,12 @@
     font-size: 1.2rem;
     color: var(--color-text, #222);
   }
+
+  .preview-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  /* Footer styles now come from the Footer component */
 </style>

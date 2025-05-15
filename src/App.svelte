@@ -1,15 +1,10 @@
 <script>
   import { onMount } from "svelte";
-  import Router from 'svelte-spa-router';
+  // Import Router component directly with explicit path
+  import Router from 'svelte-spa-router/Router.svelte';
 
-  // Import pages for routing
-  import Home from './pages/Home.svelte';
-  import PreviewPage from './pages/Preview.svelte';
-
-  const routes = {
-    '/': Home,
-    '/preview/:id': PreviewPage,
-  };
+  // Import routes from centralized router.js file
+  import { routes } from './router.js';
 
   let viewMode = "grid"; // 'grid' or 'list'
   let searchQuery = "";
@@ -510,56 +505,19 @@
   }
 </script>
 
-<main class="container app-flex">
+<div class="container app-flex">
   <Router {routes} />
+</div>
 
-  <style>
-    .app-flex {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-    .main-content {
-      flex: 1 0 auto;
-    }
-    footer {
-      flex: 0 0 auto;
-    }
-    .footer-flex {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
-      gap: 1em;
-    }
-    .footer-left {
-      flex: 1;
-      text-align: left;
-    }
-    .footer-center {
-      flex: 2;
-      text-align: left;
-    }
-    .footer-github {
-      flex: 0;
-      margin-left: 1em;
-      display: inline-flex;
-      align-items: center;
-    }
-    @media (max-width: 700px) {
-      .footer-flex {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.3em;
-      }
-      .footer-left, .footer-center {
-        text-align: left;
-        width: 100%;
-      }
-      .footer-github {
-        margin-left: 0;
-        margin-top: 0.5em;
-      }
-    }
-  </style>
-</main>
+<style>
+  .app-flex {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  .app-flex {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+</style>
