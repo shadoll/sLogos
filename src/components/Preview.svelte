@@ -21,6 +21,7 @@
 
   // For SVG source code display
   let svgSource = "";
+  let isFetchingSvgSource = false;
 
   function isSvgLogo(logo) {
     return logo && logo.format && logo.format.toLowerCase() === "svg";
