@@ -10,7 +10,7 @@
   export let onDownload;
   export let setSearchQuery;
   export let allLogos = [];
-  export let setTheme = () => {};
+  export const setTheme = () => {};
 
   function openPreview(logo) {
     // Navigate to preview page using router

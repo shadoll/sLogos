@@ -9,8 +9,8 @@
   export let setSearchQuery;
   export let allLogos = [];
   export let theme;
-  export let viewMode = "grid"; // "grid" or "list"
-  export let setTheme = () => {}; // Add setTheme prop with default no-op function
+  export let viewMode = "grid";
+  export let setTheme = () => {};
 
   $: getLogoThemeColor = logo => getDefaultLogoColor(logo.colors, theme);
 </script>

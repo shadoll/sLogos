@@ -4,7 +4,7 @@
   export let logos = [];
   export let displayLogos = [];
   export let theme = "system";
-  export let setTheme = () => {}; // Added default function to prevent errors
+  export let setTheme = () => {};
   export let viewMode;
   export let setGridView;
   export let setListView;
@@ -209,7 +209,7 @@
       <button
         class="compact-switch-btn"
         aria-label="Toggle compact mode"
-        class:active={compactMode}
+        class:active={compactMode === true}
         on:click={() => setCompactMode(!compactMode)}
         title="Show only one logo per brand (compact mode)"
       >

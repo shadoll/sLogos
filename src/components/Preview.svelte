@@ -9,7 +9,7 @@
   export let show = false;
   export let logo = null;
   export let theme;
-  export let setTheme = () => {}; // Function to update theme
+  export const setTheme = () => {};
   export const openLogoByAnchor = () => {};
   export let onDownload = (path, name) => {
     const a = document.createElement("a");

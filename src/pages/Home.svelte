@@ -116,6 +116,10 @@
   }
 
   function setCompactMode(value) {
+    // Update local state first
+    compactMode = value;
+    console.log("Home: Setting compact mode to:", value);
+
     if (typeof window !== 'undefined' && window.appData && window.appData.setCompactMode) {
       window.appData.setCompactMode(value);
     }
