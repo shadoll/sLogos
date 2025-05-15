@@ -260,7 +260,8 @@
       closeDropdown,
       setCompactMode,
       onCopy: copyUrl,
-      onDownload: downloadLogo
+      onDownload: downloadLogo,
+      openLogoByAnchor
     };
     console.log("App: Updated window.appData with", logos.length, "logos,", displayLogos.length, "display logos");
   }
@@ -464,33 +465,19 @@
     return allTags.find((t) => t.text === text);
   }
 
-  function openPreview(logo) {
-    // Use the routing approach
-    const previewUrl = `#/preview/${encodeURIComponent(logo.name.replace(/\s+/g, '-').toLowerCase())}`;
-    window.location.href = previewUrl;
-  }
+  // The openPreview function has been removed as it's now handled directly
+  // by the Grid.svelte component using the router
 
   function openLogoByAnchor(hash) {
-    if (!hash) return;
+    if (!hash || !hash.startsWith("#/preview/")) return;
 
-    let anchor = "";
-    // Handle both old and new formats
-    if (hash.startsWith("#preview-")) {
-      anchor = decodeURIComponent(hash.replace("#preview-", "").replace(/-/g, " "));
-    } else if (hash.startsWith("#/preview/")) {
-      anchor = decodeURIComponent(hash.replace("#/preview/", "").replace(/-/g, " "));
-    } else {
-      return;
-    }
+    const anchor = decodeURIComponent(hash.replace("#/preview/", ""));
 
     const found = logos.find(
-      (l) =>
-        l.name.replace(/\s+/g, "-").toLowerCase() ===
-        anchor.replace(/\s+/g, "-").toLowerCase(),
+      (l) => l.name.replace(/\s+/g, "-").toLowerCase() === anchor,
     );
 
     if (found) {
-      // Use routing approach - use router format
       const previewUrl = `#/preview/${encodeURIComponent(found.name.replace(/\s+/g, '-').toLowerCase())}`;
       console.log("App: Navigating to router URL:", previewUrl);
       window.location.href = previewUrl;

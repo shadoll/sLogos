@@ -50,9 +50,6 @@
       ? logo.colorConfig
       : undefined;
 
-  // No URL manipulation in the component anymore
-  // Parent components should handle all URL and navigation concerns
-
   // Only fetch SVG source when displayed
   $: if (show && logo) {
     // Fetch SVG source when logo is displayed and is an SVG
@@ -72,9 +69,6 @@
     // Ensure the page scrolls to the top when preview is shown
     window.scrollTo(0, 0);
   }
-
-  // Component doesn't handle any window events or URL changes
-  // Parent should handle all navigation logic
 
   // Svelte action to remove width/height from SVGs for responsive scaling
   function removeSvgSize(node) {
@@ -257,7 +251,7 @@
     border-radius: 12px;
     padding: 1.5rem;
     box-shadow: 0 2px 16px 4px rgba(0, 0, 0, 0.18);
-    z-index: 1;
+    z-index: 2;
     position: relative;
   }
 
@@ -379,7 +373,6 @@
     padding: 1.5rem;
     box-shadow: 0 2px 16px 4px rgba(0, 0, 0, 0.18);
     overflow-y: auto;
-    z-index: 1;
   }
   .logo-tags {
     display: flex;
@@ -465,7 +458,6 @@
     border-radius: 12px;
     padding: 1.5rem;
     box-shadow: 0 2px 16px 4px rgba(0, 0, 0, 0.18);
-    z-index: 1;
     position: relative;
   }
 
