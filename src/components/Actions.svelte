@@ -393,7 +393,7 @@
     top: 110%;
     right: auto;
     left: 0;
-    min-width: 200px; /* Increased width from 160px */
+    min-width: 200px;
     background: var(--color-card, #fff);
     color: var(--color-text, #222);
     border: 1px solid var(--color-border, #ddd);
@@ -407,7 +407,6 @@
     pointer-events: auto;
   }
 
-  /* Dropdown menus are positioned with JavaScript instead of CSS */
   .dropdown-item {
     background: none;
     color: var(--color-text, #222);
@@ -439,7 +438,7 @@
     padding-left: 5px;
     white-space: nowrap;
   }
-  /* Notification styles moved to Notification.svelte */
+
   .notification-overlay {
     position: fixed;
     top: 20px;

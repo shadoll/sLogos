@@ -23,12 +23,41 @@
   // For SVG source code display
   let svgSource = "";
   let isFetchingSvgSource = false;
+  let inlineSvgRef; // Reference to the InlineSvg component
+
+  // Watch for color changes and update SVG source
+  function updateSvgSource() {
+    if (inlineSvgRef && typeof inlineSvgRef.getSvgSource === 'function') {
+      const newSource = inlineSvgRef.getSvgSource();
+      if (newSource) {
+        svgSource = newSource;
+      }
+    }
+  }
 
   function isSvgLogo(logo) {
     return logo && logo.format && logo.format.toLowerCase() === "svg";
   }
   function copySvgSourceFromTextarea() {
-    if (svgSource) {
+    if (inlineSvgRef && typeof inlineSvgRef.getSvgSource === 'function') {
+      // Get the updated SVG source with all color changes applied
+      const updatedSource = inlineSvgRef.getSvgSource();
+
+      try {
+        const tempEl = document.createElement('textarea');
+        tempEl.value = updatedSource || svgSource;
+        document.body.appendChild(tempEl);
+        tempEl.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempEl);
+        return true;
+      } catch (err) {
+        console.error("Error copying SVG source:", err);
+        window.prompt("Copy the SVG source code:", updatedSource || svgSource);
+        return false;
+      }
+    } else if (svgSource) {
+      // Fallback to the original source if component reference is not available
       try {
         navigator.clipboard.writeText(svgSource);
         return true;
@@ -41,14 +70,18 @@
     return false;
   }
 
-  $: getLogoThemeColor = (logo) => getDefaultLogoColor(logo.colors, theme);
+  // Update SVG source every time the component rerenders with new colors
+  $: if (logo && (logo._activeColor || (logo && logo._activeSet))) {
+    // Use a small delay to ensure the SVG has been rendered with the new colors
+    setTimeout(updateSvgSource, 100);
+  }
 
   $: validColorConfig =
     logo && typeof logo.colorConfig === "object" && logo.colorConfig.selector
       ? logo.colorConfig
       : undefined;
 
-  // Only fetch SVG source when displayed
+  $: getLogoThemeColor = (logo) => getDefaultLogoColor(logo.colors, theme);
   $: if (show && logo) {
     if (logo.format === "SVG" && !svgSource) {
       isFetchingSvgSource = true;
@@ -106,6 +139,7 @@
       <div class="preview-container" use:removeSvgSize>
         {#if isSvgLogo(logo)}
           <InlineSvg
+            bind:this={inlineSvgRef}
             path={logo.path}
             color={logo.colors
               ? logo._activeColor || getLogoThemeColor(logo)
@@ -132,10 +166,18 @@
                 role="button"
                 aria-label="Reset to theme color"
                 style="background: none; width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center; padding: 0; margin: 0; border: none;"
-                on:click|stopPropagation={() => (logo._activeColor = undefined)}
-                on:keydown|stopPropagation={(e) =>
-                  (e.key === "Enter" || e.key === " ") &&
-                  (logo._activeColor = undefined)}
+                on:click|stopPropagation={() => {
+                      logo._activeColor = undefined;
+                      logo._activeSet = undefined; // Reset activeSet too
+                      setTimeout(updateSvgSource, 100); // Update SVG source after color reset
+                    }}
+                on:keydown|stopPropagation={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    logo._activeColor = undefined;
+                    logo._activeSet = undefined;
+                    setTimeout(updateSvgSource, 100);
+                  }
+                }}
               >
                 <svg
                   width="100%"
@@ -160,6 +202,7 @@
                         i % Object.keys(logo.colors).length
                       ];
                       logo._activeSet = setName;
+                      setTimeout(updateSvgSource, 100); // Update SVG source after color change
                     }}
                     on:keydown|stopPropagation={(e) => {
                       if (e.key === "Enter" || e.key === " ") {
@@ -167,6 +210,7 @@
                           i % Object.keys(logo.colors).length
                         ];
                         logo._activeSet = setName;
+                        setTimeout(updateSvgSource, 100); // Update SVG source after color change
                       }
                     }}
                     style="padding: 0; overflow: hidden;"
@@ -182,11 +226,18 @@
                     style={`background:${colorValue}`}
                     tabindex="0"
                     role="button"
-                    on:click|stopPropagation={() =>
-                      (logo._activeColor = colorValue)}
-                    on:keydown|stopPropagation={(e) =>
-                      (e.key === "Enter" || e.key === " ") &&
-                      (logo._activeColor = colorValue)}
+                    on:click|stopPropagation={() => {
+                      logo._activeColor = colorValue;
+                      logo._activeSet = undefined; // Clear any active set when setting individual color
+                      setTimeout(updateSvgSource, 100); // Update SVG source after color change
+                    }}
+                    on:keydown|stopPropagation={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        logo._activeColor = colorValue;
+                        logo._activeSet = undefined; // Clear any active set
+                        setTimeout(updateSvgSource, 100); // Update SVG source after color change
+                      }
+                    }}
                   ></span>
                 {/each}
               {/if}

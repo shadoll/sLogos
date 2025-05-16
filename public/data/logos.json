@@ -1544,30 +1544,33 @@
       "ua_yellow": "#FFDD00"
     },
     "targets": {
-      "part_s1": "#s1",
-      "part_s2": "#s2",
-      "part_l": "#l"
+      "part_s": "#s",
+      "part_s_stroke": "#s&stroke",
+      "part_l": "#l",
+      "part_l_stroke": "#l&stroke"
     },
     "sets": {
       "light": {
-        "part_s1": "red",
-        "part_s2": "red",
-        "part_l": "white"
+        "part_s": "red",
+        "part_l": "white",
+        "part_l_stroke": "black",
+        "part_s_stroke": "black"
       },
       "dark": {
-        "part_s1": "red",
-        "part_s2": "red",
-        "part_l": "black"
+        "part_s": "red",
+        "part_l": "black",
+        "part_l_stroke": "white",
+        "part_s_stroke": "white"
       },
       "uk": {
-        "part_s1": "uk_red",
         "part_s2": "uk_red",
         "part_l": "uk_blue"
       },
       "ua": {
-        "part_s1": "ua_blue",
-        "part_s2": "ua_blue",
-        "part_l": "ua_yellow"
+        "part_s": "ua_blue",
+        "part_l": "ua_yellow",
+        "part_l_stroke": "none",
+        "part_s_stroke": "none"
       }
     }
   },
@@ -1582,7 +1585,7 @@
     ]
   },
   {
-    "name": "Shkafnik Logo",
+    "name": "Shkafnik",
     "path": "logos/shkafnik_logo.svg",
     "format": "SVG",
     "disable": false,

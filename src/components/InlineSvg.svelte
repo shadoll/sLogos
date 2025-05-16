@@ -9,6 +9,7 @@
   export let colors = null;
   export let alt = "";
   let svgHtml = "";
+  let svgSource = ""; // Store the updated SVG source code
 
   async function fetchAndColorSvg() {
     const res = await fetch(path);
@@ -58,37 +59,69 @@
     // Remove all <style> elements
     styleEls.forEach((styleEl) => styleEl.remove());
     // Handle the new format with targets and sets if available
-    if (targets && sets && activeSet && sets[activeSet]) {
-      // Get the color assignments from the active set
-      const colorAssignments = sets[activeSet];
+    if (targets && sets && activeSet && typeof activeSet === 'string' && sets[activeSet]) {
+      try {
+        // Get the color assignments from the active set
+        const colorAssignments = sets[activeSet];
 
-      // Apply each target-color pair
-      for (const [targetName, colorName] of Object.entries(colorAssignments)) {
-        if (targets[targetName] && colors && colors[colorName]) {
-          // Get the selector for this target
-          const selector = targets[targetName];
-          const targetElements = doc.querySelectorAll(selector);
-          // Get the actual color value for this target
-          const targetColor = colors[colorName];
+        // Apply each target-color pair
+        for (const [targetName, colorName] of Object.entries(colorAssignments)) {
+          if (targets[targetName] && colors && colors[colorName]) {
+            // Get the selector and determine if it's for fill or stroke
+            const targetInfo = targets[targetName];
 
-          // Apply the color to all elements matching this selector
-          targetElements.forEach(el => {
-            // Always override fill and stroke unless they are 'none'
-            if (el.hasAttribute("fill") && el.getAttribute("fill") !== "none") {
-              el.setAttribute("fill", targetColor);
+            // Parse the selector to extract the target and attribute (fill/stroke)
+            let selector, attribute;
+
+            if (typeof targetInfo === 'string') {
+              if (targetInfo.includes('&stroke')) {
+                // Format: "#element&stroke" - target stroke attribute
+                selector = targetInfo.split('&stroke')[0];
+                attribute = 'stroke';
+              } else if (targetInfo.includes('&fill')) {
+                // Format: "#element&fill" - target fill attribute
+                selector = targetInfo.split('&fill')[0];
+                attribute = 'fill';
+              } else {
+                // Default is fill if not specified
+                selector = targetInfo;
+                attribute = 'fill';
+              }
+            } else {
+              // Fallback for older format
+              selector = targetInfo;
+              attribute = 'fill';
             }
-            if (el.hasAttribute("stroke") && el.getAttribute("stroke") !== "none") {
-              el.setAttribute("stroke", targetColor);
-            }
-            if (!el.hasAttribute("fill") && !el.hasAttribute("stroke")) {
-              // If neither, prefer fill
-              el.setAttribute("fill", targetColor);
-            }
-          });
+
+            // Proceed with selecting elements and applying colors
+            const targetElements = doc.querySelectorAll(selector);
+            const targetColor = colors[colorName];
+
+            // Apply the color to all elements matching this selector
+            targetElements.forEach(el => {
+              if (colorName === "none") {
+                // Special case for 'none' value
+                el.setAttribute(attribute, "none");
+              } else if (attribute === 'fill') {
+                el.setAttribute("fill", targetColor);
+              } else if (attribute === 'stroke') {
+                el.setAttribute("stroke", targetColor);
+              }
+            });
+          }
         }
+      } catch (err) {
+        console.error("Error applying color set:", err);
       }
     }
     svgHtml = doc.documentElement.outerHTML;
+    // Update the svgSource property to store the modified SVG code
+    svgSource = doc.documentElement.outerHTML;
+  }
+
+  // Export the svgSource so it can be accessed from outside
+  export function getSvgSource() {
+    return svgSource;
   }
 
   $: path, color, colorConfig, targets, sets, activeSet, colors, fetchAndColorSvg();
