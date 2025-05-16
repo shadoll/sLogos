@@ -1,9 +1,16 @@
 <script>
   import { onMount } from "svelte";
-  // Import Router component directly with explicit path
-  import Router from 'svelte-spa-router/Router.svelte';
+  import Router from "svelte-spa-router/Router.svelte";
 
-  import { routes } from './router.js';
+  import Home from "./pages/Home.svelte";
+  import Preview from "./pages/Preview.svelte";
+  import NotFound from "./pages/NotFound.svelte";
+
+  export const routes = {
+    "/": Home,
+    "/preview/:logoName": Preview,
+    "*": NotFound,
+  };
 
   let viewMode = "grid"; // 'grid' or 'list'
   let searchQuery = "";
@@ -23,13 +30,14 @@
     searchQuery = val;
     console.log("App: searchQuery set to:", val);
     // Update window.appData immediately
-    if (typeof window !== 'undefined' && window.appData) {
+    if (typeof window !== "undefined" && window.appData) {
       window.appData.searchQuery = val;
 
       // Also update filtered/display logos immediately for reactive UI
       window.appData.filteredLogos = window.appData.logos.filter((logo) => {
-        const matchesSearch = logo.name.toLowerCase().includes(val.toLowerCase())
-          || (logo.brand && logo.brand.toLowerCase().includes(val.toLowerCase()));
+        const matchesSearch =
+          logo.name.toLowerCase().includes(val.toLowerCase()) ||
+          (logo.brand && logo.brand.toLowerCase().includes(val.toLowerCase()));
         const matchesTags =
           !selectedTags.length ||
           (logo.tags &&
@@ -39,13 +47,21 @@
         return matchesSearch && matchesTags;
       });
 
-      window.appData.displayLogos = (!val && compactMode)
-        ? window.appData.filteredLogos.filter((logo, idx, arr) =>
-            arr.findIndex(l => (l.brand || l.name) === (logo.brand || logo.name)) === idx)
-        : window.appData.filteredLogos;
+      window.appData.displayLogos =
+        !val && compactMode
+          ? window.appData.filteredLogos.filter(
+              (logo, idx, arr) =>
+                arr.findIndex(
+                  (l) => (l.brand || l.name) === (logo.brand || logo.name),
+                ) === idx,
+            )
+          : window.appData.filteredLogos;
 
-      console.log("App: Updated filtered/display logos directly:",
-        window.appData.filteredLogos.length, window.appData.displayLogos.length);
+      console.log(
+        "App: Updated filtered/display logos directly:",
+        window.appData.filteredLogos.length,
+        window.appData.displayLogos.length,
+      );
     }
   }
 
@@ -54,7 +70,7 @@
     localStorage.setItem("compactMode", String(val));
 
     // Update window.appData immediately on compact mode change
-    if (typeof window !== 'undefined' && window.appData) {
+    if (typeof window !== "undefined" && window.appData) {
       window.appData.compactMode = val;
       console.log("App: Updated compactMode in window.appData to", val);
 
@@ -68,13 +84,13 @@
     console.log("App: onMount start - before loading logos");
 
     // Set initial empty app data
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       window.appData = {
         logos: [],
         filteredLogos: [],
         displayLogos: [],
         theme,
-        effectiveTheme: 'light',
+        effectiveTheme: "light",
         viewMode,
         searchQuery,
         allTags: [],
@@ -93,7 +109,7 @@
         closeDropdown,
         setCompactMode,
         onCopy: copyUrl,
-        onDownload: downloadLogo
+        onDownload: downloadLogo,
       };
     }
 
@@ -121,7 +137,7 @@
         );
 
         // Update app data immediately after logos are loaded
-        if (typeof window !== 'undefined') {
+        if (typeof window !== "undefined") {
           window.appData = {
             logos,
             filteredLogos,
@@ -146,9 +162,13 @@
             closeDropdown,
             setCompactMode,
             onCopy: copyUrl,
-            onDownload: downloadLogo
+            onDownload: downloadLogo,
           };
-          console.log("App: Updated window.appData after loading with", logos.length, "logos");
+          console.log(
+            "App: Updated window.appData after loading with",
+            logos.length,
+            "logos",
+          );
         }
       } else {
         console.error("Failed to load logos data", response.status);
@@ -209,8 +229,10 @@
   ).sort((a, b) => a.text.localeCompare(b.text));
 
   $: filteredLogos = logos.filter((logo) => {
-    const matchesSearch = logo.name.toLowerCase().includes(searchQuery.toLowerCase())
-      || (logo.brand && logo.brand.toLowerCase().includes(searchQuery.toLowerCase()));
+    const matchesSearch =
+      logo.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (logo.brand &&
+        logo.brand.toLowerCase().includes(searchQuery.toLowerCase()));
     const matchesTags =
       !selectedTags.length ||
       (logo.tags &&
@@ -220,10 +242,15 @@
     return matchesSearch && matchesTags;
   });
 
-  $: displayLogos = (!searchQuery && compactMode)
-    ? filteredLogos.filter((logo, idx, arr) =>
-        arr.findIndex(l => (l.brand || l.name) === (logo.brand || logo.name)) === idx)
-    : filteredLogos;
+  $: displayLogos =
+    !searchQuery && compactMode
+      ? filteredLogos.filter(
+          (logo, idx, arr) =>
+            arr.findIndex(
+              (l) => (l.brand || l.name) === (logo.brand || logo.name),
+            ) === idx,
+        )
+      : filteredLogos;
 
   // Compute the effective theme for children
   $: effectiveTheme =
@@ -234,7 +261,7 @@
       : theme;
 
   // Make app data available globally for components
-  $: if (typeof window !== 'undefined') {
+  $: if (typeof window !== "undefined") {
     window.appData = {
       logos,
       filteredLogos,
@@ -263,9 +290,15 @@
       setCompactMode,
       onCopy: copyUrl,
       onDownload: downloadLogo,
-      openLogoByAnchor
+      openLogoByAnchor,
     };
-    console.log("App: Updated window.appData with", logos.length, "logos,", displayLogos.length, "display logos");
+    console.log(
+      "App: Updated window.appData with",
+      logos.length,
+      "logos,",
+      displayLogos.length,
+      "display logos",
+    );
   }
 
   function setGridView() {
@@ -274,7 +307,7 @@
     localStorage.setItem("viewMode", "grid");
 
     // Update window.appData immediately on view change
-    if (typeof window !== 'undefined' && window.appData) {
+    if (typeof window !== "undefined" && window.appData) {
       window.appData.viewMode = "grid";
       console.log("App: Updated viewMode in window.appData to grid");
     }
@@ -286,7 +319,7 @@
     localStorage.setItem("viewMode", "list");
 
     // Update window.appData immediately on view change
-    if (typeof window !== 'undefined' && window.appData) {
+    if (typeof window !== "undefined" && window.appData) {
       window.appData.viewMode = "list";
       console.log("App: Updated viewMode in window.appData to list");
     }
@@ -374,19 +407,20 @@
     }
 
     // Update window.appData immediately
-    if (typeof window !== 'undefined' && window.appData) {
+    if (typeof window !== "undefined" && window.appData) {
       window.appData.selectedTags = [...selectedTags];
 
       // Update filtered logos immediately
       updateFilteredLogosImmediate();
     }
-  }  function addTag(tag) {
+  }
+  function addTag(tag) {
     console.log("App: Adding tag:", tag);
     if (!selectedTags.includes(tag)) {
       selectedTags = [...selectedTags, tag];
 
       // Update window.appData immediately
-      if (typeof window !== 'undefined' && window.appData) {
+      if (typeof window !== "undefined" && window.appData) {
         window.appData.selectedTags = [...selectedTags];
 
         // Update filtered logos immediately
@@ -397,7 +431,7 @@
     tagDropdownOpen = false;
 
     // Also update the dropdown state in window.appData
-    if (typeof window !== 'undefined' && window.appData) {
+    if (typeof window !== "undefined" && window.appData) {
       window.appData.tagDropdownOpen = false;
       console.log("App: Closed tag dropdown after adding tag");
     }
@@ -408,7 +442,7 @@
     selectedTags = selectedTags.filter((t) => t !== tag);
 
     // Update window.appData immediately
-    if (typeof window !== 'undefined' && window.appData) {
+    if (typeof window !== "undefined" && window.appData) {
       window.appData.selectedTags = [...selectedTags];
 
       // Update filtered logos immediately
@@ -418,10 +452,16 @@
 
   // Helper function to immediately update filtered/display logos in window.appData
   function updateFilteredLogosImmediate() {
-    if (typeof window !== 'undefined' && window.appData && window.appData.logos) {
+    if (
+      typeof window !== "undefined" &&
+      window.appData &&
+      window.appData.logos
+    ) {
       window.appData.filteredLogos = window.appData.logos.filter((logo) => {
-        const matchesSearch = logo.name.toLowerCase().includes(searchQuery.toLowerCase())
-          || (logo.brand && logo.brand.toLowerCase().includes(searchQuery.toLowerCase()));
+        const matchesSearch =
+          logo.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          (logo.brand &&
+            logo.brand.toLowerCase().includes(searchQuery.toLowerCase()));
         const matchesTags =
           !selectedTags.length ||
           (logo.tags &&
@@ -431,13 +471,22 @@
         return matchesSearch && matchesTags;
       });
 
-      window.appData.displayLogos = (!searchQuery && compactMode)
-        ? window.appData.filteredLogos.filter((logo, idx, arr) =>
-            arr.findIndex(l => (l.brand || l.name) === (logo.brand || logo.name)) === idx)
-        : window.appData.filteredLogos;
+      window.appData.displayLogos =
+        !searchQuery && compactMode
+          ? window.appData.filteredLogos.filter(
+              (logo, idx, arr) =>
+                arr.findIndex(
+                  (l) => (l.brand || l.name) === (logo.brand || logo.name),
+                ) === idx,
+            )
+          : window.appData.filteredLogos;
 
-      console.log("App: Updated filtered logos:", window.appData.filteredLogos.length,
-        "display logos:", window.appData.displayLogos.length);
+      console.log(
+        "App: Updated filtered logos:",
+        window.appData.filteredLogos.length,
+        "display logos:",
+        window.appData.displayLogos.length,
+      );
     }
   }
 
@@ -446,9 +495,12 @@
     console.log("App: Toggling tag dropdown, current state:", tagDropdownOpen);
 
     // Update window.appData immediately
-    if (typeof window !== 'undefined' && window.appData) {
+    if (typeof window !== "undefined" && window.appData) {
       window.appData.tagDropdownOpen = tagDropdownOpen;
-      console.log("App: Updated tagDropdownOpen in window.appData to:", tagDropdownOpen);
+      console.log(
+        "App: Updated tagDropdownOpen in window.appData to:",
+        tagDropdownOpen,
+      );
 
       // Force immediate update
       setTimeout(() => {
@@ -462,7 +514,7 @@
       tagDropdownOpen = false;
 
       // Update window.appData immediately
-      if (typeof window !== 'undefined' && window.appData) {
+      if (typeof window !== "undefined" && window.appData) {
         window.appData.tagDropdownOpen = false;
         console.log("App: Closed dropdown, updated in window.appData");
       }
@@ -486,7 +538,7 @@
     );
 
     if (found) {
-      const previewUrl = `#/preview/${encodeURIComponent(found.name.replace(/\s+/g, '-').toLowerCase())}`;
+      const previewUrl = `#/preview/${encodeURIComponent(found.name.replace(/\s+/g, "-").toLowerCase())}`;
       console.log("App: Navigating to router URL:", previewUrl);
       window.location.href = previewUrl;
     }
