@@ -20,6 +20,26 @@
   export let compactMode = false;
   export let setCompactMode = () => {};
 
+  let searchInput; // Reference to the search input element
+
+  onMount(() => {
+    // Add global keydown listener for the / hotkey
+    function handleKeydown(event) {
+      // Check if the / key is pressed and no input/textarea is focused
+      if (event.key === '/' && !['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName)) {
+        event.preventDefault(); // Prevent the / character from being typed
+        searchInput?.focus(); // Focus the search input
+      }
+    }
+
+    document.addEventListener('keydown', handleKeydown);
+
+    // Cleanup listener on component destroy
+    return () => {
+      document.removeEventListener('keydown', handleKeydown);
+    };
+  });
+
   function onInput(event) {
     searchQuery = event.target.value;
     setSearchQuery(searchQuery);
@@ -131,6 +151,7 @@
         type="text"
         placeholder="Search logos..."
         bind:value={searchQuery}
+        bind:this={searchInput}
         on:input={onInput}
         aria-label="Search logos"
       />
@@ -166,6 +187,9 @@
           </svg>
         </button>
       {/if}
+      <div class="hotkey-hint">
+        <kbd>/</kbd>
+      </div>
     </div>
     <div class="tag-filter">
       {#each selectedTags as tagText}
@@ -328,12 +352,14 @@
     display: flex;
     align-items: center;
   }
+
   .search-bar input {
-    padding-right: 2em;
+    padding-right: 4em; /* Increased to accommodate both clear button and hotkey hint */
   }
+
   .clear-btn {
     position: absolute;
-    right: 0.5em;
+    right: 2.5em; /* Positioned to leave space for hotkey hint */
     background: none;
     border: none;
     padding: 0;
@@ -345,9 +371,31 @@
     justify-content: center;
     height: 100%;
   }
+
   .clear-btn:hover {
     color: #f44336;
   }
+
+  .hotkey-hint {
+    position: absolute;
+    right: 0.5em;
+    display: flex;
+    align-items: center;
+    pointer-events: none;
+  }
+
+  .hotkey-hint kbd {
+    background: var(--color-border);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    padding: 0.2em 0.4em;
+    font-size: 0.75em;
+    font-family: monospace;
+    font-weight: bold;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+
   .compact-switch-btn {
     background: none;
     border: none;
