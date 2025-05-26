@@ -84,6 +84,17 @@
     }
   },
   {
+    "name": "Apple Icloud",
+    "path": "logos/apple_icloud.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Apple",
+    "tags": [
+      "cloud",
+      "storage"
+    ]
+  },
+  {
     "name": "Apple Rainbow",
     "path": "logos/apple_rainbow.svg",
     "format": "SVG",
@@ -199,6 +210,18 @@
     "brand": "BMW"
   },
   {
+    "name": "Digital Ocean",
+    "path": "logos/digital-ocean.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Digital Ocean",
+    "tags": [
+      "cloud",
+      "hosting",
+      "infrastructure"
+    ]
+  },
+  {
     "name": "Docker Icon",
     "path": "logos/docker-icon.svg",
     "format": "SVG",
@@ -298,11 +321,46 @@
     "brand": "Google"
   },
   {
+    "name": "Grafana",
+    "path": "logos/grafana.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Grafana",
+    "tags": [
+      "monitoring",
+      "software"
+    ]
+  },
+  {
     "name": "GraphQL",
     "path": "logos/graphql.svg",
     "format": "SVG",
     "disable": false,
     "brand": "GraphQL"
+  },
+  {
+    "name": "Immich",
+    "path": "logos/immich.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Immich",
+    "tags": [
+      "selfhosted",
+      "photo",
+      "media",
+      "storage"
+    ]
+  },
+  {
+    "name": "Jellyfin",
+    "path": "logos/jellyfin.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Jellyfin",
+    "tags": [
+      "media",
+      "streaming"
+    ]
   },
   {
     "name": "Kubernetes",
@@ -330,7 +388,22 @@
     "path": "logos/letsencrypt.svg",
     "format": "SVG",
     "disable": false,
-    "brand": "Letsencrypt"
+    "brand": "Letsencrypt",
+    "tags": [
+      "ssl",
+      "security"
+    ]
+  },
+  {
+    "name": "Letsencrypt",
+    "path": "logos/letsencrypt-logo.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Letsencrypt",
+    "tags": [
+      "ssl",
+      "security"
+    ]
   },
   {
     "name": "Linux Mint",
@@ -976,6 +1049,17 @@
     "tags": [
       "proxy",
       "software"
+    ]
+  },
+  {
+    "name": "Trakt",
+    "path": "logos/trakt.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Trakt",
+    "tags": [
+      "entertainment",
+      "streaming"
     ]
   },
   {
@@ -2141,6 +2225,18 @@
     "disable": false,
     "tags": [],
     "brand": "Youtube"
+  },
+  {
+    "name": "Zigbee2mqtt",
+    "path": "logos/zigbee2mqtt.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Zigbee2mqtt",
+    "tags": [
+      "iot",
+      "automation",
+      "smart home"
+    ]
   },
   {
     "name": "Zoom",
