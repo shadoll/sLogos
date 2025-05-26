@@ -213,6 +213,17 @@
     "brand": "DuckDuckGo"
   },
   {
+    "name": "Forgejo",
+    "path": "logos/forgejo.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Forgejo",
+    "tags": [
+      "software",
+      "git"
+    ]
+  },
+  {
     "name": "Freebsd",
     "path": "logos/freebsd.svg",
     "format": "SVG",
@@ -226,8 +237,8 @@
     "disable": false,
     "brand": "GitLab",
     "tags": [
-      "tech",
-      "software"
+      "software",
+      "git"
     ]
   },
   {
@@ -534,7 +545,7 @@
     "format": "SVG",
     "disable": false,
     "tags": [
-      "tech",
+      "git",
       "software"
     ],
     "brand": "Git"
@@ -546,7 +557,7 @@
     "disable": false,
     "brand": "Gitea",
     "tags": [
-      "tech",
+      "git",
       "software"
     ]
   },
@@ -556,7 +567,7 @@
     "format": "SVG",
     "disable": false,
     "tags": [
-      "tech",
+      "git",
       "software"
     ],
     "brand": "GitHub",
@@ -578,7 +589,7 @@
     "format": "SVG",
     "disable": false,
     "tags": [
-      "tech",
+      "git",
       "software"
     ],
     "brand": "GitHub",
@@ -600,7 +611,7 @@
     "format": "SVG",
     "disable": false,
     "tags": [
-      "tech",
+      "git",
       "software"
     ],
     "brand": "GitLab"
