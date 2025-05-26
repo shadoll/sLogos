@@ -1019,6 +1019,18 @@
     }
   },
   {
+    "name": "SLZB",
+    "path": "logos/slzb.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "SMLIGHT",
+    "tags": [
+      "iot",
+      "smart home",
+      "automation"
+    ]
+  },
+  {
     "name": "Traefik Logo",
     "path": "logos/traefik-logo.svg",
     "format": "SVG",
