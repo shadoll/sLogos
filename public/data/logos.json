@@ -1,5 +1,42 @@
 [
   {
+    "name": "Adguard",
+    "path": "logos/adguard.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "AdGuard",
+    "tags": [
+      "adblocker",
+      "privacy"
+    ],
+    "colors": {
+      "dark": "#242424",
+      "white": "#FFFFFF"
+    },
+    "targets": {
+      "main": "#text"
+    },
+    "sets": {
+      "light": {
+        "main": "white"
+      },
+      "dark": {
+        "main": "dark"
+      }
+    }
+  },
+  {
+    "name": "Adguard",
+    "path": "logos/adguard-logo.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "AdGuard",
+    "tags": [
+      "adblocker",
+      "privacy"
+    ]
+  },
+  {
     "name": "Adidas",
     "path": "logos/adidas.svg",
     "format": "SVG",
@@ -896,6 +933,17 @@
         "lines": "black"
       }
     }
+  },
+  {
+    "name": "Uptime Kuma",
+    "path": "logos/uptimekuma.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Uptime Kuma",
+    "tags": [
+      "monitoring",
+      "software"
+    ]
   },
   {
     "name": "Whatsapp",
