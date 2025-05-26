@@ -946,6 +946,39 @@
     }
   },
   {
+    "name": "Traefik Logo",
+    "path": "logos/traefik-logo.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Traefik",
+    "tags": [
+      "proxy",
+      "software"
+    ]
+  },
+  {
+    "name": "Traefik Proxy",
+    "path": "logos/traefik-proxy.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Traefik",
+    "tags": [
+      "proxy",
+      "software"
+    ]
+  },
+  {
+    "name": "Traefik Proxy",
+    "path": "logos/traefik-proxy-logo.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Traefik",
+    "tags": [
+      "proxy",
+      "software"
+    ]
+  },
+  {
     "name": "Uptime Kuma",
     "path": "logos/uptimekuma.svg",
     "format": "SVG",
