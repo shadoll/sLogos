@@ -173,7 +173,7 @@
 
 <style>
   main {
-    padding: 0 1rem;
+    padding: 0 1rem 2rem 1rem;
     max-width: 1400px;
     margin: 0 auto;
     width: 100%;
