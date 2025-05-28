@@ -288,11 +288,18 @@
     ]
   },
   {
-    "name": "Docker Icon",
+    "name": "Docker",
     "path": "logos/docker-icon.svg",
     "format": "SVG",
     "disable": false,
     "brand": "Docker"
+  },
+  {
+    "name": "Dockge",
+    "path": "logos/dockge.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Dockge"
   },
   {
     "name": "DuckDuckGo",
