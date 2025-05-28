@@ -100,6 +100,7 @@
         setSearchQuery,
         setGridView,
         setListView,
+        setCompactView,
         setTheme,
         toggleDropdown,
         addTag,
@@ -197,13 +198,11 @@
     const searchParam = params.get("search");
     if (searchParam) {
       searchQuery = searchParam;
-    }
-
-    // Restore view mode and compact mode from localStorage
-    const savedViewMode = localStorage.getItem("viewMode");
-    if (savedViewMode === "grid" || savedViewMode === "list") {
-      viewMode = savedViewMode;
-    }
+    }        // Restore view mode and compact mode from localStorage
+        const savedViewMode = localStorage.getItem("viewMode");
+        if (savedViewMode === "grid" || savedViewMode === "list" || savedViewMode === "compact") {
+          viewMode = savedViewMode;
+        }
     const savedCompact = localStorage.getItem("compactMode");
     if (savedCompact === "true" || savedCompact === "false") {
       setCompactMode(savedCompact === "true");
@@ -277,6 +276,7 @@
       setSearchQuery,
       setGridView,
       setListView,
+      setCompactView,
       setTheme: (newTheme) => {
         console.log("window.appData.setTheme called with:", newTheme);
         setTheme(newTheme);
@@ -322,6 +322,18 @@
     if (typeof window !== "undefined" && window.appData) {
       window.appData.viewMode = "list";
       console.log("App: Updated viewMode in window.appData to list");
+    }
+  }
+
+  function setCompactView() {
+    console.log("Setting view mode to: compact");
+    viewMode = "compact";
+    localStorage.setItem("viewMode", "compact");
+
+    // Update window.appData immediately on view change
+    if (typeof window !== "undefined" && window.appData) {
+      window.appData.viewMode = "compact";
+      console.log("App: Updated viewMode in window.appData to compact");
     }
   }
 

@@ -94,6 +94,12 @@
     }
   }
 
+  function setCompactView() {
+    if (typeof window !== 'undefined' && window.appData && window.appData.setCompactView) {
+      window.appData.setCompactView();
+    }
+  }
+
   function toggleDropdown() {
     tagDropdownOpen = !tagDropdownOpen;
     console.log("Home: Toggle dropdown to:", tagDropdownOpen);
@@ -135,6 +141,7 @@
     {setTheme}
     {setGridView}
     {setListView}
+    {setCompactView}
     logos={allLogos}
     displayLogos={logos}
     {toggleDropdown}

@@ -413,57 +413,6 @@ div.logo-image img {
   padding-top: 0.9rem;
 }
 
-.theme-switcher {
-  display: flex;
-  align-items: center;
-  gap: 0.2rem;
-  margin-left: auto;
-}
-
-.theme-switch-group {
-  display: flex;
-  border-radius: 6px;
-  overflow: hidden;
-  border: 1px solid var(--color-border);
-  background: var(--color-card);
-}
-
-.theme-switch-group button {
-  background: none;
-  border: none;
-  color: var(--color-text);
-  padding: 0.2em 0.7em;
-  font-size: 1.1rem;
-  border-radius: 0;
-  transition: background 0.2s, color 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.theme-switch-group button:first-child {
-  border-top-left-radius: 6px;
-  border-bottom-left-radius: 6px;
-}
-
-.theme-switch-group button:last-child {
-  border-top-right-radius: 6px;
-  border-bottom-right-radius: 6px;
-}
-
-.theme-switch-group button.active,
-.theme-switch-group button:focus {
-  background: var(--color-accent);
-  color: var(--white);
-  font-weight: bold;
-  outline: 2px solid var(--color-border);
-}
-
-.theme-switch-group button:hover {
-  background: var(--color-accent);
-  color: var(--color-accent-text);
-}
-
 .logos-container {
   width: 100%;
 }
@@ -595,8 +544,8 @@ footer {
 }
 
 textarea {
-    background-color: var(--background-color);
-    color: var(--color-text);
+  background-color: var(--background-color);
+  color: var(--color-text);
 }
 
 .set-circle {

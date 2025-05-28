@@ -1,6 +1,7 @@
 <script>
   import CardSmall from './CardSmall.svelte';
   import CardMiddle from './CardMiddle.svelte';
+  import CardTiny from './CardTiny.svelte';
   import { getDefaultLogoColor } from '../utils/colorTheme.js';
 
   export let logos = [];
@@ -23,6 +24,14 @@
         {theme}
         {onCopy}
         {onDownload}
+        {setSearchQuery}
+        {allLogos}
+        {setTheme}
+      />
+    {:else if viewMode === "compact"}
+      <CardTiny
+        {logo}
+        {theme}
         {setSearchQuery}
         {allLogos}
         {setTheme}
@@ -58,6 +67,20 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
     gap: 0.75rem;
+  }
+
+  .compact-view {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 200px);
+    gap: 1rem;
+    justify-content: space-between;
+  }
+
+  @media (max-width: 600px) {
+    .compact-view {
+      grid-template-columns: repeat(auto-fill, 160px);
+      gap: 0.75rem;
+    }
   }
 
   .no-results {

@@ -8,6 +8,7 @@
   export let viewMode;
   export let setGridView;
   export let setListView;
+  export let setCompactView;
   export let searchQuery;
   export let setSearchQuery;
   export let allTags = [];
@@ -275,52 +276,89 @@
           />
         </svg>
       </button>
-      <button
-        class:active={viewMode === "grid"}
-        on:click={setGridView}
-        aria-label="Grid view"
-      >
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 20 20"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          ><rect x="3" y="3" width="6" height="6" fill="currentColor" /><rect
-            x="11"
-            y="3"
-            width="6"
-            height="6"
-            fill="currentColor"
-          /><rect x="3" y="11" width="6" height="6" fill="currentColor" /><rect
-            x="11"
-            y="11"
-            width="6"
-            height="6"
-            fill="currentColor"
-          /></svg
+      <div class="view-mode-group">
+        <button
+          class:active={viewMode === "compact"}
+          on:click={setCompactView}
+          aria-label="Compact view"
         >
-      </button>
-      <button
-        class:active={viewMode === "list"}
-        on:click={setListView}
-        aria-label="List view"
-      >
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 20 20"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          ><rect x="4" y="5" width="12" height="2" fill="currentColor" /><rect
-            x="4"
-            y="9"
-            width="12"
-            height="2"
-            fill="currentColor"
-          /><rect x="4" y="13" width="12" height="2" fill="currentColor" /></svg
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect x="2" y="2" width="4" height="4" fill="currentColor" />
+            <rect x="8" y="2" width="4" height="4" fill="currentColor" />
+            <rect x="14" y="2" width="4" height="4" fill="currentColor" />
+            <rect x="2" y="8" width="4" height="4" fill="currentColor" />
+            <rect x="8" y="8" width="4" height="4" fill="currentColor" />
+            <rect x="14" y="8" width="4" height="4" fill="currentColor" />
+            <rect x="2" y="14" width="4" height="4" fill="currentColor" />
+            <rect x="8" y="14" width="4" height="4" fill="currentColor" />
+            <rect x="14" y="14" width="4" height="4" fill="currentColor" />
+          </svg>
+        </button>
+        <button
+          class:active={viewMode === "grid"}
+          on:click={setGridView}
+          aria-label="Grid view"
         >
-      </button>
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            ><rect x="3" y="3" width="6" height="6" fill="currentColor" /><rect
+              x="11"
+              y="3"
+              width="6"
+              height="6"
+              fill="currentColor"
+            /><rect
+              x="3"
+              y="11"
+              width="6"
+              height="6"
+              fill="currentColor"
+            /><rect
+              x="11"
+              y="11"
+              width="6"
+              height="6"
+              fill="currentColor"
+            /></svg
+          >
+        </button>
+        <button
+          class:active={viewMode === "list"}
+          on:click={setListView}
+          aria-label="List view"
+        >
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            ><rect x="4" y="5" width="12" height="2" fill="currentColor" /><rect
+              x="4"
+              y="9"
+              width="12"
+              height="2"
+              fill="currentColor"
+            /><rect
+              x="4"
+              y="13"
+              width="12"
+              height="2"
+              fill="currentColor"
+            /></svg
+          >
+        </button>
+      </div>
     </div>
   </div>
 </header>
@@ -410,6 +448,58 @@
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   }
 
+  .theme-switcher {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    margin-left: auto;
+  }
+
+  .theme-switch-group {
+    display: flex;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    background: var(--color-card);
+  }
+
+  .theme-switch-group button {
+    background: none;
+    border: none;
+    color: var(--color-text);
+    padding: 0.2em 0.7em;
+    font-size: 1.1rem;
+    border-radius: 0;
+    transition:
+      background 0.2s,
+      color 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .theme-switch-group button:first-child {
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+  }
+
+  .theme-switch-group button:last-child {
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+  }
+
+  .theme-switch-group button.active,
+  .theme-switch-group button:focus {
+    background: var(--color-accent);
+    color: var(--white);
+    font-weight: bold;
+  }
+
+  .theme-switch-group button:hover {
+    background: var(--color-accent);
+    color: var(--color-accent-text);
+  }
+
   .compact-switch-btn {
     background: none;
     border: none;
@@ -427,6 +517,39 @@
   }
   .compact-switch-btn.active,
   .compact-switch-btn:hover {
+    background: var(--color-accent, #4f8cff);
+    color: #fff;
+  }
+
+  .view-mode-group {
+    display: inline-flex;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--color-background);
+  }
+
+  .view-mode-group button {
+    background: none;
+    border: none;
+    color: var(--color-text);
+    cursor: pointer;
+    padding: 0.5em 0.7em;
+    transition:
+      background 0.2s,
+      color 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid var(--color-border);
+    border-radius: 0;
+  }
+
+  .view-mode-group button:hover {
+    background: var(--color-card);
+  }
+
+  .view-mode-group button.active {
     background: var(--color-accent, #4f8cff);
     color: #fff;
   }
