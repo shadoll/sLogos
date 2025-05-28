@@ -26,17 +26,20 @@
     // Add global keydown listener for the / hotkey
     function handleKeydown(event) {
       // Check if the / key is pressed and no input/textarea is focused
-      if (event.key === '/' && !['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName)) {
+      if (
+        event.key === "/" &&
+        !["INPUT", "TEXTAREA"].includes(document.activeElement?.tagName)
+      ) {
         event.preventDefault(); // Prevent the / character from being typed
         searchInput?.focus(); // Focus the search input
       }
     }
 
-    document.addEventListener('keydown', handleKeydown);
+    document.addEventListener("keydown", handleKeydown);
 
     // Cleanup listener on component destroy
     return () => {
-      document.removeEventListener('keydown', handleKeydown);
+      document.removeEventListener("keydown", handleKeydown);
     };
   });
 
@@ -71,7 +74,8 @@
       {#if displayLogos && logos && displayLogos.length === logos.length}
         {logos.length} images in gallery
       {:else}
-        {displayLogos ? displayLogos.length : 0} of {logos ? logos.length : 0} images displayed
+        {displayLogos ? displayLogos.length : 0} of {logos ? logos.length : 0} images
+        displayed
       {/if}
     </span>
     <div class="theme-switcher">
@@ -348,13 +352,23 @@
   }
 
   .search-bar {
+    margin-bottom: 1.5rem;
+    width: 100%;
+    max-width: 500px;
     position: relative;
     display: flex;
     align-items: center;
   }
 
   .search-bar input {
-    padding-right: 4em; /* Increased to accommodate both clear button and hotkey hint */
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    font-size: 1rem;
+    background: var(--color-card);
+    color: var(--color-text);
+    padding-right: 4em;
   }
 
   .clear-btn {
