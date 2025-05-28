@@ -80,7 +80,7 @@
       {/if}
     </span>
     <div class="theme-switcher">
-      <div class="theme-switch-group">
+      <div class="theme-switch-group button-group">
         <button
           on:click={() => setTheme("system")}
           class:active={theme === "system"}
@@ -276,7 +276,7 @@
           />
         </svg>
       </button>
-      <div class="view-mode-group">
+      <div class="view-mode-group button-group">
         <button
           class:active={viewMode === "compact"}
           on:click={setCompactView}
@@ -455,51 +455,6 @@
     margin-left: auto;
   }
 
-  .theme-switch-group {
-    display: flex;
-    border-radius: 6px;
-    overflow: hidden;
-    border: 1px solid var(--color-border);
-    background: var(--color-card);
-  }
-
-  .theme-switch-group button {
-    background: none;
-    border: none;
-    color: var(--color-text);
-    padding: 0.2em 0.7em;
-    font-size: 1.1rem;
-    border-radius: 0;
-    transition:
-      background 0.2s,
-      color 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .theme-switch-group button:first-child {
-    border-top-left-radius: 6px;
-    border-bottom-left-radius: 6px;
-  }
-
-  .theme-switch-group button:last-child {
-    border-top-right-radius: 6px;
-    border-bottom-right-radius: 6px;
-  }
-
-  .theme-switch-group button.active,
-  .theme-switch-group button:focus {
-    background: var(--color-accent);
-    color: var(--white);
-    font-weight: bold;
-  }
-
-  .theme-switch-group button:hover {
-    background: var(--color-accent);
-    color: var(--color-accent-text);
-  }
-
   .compact-switch-btn {
     background: none;
     border: none;
@@ -517,39 +472,6 @@
   }
   .compact-switch-btn.active,
   .compact-switch-btn:hover {
-    background: var(--color-accent, #4f8cff);
-    color: #fff;
-  }
-
-  .view-mode-group {
-    display: inline-flex;
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
-    overflow: hidden;
-    background: var(--color-background);
-  }
-
-  .view-mode-group button {
-    background: none;
-    border: none;
-    color: var(--color-text);
-    cursor: pointer;
-    padding: 0.5em 0.7em;
-    transition:
-      background 0.2s,
-      color 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-right: 1px solid var(--color-border);
-    border-radius: 0;
-  }
-
-  .view-mode-group button:hover {
-    background: var(--color-card);
-  }
-
-  .view-mode-group button.active {
     background: var(--color-accent, #4f8cff);
     color: #fff;
   }
