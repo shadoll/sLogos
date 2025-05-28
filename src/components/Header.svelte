@@ -368,7 +368,7 @@
     padding: 0.5rem 1rem;
     background: var(--color-card);
     border-bottom: 1px solid var(--color-border);
-    border-radius: 0; /* Ensure no rounded corners */
+    border-radius: 0;
     margin-bottom: 1rem;
   }
 
