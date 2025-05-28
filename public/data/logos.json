@@ -254,6 +254,19 @@
     "brand": "Freebsd"
   },
   {
+    "name": "Frigate Logo",
+    "path": "logos/frigate-logo.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Frigate Logo",
+    "tags": [
+      "automation",
+      "smart home",
+      "selfhosted",
+      "security"
+    ]
+  },
+  {
     "name": "Gitlab",
     "path": "logos/gitlab-logo.svg",
     "format": "SVG",
