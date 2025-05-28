@@ -175,6 +175,72 @@
     ]
   },
   {
+    "name": "Authentik",
+    "path": "logos/authentik.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Authentik",
+    "tags": [
+      "identity",
+      "authentication",
+      "software"
+    ],
+    "colors": {
+      "red": "#fd4b2d",
+      "white": "#ffffff",
+      "black": "#000000"
+    },
+    "targets": {
+      "main": "#text",
+      "logo": "#logo"
+    },
+    "sets": {
+      "set_1": {
+        "main": "red",
+        "logo": "red"
+      },
+      "set_2": {
+        "main": "white",
+        "logo": "white"
+      },
+      "set_3": {
+        "main": "black",
+        "logo": "black"
+      }
+    }
+  },
+  {
+    "name": "Authentik",
+    "path": "logos/authentik-logo.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Authentik",
+    "tags": [
+      "identity",
+      "authentication",
+      "software"
+    ],
+    "colors": {
+      "red": "#fd4b2d",
+      "white": "#ffffff",
+      "black": "#000000"
+    },
+    "targets": {
+      "logo": "#logo"
+    },
+    "sets": {
+      "set_1": {
+        "logo": "red"
+      },
+      "set_2": {
+        "logo": "white"
+      },
+      "set_3": {
+        "logo": "black"
+      }
+    }
+  },
+  {
     "name": "Binance",
     "path": "logos/binance.svg",
     "format": "SVG",
