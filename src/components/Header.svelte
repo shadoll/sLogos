@@ -25,14 +25,15 @@
   let tagSearchQuery = ""; // Search query for filtering tags
 
   // Filter available tags based on search query
-  $: filteredAvailableTags = allTags.filter((t) =>
-    !selectedTags.includes(t.text) &&
-    t.text.toLowerCase().includes(tagSearchQuery.toLowerCase())
+  $: filteredAvailableTags = allTags.filter(
+    (t) =>
+      !selectedTags.includes(t.text) &&
+      t.text.toLowerCase().includes(tagSearchQuery.toLowerCase()),
   );
 
   // Filter all tags based on search query (both selected and unselected)
   $: filteredAllTags = allTags.filter((t) =>
-    t.text.toLowerCase().includes(tagSearchQuery.toLowerCase())
+    t.text.toLowerCase().includes(tagSearchQuery.toLowerCase()),
   );
 
   onMount(() => {
@@ -216,21 +217,35 @@
           aria-label="Open filter options"
           class:active={tagDropdownOpen}
         >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M3 4a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v2a1 1 0 0 1-.293.707L14 13.414V19a1 1 0 0 1-.553.894l-2 1A1 1 0 0 1 10 20v-6.586L3.293 6.707A1 1 0 0 1 3 6V4z" fill="currentColor"/>
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M3 4a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v2a1 1 0 0 1-.293.707L14 13.414V19a1 1 0 0 1-.553.894l-2 1A1 1 0 0 1 10 20v-6.586L3.293 6.707A1 1 0 0 1 3 6V4z"
+              fill="currentColor"
+            />
           </svg>
-          {#if (selectedTags.length + (compactMode ? 1 : 0)) > 0}
-            <span class="filter-count">{selectedTags.length + (compactMode ? 1 : 0)}</span>
+          {#if selectedTags.length + (compactMode ? 1 : 0) > 0}
+            <span class="filter-count"
+              >{selectedTags.length + (compactMode ? 1 : 0)}</span
+            >
           {/if}
         </button>
         {#if tagDropdownOpen}
+          <!-- svelte-ignore a11y-click-events-have-key-events -->
           <div class="filter-dropdown-panel" on:click|stopPropagation>
             <div class="filter-options">
               <button
                 class="filter-option-item"
                 class:selected={compactMode}
                 on:click={() => setCompactMode(!compactMode)}
-                aria-label={compactMode ? "Disable group by brand" : "Enable group by brand"}
+                aria-label={compactMode
+                  ? "Disable group by brand"
+                  : "Enable group by brand"}
               >
                 <span class="option-icon">
                   <span class="permanent-icon">
@@ -246,9 +261,7 @@
                     {/if}
                   </span>
                 </span>
-                <span class="option-label">
-                  Group by brand
-                </span>
+                <span class="option-label"> Group by brand </span>
               </button>
             </div>
 
@@ -267,11 +280,22 @@
                   {#if tagSearchQuery}
                     <button
                       class="tags-search-clear"
-                      on:click|stopPropagation={() => tagSearchQuery = ""}
+                      on:click|stopPropagation={() => (tagSearchQuery = "")}
                       aria-label="Clear tag search"
                     >
-                      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M4 4L12 12M12 4L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 16 16"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M4 4L12 12M12 4L4 12"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                        />
                       </svg>
                     </button>
                   {/if}
@@ -284,29 +308,41 @@
                       <button
                         class="filter-tag-item"
                         class:selected={isSelected}
-                        on:click={() => isSelected ? removeTag(tagObj.text) : addTag(tagObj.text)}
-                        aria-label={isSelected ? `Remove tag: ${tagObj.text}` : `Add tag: ${tagObj.text}`}
-                      >                      <span class="tag-icon">
-                        <span class="permanent-icon">
-                          {#if isSelected}
-                            ✔️
-                          {/if}
+                        on:click={() =>
+                          isSelected
+                            ? removeTag(tagObj.text)
+                            : addTag(tagObj.text)}
+                        aria-label={isSelected
+                          ? `Remove tag: ${tagObj.text}`
+                          : `Add tag: ${tagObj.text}`}
+                      >
+                        <span class="tag-icon">
+                          <span class="permanent-icon">
+                            {#if isSelected}
+                              ✔️
+                            {/if}
+                          </span>
+                          <span class="hover-icon">
+                            {#if isSelected}
+                              ❌
+                            {:else}
+                              ✔️
+                            {/if}
+                          </span>
                         </span>
-                        <span class="hover-icon">
-                          {#if isSelected}
-                            ❌
-                          {:else}
-                            ✔️
-                          {/if}
-                        </span>
-                      </span>
-                        <span class="tag-text" style={tagObj.color ? `color: ${tagObj.color};` : ""}>{tagObj.text}</span>
+                        <span
+                          class="tag-text"
+                          style={tagObj.color ? `color: ${tagObj.color};` : ""}
+                          >{tagObj.text}</span
+                        >
                       </button>
                     {/each}
                   </div>
                 {:else}
                   <div class="no-tags">
-                    {tagSearchQuery ? "No tags match your search" : "No available tags"}
+                    {tagSearchQuery
+                      ? "No tags match your search"
+                      : "No available tags"}
                   </div>
                 {/if}
               </div>
@@ -332,11 +368,38 @@
           on:click={() => setCompactMode(false)}
           aria-label="Disable group by brand"
         >
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M10 11L3 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-            <path d="M10 16H3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-            <path d="M14 13.5L16.1 16L20 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M3 6L13.5 6M20 6L17.75 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M10 11L3 11"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+            />
+            <path
+              d="M10 16H3"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+            />
+            <path
+              d="M14 13.5L16.1 16L20 11"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M3 6L13.5 6M20 6L17.75 6"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+            />
           </svg>
           Group by brand
           <span class="close">&times;</span>
@@ -421,7 +484,8 @@
               x="4"
               y="13"
               width="12"
-              height="2" fill="currentColor"
+              height="2"
+              fill="currentColor"
             /></svg
           >
         </button>
@@ -551,7 +615,9 @@
     align-items: center;
     gap: 0.3em;
     opacity: 1;
-    transition: background 0.2s, color 0.2s;
+    transition:
+      background 0.2s,
+      color 0.2s;
   }
 
   .selected-tag .close {
@@ -580,7 +646,10 @@
     gap: 0.4em;
     opacity: 0.8;
     cursor: pointer;
-    transition: background 0.2s, color 0.2s, opacity 0.2s;
+    transition:
+      background 0.2s,
+      color 0.2s,
+      opacity 0.2s;
   }
 
   .compact-indicator:hover {
@@ -615,7 +684,10 @@
     padding: 0.6em 0.8em;
     font-size: 0.9em;
     cursor: pointer;
-    transition: background 0.2s, color 0.2s, border-color 0.2s;
+    transition:
+      background 0.2s,
+      color 0.2s,
+      border-color 0.2s;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -678,43 +750,6 @@
     gap: 0.5rem;
   }
 
-  .filter-option {
-    display: flex;
-    align-items: center;
-  }
-
-  .filter-option-label {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    cursor: pointer;
-    color: var(--color-text);
-    font-size: 0.9em;
-    position: relative;
-    padding: 0.4rem 0;
-    width: 100%;
-  }
-
-  .filter-option-label input[type="checkbox"] {
-    opacity: 0;
-    position: absolute;
-    pointer-events: none;
-  }
-
-  .filter-option-label .checkmark {
-    opacity: 0;
-    transition: opacity 0.2s;
-  }
-
-  .filter-option-label input[type="checkbox"]:checked + .checkmark {
-    opacity: 1;
-  }
-
-  .option-text {
-    margin-left: 0.5rem;
-    color: var(--color-text);
-  }
-
   .filter-separator {
     height: 1px;
     background: var(--color-border);
@@ -763,7 +798,9 @@
     align-items: center;
     justify-content: center;
     border-radius: 2px;
-    transition: color 0.2s, background 0.2s;
+    transition:
+      color 0.2s,
+      background 0.2s;
   }
 
   .tags-search-clear:hover {
@@ -804,11 +841,6 @@
   .filter-tag-item.selected:hover {
     background: var(--color-border);
     opacity: 1;
-  }
-
-  .filter-tag-item.selected .tag-checkbox {
-    border-color: var(--color-border);
-    background: var(--color-card);
   }
 
   .tag-icon {
@@ -855,39 +887,6 @@
     padding: 1rem;
     text-align: center;
     font-style: italic;
-  }
-
-  .checkbox-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-  }
-
-  .checkbox-container input[type="checkbox"] {
-    position: absolute;
-    opacity: 0;
-    width: 16px;
-    height: 16px;
-    margin: 0;
-  }
-
-  .checkmark {
-    width: 16px;
-    height: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 0.5rem;
-    font-size: 14px;
-  }
-
-  .filter-option label {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    color: var(--color-text);
-    font-size: 0.9em;
-    gap: 0;
   }
 
   .filter-option-item {
