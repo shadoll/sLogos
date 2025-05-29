@@ -188,6 +188,7 @@
   <Header
     {logos}
     displayLogos={logos}
+    {allLogos}
     {theme}
     {setTheme}
     {viewMode}

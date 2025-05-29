@@ -1,8 +1,8 @@
 <script>
   import { onMount } from "svelte";
 
-  export let logos = [];
   export let displayLogos = [];
+  export let allLogos = []; // Add this to get total count
   export let theme = "system";
   export let setTheme = () => {};
   export let viewMode;
@@ -43,7 +43,7 @@
   // Compute all unique brands
   $: allBrands = Array.from(
     new Set(
-      logos
+      allLogos
         .map((logo) => logo.brand)
         .filter((brand) => brand && brand.trim() !== "")
     )
@@ -140,11 +140,11 @@
       <h1>Logo Gallery</h1>
     </div>
     <span class="logo-count">
-      {#if displayLogos && logos && displayLogos.length === logos.length}
-        {logos.length} images in gallery
-      {:else}
-        {displayLogos ? displayLogos.length : 0} of {logos ? logos.length : 0} images
+      {#if (searchQuery && searchQuery.trim() !== "") || selectedTags.length > 0 || selectedBrands.length > 0 || compactMode}
+        {displayLogos ? displayLogos.length : 0} of {allLogos ? allLogos.length : 0} images
         displayed
+      {:else}
+        {allLogos ? allLogos.length : 0} images in gallery
       {/if}
     </span>
     <div class="theme-switcher">
@@ -298,7 +298,11 @@
               <button
                 class="filter-option-item"
                 class:selected={compactMode}
-                on:click={() => setCompactMode(!compactMode)}
+                on:click={() => {
+                  const newValue = !compactMode;
+                  setCompactMode(newValue);
+                  compactMode = newValue;
+                }}
                 aria-label={compactMode
                   ? "Disable group by brand"
                   : "Enable group by brand"}
@@ -470,7 +474,10 @@
                   on:click={() => {
                     selectedTags.forEach(tag => removeTag(tag));
                     selectedBrands.forEach(brand => removeBrand(brand));
-                    if (compactMode) setCompactMode(false);
+                    if (compactMode) {
+                      setCompactMode(false);
+                      compactMode = false;
+                    }
                   }}
                   aria-label="Clear all filters"
                 >
@@ -509,7 +516,10 @@
         {#if compactMode}
           <button
             class="compact-indicator"
-            on:click={() => setCompactMode(false)}
+            on:click={() => {
+              setCompactMode(false);
+              compactMode = false;
+            }}
             aria-label="Disable group by brand"
           >
             <svg
