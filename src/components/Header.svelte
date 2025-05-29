@@ -218,9 +218,6 @@
       </div>
     </div>
   </div>
-  <div class="logo-count-mobile mobile-only">
-    {displayLogos.length} of {logos.length} logos
-  </div>
 
   <div class="header-row header-controls">
     <div class="search-bar">
@@ -1222,104 +1219,8 @@
     opacity: 1;
   }
 
-  /* Mobile responsive styles for header elements */
-  .mobile-only {
-    display: none;
-  }
-
-  .desktop-only {
-    display: block;
-  }
-
-  .logo-count-mobile {
-    font-family: system-ui, Arial, sans-serif;
-    font-size: 0.6rem;
-    font-weight: normal;
-    color: var(--color-text);
-    opacity: 0.7;
-    padding: 0;
-    margin: 0;
-    text-align: left;
-  }
-
-  .theme-mobile-toggle {
-    position: relative;
-    display: none;
-  }
-
-  .theme-mobile-button {
-    background: var(--color-card);
-    color: var(--color-text);
-    border: 1px solid var(--color-border);
-    border-radius: 6px;
-    padding: 0.5rem;
-    cursor: pointer;
-    transition: background 0.2s, color 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .theme-mobile-button:hover {
-    background: var(--color-accent);
-    color: #fff;
-  }
-
-  .theme-mobile-dropdown {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    margin-top: 0.5rem;
-    background: var(--color-card);
-    border: 1px solid var(--color-border);
-    border-radius: 6px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    min-width: 120px;
-    display: none;
-    flex-direction: column;
-    overflow: hidden;
-  }
-
-  .theme-mobile-dropdown.show {
-    display: flex;
-  }
-
-  .theme-mobile-dropdown button {
-    background: none;
-    border: none;
-    padding: 0.75rem 1rem;
-    cursor: pointer;
-    color: var(--color-text);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.9rem;
-    transition: background 0.2s;
-    text-align: left;
-  }
-
-  .theme-mobile-dropdown button:hover {
-    background: var(--color-border);
-  }
-
-  .theme-mobile-dropdown button.active {
-    background: var(--color-accent);
-    color: #fff;
-  }
-
   @media (max-width: 700px) {
-    .mobile-only {
-      display: block;
-    }
 
-    .desktop-only {
-      display: none;
-    }
-
-    .theme-mobile-toggle {
-      display: block;
-    }
 
     .header-row {
       flex-direction: row;
