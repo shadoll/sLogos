@@ -13,16 +13,20 @@
   export let setSearchQuery;
   export let allTags = [];
   export let selectedTags = [];
+  export let selectedBrands = [];
   export let tagDropdownOpen = false;
   export let toggleDropdown = () => console.log("toggleDropdown not provided");
   export let addTag = () => console.log("addTag not provided");
   export let removeTag = () => console.log("removeTag not provided");
+  export let addBrand = () => console.log("addBrand not provided");
+  export let removeBrand = () => console.log("removeBrand not provided");
   export let getTagObj = (tag) => ({ text: tag });
   export let compactMode = false;
   export let setCompactMode = () => {};
 
   let searchInput; // Reference to the search input element
   let tagSearchQuery = ""; // Search query for filtering tags
+  let activeTab = "categories"; // "categories" or "brands"
 
   // Filter available tags based on search query
   $: filteredAvailableTags = allTags.filter(
@@ -34,6 +38,20 @@
   // Filter all tags based on search query (both selected and unselected)
   $: filteredAllTags = allTags.filter((t) =>
     t.text.toLowerCase().includes(tagSearchQuery.toLowerCase()),
+  );
+
+  // Compute all unique brands
+  $: allBrands = Array.from(
+    new Set(
+      logos
+        .map((logo) => logo.brand)
+        .filter((brand) => brand && brand.trim() !== "")
+    )
+  ).sort();
+
+  // Filter brands based on search query
+  $: filteredAllBrands = allBrands.filter((brand) =>
+    brand.toLowerCase().includes(tagSearchQuery.toLowerCase())
   );
 
   onMount(() => {
@@ -73,6 +91,43 @@
     history.replaceState(null, "", newUrl);
 
     console.log("Header: Search query set to:", searchQuery);
+  }
+
+  function toggleBrand(brand) {
+    if (selectedBrands.includes(brand)) {
+      selectedBrands = selectedBrands.filter(b => b !== brand);
+    } else {
+      selectedBrands = [...selectedBrands, brand];
+    }
+
+    // Save to localStorage
+    localStorage.setItem("selectedBrands", JSON.stringify(selectedBrands));
+
+    // Update URL parameters
+    updateFilterParams();
+  }
+
+  function updateFilterParams() {
+    const params = new URLSearchParams(window.location.search);
+
+    // Update tags
+    if (selectedTags.length > 0) {
+      params.set("tags", selectedTags.join(","));
+    } else {
+      params.delete("tags");
+    }
+
+    // Update brands
+    if (selectedBrands.length > 0) {
+      params.set("brands", selectedBrands.join(","));
+    } else {
+      params.delete("brands");
+    }
+
+    const newUrl = window.location.pathname + (params.toString() ? "?" + params.toString() : "");
+    history.replaceState(null, "", newUrl);
+
+
   }
 </script>
 
@@ -229,9 +284,9 @@
               fill="currentColor"
             />
           </svg>
-          {#if selectedTags.length + (compactMode ? 1 : 0) > 0}
+          {#if selectedTags.length + selectedBrands.length + (compactMode ? 1 : 0) > 0}
             <span class="filter-count"
-              >{selectedTags.length + (compactMode ? 1 : 0)}</span
+              >{selectedTags.length + selectedBrands.length + (compactMode ? 1 : 0)}</span
             >
           {/if}
         </button>
@@ -265,15 +320,30 @@
               </button>
             </div>
 
-            {#if filteredAvailableTags.length > 0 || tagSearchQuery}
+            {#if filteredAvailableTags.length > 0 || tagSearchQuery || allBrands.length > 0}
               <div class="filter-separator"></div>
-              <div class="filter-tags-section">
-                <div class="filter-section-title">Categories</div>
+              <div class="filter-tabs-section">
+                <div class="filter-tabs">
+                  <button
+                    class="filter-tab"
+                    class:active={activeTab === "categories"}
+                    on:click={() => activeTab = "categories"}
+                  >
+                    Categories
+                  </button>
+                  <button
+                    class="filter-tab"
+                    class:active={activeTab === "brands"}
+                    on:click={() => activeTab = "brands"}
+                  >
+                    Brands
+                  </button>
+                </div>
 
                 <div class="tags-search-bar">
                   <input
                     type="text"
-                    placeholder="Search categories..."
+                    placeholder={activeTab === "categories" ? "Search categories..." : "Search brands..."}
                     bind:value={tagSearchQuery}
                     class="tags-search-input"
                   />
@@ -281,7 +351,7 @@
                     <button
                       class="tags-search-clear"
                       on:click|stopPropagation={() => (tagSearchQuery = "")}
-                      aria-label="Clear tag search"
+                      aria-label="Clear search"
                     >
                       <svg
                         width="14"
@@ -301,60 +371,104 @@
                   {/if}
                 </div>
 
-                {#if filteredAllTags.length > 0}
-                  <div class="filter-tags-list">
-                    {#each filteredAllTags as tagObj}
-                      {@const isSelected = selectedTags.includes(tagObj.text)}
-                      <button
-                        class="filter-tag-item"
-                        class:selected={isSelected}
-                        on:click={() =>
-                          isSelected
-                            ? removeTag(tagObj.text)
-                            : addTag(tagObj.text)}
-                        aria-label={isSelected
-                          ? `Remove tag: ${tagObj.text}`
-                          : `Add tag: ${tagObj.text}`}
-                      >
-                        <span class="tag-icon">
-                          <span class="permanent-icon">
-                            {#if isSelected}
-                              ✔︎
-                            {/if}
-                          </span>
-                          <span class="hover-icon">
-                            {#if isSelected}
-                              ✕
-                            {:else}
-                              ✔︎
-                            {/if}
-                          </span>
-                        </span>
-                        <span
-                          class="tag-text"
-                          style={tagObj.color ? `color: ${tagObj.color};` : ""}
-                          >{tagObj.text}</span
+                {#if activeTab === "categories"}
+                  {#if filteredAllTags.length > 0}
+                    <div class="filter-tags-list">
+                      {#each filteredAllTags as tagObj}
+                        {@const isSelected = selectedTags.includes(tagObj.text)}
+                        <button
+                          class="filter-tag-item"
+                          class:selected={isSelected}
+                          on:click={() =>
+                            isSelected
+                              ? removeTag(tagObj.text)
+                              : addTag(tagObj.text)}
+                          aria-label={isSelected
+                            ? `Remove tag: ${tagObj.text}`
+                            : `Add tag: ${tagObj.text}`}
                         >
-                      </button>
-                    {/each}
-                  </div>
+                          <span class="tag-icon">
+                            <span class="permanent-icon">
+                              {#if isSelected}
+                                ✔︎
+                              {/if}
+                            </span>
+                            <span class="hover-icon">
+                              {#if isSelected}
+                                ✕
+                              {:else}
+                                ✔︎
+                              {/if}
+                            </span>
+                          </span>
+                          <span
+                            class="tag-text"
+                            style={tagObj.color ? `color: ${tagObj.color};` : ""}
+                            >{tagObj.text}</span
+                          >
+                        </button>
+                      {/each}
+                    </div>
+                  {:else}
+                    <div class="no-tags">
+                      {tagSearchQuery
+                        ? "No categories match your search"
+                        : "No available categories"}
+                    </div>
+                  {/if}
                 {:else}
-                  <div class="no-tags">
-                    {tagSearchQuery
-                      ? "No tags match your search"
-                      : "No available tags"}
-                  </div>
+                  {#if filteredAllBrands.length > 0}
+                    <div class="filter-tags-list">
+                      {#each filteredAllBrands as brand}
+                        {@const isSelected = selectedBrands.includes(brand)}
+                        <button
+                          class="filter-tag-item filter-brand-item"
+                          class:selected={isSelected}
+                          on:click={() =>
+                            isSelected
+                              ? removeBrand(brand)
+                              : addBrand(brand)}
+                          aria-label={isSelected
+                            ? `Remove brand: ${brand}`
+                            : `Add brand: ${brand}`}
+                        >
+                          <span class="tag-icon">
+                            <span class="permanent-icon">
+                              {#if isSelected}
+                                ✔︎
+                              {/if}
+                            </span>
+                            <span class="hover-icon">
+                              {#if isSelected}
+                                ✕
+                              {:else}
+                                ✔︎
+                              {/if}
+                            </span>
+                          </span>
+                          <span class="brand-text">{brand}</span>
+                        </button>
+                      {/each}
+                    </div>
+                  {:else}
+                    <div class="no-tags">
+                      {tagSearchQuery
+                        ? "No brands match your search"
+                        : "No available brands"}
+                    </div>
+                  {/if}
                 {/if}
               </div>
             {/if}
 
-            {#if selectedTags.length > 0 || compactMode}
+            {#if selectedTags.length > 0 || selectedBrands.length > 0 || compactMode}
               <div class="filter-separator"></div>
               <div class="clear-all-section">
                 <button
                   class="clear-all-button"
                   on:click={() => {
                     selectedTags.forEach(tag => removeTag(tag));
+                    selectedBrands.forEach(brand => removeBrand(brand));
                     if (compactMode) setCompactMode(false);
                   }}
                   aria-label="Clear all filters"
@@ -375,6 +489,17 @@
           on:click={() => removeTag(getTagObj(tagText).text)}
         >
           {getTagObj(tagText).text}
+          <span class="close">&times;</span>
+        </button>
+      {/each}
+
+      {#each selectedBrands as brand}
+        <button
+          class="selected-brand"
+          aria-label={`Remove brand: ${brand}`}
+          on:click={() => removeBrand(brand)}
+        >
+          {brand}
           <span class="close">&times;</span>
         </button>
       {/each}
@@ -500,10 +625,7 @@
             /><rect
               x="4"
               y="13"
-              width="12"
-              height="2"
-              fill="currentColor"
-            /></svg
+              width="12" height="2" fill="currentColor" /></svg
           >
         </button>
       </div>
@@ -773,17 +895,32 @@
     margin: 0.5rem 0;
   }
 
-  .filter-tags-section {
+  .filter-tabs {
     display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+    margin-bottom: 0.5rem;
   }
 
-  .filter-section-title {
+  .filter-tab {
+    flex: 1;
+    background: none;
+    border: none;
+    padding: 0.4rem 0.8rem;
     font-size: 0.85em;
-    font-weight: 600;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
     color: var(--color-text);
-    opacity: 0.8;
+    opacity: 0.7;
+    border-radius: 0;
+  }
+
+  .filter-tab.active {
+    background: var(--color-card);
+    opacity: 1;
+  }
+
+  .filter-tab:hover:not(.active) {
+    opacity: 0.9;
   }
 
   .tags-search-bar {
@@ -860,6 +997,15 @@
     opacity: 1;
   }
 
+  .filter-brand-item.selected {
+    background: none;
+    color: var(--color-text);
+  }
+
+  .filter-brand-item.selected:hover {
+    background: var(--color-border);
+  }
+
   .tag-icon {
     width: 16px;
     height: 16px;
@@ -894,6 +1040,11 @@
   }
 
   .tag-text {
+    font-size: 0.85em;
+    font-weight: 500;
+  }
+
+  .brand-text {
     font-size: 0.85em;
     font-weight: 500;
   }
@@ -998,5 +1149,72 @@
   .clear-all-text {
     font-size: 0.85em;
     font-weight: 500;
+  }
+
+  .filter-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: 0.75rem;
+  }
+
+  .filter-tab {
+    background: none;
+    border: none;
+    color: var(--color-text);
+    cursor: pointer;
+    padding: 0.5rem 0.75rem;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+    font-size: 0.9rem;
+    opacity: 0.7;
+    border-radius: 0;
+  }
+
+  .filter-tab:hover {
+    opacity: 1;
+  }
+
+  .filter-tab.active {
+    color: var(--color-accent);
+    border-bottom-color: var(--color-accent);
+    opacity: 1;
+    font-weight: 500;
+    box-shadow: none;
+  }
+
+  .selected-brand {
+    background: #2196F3;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.2em 0.8em 0.2em 0.8em;
+    font-size: 0.85em;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.3em;
+    opacity: 1;
+    transition:
+      background 0.2s,
+      color 0.2s;
+  }
+
+  .selected-brand:hover {
+    background: #1976D2;
+  }
+
+  .selected-brand .close {
+    margin-left: 0.4em;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+
+  .selected-brand .close:hover {
+    opacity: 1;
   }
 </style>

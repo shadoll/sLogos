@@ -21,6 +21,7 @@
   let mq;
   let allTags = [];
   let selectedTags = [];
+  let selectedBrands = [];
   let tagDropdownOpen = false;
   let showModal = false;
   let selectedLogo = null;
@@ -44,7 +45,10 @@
             logo.tags.some((tag) =>
               selectedTags.includes(typeof tag === "string" ? tag : tag.text),
             ));
-        return matchesSearch && matchesTags;
+        const matchesBrands =
+          !selectedBrands.length ||
+          (logo.brand && selectedBrands.includes(logo.brand));
+        return matchesSearch && matchesTags && matchesBrands;
       });
 
       window.appData.displayLogos =
@@ -95,6 +99,7 @@
         searchQuery,
         allTags: [],
         selectedTags: [],
+        selectedBrands: [],
         tagDropdownOpen,
         compactMode,
         setSearchQuery,
@@ -111,6 +116,8 @@
         setCompactMode,
         onCopy: copyUrl,
         onDownload: downloadLogo,
+        addBrand,
+        removeBrand,
       };
     }
 
@@ -149,6 +156,7 @@
             searchQuery,
             allTags,
             selectedTags,
+            selectedBrands,
             tagDropdownOpen,
             compactMode,
             setSearchQuery,
@@ -165,6 +173,8 @@
             setCompactMode,
             onCopy: copyUrl,
             onDownload: downloadLogo,
+            addBrand,
+            removeBrand,
           };
           console.log(
             "App: Updated window.appData after loading with",
@@ -223,6 +233,21 @@
         localStorage.removeItem("selectedTags");
       }
     }
+
+    // Restore selected brands from localStorage
+    const savedBrands = localStorage.getItem("selectedBrands");
+    if (savedBrands) {
+      try {
+        const parsedBrands = JSON.parse(savedBrands);
+        if (Array.isArray(parsedBrands)) {
+          selectedBrands = parsedBrands;
+          console.log("App: Restored selectedBrands from localStorage:", selectedBrands);
+        }
+      } catch (error) {
+        console.error("App: Error parsing saved brands:", error);
+        localStorage.removeItem("selectedBrands");
+      }
+    }
   });
 
   // Make sure to apply theme whenever it changes
@@ -243,6 +268,7 @@
     ).values(),
   ).sort((a, b) => a.text.localeCompare(b.text));
 
+  // Update the filtering logic to include brand filtering in the reactive statement
   $: filteredLogos = logos.filter((logo) => {
     const matchesSearch =
       logo.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -254,7 +280,10 @@
         logo.tags.some((tag) =>
           selectedTags.includes(typeof tag === "string" ? tag : tag.text),
         ));
-    return matchesSearch && matchesTags;
+    const matchesBrands =
+      !selectedBrands.length ||
+      (logo.brand && selectedBrands.includes(logo.brand));
+    return matchesSearch && matchesTags && matchesBrands;
   });
 
   $: displayLogos =
@@ -287,6 +316,7 @@
       searchQuery,
       allTags,
       selectedTags,
+      selectedBrands,
       tagDropdownOpen,
       compactMode,
       setSearchQuery,
@@ -301,6 +331,8 @@
       addTag,
       removeTag,
       toggleTag,
+      addBrand,
+      removeBrand,
       getTagObj,
       closeDropdown,
       setCompactMode,
@@ -490,6 +522,48 @@
     }
   }
 
+  function addBrand(brand) {
+    console.log("App: Adding brand:", brand);
+    if (!selectedBrands.includes(brand)) {
+      selectedBrands = [...selectedBrands, brand];
+      localStorage.setItem("selectedBrands", JSON.stringify(selectedBrands));
+      console.log("App: Updated selectedBrands:", selectedBrands);
+
+      // Update window.appData immediately
+      if (typeof window !== "undefined" && window.appData) {
+        window.appData.selectedBrands = [...selectedBrands];
+        console.log("App: Updated selectedBrands in window.appData");
+
+        // Update filtered logos immediately
+        updateFilteredLogosImmediate();
+      }
+    }
+
+    // Close dropdown after adding brand
+    tagDropdownOpen = false;
+
+    // Also update the dropdown state in window.appData
+    if (typeof window !== "undefined" && window.appData) {
+      window.appData.tagDropdownOpen = false;
+    }
+  }
+
+  function removeBrand(brand) {
+    console.log("App: Removing brand:", brand);
+    selectedBrands = selectedBrands.filter((b) => b !== brand);
+    localStorage.setItem("selectedBrands", JSON.stringify(selectedBrands));
+    console.log("App: Updated selectedBrands:", selectedBrands);
+
+    // Update window.appData immediately
+    if (typeof window !== "undefined" && window.appData) {
+      window.appData.selectedBrands = [...selectedBrands];
+      console.log("App: Updated selectedBrands in window.appData");
+
+      // Update filtered logos immediately
+      updateFilteredLogosImmediate();
+    }
+  }
+
   // Helper function to immediately update filtered/display logos in window.appData
   function updateFilteredLogosImmediate() {
     if (typeof window !== "undefined" && window.appData) {
@@ -504,7 +578,10 @@
             logo.tags.some((tag) =>
               selectedTags.includes(typeof tag === "string" ? tag : tag.text),
             ));
-        return matchesSearch && matchesTags;
+        const matchesBrands =
+          !selectedBrands.length ||
+          (logo.brand && selectedBrands.includes(logo.brand));
+        return matchesSearch && matchesTags && matchesBrands;
       });
 
       window.appData.displayLogos =

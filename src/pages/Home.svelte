@@ -14,7 +14,42 @@
   let tagDropdownOpen = false;
   let selectedTags = [];
   let allTags = [];
+  let selectedBrands = [];
+  let addBrand = () => {};
+  let removeBrand = () => {};
   let setTheme = () => {};
+
+
+  $: ({
+    logos = [],
+    filteredLogos = [],
+    displayLogos = [],
+    theme = "system",
+    effectiveTheme = "light",
+    viewMode = "grid",
+    searchQuery = "",
+    allTags = [],
+    selectedTags = [],
+    selectedBrands = [],
+    tagDropdownOpen = false,
+    compactMode = false,
+    setSearchQuery = () => {},
+    setGridView = () => {},
+    setListView = () => {},
+    setCompactView = () => {},
+    setTheme = () => {},
+    toggleDropdown = () => {},
+    addTag = () => {},
+    removeTag = () => {},
+    addBrand = () => {},
+    removeBrand = () => {},
+    toggleTag = () => {},
+    getTagObj = () => ({ text: "" }),
+    closeDropdown = () => {},
+    setCompactMode = () => {},
+    onCopy = () => {},
+    onDownload = () => {},
+  } = appData || {});
 
   onMount(() => {
     if (typeof window !== 'undefined' && window.appData) {
@@ -27,12 +62,25 @@
       tagDropdownOpen = window.appData.tagDropdownOpen || false;
       selectedTags = window.appData.selectedTags || [];
       allTags = window.appData.allTags || [];
+      selectedBrands = window.appData.selectedBrands || [];
 
       if (window.appData.setTheme && typeof window.appData.setTheme === 'function') {
         console.log("Home: Found window.appData.setTheme function");
         setTheme = window.appData.setTheme;
       } else {
         console.warn("Home: window.appData.setTheme not found or not a function");
+      }
+
+      if (window.appData.addBrand && typeof window.appData.addBrand === 'function') {
+        addBrand = window.appData.addBrand;
+      }
+
+      if (window.appData.removeBrand && typeof window.appData.removeBrand === 'function') {
+        removeBrand = window.appData.removeBrand;
+      }
+
+      if (window.appData.selectedBrands) {
+        selectedBrands = window.appData.selectedBrands;
       }
 
       // Set up reactivity with window.appData
@@ -55,6 +103,10 @@
 
           if (window.appData.allTags) {
             allTags = [...window.appData.allTags];
+          }
+
+          if (window.appData.selectedBrands) {
+            selectedBrands = [...window.appData.selectedBrands];
           }
         }
       }, 100);
@@ -134,25 +186,28 @@
 
 <div class="container">
   <Header
-    {searchQuery}
-    {setSearchQuery}
-    {viewMode}
+    {logos}
+    displayLogos={logos}
     {theme}
     {setTheme}
+    {viewMode}
     {setGridView}
     {setListView}
     {setCompactView}
-    logos={allLogos}
-    displayLogos={logos}
+    {searchQuery}
+    {setSearchQuery}
+    allTags={allTags}
+    selectedTags={selectedTags}
+    selectedBrands={selectedBrands}
+    {tagDropdownOpen}
     {toggleDropdown}
     {addTag}
     {removeTag}
-    allTags={allTags}
-    selectedTags={selectedTags}
-    tagDropdownOpen={tagDropdownOpen}
+    addBrand={addBrand}
+    removeBrand={removeBrand}
+    getTagObj={(tag) => (window.appData?.getTagObj ? window.appData.getTagObj(tag) : {text: tag})}
     {compactMode}
     {setCompactMode}
-    getTagObj={(tag) => (window.appData?.getTagObj ? window.appData.getTagObj(tag) : {text: tag})}
   />
 
   <main>
