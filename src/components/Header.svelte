@@ -22,6 +22,18 @@
   export let setCompactMode = () => {};
 
   let searchInput; // Reference to the search input element
+  let tagSearchQuery = ""; // Search query for filtering tags
+
+  // Filter available tags based on search query
+  $: filteredAvailableTags = allTags.filter((t) =>
+    !selectedTags.includes(t.text) &&
+    t.text.toLowerCase().includes(tagSearchQuery.toLowerCase())
+  );
+
+  // Filter all tags based on search query (both selected and unselected)
+  $: filteredAllTags = allTags.filter((t) =>
+    t.text.toLowerCase().includes(tagSearchQuery.toLowerCase())
+  );
 
   onMount(() => {
     // Add global keydown listener for the / hotkey
@@ -214,42 +226,95 @@
         {#if tagDropdownOpen}
           <div class="filter-dropdown-panel" on:click|stopPropagation>
             <div class="filter-options">
-              <div class="filter-option">
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={compactMode}
-                    on:change={(e) => setCompactMode(e.target.checked)}
-                  />
-                  <span class="option-label">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M10 11L3 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                      <path d="M10 16H3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                      <path d="M14 13.5L16.1 16L20 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                      <path d="M3 6L13.5 6M20 6L17.75 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                    </svg>
-                    Compact mode
+              <button
+                class="filter-option-item"
+                class:selected={compactMode}
+                on:click={() => setCompactMode(!compactMode)}
+                aria-label={compactMode ? "Disable group by brand" : "Enable group by brand"}
+              >
+                <span class="option-icon">
+                  <span class="permanent-icon">
+                    {#if compactMode}
+                      ✔️
+                    {/if}
                   </span>
-                </label>
-              </div>
+                  <span class="hover-icon">
+                    {#if compactMode}
+                      ❌
+                    {:else}
+                      ✔️
+                    {/if}
+                  </span>
+                </span>
+                <span class="option-label">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 11L3 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M10 16H3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M14 13.5L16.1 16L20 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M3 6L13.5 6M20 6L17.75 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                  </svg>
+                  Group by brand
+                </span>
+              </button>
             </div>
 
-            {#if allTags.filter((t) => !selectedTags.includes(t.text)).length > 0}
+            {#if filteredAvailableTags.length > 0 || tagSearchQuery}
               <div class="filter-separator"></div>
               <div class="filter-tags-section">
                 <div class="filter-section-title">Tags</div>
-                <div class="filter-tags-grid">
-                  {#each allTags.filter((t) => !selectedTags.includes(t.text)) as tagObj}
+
+                <div class="tags-search-bar">
+                  <input
+                    type="text"
+                    placeholder="Search tags..."
+                    bind:value={tagSearchQuery}
+                    class="tags-search-input"
+                  />
+                  {#if tagSearchQuery}
                     <button
-                      class="filter-tag"
-                      style={tagObj.color ? `background: ${tagObj.color}; color: #fff;` : ""}
-                      on:click={() => addTag(tagObj.text)}
-                      aria-label={`Add tag: ${tagObj.text}`}
+                      class="tags-search-clear"
+                      on:click|stopPropagation={() => tagSearchQuery = ""}
+                      aria-label="Clear tag search"
                     >
-                      {tagObj.text}
+                      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4 4L12 12M12 4L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                      </svg>
                     </button>
-                  {/each}
+                  {/if}
                 </div>
+
+                {#if filteredAllTags.length > 0}
+                  <div class="filter-tags-list">
+                    {#each filteredAllTags as tagObj}
+                      {@const isSelected = selectedTags.includes(tagObj.text)}
+                      <button
+                        class="filter-tag-item"
+                        class:selected={isSelected}
+                        on:click={() => isSelected ? removeTag(tagObj.text) : addTag(tagObj.text)}
+                        aria-label={isSelected ? `Remove tag: ${tagObj.text}` : `Add tag: ${tagObj.text}`}
+                      >                      <span class="tag-icon">
+                        <span class="permanent-icon">
+                          {#if isSelected}
+                            ✔️
+                          {/if}
+                        </span>
+                        <span class="hover-icon">
+                          {#if isSelected}
+                            ❌
+                          {:else}
+                            ✔️
+                          {/if}
+                        </span>
+                      </span>
+                        <span class="tag-text" style={tagObj.color ? `color: ${tagObj.color};` : ""}>{tagObj.text}</span>
+                      </button>
+                    {/each}
+                  </div>
+                {:else}
+                  <div class="no-tags">
+                    {tagSearchQuery ? "No tags match your search" : "No available tags"}
+                  </div>
+                {/if}
               </div>
             {/if}
           </div>
@@ -268,15 +333,20 @@
       {/each}
 
       {#if compactMode}
-        <span class="compact-indicator">
+        <button
+          class="compact-indicator"
+          on:click={() => setCompactMode(false)}
+          aria-label="Disable group by brand"
+        >
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M10 11L3 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
             <path d="M10 16H3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
             <path d="M14 13.5L16.1 16L20 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             <path d="M3 6L13.5 6M20 6L17.75 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
           </svg>
-          Compact
-        </span>
+          Group by brand
+          <span class="close">&times;</span>
+        </button>
       {/if}
     </div>
     <div class="view-toggle">
@@ -357,8 +427,7 @@
               x="4"
               y="13"
               width="12"
-              height="2"
-              fill="currentColor"
+              height="2" fill="currentColor"
             /></svg
           >
         </button>
@@ -472,7 +541,7 @@
     background: var(--color-accent, #4f8cff);
     color: #fff;
     border: none;
-    border-radius: 12px;
+    border-radius: 8px;
     padding: 0.2em 0.8em 0.2em 0.8em;
     font-size: 0.85em;
     font-weight: 500;
@@ -501,7 +570,8 @@
   .compact-indicator {
     background: var(--color-border);
     color: var(--color-text);
-    border-radius: 12px;
+    border: none;
+    border-radius: 8px;
     padding: 0.2em 0.8em;
     font-size: 0.85em;
     font-weight: 500;
@@ -509,6 +579,27 @@
     align-items: center;
     gap: 0.4em;
     opacity: 0.8;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, opacity 0.2s;
+  }
+
+  .compact-indicator:hover {
+    opacity: 1;
+    background: var(--color-text);
+    color: var(--color-card);
+  }
+
+  .compact-indicator .close {
+    margin-left: 0.4em;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+
+  .compact-indicator .close:hover {
+    opacity: 1;
   }
 
   .filter-dropdown {
@@ -564,7 +655,7 @@
 
   .filter-dropdown-panel {
     position: absolute;
-    right: 0;
+    left: 0;
     top: 100%;
     margin-top: 0.5rem;
     min-width: 250px;
@@ -591,25 +682,35 @@
     align-items: center;
   }
 
-  .filter-option label {
+  .filter-option-label {
     display: flex;
     align-items: center;
     gap: 0.5rem;
     cursor: pointer;
     color: var(--color-text);
     font-size: 0.9em;
+    position: relative;
+    padding: 0.4rem 0;
+    width: 100%;
   }
 
-  .filter-option input[type="checkbox"] {
-    width: 16px;
-    height: 16px;
-    margin: 0;
+  .filter-option-label input[type="checkbox"] {
+    opacity: 0;
+    position: absolute;
+    pointer-events: none;
   }
 
-  .option-label {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
+  .filter-option-label .checkmark {
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .filter-option-label input[type="checkbox"]:checked + .checkmark {
+    opacity: 1;
+  }
+
+  .option-text {
+    margin-left: 0.5rem;
     color: var(--color-text);
   }
 
@@ -632,31 +733,214 @@
     opacity: 0.8;
   }
 
-  .filter-tags-grid {
+  .tags-search-bar {
+    position: relative;
+    margin-bottom: 0.5rem;
+  }
+
+  .tags-search-input {
+    width: 100%;
+    padding: 0.5rem 2.5rem 0.5rem 0.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    font-size: 0.85em;
+    background: var(--color-card);
+    color: var(--color-text);
+  }
+
+  .tags-search-clear {
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    padding: 0.2rem;
+    cursor: pointer;
+    color: #888;
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.3rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+    transition: color 0.2s, background 0.2s;
+  }
+
+  .tags-search-clear:hover {
+    color: #f44336;
+  }
+
+  .filter-tags-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
     max-height: 200px;
     overflow-y: auto;
   }
 
-  .filter-tag {
-    background: var(--color-accent, #4f8cff);
-    color: #fff;
+  .filter-tag-item {
+    background: none;
     border: none;
-    border-radius: 12px;
-    padding: 0.2em 0.8em;
-    font-size: 0.85em;
-    font-weight: 500;
-    letter-spacing: 0.02em;
+    padding: 0.4rem 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     cursor: pointer;
-    opacity: 0.85;
-    transition: background 0.2s, color 0.2s, opacity 0.2s;
+    border-radius: 4px;
+    transition: background 0.2s;
     text-align: left;
+    color: var(--color-text);
   }
 
-  .filter-tag:hover {
+  .filter-tag-item:hover {
+    background: var(--color-border);
+  }
+
+  .filter-tag-item.selected {
+    background: none;
+    color: var(--color-text);
+  }
+
+  .filter-tag-item.selected:hover {
+    background: var(--color-border);
     opacity: 1;
-    transform: translateY(-1px);
+  }
+
+  .filter-tag-item.selected .tag-checkbox {
+    border-color: var(--color-border);
+    background: var(--color-card);
+  }
+
+  .tag-icon {
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+    font-size: 14px;
+  }
+
+  .filter-tag-item .tag-icon .hover-icon {
+    opacity: 0;
+    transition: opacity 0.2s;
+    position: absolute;
+  }
+
+  .filter-tag-item:hover .tag-icon .hover-icon {
+    opacity: 1;
+  }
+
+  .filter-tag-item:hover .tag-icon .permanent-icon {
+    opacity: 0;
+  }
+
+  .filter-option-item:hover .option-icon .hover-icon {
+    opacity: 1;
+  }
+
+  .filter-option-item:hover .option-icon .permanent-icon {
+    opacity: 0;
+  }
+
+  .tag-text {
+    font-size: 0.85em;
+    font-weight: 500;
+  }
+
+  .no-tags {
+    color: #888;
+    font-size: 0.85em;
+    padding: 1rem;
+    text-align: center;
+    font-style: italic;
+  }
+
+  .checkbox-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .checkbox-container input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 16px;
+    height: 16px;
+    margin: 0;
+  }
+
+  .checkmark {
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.5rem;
+    font-size: 14px;
+  }
+
+  .filter-option label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: var(--color-text);
+    font-size: 0.9em;
+    gap: 0;
+  }
+
+  .filter-option-item {
+    background: none;
+    border: none;
+    padding: 0.4rem 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 0.2s;
+    text-align: left;
+    color: var(--color-text);
+    width: 100%;
+  }
+
+  .filter-option-item:hover {
+    background: var(--color-border);
+  }
+
+  .option-icon {
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+    font-size: 14px;
+  }
+
+  .filter-option-item .option-icon .hover-icon {
+    opacity: 0;
+    transition: opacity 0.2s;
+    position: absolute;
+  }
+
+  .filter-option-item:hover .option-icon .hover-icon {
+    opacity: 1;
+  }
+
+  .filter-option-item:hover .option-icon > *:not(.hover-icon) {
+    opacity: 0;
+  }
+
+  .permanent-icon {
+    position: absolute;
+    transition: opacity 0.2s;
+  }
+
+  .hover-icon {
+    opacity: 0;
+    transition: opacity 0.2s;
+    position: absolute;
   }
 </style>
