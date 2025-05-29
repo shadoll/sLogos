@@ -1,5 +1,16 @@
 [
   {
+    "name": "1password",
+    "path": "logos/1password.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "1password",
+    "tags": [
+      "Password Manager",
+      "Security"
+    ]
+  },
+  {
     "name": "Adguard",
     "path": "logos/adguard.svg",
     "format": "SVG",
