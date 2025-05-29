@@ -67,11 +67,13 @@ function applySvgColors(svgContent, colorSet, targets) {
       if (selector.startsWith('#')) {
         // ID selector - replace fill/stroke for specific element
         const elementId = selector.substring(1);
-        const idRegex = new RegExp(`(id="${elementId}"[^>]*?)fill="[^"]*"`, 'g');
-        modifiedSvg = modifiedSvg.replace(idRegex, `$1fill="${color}"`);
 
-        // If no fill attribute, add it
-        const addFillRegex = new RegExp(`(id="${elementId}"[^>]*?)(?!.*fill=)([^>]*>)`, 'g');
+        // First, remove any existing fill attributes for this element
+        const removeExistingFillRegex = new RegExp(`(id="${elementId}"[^>]*?)\\s*fill="[^"]*"`, 'g');
+        modifiedSvg = modifiedSvg.replace(removeExistingFillRegex, '$1');
+
+        // Then add the new fill attribute
+        const addFillRegex = new RegExp(`(id="${elementId}"[^>]*?)(\s*>)`, 'g');
         modifiedSvg = modifiedSvg.replace(addFillRegex, `$1 fill="${color}"$2`);
       } else {
         // Default: replace all fill attributes (fallback)
