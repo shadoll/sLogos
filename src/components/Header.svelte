@@ -483,71 +483,73 @@
         {/if}
       </div>
 
-      {#each selectedTags as tagText}
-        <button
-          class="selected-tag"
-          aria-label={`Remove tag: ${getTagObj(tagText).text}`}
-          on:click={() => removeTag(getTagObj(tagText).text)}
-        >
-          {getTagObj(tagText).text}
-          <span class="close">&times;</span>
-        </button>
-      {/each}
-
-      {#each selectedBrands as brand}
-        <button
-          class="selected-brand"
-          aria-label={`Remove brand: ${brand}`}
-          on:click={() => removeBrand(brand)}
-        >
-          {brand}
-          <span class="close">&times;</span>
-        </button>
-      {/each}
-
-      {#if compactMode}
-        <button
-          class="compact-indicator"
-          on:click={() => setCompactMode(false)}
-          aria-label="Disable group by brand"
-        >
-          <svg
-            width="14"
-            height="14"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
+      <div class="selected-filters">
+        {#each selectedTags as tagText}
+          <button
+            class="selected-tag"
+            aria-label={`Remove tag: ${getTagObj(tagText).text}`}
+            on:click={() => removeTag(getTagObj(tagText).text)}
           >
-            <path
-              d="M10 11L3 11"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-            />
-            <path
-              d="M10 16H3"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-            />
-            <path
-              d="M14 13.5L16.1 16L20 11"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-            <path
-              d="M3 6L13.5 6M20 6L17.75 6"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-            />
-          </svg>
-          Group by brand
-          <span class="close">&times;</span>
-        </button>
-      {/if}
+            {getTagObj(tagText).text}
+            <span class="close">&times;</span>
+          </button>
+        {/each}
+
+        {#each selectedBrands as brand}
+          <button
+            class="selected-brand"
+            aria-label={`Remove brand: ${brand}`}
+            on:click={() => removeBrand(brand)}
+          >
+            {brand}
+            <span class="close">&times;</span>
+          </button>
+        {/each}
+
+        {#if compactMode}
+          <button
+            class="compact-indicator"
+            on:click={() => setCompactMode(false)}
+            aria-label="Disable group by brand"
+          >
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M10 11L3 11"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              />
+              <path
+                d="M10 16H3"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              />
+              <path
+                d="M14 13.5L16.1 16L20 11"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M3 6L13.5 6M20 6L17.75 6"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              />
+            </svg>
+            Group by brand
+            <span class="close">&times;</span>
+          </button>
+        {/if}
+      </div>
     </div>
     <div class="view-toggle">
       <div class="view-mode-group button-group">
@@ -734,10 +736,10 @@
   }
 
   .filter-section {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.3rem;
-    align-items: center;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.5rem;
+    align-items: flex-start;
     position: relative;
   }
 
@@ -746,9 +748,9 @@
     color: #fff;
     border: none;
     border-radius: 8px;
-    padding: 0.2em 0.8em 0.2em 0.8em;
-    font-size: 0.85em;
-    font-weight: 500;
+    padding: 0.1em 0.8em;
+    font-size: 0.75em;
+    font-weight: 300;
     letter-spacing: 0.02em;
     cursor: pointer;
     display: flex;
@@ -778,9 +780,9 @@
     color: var(--color-text);
     border: none;
     border-radius: 8px;
-    padding: 0.2em 0.8em;
-    font-size: 0.85em;
-    font-weight: 500;
+    padding: 0.1em 0.8em;
+    font-size: 0.75em;
+    font-weight: 300;
     display: flex;
     align-items: center;
     gap: 0.4em;
@@ -812,6 +814,7 @@
   }
 
   .filter-dropdown {
+    grid-column: 1;
     position: relative;
     display: inline-block;
   }
@@ -1219,6 +1222,17 @@
     opacity: 1;
   }
 
+  .selected-filters {
+    grid-column: 2;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    align-items: flex-end;
+    min-height: 2.5rem;
+    max-height: 5rem;
+    overflow: hidden;
+  }
+
   @media (max-width: 700px) {
     .header-row {
       display: grid;
@@ -1244,6 +1258,29 @@
       margin-left: 0;
       padding-top: 0;
       justify-self: start;
+    }
+
+    .header-controls {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      grid-template-rows: auto auto;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    .search-bar {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .view-toggle {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    .filter-section {
+      grid-column: 1 / -1;
+      grid-row: 2;
     }
   }
 </style>
