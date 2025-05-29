@@ -6,7 +6,7 @@ CONTAINER_NAME = slogos-dev
 DEV_PORT = 5006
 
 # Main targets
-.PHONY: all build start stop restart logs clean scan-logos dev rebuild favicon deps-favicon build-with-favicons sync-packages convert-colors
+.PHONY: all build start stop restart logs clean scan-logos dev rebuild favicon deps-favicon build-with-favicons sync-packages convert-colors generate-svg-variants
 
 all: build start
 
@@ -75,3 +75,9 @@ update-lock:
 	@echo "Updating package-lock.json to match package.json..."
 	$(DOCKER_COMPOSE) -f compose.dev.yml run --rm $(CONTAINER_NAME) npm install
 	@echo "Package lock file has been updated"
+
+# Generate SVG variants with color sets
+generate-svg-variants:
+	@echo "Generating SVG variants with color sets..."
+	$(DOCKER_COMPOSE) -f compose.dev.yml run --rm $(CONTAINER_NAME) node scripts/generate-svg-variants.js
+	@echo "SVG variants have been generated"

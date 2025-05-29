@@ -34,6 +34,9 @@ jobs:
       - name: Generate logos.json
         run: node scripts/scanLogos.js
 
+      - name: Generate SVG variants
+        run: node scripts/generate-svg-variants.js
+
       - name: Prepare Pages artifact
         run: |
           mkdir -p ./gh-pages-artifact/build
