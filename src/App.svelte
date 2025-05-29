@@ -522,7 +522,7 @@
   }
 
   function closeDropdown(e) {
-    if (!e.target.closest(".tag-dropdown")) {
+    if (!e.target.closest(".filter-dropdown")) {
       tagDropdownOpen = false;
 
       // Update window.appData immediately

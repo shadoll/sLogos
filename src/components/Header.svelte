@@ -196,7 +196,66 @@
         <kbd>/</kbd>
       </div>
     </div>
-    <div class="tag-filter">
+    <div class="filter-section">
+      <div class="filter-dropdown">
+        <button
+          class="filter-toggle"
+          on:click|stopPropagation={toggleDropdown}
+          aria-label="Open filter options"
+          class:active={tagDropdownOpen}
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 4a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v2a1 1 0 0 1-.293.707L14 13.414V19a1 1 0 0 1-.553.894l-2 1A1 1 0 0 1 10 20v-6.586L3.293 6.707A1 1 0 0 1 3 6V4z" fill="currentColor"/>
+          </svg>
+          {#if (selectedTags.length + (compactMode ? 1 : 0)) > 0}
+            <span class="filter-count">{selectedTags.length + (compactMode ? 1 : 0)}</span>
+          {/if}
+        </button>
+        {#if tagDropdownOpen}
+          <div class="filter-dropdown-panel" on:click|stopPropagation>
+            <div class="filter-options">
+              <div class="filter-option">
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={compactMode}
+                    on:change={(e) => setCompactMode(e.target.checked)}
+                  />
+                  <span class="option-label">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M10 11L3 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                      <path d="M10 16H3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                      <path d="M14 13.5L16.1 16L20 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M3 6L13.5 6M20 6L17.75 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                    Compact mode
+                  </span>
+                </label>
+              </div>
+            </div>
+
+            {#if allTags.filter((t) => !selectedTags.includes(t.text)).length > 0}
+              <div class="filter-separator"></div>
+              <div class="filter-tags-section">
+                <div class="filter-section-title">Tags</div>
+                <div class="filter-tags-grid">
+                  {#each allTags.filter((t) => !selectedTags.includes(t.text)) as tagObj}
+                    <button
+                      class="filter-tag"
+                      style={tagObj.color ? `background: ${tagObj.color}; color: #fff;` : ""}
+                      on:click={() => addTag(tagObj.text)}
+                      aria-label={`Add tag: ${tagObj.text}`}
+                    >
+                      {tagObj.text}
+                    </button>
+                  {/each}
+                </div>
+              </div>
+            {/if}
+          </div>
+        {/if}
+      </div>
+
       {#each selectedTags as tagText}
         <button
           class="selected-tag"
@@ -207,75 +266,20 @@
           <span class="close">&times;</span>
         </button>
       {/each}
-      <div class="tag-dropdown">
-        <button
-          class="dropdown-toggle"
-          on:click={toggleDropdown}
-          aria-label="Add tag filter"
-        >
-          + Tag{selectedTags.length ? "" : "s"}
-        </button>
-        {#if tagDropdownOpen}
-          <div class="dropdown-list" style="z-index: 100;">
-            {#each allTags.filter((t) => !selectedTags.includes(t.text)) as tagObj}
-              <button
-                class="dropdown-tag"
-                style={tagObj.color
-                  ? `background: ${tagObj.color}; color: #fff;`
-                  : ""}
-                on:click={() => addTag(tagObj.text)}
-                aria-label={`Add tag: ${tagObj.text}`}>{tagObj.text}</button
-              >
-            {/each}
-            {#if allTags.filter((t) => !selectedTags.includes(t.text)).length === 0}
-              <span class="no-tags">No more tags</span>
-            {/if}
-          </div>
-        {/if}
-      </div>
+
+      {#if compactMode}
+        <span class="compact-indicator">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 11L3 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M10 16H3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M14 13.5L16.1 16L20 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M3 6L13.5 6M20 6L17.75 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          Compact
+        </span>
+      {/if}
     </div>
     <div class="view-toggle">
-      <button
-        class="compact-switch-btn"
-        aria-label="Toggle compact mode"
-        class:active={compactMode === true}
-        on:click={() => setCompactMode(!compactMode)}
-        title="Show only one logo per brand (compact mode)"
-      >
-        <svg
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M10 11L3 11"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-          />
-          <path
-            d="M10 16H3"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-          />
-          <path
-            d="M14 13.5L16.1 16L20 11"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-          <path
-            d="M3 6L13.5 6M20 6L17.75 6"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-          />
-        </svg>
-      </button>
       <div class="view-mode-group button-group">
         <button
           class:active={viewMode === "compact"}
@@ -455,24 +459,204 @@
     margin-left: auto;
   }
 
-  .compact-switch-btn {
-    background: none;
-    border: none;
-    color: var(--color-text);
-    cursor: pointer;
-    padding: 0.3em 0.6em;
-    border-radius: 6px;
-    margin-right: 0.5em;
-    font-size: 1.1em;
-    display: inline-flex;
+  .filter-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
     align-items: center;
-    transition:
-      background 0.2s,
-      color 0.2s;
+    margin-left: 1rem;
+    position: relative;
   }
-  .compact-switch-btn.active,
-  .compact-switch-btn:hover {
+
+  .selected-tag {
     background: var(--color-accent, #4f8cff);
     color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 0.2em 0.8em 0.2em 0.8em;
+    font-size: 0.85em;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.3em;
+    opacity: 1;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .selected-tag .close {
+    margin-left: 0.4em;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+
+  .selected-tag .close:hover {
+    opacity: 1;
+  }
+
+  .compact-indicator {
+    background: var(--color-border);
+    color: var(--color-text);
+    border-radius: 12px;
+    padding: 0.2em 0.8em;
+    font-size: 0.85em;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+    opacity: 0.8;
+  }
+
+  .filter-dropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+  .filter-toggle {
+    background: var(--color-card);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    padding: 0.4em 0.6em;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    gap: 0.3rem;
+  }
+
+  .filter-toggle:hover,
+  .filter-toggle.active {
+    background: var(--color-accent);
+    color: #fff;
+    border-color: var(--color-accent);
+  }
+
+  .filter-count {
+    background: var(--color-accent);
+    color: #fff;
+    border-radius: 50%;
+    min-width: 16px;
+    height: 16px;
+    font-size: 0.7em;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: -6px;
+    right: -6px;
+    padding: 0 2px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  }
+
+  .filter-toggle.active .filter-count {
+    background: #fff;
+    color: var(--color-accent);
+  }
+
+  .filter-dropdown-panel {
+    position: absolute;
+    right: 0;
+    top: 100%;
+    margin-top: 0.5rem;
+    min-width: 250px;
+    background: var(--color-card);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .filter-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .filter-option {
+    display: flex;
+    align-items: center;
+  }
+
+  .filter-option label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    color: var(--color-text);
+    font-size: 0.9em;
+  }
+
+  .filter-option input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+  }
+
+  .option-label {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--color-text);
+  }
+
+  .filter-separator {
+    height: 1px;
+    background: var(--color-border);
+    margin: 0.5rem 0;
+  }
+
+  .filter-tags-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .filter-section-title {
+    font-size: 0.85em;
+    font-weight: 600;
+    color: var(--color-text);
+    opacity: 0.8;
+  }
+
+  .filter-tags-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+
+  .filter-tag {
+    background: var(--color-accent, #4f8cff);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 0.2em 0.8em;
+    font-size: 0.85em;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    opacity: 0.85;
+    transition: background 0.2s, color 0.2s, opacity 0.2s;
+    text-align: left;
+  }
+
+  .filter-tag:hover {
+    opacity: 1;
+    transform: translateY(-1px);
   }
 </style>
