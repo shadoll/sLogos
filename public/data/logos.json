@@ -61,6 +61,14 @@
     ]
   },
   {
+    "name": "Android Auto",
+    "path": "logos/android-auto.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Google",
+    "tags": []
+  },
+  {
     "name": "Apple",
     "path": "logos/apple.svg",
     "format": "SVG",
@@ -351,7 +359,7 @@
     "brand": "GitLab",
     "tags": [
       "Selfhosted",
-      "software",
+      "DevOps",
       "git"
     ]
   },
@@ -381,7 +389,10 @@
     "path": "logos/google-home.svg",
     "format": "SVG",
     "disable": false,
-    "brand": "Google"
+    "brand": "Google",
+    "tags": [
+      "Smart Home"
+    ]
   },
   {
     "name": "Google Maps",
@@ -395,7 +406,12 @@
     "path": "logos/google-meet.svg",
     "format": "SVG",
     "disable": false,
-    "brand": "Google"
+    "brand": "Google",
+    "tags": [
+      "Communication",
+      "Video Conferencing",
+      "Office Suite"
+    ]
   },
   {
     "name": "Google Photos",
@@ -429,6 +445,17 @@
     "format": "SVG",
     "disable": false,
     "brand": "GraphQL"
+  },
+  {
+    "name": "Homebridge",
+    "path": "logos/homebridge.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Homebridge",
+    "tags": [
+      "Selfhosted",
+      "Smart Home"
+    ]
   },
   {
     "name": "Immich",
@@ -741,7 +768,7 @@
     "disable": false,
     "tags": [
       "git",
-      "software"
+      "DevOps"
     ],
     "brand": "GitHub",
     "colors": {
@@ -763,7 +790,7 @@
     "disable": false,
     "tags": [
       "git",
-      "software"
+      "DevOps"
     ],
     "brand": "GitHub",
     "colors": {
@@ -786,7 +813,7 @@
     "tags": [
       "Selfhosted",
       "git",
-      "software"
+      "DevOps"
     ],
     "brand": "GitLab"
   },
@@ -1035,9 +1062,9 @@
     "disable": false,
     "tags": [
       "Selfhosted",
-      "communication",
-      "software",
-      "messaging"
+      "Communication",
+      "Video Conferencing",
+      "Office Suite"
     ],
     "colors": {
       "denim": "#1e325c"
@@ -1123,6 +1150,31 @@
     }
   },
   {
+    "name": "OpenVPN",
+    "path": "logos/openvpn.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "OpenVPN",
+    "tags": [
+      "Selfhosted",
+      "VPN",
+      "security"
+    ]
+  },
+  {
+    "name": "Slack",
+    "path": "logos/slack.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Slack",
+    "tags": [
+      "Communication",
+      "Video Conferencing",
+      "Office Suite",
+      "Messaging"
+    ]
+  },
+  {
     "name": "SLZB",
     "path": "logos/slzb.svg",
     "format": "SVG",
@@ -1178,6 +1230,33 @@
     ]
   },
   {
+    "name": "Unifi",
+    "path": "logos/unifi.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Unifi",
+    "tags": [
+      "Network Devices",
+      "Smart Home",
+      "Hardware"
+    ],
+    "colors": {
+      "black": "#000000",
+      "white": "#ffffff"
+    },
+    "targets": {
+      "logo": "#unifi-logo"
+    },
+    "sets": {
+      "white": {
+        "logo": "black"
+      },
+      "black": {
+        "logo": "white"
+      }
+    }
+  },
+  {
     "name": "Uptime Kuma",
     "path": "logos/uptimekuma.svg",
     "format": "SVG",
@@ -1195,8 +1274,9 @@
     "disable": false,
     "brand": "Meta",
     "tags": [
-      "messaging",
-      "communication"
+      "Communication",
+      "Messaging",
+      "Social"
     ],
     "colors": {
       "green": "#25D366",
@@ -1307,7 +1387,11 @@
     "format": "SVG",
     "disable": false,
     "brand": "Mikrotik",
-    "tags": []
+    "tags": [
+      "Network Devices",
+      "Hardware",
+      "Smart Home"
+    ]
   },
   {
     "name": "Mikrotik Logo",
@@ -1902,8 +1986,8 @@
     "format": "SVG",
     "disable": false,
     "tags": [
-      "messaging",
-      "communication"
+      "Messaging",
+      "Communication"
     ],
     "brand": "Signal",
     "colors": {
@@ -1924,8 +2008,8 @@
     "format": "SVG",
     "disable": false,
     "tags": [
-      "messaging",
-      "communication"
+      "Messaging",
+      "Communication"
     ],
     "brand": "Signal",
     "colors": {
@@ -2094,8 +2178,8 @@
     "format": "SVG",
     "disable": false,
     "tags": [
-      "social",
-      "communication"
+      "Social",
+      "Communication"
     ],
     "brand": "Meta"
   },
@@ -2192,8 +2276,8 @@
     "disable": false,
     "brand": "Viber",
     "tags": [
-      "messaging",
-      "communication"
+      "Communication",
+      "Messaging"
     ],
     "colors": {
       "purple": "#7d3daf",
@@ -2285,6 +2369,37 @@
     "brand": "Wifi"
   },
   {
+    "name": "Wireguard",
+    "path": "logos/wireguard.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Wireguard",
+    "tags": [
+      "Selfhosted",
+      "VPN",
+      "security"
+    ],
+    "colors": {
+      "red": "#88171a",
+      "white": "#FFFFFF",
+      "black": "#000000"
+    },
+    "targets": {
+      "circle": "#circle",
+      "logo": "#logo"
+    },
+    "sets": {
+      "light": {
+        "circle": "red",
+        "logo": "white"
+      },
+      "dark": {
+        "circle": "black",
+        "logo": "red"
+      }
+    }
+  },
+  {
     "name": "Wise",
     "path": "logos/wise.svg",
     "format": "SVG",
@@ -2358,14 +2473,24 @@
     "path": "logos/zoom.svg",
     "format": "SVG",
     "disable": false,
-    "brand": "Zoom"
+    "brand": "Zoom",
+    "tags": [
+      "Communication",
+      "Video Conferencing",
+      "Office Suite"
+    ]
   },
   {
     "name": "Zoom",
     "path": "logos/zoom-icon.svg",
     "format": "SVG",
     "disable": false,
-    "brand": "Zoom"
+    "brand": "Zoom",
+    "tags": [
+      "Communication",
+      "Video Conferencing",
+      "Office Suite"
+    ]
   },
   {
     "name": "Банк Власний Рахунок",
