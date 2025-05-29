@@ -25,7 +25,8 @@
   </div>
 </footer>
 
-<style>  footer {
+<style>
+  footer {
     padding: 1.5rem;
     background: var(--color-background);
     color: var(--color-text-muted);

@@ -655,6 +655,24 @@
     margin-bottom: 1rem;
   }
 
+  .header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+
+  .logo-count {
+    font-family: system-ui, Arial, sans-serif;
+    font-size: 0.6rem;
+    font-weight: normal;
+    color: var(--color-text);
+    opacity: 0.7;
+    margin-left: 1rem;
+    align-self: center;
+    padding-top: 0.9rem;
+  }
+
   .header-title {
     display: flex;
     align-items: center;
@@ -665,11 +683,6 @@
     width: 28px;
     height: 28px;
     border-radius: 4px;
-  }
-
-  .header-icon {
-    width: 28px;
-    height: 28px;
   }
 
   .header-controls {
@@ -927,26 +940,27 @@
   }
 
   .filter-tab {
-    flex: 1;
     background: none;
     border: none;
-    padding: 0.4rem 0.8rem;
-    font-size: 0.85em;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
     color: var(--color-text);
+    cursor: pointer;
+    padding: 0.5rem 0.75rem;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+    font-size: 0.9rem;
     opacity: 0.7;
     border-radius: 0;
   }
 
-  .filter-tab.active {
-    background: var(--color-card);
+  .filter-tab:hover {
     opacity: 1;
   }
 
-  .filter-tab:hover:not(.active) {
-    opacity: 0.9;
+  .filter-tab.active {
+    color: var(--color-accent);
+    border-bottom-color: var(--color-accent);
+    opacity: 1;
+    font-weight: 500;
   }
 
   .tags-search-bar {
@@ -1177,45 +1191,9 @@
     font-weight: 500;
   }
 
-  .filter-tabs {
-    display: flex;
-    border-bottom: 1px solid var(--color-border);
-    margin-bottom: 0.75rem;
-  }
 
-  .filter-tab {
-    background: none;
-    border: none;
-    color: var(--color-text);
-    cursor: pointer;
-    padding: 0.5rem 0.75rem;
-    border-bottom: 2px solid transparent;
-    transition: color 0.2s, border-color 0.2s;
-    font-size: 0.9rem;
-    opacity: 0.7;
-    border-radius: 0;
-  }
 
-  .filter-tab:hover {
-    opacity: 1;
-  }
 
-  .filter-tab.active {
-    color: var(--color-accent);
-    border-bottom-color: var(--color-accent);
-    opacity: 1;
-    font-weight: 500;
-    box-shadow: none;
-  }
-
-  .selected-brand {
-    background: #27ae60;
-    color: #fff;
-  }
-
-  .selected-brand:hover {
-    background: #219150;
-  }
 
   .selected-filters {
     grid-column: 2;
