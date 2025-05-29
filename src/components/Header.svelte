@@ -493,7 +493,7 @@
       <div class="selected-filters">
         {#each selectedTags as tagText}
           <button
-            class="selected-tag"
+            class="selected-filter-btn selected-tag"
             aria-label={`Remove tag: ${getTagObj(tagText).text}`}
             on:click={() => removeTag(getTagObj(tagText).text)}
           >
@@ -504,7 +504,7 @@
 
         {#each selectedBrands as brand}
           <button
-            class="selected-brand"
+            class="selected-filter-btn selected-brand"
             aria-label={`Remove brand: ${brand}`}
             on:click={() => removeBrand(brand)}
           >
@@ -515,7 +515,7 @@
 
         {#if compactMode}
           <button
-            class="compact-indicator"
+            class="selected-filter-btn compact-indicator"
             on:click={() => {
               setCompactMode(false);
               compactMode = false;
@@ -753,12 +753,11 @@
     position: relative;
   }
 
-  .selected-tag {
-    background: var(--color-accent);
-    color: #fff;
+  /* Base styles for all selected filter buttons */
+  .selected-filter-btn {
     border: none;
     border-radius: 8px;
-    padding: 0.1em 0.8em;
+    padding: 0.1em 0.7em;
     font-size: 0.75em;
     font-weight: 300;
     letter-spacing: 0.02em;
@@ -767,12 +766,16 @@
     align-items: center;
     gap: 0.3em;
     opacity: 1;
-    transition:
-      background 0.2s,
-      color 0.2s;
+    transition: background 0.2s, color 0.2s, transform 0.1s;
+    position: relative;
+    color: #fff;
   }
 
-  .selected-tag .close {
+  .selected-filter-btn:hover {
+    filter: brightness(1.6);
+  }
+
+  .selected-filter-btn .close {
     margin-left: 0.4em;
     font-size: 1.1em;
     font-weight: bold;
@@ -781,27 +784,33 @@
     transition: opacity 0.2s;
   }
 
-  .selected-tag .close:hover {
+  .selected-filter-btn .close:hover {
     opacity: 1;
+  }
+
+  /* Type-specific styles */
+  .selected-tag {
+    background: var(--color-accent);
+    color: #fff;
+  }
+
+  .selected-tag:hover {
+    background: var(--color-accent);
+  }
+
+  .selected-brand {
+    background: #27ae60;
+    color: #fff;
+  }
+
+  .selected-brand:hover {
+    background: var(--additional-color);
   }
 
   .compact-indicator {
     background: var(--color-border);
     color: var(--color-text);
-    border: none;
-    border-radius: 8px;
-    padding: 0.1em 0.8em;
-    font-size: 0.75em;
-    font-weight: 300;
-    display: flex;
-    align-items: center;
-    gap: 0.4em;
     opacity: 0.8;
-    cursor: pointer;
-    transition:
-      background 0.2s,
-      color 0.2s,
-      opacity 0.2s;
   }
 
   .compact-indicator:hover {
@@ -810,17 +819,20 @@
     color: var(--color-card);
   }
 
-  .compact-indicator .close {
-    margin-left: 0.4em;
-    font-size: 1.1em;
-    font-weight: bold;
-    cursor: pointer;
-    opacity: 0.7;
-    transition: opacity 0.2s;
+  .selected-tag {
+    background: var(--color-accent);
+    align-items: center;
   }
 
-  .compact-indicator .close:hover {
+  .compact-indicator {
+    background: var(--color-border);
+    color: var(--color-text);
+  }
+
+  .compact-indicator:hover {
     opacity: 1;
+    background: var(--color-text);
+    color: var(--color-card);
   }
 
   .filter-dropdown {
@@ -1199,37 +1211,10 @@
   .selected-brand {
     background: #27ae60;
     color: #fff;
-    border: none;
-    border-radius: 8px;
-    padding: 0.2em 0.8em 0.2em 0.8em;
-    font-size: 0.85em;
-    font-weight: 500;
-    letter-spacing: 0.02em;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 0.3em;
-    opacity: 1;
-    transition:
-      background 0.2s,
-      color 0.2s;
   }
 
   .selected-brand:hover {
     background: #219150;
-  }
-
-  .selected-brand .close {
-    margin-left: 0.4em;
-    font-size: 1.1em;
-    font-weight: bold;
-    cursor: pointer;
-    opacity: 0.7;
-    transition: opacity 0.2s;
-  }
-
-  .selected-brand .close:hover {
-    opacity: 1;
   }
 
   .selected-filters {
