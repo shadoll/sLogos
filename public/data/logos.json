@@ -73,23 +73,42 @@
     "path": "logos/apple.svg",
     "format": "SVG",
     "disable": false,
-    "brand": "Apple",
     "tags": [
       "tech"
     ],
+    "brand": "Apple",
     "colors": {
+      "green": "#75bd21",
+      "yellow": "#ffc728",
+      "orange": "#ff661c",
+      "red": "#cf0f2b",
+      "pink": "#b01cab",
+      "blue": "#00a1de",
       "silver": "#999",
       "dark_grey": "#666"
     },
     "targets": {
-      "main": "path"
+      "line1": "#line1",
+      "line2": "#line2",
+      "line3": "#line3",
+      "line4": "#line4",
+      "line5": "#line5",
+      "line6": "#line6"
     },
     "sets": {
-      "set_1": {
-        "main": "silver"
+      "silver": {
+        "line1": "silver"
       },
-      "set_2": {
-        "main": "dark_grey"
+      "dark_grey": {
+        "line1": "dark_grey"
+      },
+      "rainbow": {
+        "line1": "green",
+        "line2": "yellow",
+        "line3": "orange",
+        "line4": "red",
+        "line5": "pink",
+        "line6": "blue"
       }
     }
   },
@@ -103,16 +122,6 @@
       "cloud",
       "storage"
     ]
-  },
-  {
-    "name": "Apple Rainbow",
-    "path": "logos/apple_rainbow.svg",
-    "format": "SVG",
-    "disable": false,
-    "tags": [
-      "tech"
-    ],
-    "brand": "Apple"
   },
   {
     "name": "Apple App Store",
