@@ -756,7 +756,7 @@
   /* Base styles for all selected filter buttons */
   .selected-filter-btn {
     border: none;
-    border-radius: 8px;
+    border-radius: 4px;
     padding: 0.1em 0.7em;
     font-size: 0.75em;
     font-weight: 300;
