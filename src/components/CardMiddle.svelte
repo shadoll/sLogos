@@ -8,8 +8,8 @@
   export let theme;
   export let onCopy;
   export let onDownload;
-  export let setSearchQuery;
   export let allLogos = [];
+  export let addBrand = () => {};
   export const setTheme = () => {};
 
   function openPreview(logo) {
@@ -63,13 +63,8 @@
           class="brand-filter-btn"
           title="Filter by brand"
           on:click={() => {
-            console.log('CardSquare: Filtering by brand:', logo.brand);
-            setSearchQuery(logo.brand);
-            // Update URL with search param
-            const params = new URLSearchParams(window.location.search);
-            params.set('search', logo.brand);
-            const newUrl = window.location.pathname + (params.toString() ? '?' + params.toString() : '');
-            history.replaceState(null, '', newUrl);
+            console.log('CardMiddle: Filtering by brand:', logo.brand);
+            addBrand(logo.brand);
           }}
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none">

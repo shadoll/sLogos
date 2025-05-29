@@ -8,8 +8,8 @@
   export let theme;
   export let onCopy;
   export let onDownload;
-  export let setSearchQuery;
   export let allLogos = [];
+  export let addBrand = () => {};
   export const setTheme = () => {};
 
   function openPreview(logo) {
@@ -64,12 +64,7 @@
           title="Filter by brand"
           on:click={() => {
             console.log('CardList: Filtering by brand:', logo.brand);
-            setSearchQuery(logo.brand);
-            // Update URL with search param
-            const params = new URLSearchParams(window.location.search);
-            params.set('search', logo.brand);
-            const newUrl = window.location.pathname + (params.toString() ? '?' + params.toString() : '');
-            history.replaceState(null, '', newUrl);
+            addBrand(logo.brand);
           }}
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none">

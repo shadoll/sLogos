@@ -220,6 +220,7 @@
       {onDownload}
       {setSearchQuery}
       {allLogos}
+      {addBrand}
       {setTheme}
     />
   </main>

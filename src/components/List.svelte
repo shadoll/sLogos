@@ -9,6 +9,7 @@
   export let onDownload;
   export let setSearchQuery;
   export let allLogos = [];
+  export let addBrand = () => {};
   export let theme;
   export let viewMode = "grid";
   export let setTheme = () => {};
@@ -26,6 +27,7 @@
         {onDownload}
         {setSearchQuery}
         {allLogos}
+        {addBrand}
         {setTheme}
       />
     {:else if viewMode === "compact"}
@@ -44,6 +46,7 @@
         {onDownload}
         {setSearchQuery}
         {allLogos}
+        {addBrand}
         {setTheme}
       />
     {/if}
