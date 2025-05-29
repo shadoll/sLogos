@@ -154,6 +154,7 @@
             setSearchQuery,
             setGridView,
             setListView,
+            setCompactView,
             setTheme,
             toggleDropdown,
             addTag,
@@ -206,6 +207,21 @@
     const savedCompact = localStorage.getItem("compactMode");
     if (savedCompact === "true" || savedCompact === "false") {
       setCompactMode(savedCompact === "true");
+    }
+
+    // Restore selected tags from localStorage
+    const savedTags = localStorage.getItem("selectedTags");
+    if (savedTags) {
+      try {
+        const parsedTags = JSON.parse(savedTags);
+        if (Array.isArray(parsedTags)) {
+          selectedTags = parsedTags;
+          console.log("App: Restored selectedTags from localStorage:", selectedTags);
+        }
+      } catch (error) {
+        console.error("App: Error parsing saved tags:", error);
+        localStorage.removeItem("selectedTags");
+      }
     }
   });
 
@@ -418,22 +434,31 @@
       selectedTags = [...selectedTags, tag];
     }
 
+    // Save to localStorage
+    localStorage.setItem("selectedTags", JSON.stringify(selectedTags));
+    console.log("App: Updated selectedTags:", selectedTags);
+
     // Update window.appData immediately
     if (typeof window !== "undefined" && window.appData) {
       window.appData.selectedTags = [...selectedTags];
+      console.log("App: Updated selectedTags in window.appData");
 
       // Update filtered logos immediately
       updateFilteredLogosImmediate();
     }
   }
+
   function addTag(tag) {
     console.log("App: Adding tag:", tag);
     if (!selectedTags.includes(tag)) {
       selectedTags = [...selectedTags, tag];
+      localStorage.setItem("selectedTags", JSON.stringify(selectedTags));
+      console.log("App: Updated selectedTags:", selectedTags);
 
       // Update window.appData immediately
       if (typeof window !== "undefined" && window.appData) {
         window.appData.selectedTags = [...selectedTags];
+        console.log("App: Updated selectedTags in window.appData");
 
         // Update filtered logos immediately
         updateFilteredLogosImmediate();
@@ -452,10 +477,13 @@
   function removeTag(tag) {
     console.log("App: Removing tag:", tag);
     selectedTags = selectedTags.filter((t) => t !== tag);
+    localStorage.setItem("selectedTags", JSON.stringify(selectedTags));
+    console.log("App: Updated selectedTags:", selectedTags);
 
     // Update window.appData immediately
     if (typeof window !== "undefined" && window.appData) {
       window.appData.selectedTags = [...selectedTags];
+      console.log("App: Updated selectedTags in window.appData");
 
       // Update filtered logos immediately
       updateFilteredLogosImmediate();
@@ -464,16 +492,12 @@
 
   // Helper function to immediately update filtered/display logos in window.appData
   function updateFilteredLogosImmediate() {
-    if (
-      typeof window !== "undefined" &&
-      window.appData &&
-      window.appData.logos
-    ) {
+    if (typeof window !== "undefined" && window.appData) {
+      // Update filtered logos immediately for reactive UI
       window.appData.filteredLogos = window.appData.logos.filter((logo) => {
         const matchesSearch =
           logo.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          (logo.brand &&
-            logo.brand.toLowerCase().includes(searchQuery.toLowerCase()));
+          (logo.brand && logo.brand.toLowerCase().includes(searchQuery.toLowerCase()));
         const matchesTags =
           !selectedTags.length ||
           (logo.tags &&
@@ -494,9 +518,8 @@
           : window.appData.filteredLogos;
 
       console.log(
-        "App: Updated filtered logos:",
+        "App: Updated filtered/display logos:",
         window.appData.filteredLogos.length,
-        "display logos:",
         window.appData.displayLogos.length,
       );
     }
@@ -509,74 +532,53 @@
     // Update window.appData immediately
     if (typeof window !== "undefined" && window.appData) {
       window.appData.tagDropdownOpen = tagDropdownOpen;
-      console.log(
-        "App: Updated tagDropdownOpen in window.appData to:",
-        tagDropdownOpen,
-      );
-
-      // Force immediate update
-      setTimeout(() => {
-        if (window.appData) window.appData.tagDropdownOpen = tagDropdownOpen;
-      }, 0);
     }
   }
 
-  function closeDropdown(e) {
-    if (!e.target.closest(".filter-dropdown")) {
-      tagDropdownOpen = false;
-
-      // Update window.appData immediately
-      if (typeof window !== "undefined" && window.appData) {
-        window.appData.tagDropdownOpen = false;
-        console.log("App: Closed dropdown, updated in window.appData");
-      }
+  function closeDropdown() {
+    tagDropdownOpen = false;
+    if (typeof window !== "undefined" && window.appData) {
+      window.appData.tagDropdownOpen = false;
     }
   }
 
-  function getTagObj(text) {
-    return allTags.find((t) => t.text === text);
+  function getTagObj(tag) {
+    const tagObj = allTags.find(t => t.text === tag);
+    return tagObj || { text: tag };
   }
-
-  // The openPreview function has been removed as it's now handled directly
-  // by the Grid.svelte component using the router
 
   function openLogoByAnchor(hash) {
-    if (!hash || !hash.startsWith("#/preview/")) return;
+    if (!hash || !hash.startsWith('#/preview/')) return;
 
-    const anchor = decodeURIComponent(hash.replace("#/preview/", ""));
-
-    const found = logos.find(
-      (l) => l.name.replace(/\s+/g, "-").toLowerCase() === anchor,
+    const logoName = hash.replace('#/preview/', '').replace(/-/g, ' ');
+    const logo = logos.find(l =>
+      l.name.toLowerCase().replace(/\s+/g, '-') === hash.replace('#/preview/', '').toLowerCase() ||
+      l.name.toLowerCase() === logoName.toLowerCase()
     );
 
-    if (found) {
-      const previewUrl = `#/preview/${encodeURIComponent(found.name.replace(/\s+/g, "-").toLowerCase())}`;
-      console.log("App: Navigating to router URL:", previewUrl);
-      window.location.href = previewUrl;
+    if (logo) {
+      selectedLogo = logo;
+      showModal = true;
     }
   }
 
   // Listen for outside click to close dropdown
-  $: if (tagDropdownOpen) {
-    window.addEventListener("click", closeDropdown);
-  } else {
-    window.removeEventListener("click", closeDropdown);
+  function handleOutsideClick(event) {
+    if (tagDropdownOpen && !event.target.closest('.filter-dropdown')) {
+      closeDropdown();
+    }
+  }
+
+  $: if (typeof window !== "undefined") {
+    if (tagDropdownOpen) {
+      document.addEventListener('click', handleOutsideClick);
+    } else {
+      document.removeEventListener('click', handleOutsideClick);
+    }
   }
 </script>
 
-<div class="container app-flex">
-  <Router {routes} />
-</div>
+<Router {routes} />
 
 <style>
-  .app-flex {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-  .app-flex {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
 </style>
