@@ -18,7 +18,7 @@
   // Notification state
   let showNotification = false;
   let notificationText = '';
-  let notificationType = 'success'; // 'success' or 'error'
+  let notificationType = 'success';
 
   function showCopyNotification(text, type = 'success') {
     notificationText = text;
@@ -27,7 +27,7 @@
 
     // Force the notification to be visible in the preview
     setTimeout(() => {
-      showNotification = true; // Re-trigger the notification in case it was missed
+      showNotification = true;
     }, 50);
   }
 
@@ -99,9 +99,19 @@
     return filename.split('/').pop().replace(/\.[^.]+$/, '');
   }
 
+  function getSvgPath(logo) {
+    // If a color set is active, use the generated variant
+    if (logo._activeSet) {
+      return `/logos_gen/${getBaseName(logo.path)}__${logo._activeSet}.svg`;
+    }
+    // Otherwise use the original SVG
+    return logo.path;
+  }
+
   function getPngUrl(logo) {
     // Adjust this endpoint to match your backend
-    return `/api/svg2png?file=${encodeURIComponent(logo.path)}`;
+    const svgPath = getSvgPath(logo);
+    return `/api/svg2png?file=${encodeURIComponent(svgPath)}`;
   }
 
   function getPngLink(logo) {
@@ -154,10 +164,11 @@
 
   async function handleCopyUrlClick(e) {
     e.stopPropagation();
-    const url = window.location.origin + '/' + logo.path;
+    const svgPath = getSvgPath(logo);
+    const url = window.location.origin + '/' + svgPath;
     navigator.clipboard.writeText(url)
-      .then(() => showCopyNotification('URL copied!', 'success'))
-      .catch(() => showCopyNotification('Failed to copy URL', 'error'));
+      .then(() => showCopyNotification('SVG URL copied!', 'success'))
+      .catch(() => showCopyNotification('Failed to copy SVG URL', 'error'));
     closeCopyMenu();
   }
 
@@ -231,8 +242,9 @@
           showCopyNotification('Failed to copy SVG source', 'error');
         }
       } else {
-        // Use the standard method for grid/list view
-        const success = await copySvgSource(logo.path);
+        // Use the correct SVG path (original or generated variant)
+        const svgPath = getSvgPath(logo);
+        const success = await copySvgSource(svgPath);
         if (success) {
           showCopyNotification('SVG source copied!', 'success');
         } else {
@@ -276,7 +288,13 @@
 </span>
 
 <span class="action-group download-group">
-  <button class="download-btn" on:click={() => onDownload(logo.path, logo.name)}>
+  <button class="download-btn" on:click={() => {
+    const svgPath = getSvgPath(logo);
+    const filename = logo._activeSet ?
+      `${getBaseName(logo.path)}__${logo._activeSet}.svg` :
+      logo.name;
+    onDownload(svgPath, filename);
+  }}>
     Download
   </button>
   {#if logo.format === 'SVG'}
