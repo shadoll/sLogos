@@ -1220,21 +1220,30 @@
   }
 
   @media (max-width: 700px) {
-
-
     .header-row {
-      flex-direction: row;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      grid-template-rows: auto auto;
+      gap: 0.5rem;
       align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
     }
 
-    .logo-count {
-      display: none;
+    .header-title {
+      grid-column: 1;
+      grid-row: 1;
     }
 
     .theme-switcher {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    .logo-count {
+      grid-column: 1 / -1;
+      grid-row: 2;
       margin-left: 0;
+      padding-top: 0;
+      justify-self: start;
     }
   }
 </style>
