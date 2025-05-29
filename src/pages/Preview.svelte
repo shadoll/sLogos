@@ -79,21 +79,23 @@
 <style>
   .preview-route {
     width: 100%;
-    min-height: 100vh;
+    height: 100vh;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
   }
 
   .preview-container {
     flex: 1;
+    min-height: 0;
+    overflow: hidden;
   }
 
   .back-button-container {
     padding: 1rem 2rem;
     background: var(--color-card);
-    position: sticky;
-    top: 0;
-    z-index: 5;
+    flex-shrink: 0;
+    border-bottom: 1px solid var(--color-border);
   }
 
   .back-button {
@@ -112,5 +114,18 @@
 
   .back-button:hover {
     background: var(--color-accent-hover);
+  }
+
+  @media (max-width: 900px) {
+    .preview-route {
+      height: auto;
+      min-height: 100vh;
+      overflow: visible;
+    }
+
+    .preview-container {
+      overflow: visible;
+      min-height: auto;
+    }
   }
 </style>

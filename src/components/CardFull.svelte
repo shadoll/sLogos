@@ -318,26 +318,6 @@
     background: #444;
     color: #eee;
   }
-  .preview-container {
-    flex: 3;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
-    background-color: var(--color-card);
-    color: var(--color-text);
-    border-radius: 4px;
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
-  }
-
-  .preview-container img {
-    max-width: 80%;
-    max-height: 80%;
-    object-fit: contain;
-  }
-
   .preview-wrapper {
     position: relative;
     width: 100%;
@@ -347,22 +327,23 @@
     flex-direction: column;
     padding: 0;
     border: none;
-    overflow: visible;
+    overflow: hidden;
   }
 
   .modal-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 2rem 2.5rem 1rem 2.5rem;
+    padding: 1.5rem 2rem;
     background: var(--color-card);
     color: var(--color-text);
     z-index: 2;
-    flex: 0 0 auto;
+    flex-shrink: 0;
+    border-bottom: 1px solid var(--color-border);
   }
 
   .modal-header h2 {
-    font-size: 2.2rem;
+    font-size: 2rem;
     color: var(--color-accent, #4f8cff);
     margin: 0;
   }
@@ -372,17 +353,43 @@
   }
 
   .preview-body {
-    flex: 1 1 auto;
+    flex: 1;
     display: flex;
     flex-direction: row;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .preview-container {
+    flex: 3;
+    display: flex;
     align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    height: 100%;
-    background: var(--color-card);
-    gap: 2.5rem;
-    overflow: visible;
-    padding: 1rem;
+    justify-content: center;
+    padding: 2rem;
+    background-color: var(--color-card);
+    color: var(--color-text);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .preview-container img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    width: auto;
+    height: auto;
+  }
+
+  .right-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    flex: 1;
+    min-width: 300px;
+    max-width: 400px;
+    overflow-y: auto;
+    padding: 1.5rem;
+    background: var(--color-bg);
   }
   .logo-details.fullscreen-details {
     width: 100%;
@@ -406,63 +413,63 @@
     padding-top: 1rem;
   }
   @media (max-width: 900px) {
+    .preview-wrapper {
+      overflow-y: auto;
+    }
+
     .preview-body {
       flex-direction: column;
       align-items: stretch;
-      gap: 1.5rem;
-      padding: 0 0.5rem 0.5rem 0.5rem;
-      overflow-y: auto; /* Enable scrolling on smaller screens */
-    }
-    .logo-details.fullscreen-details {
-      max-width: 100vw;
-      min-width: 0;
-      width: 100%;
-      padding: 1.2rem 0.7rem 1rem 0.7rem;
-    }
-    .modal-header {
-      padding: 1.2rem 0.7rem 0.7rem 0.7rem;
-    }
-    .right-column {
-      max-width: 100%;
-      width: 100% !important; /* Force 100% width in mobile view */
-      flex-basis: 100%;
-    }
-    .preview-actions-container {
-      margin: 0 auto;
-      width: 100%;
+      overflow: visible;
+      min-height: auto;
     }
 
     .preview-container {
+      flex: none;
       width: 100%;
-      height: auto;
-      aspect-ratio: 1 / 1; /* Create a square container */
-      min-height: 50vh; /* Ensure minimum height */
-      position: relative;
+      height: 60vh;
+      min-height: 300px;
+      padding: 1rem;
     }
 
-    /* For browsers that don't support aspect-ratio */
-    @supports not (aspect-ratio: 1 / 1) {
-      .preview-container {
-        height: 0;
-        padding-bottom: 100%;
-        position: relative;
-      }
+    .right-column {
+      flex: none;
+      max-width: 100%;
+      min-width: 0;
+      width: 100%;
+      padding: 1rem;
+      overflow-y: visible;
+      max-height: none;
+      background: var(--color-bg);
+    }
 
-      .preview-container > :global(*) {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-      }
+    .modal-header {
+      padding: 1rem;
+    }
+
+    .logo-details.fullscreen-details {
+      max-width: 100%;
+      min-width: 0;
+      width: 100%;
+      padding: 1rem;
+    }
+
+    .preview-actions-container {
+      margin: 0;
+      width: 100%;
     }
   }
 
   .right-column {
     display: flex;
-    flex-direction: column; /* Keep it as column for proper vertical stacking */
-    gap: 2rem;
+    flex-direction: column;
+    gap: 1.5rem;
     flex: 1;
+    min-width: 300px;
+    max-width: 400px;
+    overflow-y: auto;
+    padding: 1.5rem;
+    background: var(--color-bg);
   }
 
   .source-code-container {
