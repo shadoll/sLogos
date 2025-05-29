@@ -462,8 +462,15 @@
     height: 28px;
   }
 
+  .header-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+
   .search-bar {
-    margin-bottom: 1.5rem;
+    margin-bottom: 0;
     width: 100%;
     max-width: 500px;
     position: relative;
@@ -533,12 +540,11 @@
     flex-wrap: wrap;
     gap: 0.3rem;
     align-items: center;
-    margin-left: 1rem;
     position: relative;
   }
 
   .selected-tag {
-    background: var(--color-accent, #4f8cff);
+    background: var(--color-accent);
     color: #fff;
     border: none;
     border-radius: 8px;
@@ -612,7 +618,7 @@
     color: var(--color-text);
     border: 1px solid var(--color-border);
     border-radius: 6px;
-    padding: 0.4em 0.6em;
+    padding: 0.6em 0.8em;
     font-size: 0.9em;
     cursor: pointer;
     transition: background 0.2s, color 0.2s, border-color 0.2s;
@@ -621,6 +627,7 @@
     justify-content: center;
     position: relative;
     gap: 0.3rem;
+    height: 40px;
   }
 
   .filter-toggle:hover,
