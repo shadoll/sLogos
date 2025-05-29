@@ -6,6 +6,7 @@
     "disable": false,
     "brand": "AdGuard",
     "tags": [
+      "Selfhosted",
       "adblocker",
       "privacy"
     ],
@@ -32,6 +33,7 @@
     "disable": false,
     "brand": "AdGuard",
     "tags": [
+      "Selfhosted",
       "adblocker",
       "privacy"
     ]
@@ -118,8 +120,8 @@
     "format": "SVG",
     "disable": false,
     "tags": [
-      "automation",
-      "smart home"
+      "IoT",
+      "Smart Home"
     ],
     "brand": "Apple"
   },
@@ -181,6 +183,7 @@
     "disable": false,
     "brand": "Authentik",
     "tags": [
+      "Selfhosted",
       "identity",
       "authentication",
       "software"
@@ -216,6 +219,7 @@
     "disable": false,
     "brand": "Authentik",
     "tags": [
+      "Selfhosted",
       "identity",
       "authentication",
       "software"
@@ -315,6 +319,7 @@
     "disable": false,
     "brand": "Forgejo",
     "tags": [
+      "Selfhosted",
       "software",
       "git"
     ]
@@ -327,16 +332,15 @@
     "brand": "Freebsd"
   },
   {
-    "name": "Frigate Logo",
+    "name": "Frigate",
     "path": "logos/frigate-logo.svg",
     "format": "SVG",
     "disable": false,
     "brand": "Frigate Logo",
     "tags": [
-      "automation",
-      "smart home",
-      "selfhosted",
-      "security"
+      "IoT",
+      "Smart Home",
+      "Selfhosted"
     ]
   },
   {
@@ -346,6 +350,7 @@
     "disable": false,
     "brand": "GitLab",
     "tags": [
+      "Selfhosted",
       "software",
       "git"
     ]
@@ -413,6 +418,7 @@
     "disable": false,
     "brand": "Grafana",
     "tags": [
+      "Selfhosted",
       "Monitoring Tools",
       "software"
     ]
@@ -431,7 +437,7 @@
     "disable": false,
     "brand": "Immich",
     "tags": [
-      "selfhosted",
+      "Selfhosted",
       "photo",
       "media",
       "storage"
@@ -444,6 +450,7 @@
     "disable": false,
     "brand": "Jellyfin",
     "tags": [
+      "Selfhosted",
       "media",
       "streaming"
     ]
@@ -510,14 +517,20 @@
     "path": "logos/mariadb.svg",
     "format": "SVG",
     "disable": false,
-    "brand": "MariaDB"
+    "brand": "MariaDB",
+    "tags": [
+      "Databases"
+    ]
   },
   {
     "name": "MariaDB",
     "path": "logos/mariadb-icon.svg",
     "format": "SVG",
     "disable": false,
-    "brand": "MariaDB"
+    "brand": "MariaDB",
+    "tags": [
+      "Databases"
+    ]
   },
   {
     "name": "Mastercard",
@@ -716,6 +729,7 @@
     "disable": false,
     "brand": "Gitea",
     "tags": [
+      "Selfhosted",
       "git",
       "software"
     ]
@@ -770,6 +784,7 @@
     "format": "SVG",
     "disable": false,
     "tags": [
+      "Selfhosted",
       "git",
       "software"
     ],
@@ -874,8 +889,9 @@
     "format": "SVG",
     "disable": false,
     "tags": [
-      "automation",
-      "smart home"
+      "Selfhosted",
+      "Smart Home",
+      "IoT"
     ],
     "brand": "Home Assistant"
   },
@@ -885,8 +901,9 @@
     "format": "SVG",
     "disable": false,
     "tags": [
-      "automation",
-      "smart home"
+      "Selfhosted",
+      "Smart Home",
+      "IoT"
     ],
     "brand": "Home Assistant"
   },
@@ -1017,6 +1034,7 @@
     "format": "SVG",
     "disable": false,
     "tags": [
+      "Selfhosted",
       "communication",
       "software",
       "messaging"
@@ -1111,9 +1129,8 @@
     "disable": false,
     "brand": "SMLIGHT",
     "tags": [
-      "iot",
-      "smart home",
-      "automation"
+      "IoT",
+      "Smart Home"
     ]
   },
   {
@@ -1167,8 +1184,8 @@
     "disable": false,
     "brand": "Uptime Kuma",
     "tags": [
-      "Monitoring Tools",
-      "software"
+      "Selfhosted",
+      "Monitoring Tools"
     ]
   },
   {
@@ -1219,14 +1236,14 @@
     "brand": "Microsoft"
   },
   {
-    "name": "Linkedin",
+    "name": "LinkedIn",
     "path": "logos/microsoft-linkedin.svg",
     "format": "SVG",
     "disable": false,
     "brand": "Microsoft"
   },
   {
-    "name": "Linkedin",
+    "name": "LinkedIn",
     "path": "logos/microsoft-linkedin-icon.svg",
     "format": "SVG",
     "disable": false,
@@ -1363,12 +1380,12 @@
     "disable": false,
     "tags": [
       "software",
-      "database"
+      "Databases"
     ],
     "brand": "MySQL"
   },
   {
-    "name": "Mysql",
+    "name": "MySQL",
     "path": "logos/mysql-icon.svg",
     "format": "SVG",
     "disable": false,
@@ -1536,8 +1553,7 @@
     "format": "SVG",
     "disable": false,
     "tags": [
-      "software",
-      "database"
+      "Databases"
     ],
     "brand": "PostgreSQL"
   },
@@ -1637,7 +1653,9 @@
     "path": "logos/rabbitmq.svg",
     "format": "SVG",
     "disable": false,
-    "tags": [],
+    "tags": [
+      "Selfhosted"
+    ],
     "brand": "RabbitMQ"
   },
   {
@@ -1645,7 +1663,9 @@
     "path": "logos/rabbitmq-logo.svg",
     "format": "SVG",
     "disable": false,
-    "tags": [],
+    "tags": [
+      "Selfhosted"
+    ],
     "brand": "RabbitMQ"
   },
   {
@@ -1675,8 +1695,7 @@
     "format": "SVG",
     "disable": false,
     "tags": [
-      "software",
-      "database"
+      "Databases"
     ],
     "brand": "Redis",
     "colors": {
@@ -1700,9 +1719,7 @@
     "format": "SVG",
     "disable": false,
     "tags": [
-      "tech",
-      "software",
-      "database"
+      "Databases"
     ],
     "brand": "Redis"
   },
@@ -2331,9 +2348,9 @@
     "disable": false,
     "brand": "Zigbee2mqtt",
     "tags": [
-      "iot",
-      "automation",
-      "smart home"
+      "IoT",
+      "Smart Home",
+      "Selfhosted"
     ]
   },
   {
