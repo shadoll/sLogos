@@ -413,7 +413,7 @@
     "disable": false,
     "brand": "Grafana",
     "tags": [
-      "monitoring",
+      "Monitoring Tools",
       "software"
     ]
   },
@@ -1167,7 +1167,7 @@
     "disable": false,
     "brand": "Uptime Kuma",
     "tags": [
-      "monitoring",
+      "Monitoring Tools",
       "software"
     ]
   },

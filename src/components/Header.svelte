@@ -255,9 +255,9 @@
                   </span>
                   <span class="hover-icon">
                     {#if compactMode}
-                      ❌
+                      ✕
                     {:else}
-                      ✔️
+                      ✔︎
                     {/if}
                   </span>
                 </span>
@@ -319,14 +319,14 @@
                         <span class="tag-icon">
                           <span class="permanent-icon">
                             {#if isSelected}
-                              ✔️
+                              ✔︎
                             {/if}
                           </span>
                           <span class="hover-icon">
                             {#if isSelected}
-                              ❌
+                              ✕
                             {:else}
-                              ✔️
+                              ✔︎
                             {/if}
                           </span>
                         </span>
@@ -345,6 +345,23 @@
                       : "No available tags"}
                   </div>
                 {/if}
+              </div>
+            {/if}
+
+            {#if selectedTags.length > 0 || compactMode}
+              <div class="filter-separator"></div>
+              <div class="clear-all-section">
+                <button
+                  class="clear-all-button"
+                  on:click={() => {
+                    selectedTags.forEach(tag => removeTag(tag));
+                    if (compactMode) setCompactMode(false);
+                  }}
+                  aria-label="Clear all filters"
+                >
+                  <span class="clear-all-icon">✕</span>
+                  <span class="clear-all-text">Clear all</span>
+                </button>
               </div>
             {/if}
           </div>
@@ -942,5 +959,44 @@
     opacity: 0;
     transition: opacity 0.2s;
     position: absolute;
+  }
+
+  .clear-all-section {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .clear-all-button {
+    background: none;
+    border: none;
+    padding: 0.4rem 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 0.2s;
+    text-align: left;
+    color: var(--color-text);
+    width: 100%;
+  }
+
+  .clear-all-button:hover {
+    background: var(--color-border);
+  }
+
+  .clear-all-icon {
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 14px;
+  }
+
+  .clear-all-text {
+    font-size: 0.85em;
+    font-weight: 500;
   }
 </style>
