@@ -73,14 +73,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, 200px);
     gap: 1rem;
-    justify-content: space-between;
-  }
-
-  @media (max-width: 600px) {
-    .compact-view {
-      grid-template-columns: repeat(auto-fill, 160px);
-      gap: 0.75rem;
-    }
+    justify-content: space-evenly;
   }
 
   .no-results {

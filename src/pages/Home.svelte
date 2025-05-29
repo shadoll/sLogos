@@ -227,10 +227,17 @@
 </div>
 
 <style>
+  .container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
   main {
     padding: 0 1rem 2rem 1rem;
     max-width: 1400px;
     margin: 0 auto;
     width: 100%;
+    flex: 1;
   }
 </style>

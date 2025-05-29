@@ -1183,7 +1183,7 @@
   }
 
   .selected-brand {
-    background: #2196F3;
+    background: #27ae60;
     color: #fff;
     border: none;
     border-radius: 8px;
@@ -1202,7 +1202,7 @@
   }
 
   .selected-brand:hover {
-    background: #1976D2;
+    background: #219150;
   }
 
   .selected-brand .close {
