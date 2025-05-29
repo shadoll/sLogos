@@ -69,6 +69,14 @@
     "tags": []
   },
   {
+    "name": "Apache",
+    "path": "logos/apache.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Apache",
+    "tags": []
+  },
+  {
     "name": "Apple",
     "path": "logos/apple.svg",
     "format": "SVG",
@@ -85,7 +93,8 @@
       "pink": "#b01cab",
       "blue": "#00a1de",
       "silver": "#999",
-      "dark_grey": "#666"
+      "dark_grey": "#666",
+      "black": "#000"
     },
     "targets": {
       "line1": "#line1",
@@ -101,6 +110,9 @@
       },
       "dark_grey": {
         "line1": "dark_grey"
+      },
+      "black": {
+        "line1": "black"
       },
       "rainbow": {
         "line1": "green",
@@ -170,7 +182,8 @@
       "tech"
     ],
     "colors": {
-      "dark_blue": "#080225"
+      "dark_blue": "#080225",
+      "light_blue": "#0091bd"
     },
     "brand": "arm",
     "targets": {
@@ -179,6 +192,9 @@
     "sets": {
       "set_1": {
         "main": "dark_blue"
+      },
+      "set_2": {
+        "main": "light_blue"
       }
     }
   },
@@ -286,6 +302,28 @@
     "brand": "Bitcoin"
   },
   {
+    "name": "Bitwarden",
+    "path": "logos/bitwarden.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Bitwarden",
+    "tags": [
+      "Selfhosted",
+      "Password Manager",
+      "Security"
+    ]
+  },
+  {
+    "name": "Bluesky",
+    "path": "logos/bluesky.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Bluesky",
+    "tags": [
+      "Social"
+    ]
+  },
+  {
     "name": "BMW",
     "path": "logos/bmw.svg",
     "format": "SVG",
@@ -328,6 +366,44 @@
     "format": "SVG",
     "disable": false,
     "brand": "DuckDuckGo"
+  },
+  {
+    "name": "Enpass",
+    "path": "logos/enpass.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Enpass",
+    "tags": [
+      "Password Manager",
+      "Security"
+    ],
+    "colors": {
+      "blue": "#0d47a1",
+      "white": "#ffffff"
+    },
+    "targets": {
+      "main": "#logo"
+    },
+    "sets": {
+      "set_1": {
+        "main": "blue"
+      },
+      "set_2": {
+        "main": "white"
+      }
+    }
+  },
+  {
+    "name": "Messenger",
+    "path": "logos/facebook-messenger.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Meta",
+    "tags": [
+      "Social",
+      "Communication",
+      "Messaging"
+    ]
   },
   {
     "name": "Forgejo",
@@ -1123,7 +1199,11 @@
     "path": "logos/meta-facebook.svg",
     "format": "SVG",
     "disable": false,
-    "brand": "Meta"
+    "brand": "Meta",
+    "tags": [
+      "Social",
+      "Communication"
+    ]
   },
   {
     "name": "Meta",
@@ -1139,8 +1219,7 @@
     "disable": false,
     "brand": "Meta",
     "tags": [
-      "social",
-      "media"
+      "Social"
     ],
     "colors": {
       "white": "#fff",
@@ -1157,6 +1236,37 @@
         "lines": "black"
       }
     }
+  },
+  {
+    "name": "MongoDB",
+    "path": "logos/mongodb.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "MongoDB",
+    "tags": [
+      "Databases"
+    ]
+  },
+  {
+    "name": "MQTT",
+    "path": "logos/mqtt.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "MQTT",
+    "tags": [
+      "IoT",
+      "Smart Home"
+    ]
+  },
+  {
+    "name": "Neo4j",
+    "path": "logos/neo4j.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Neo4j",
+    "tags": [
+      "Databases"
+    ]
   },
   {
     "name": "OpenVPN",
@@ -1234,8 +1344,7 @@
     "disable": false,
     "brand": "Trakt",
     "tags": [
-      "entertainment",
-      "streaming"
+      "Social"
     ]
   },
   {
