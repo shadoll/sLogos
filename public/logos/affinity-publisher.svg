@@ -10,13 +10,13 @@
                 <g transform="matrix(0.349896,0,0,0.351649,-1248.98,38.4565)">
                     <path
                         d="M4145.14,949L3887.34,502.652L3754,733.508L3754,909C3754,931.077 3771.92,949 3794,949L4145.14,949ZM4333.13,949L4184.49,949C4184.49,949 3991.94,615.513 3927.43,503.943C3914.78,482.065 3914.78,455.101 3927.42,433.219C3950.75,392.851 3981.34,339.909 3981.34,339.909L4333.13,949ZM4521.12,949L4372.48,949L4003.19,302.072L4075.33,177.182L4521.12,949ZM4628,808.578L4628,909C4628,931.077 4610.08,949 4588,949L4560.47,949L4095,143.121L4134.35,75L4204.3,75L4628,808.578ZM4588,75L4243.64,75L4628,740.456L4628,115C4628,92.923 4610.08,75 4588,75Z"
-                        style="fill:url(#_Radial1);" />
+                        style="fill:url(#_RadialBlendHighlight_39487);" />
                 </g>
             </g>
         </g>
     </g>
     <defs>
-        <radialGradient id="_Radial1" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse"
+        <radialGradient id="_RadialBlendHighlight_39487" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse"
             gradientTransform="matrix(1038.26,0,0,1038.26,4421.95,-89.2604)">
             <stop offset="0" style="stop-color:rgb(255,174,113);stop-opacity:1" />
             <stop offset="1" style="stop-color:rgb(255,147,80);stop-opacity:1" />
