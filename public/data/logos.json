@@ -497,6 +497,64 @@
     }
   },
   {
+    "name": "Influxdb",
+    "path": "logos/influxdb.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Influxdb",
+    "tags": [
+      "Databases"
+    ],
+    "colors": {
+      "deep_blue": "#020a47",
+      "black": "#000000",
+      "white": "#ffffff"
+    },
+    "targets": {
+      "main": "path"
+    },
+    "sets": {
+      "deep_blue": {
+        "main": "deep_blue"
+      },
+      "black": {
+        "main": "black"
+      },
+      "white": {
+        "main": "white"
+      }
+    }
+  },
+  {
+    "name": "Influxdb",
+    "path": "logos/influxdb-logo.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Influxdb",
+    "tags": [
+      "Databases"
+    ],
+    "colors": {
+      "deep_blue": "#020a47",
+      "black": "#000000",
+      "white": "#ffffff"
+    },
+    "targets": {
+      "main": "path"
+    },
+    "sets": {
+      "deep_blue": {
+        "main": "deep_blue"
+      },
+      "black": {
+        "main": "black"
+      },
+      "white": {
+        "main": "white"
+      }
+    }
+  },
+  {
     "name": "Messenger",
     "path": "logos/facebook-messenger.svg",
     "format": "SVG",
