@@ -405,6 +405,66 @@
     }
   },
   {
+    "name": "Eufy",
+    "path": "logos/eufy.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Eufy",
+    "tags": [
+      "Smart Home",
+      "IoT"
+    ],
+    "colors": {
+      "blue": "#005d8e",
+      "white": "#ffffff",
+      "black": "#000000"
+    },
+    "targets": {
+      "main": "#logo"
+    },
+    "sets": {
+      "blue": {
+        "main": "blue"
+      },
+      "white": {
+        "main": "white"
+      },
+      "black": {
+        "main": "black"
+      }
+    }
+  },
+  {
+    "name": "Homarr",
+    "path": "logos/homarr.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Homarr",
+    "tags": [
+      "Selfhosted",
+      "Dashboard"
+    ],
+    "colors": {
+      "red": "#fa5252",
+      "black": "#000000",
+      "white": "#ffffff"
+    },
+    "targets": {
+      "main": "#logo"
+    },
+    "sets": {
+      "red": {
+        "main": "red"
+      },
+      "black": {
+        "main": "black"
+      },
+      "white": {
+        "main": "white"
+      }
+    }
+  },
+  {
     "name": "Messenger",
     "path": "logos/facebook-messenger.svg",
     "format": "SVG",
@@ -1290,6 +1350,36 @@
       "VPN",
       "security"
     ]
+  },
+  {
+    "name": "Reolink",
+    "path": "logos/reolink.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Reolink",
+    "tags": [
+      "Smart Home",
+      "IoT"
+    ],
+    "colors": {
+      "blue": "#0050e2",
+      "white": "#ffffff",
+      "black": "#000000"
+    },
+    "targets": {
+      "main": "#logo"
+    },
+    "sets": {
+      "blue": {
+        "main": "blue"
+      },
+      "white": {
+        "main": "white"
+      },
+      "black": {
+        "main": "black"
+      }
+    }
   },
   {
     "name": "Slack",
