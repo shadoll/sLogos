@@ -865,7 +865,60 @@
     "path": "logos/kubernetes.svg",
     "format": "SVG",
     "disable": false,
-    "brand": "Kubernetes"
+    "brand": "Kubernetes",
+    "tags": [
+      "Selfhosted",
+      "Container",
+      "Orchestration"
+    ],
+    "colors": {
+      "blue": "#326de6",
+      "white": "#ffffff",
+      "black": "#000000",
+      "none": "none"
+    },
+    "targets": {
+      "logo": "#logo",
+      "background": "#background",
+      "outline": "#outline"
+    },
+    "sets": {
+      "white-on-blue": {
+        "logo": "white",
+        "background": "blue",
+        "outline": "white"
+      },
+      "white-on-blue-no-outline": {
+        "logo": "white",
+        "background": "blue",
+        "outline": "none"
+      },
+      "black-on-white-no-outline": {
+        "logo": "black",
+        "background": "white",
+        "outline": "none"
+      },
+      "blue-on-white": {
+        "logo": "blue",
+        "background": "white",
+        "outline": "blue"
+      },
+      "blue-on-transparent": {
+        "logo": "blue",
+        "background": "none",
+        "outline": "blue"
+      },
+      "white-on-transparent": {
+        "logo": "white",
+        "background": "none",
+        "outline": "white"
+      },
+      "black-on-transparent": {
+        "logo": "black",
+        "background": "none",
+        "outline": "black"
+      }
+    }
   },
   {
     "name": "Languagetool",
