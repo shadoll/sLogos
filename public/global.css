@@ -14,6 +14,7 @@
   --color-card: var(--card-background);
   --color-accent: var(--primary-color);
   --color-accent-hover: var(--primary-color-hover);
+  --color-default-fill: #c8aca5;
 }
 
 /* Dark theme overrides - using both media query and class-based approach */
@@ -45,6 +46,7 @@
   --color-text: #333333;
   --color-border: #ddd;
   --color-accent: var(--primary-color);
+  --color-default-fill: #524643;
 }
 
 * {
@@ -116,7 +118,7 @@ button:hover {
   background: var(--color-accent);
   color: var(--white);
   font-weight: bold;
-  outline: 2px solid var(--color-border);
+  /* outline: 2px solid var(--color-border); */
 }
 
 .copy-btn,
@@ -355,7 +357,7 @@ div.logo-image img {
   max-height: 100%;
   display: block;
   object-fit: contain;
-  color: var(--color-text);
+  color: var(--color-default-fill);
 }
 
 /* Modal styles */

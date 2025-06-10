@@ -555,6 +555,138 @@
     }
   },
   {
+    "name": "Matter",
+    "path": "logos/matter.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Matter",
+    "tags": [
+      "IoT",
+      "Smart Home"
+    ],
+    "colors": {
+      "dark_grey": "#524643",
+      "white": "#ffffff",
+      "black": "#000000"
+    },
+    "targets": {
+      "main": "#logo"
+    },
+    "sets": {
+      "dark_grey": {
+        "main": "dark_grey"
+      },
+      "white": {
+        "main": "white"
+      },
+      "black": {
+        "main": "black"
+      }
+    }
+  },
+  {
+    "name": "Matter",
+    "path": "logos/matter-icon.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Matter",
+    "tags": [
+      "IoT",
+      "Smart Home"
+    ],
+    "colors": {
+      "dark_grey": "#524643",
+      "white": "#ffffff",
+      "black": "#000000"
+    },
+    "targets": {
+      "main": "#logo"
+    },
+    "sets": {
+      "dark_grey": {
+        "main": "dark_grey"
+      },
+      "white": {
+        "main": "white"
+      },
+      "black": {
+        "main": "black"
+      }
+    }
+  },
+  {
+    "name": "Mattermost",
+    "path": "logos/mattermost-icon.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "Selfhosted",
+      "Communication",
+      "Video Conferencing",
+      "Office Suite"
+    ],
+    "colors": {
+      "denim": "#1e325c",
+      "blue": "#0058cc",
+      "white": "#ffffff",
+      "black": "#000000"
+    },
+    "brand": "Mattermost",
+    "targets": {
+      "main": "path"
+    },
+    "sets": {
+      "denim": {
+        "main": "denim"
+      },
+      "blue": {
+        "main": "blue"
+      },
+      "white": {
+        "main": "white"
+      },
+      "black": {
+        "main": "black"
+      }
+    }
+  },
+  {
+    "name": "Mattermost",
+    "path": "logos/mattermost-line.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "Selfhosted",
+      "Communication",
+      "Video Conferencing",
+      "Office Suite"
+    ],
+    "colors": {
+      "denim": "#1e325c",
+      "blue": "#0058cc",
+      "white": "#ffffff",
+      "black": "#000000"
+    },
+    "brand": "Mattermost",
+    "targets": {
+      "main": "path"
+    },
+    "sets": {
+      "denim": {
+        "main": "denim"
+      },
+      "blue": {
+        "main": "blue"
+      },
+      "white": {
+        "main": "white"
+      },
+      "black": {
+        "main": "black"
+      }
+    }
+  },
+  {
     "name": "Messenger",
     "path": "logos/facebook-messenger.svg",
     "format": "SVG",
@@ -1313,15 +1445,27 @@
       "Office Suite"
     ],
     "colors": {
-      "denim": "#1e325c"
+      "denim": "#1e325c",
+      "blue": "#0058cc",
+      "white": "#ffffff",
+      "black": "#000000"
     },
     "brand": "Mattermost",
     "targets": {
       "main": "g"
     },
     "sets": {
-      "set_1": {
+      "denim": {
         "main": "denim"
+      },
+      "blue": {
+        "main": "blue"
+      },
+      "white": {
+        "main": "white"
+      },
+      "black": {
+        "main": "black"
       }
     }
   },
@@ -1511,6 +1655,13 @@
       "IoT",
       "Smart Home"
     ]
+  },
+  {
+    "name": "Thread",
+    "path": "logos/thread-net.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Thread"
   },
   {
     "name": "Traefik Logo",
