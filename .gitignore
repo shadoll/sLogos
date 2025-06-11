@@ -8,6 +8,7 @@ yarn.lock
 
 # Build output
 public/build/
+public/pwa-files-to-cache.json
 
 # macOS specific files
 .DS_Store

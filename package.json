@@ -9,7 +9,8 @@
     "scan-logos": "node scripts/scanLogos.js",
     "generate-favicons": "node scripts/generateFavicons.js",
     "generate-variants": "node scripts/generate-svg-variants.js",
-    "variants": "npm run generate-variants"
+    "variants": "npm run generate-variants",
+    "pwa-cache-list": "node scripts/generate-pwa-cache-list.js"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.0.0",

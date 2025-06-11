@@ -6,21 +6,19 @@ CONTAINER_NAME = slogos-dev
 DEV_PORT = 5006
 
 # Main targets
-.PHONY: all build start stop restart logs clean scan-logos dev rebuild favicon deps-favicon build-with-favicons sync-packages convert-colors generate-svg-variants
+.PHONY: all build start stop restart logs clean scan-logos dev rebuild favicon build-with-favicons generate-svg-variants pwa-cache-list run update-lock
 
 all: build start
 
-# Development mode with hot reloading
-dev:
+dev: pwa-cache-list
 	$(DOCKER_COMPOSE) -f compose.dev.yml up --build
 
-# Build the Docker container
 build:
 	@echo "Building the Logo Gallery container..."
 	$(DOCKER_COMPOSE) -f compose.dev.yml build
 
 # Start the application in the background
-start:
+start: pwa-cache-list
 	@echo "Starting Logo Gallery application on port $(DEV_PORT)..."
 	$(DOCKER_COMPOSE) -f compose.dev.yml up -d
 	@echo "Application is running at http://localhost:$(DEV_PORT)"
@@ -81,3 +79,9 @@ generate-svg-variants:
 	@echo "Generating SVG variants with color sets..."
 	$(DOCKER_COMPOSE) -f compose.dev.yml run --rm $(CONTAINER_NAME) node scripts/generate-svg-variants.js
 	@echo "SVG variants have been generated"
+
+# Generate PWA cache list
+pwa-cache-list:
+	@echo "Generating PWA cache list..."
+	$(DOCKER_COMPOSE) -f compose.dev.yml run --rm $(CONTAINER_NAME) npm run pwa-cache-list
+

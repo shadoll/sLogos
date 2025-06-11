@@ -10,6 +10,8 @@ const srcSvgPath = path.join(__dirname, '../public/favicon.svg');
 const pngOutputPath = path.join(__dirname, '../public/apple-touch-icon.png');
 const icoOutputPath = path.join(__dirname, '../public/favicon.ico');
 const faviconPngPath = path.join(__dirname, '../public/favicon.png');
+const icon192Path = path.join(__dirname, '../public/icon-192.png');
+const icon512Path = path.join(__dirname, '../public/icon-512.png');
 
 // Ensure the favicon.svg file exists
 if (!fs.existsSync(srcSvgPath)) {
@@ -55,10 +57,20 @@ async function generateFavicons() {
     fs.copyFileSync(faviconPngPath, icoOutputPath);
     console.log(`Created ${icoOutputPath} (Note: This is actually a PNG file renamed to .ico)`);
 
+    // Generate icon-192.png for PWA
+    const icon192 = await jimp.read(tempPngPath);
+    await icon192.resize(192, 192).writeAsync(icon192Path);
+    console.log(`Created ${icon192Path}`);
+
+    // Generate icon-512.png for PWA
+    const icon512 = await jimp.read(tempPngPath);
+    await icon512.resize(512, 512).writeAsync(icon512Path);
+    console.log(`Created ${icon512Path}`);
+
     // Clean up temporary file
     fs.unlinkSync(tempPngPath);
 
-    console.log('Favicon generation completed successfully!');
+    console.log('Favicon and PWA icon generation completed successfully!');
   } catch (error) {
     console.error('Error generating favicons:', error);
     process.exit(1);

@@ -37,6 +37,9 @@ jobs:
       - name: Generate SVG variants
         run: node scripts/generate-svg-variants.js
 
+      - name: Generate PWA cache list
+        run: node scripts/generate-pwa-cache-list.js
+
       - name: Prepare Pages artifact
         run: |
           mkdir -p ./gh-pages-artifact/build
@@ -50,6 +53,7 @@ jobs:
           cp -r public/data ./gh-pages-artifact/
           cp -r public/logos ./gh-pages-artifact/
           cp -r public/logos_gen ./gh-pages-artifact/
+          cp public/pwa-files-to-cache.json ./gh-pages-artifact/
           if [ -f public/CNAME ]; then
             cp public/CNAME ./gh-pages-artifact/CNAME
           fi
