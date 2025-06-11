@@ -125,7 +125,6 @@
   }
 
   $: path, color, colorConfig, targets, sets, activeSet, colors, fetchAndColorSvg();
-
 </script>
 
 <div class="svg-wrapper" role="img" aria-label={alt || "SVG image"}>
