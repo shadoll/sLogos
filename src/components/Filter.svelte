@@ -3,18 +3,21 @@
   export let allTags = [];
   export let selectedTags = [];
   export let selectedBrands = [];
+  export let selectedVariants = [];
   export let tagDropdownOpen = false;
   export let toggleDropdown = () => console.log("toggleDropdown not provided");
   export let addTag = () => console.log("addTag not provided");
   export let removeTag = () => console.log("removeTag not provided");
   export let addBrand = () => console.log("addBrand not provided");
   export let removeBrand = () => console.log("removeBrand not provided");
+  export let addVariant = () => console.log("addVariant not provided");
+  export let removeVariant = () => console.log("removeVariant not provided");
   export let getTagObj = (tag) => ({ text: tag });
   export let compactMode = false;
   export let setCompactMode = () => {};
 
   let tagSearchQuery = ""; // Search query for filtering tags
-  let activeTab = "categories"; // "categories" or "brands"
+  let activeTab = "categories"; // "categories", "brands", or "variants"
 
   // Filter available tags based on search query
   $: filteredAvailableTags = allTags.filter(
@@ -37,9 +40,24 @@
     )
   ).sort();
 
+  // Compute all unique variants
+  $: allVariants = Array.from(
+    new Set(
+      allLogos
+        .filter((logo) => logo.variants && Array.isArray(logo.variants))
+        .flatMap((logo) => logo.variants)
+        .filter((variant) => variant && variant.trim() !== "")
+    )
+  ).sort();
+
   // Filter brands based on search query
   $: filteredAllBrands = allBrands.filter((brand) =>
     brand.toLowerCase().includes(tagSearchQuery.toLowerCase())
+  );
+
+  // Filter variants based on search query
+  $: filteredAllVariants = allVariants.filter((variant) =>
+    variant.toLowerCase().includes(tagSearchQuery.toLowerCase())
   );
 
   function toggleBrand(brand) {
@@ -51,6 +69,17 @@
 
     // Save to localStorage
     localStorage.setItem("selectedBrands", JSON.stringify(selectedBrands));
+
+    // Update URL parameters
+    updateFilterParams();
+  }
+
+  function toggleVariant(variant) {
+    if (selectedVariants.includes(variant)) {
+      removeVariant(variant);
+    } else {
+      addVariant(variant);
+    }
 
     // Update URL parameters
     updateFilterParams();
@@ -71,6 +100,13 @@
       params.set("brands", selectedBrands.join(","));
     } else {
       params.delete("brands");
+    }
+
+    // Update variants
+    if (selectedVariants.length > 0) {
+      params.set("variants", selectedVariants.join(","));
+    } else {
+      params.delete("variants");
     }
 
     const newUrl = window.location.pathname + (params.toString() ? "?" + params.toString() : "");
@@ -98,9 +134,9 @@
           fill="currentColor"
         />
       </svg>
-      {#if selectedTags.length + selectedBrands.length + (compactMode ? 1 : 0) > 0}
+      {#if selectedTags.length + selectedBrands.length + selectedVariants.length + (compactMode ? 1 : 0) > 0}
         <span class="filter-count"
-          >{selectedTags.length + selectedBrands.length + (compactMode ? 1 : 0)}</span
+          >{selectedTags.length + selectedBrands.length + selectedVariants.length + (compactMode ? 1 : 0)}</span
         >
       {/if}
     </button>
@@ -138,7 +174,7 @@
           </button>
         </div>
 
-        {#if filteredAvailableTags.length > 0 || tagSearchQuery || allBrands.length > 0}
+        {#if filteredAvailableTags.length > 0 || tagSearchQuery || allBrands.length > 0 || allVariants.length > 0}
           <div class="filter-separator"></div>
           <div class="filter-tabs-section">
             <div class="filter-tabs">
@@ -156,12 +192,19 @@
               >
                 Brands
               </button>
+              <button
+                class="filter-tab"
+                class:active={activeTab === "variants"}
+                on:click={() => activeTab = "variants"}
+              >
+                Variants
+              </button>
             </div>
 
             <div class="tags-search-bar">
               <input
                 type="text"
-                placeholder={activeTab === "categories" ? "Search categories..." : "Search brands..."}
+                placeholder={activeTab === "categories" ? "Search categories..." : activeTab === "brands" ? "Search brands..." : "Search variants..."}
                 bind:value={tagSearchQuery}
                 class="tags-search-input"
               />
@@ -234,7 +277,7 @@
                     : "No available categories"}
                 </div>
               {/if}
-            {:else}
+            {:else if activeTab === "brands"}
               {#if filteredAllBrands.length > 0}
                 <div class="filter-tags-list">
                   {#each filteredAllBrands as brand}
@@ -275,11 +318,49 @@
                     : "No available brands"}
                 </div>
               {/if}
+            {:else if activeTab === "variants"}
+              {#if filteredAllVariants.length > 0}
+                <div class="filter-tags-list">
+                  {#each filteredAllVariants as variant}
+                    {@const isSelected = selectedVariants.includes(variant)}
+                    <button
+                      class="filter-tag-item filter-variant-item"
+                      class:selected={isSelected}
+                      on:click={() => toggleVariant(variant)}
+                      aria-label={isSelected
+                        ? `Remove variant: ${variant}`
+                        : `Add variant: ${variant}`}
+                    >
+                      <span class="tag-icon">
+                        <span class="permanent-icon">
+                          {#if isSelected}
+                            ✔︎
+                          {/if}
+                        </span>
+                        <span class="hover-icon">
+                          {#if isSelected}
+                            ✕
+                          {:else}
+                            ✔︎
+                          {/if}
+                        </span>
+                      </span>
+                      <span class="variant-text">{variant}</span>
+                    </button>
+                  {/each}
+                </div>
+              {:else}
+                <div class="no-tags">
+                  {tagSearchQuery
+                    ? "No variants match your search"
+                    : "No available variants"}
+                </div>
+              {/if}
             {/if}
           </div>
         {/if}
 
-        {#if selectedTags.length > 0 || selectedBrands.length > 0 || compactMode}
+        {#if selectedTags.length > 0 || selectedBrands.length > 0 || selectedVariants.length > 0 || compactMode}
           <div class="filter-separator"></div>
           <div class="clear-all-section">
             <button
@@ -287,6 +368,7 @@
               on:click={() => {
                 selectedTags.forEach(tag => removeTag(tag));
                 selectedBrands.forEach(brand => removeBrand(brand));
+                [...selectedVariants].forEach(variant => removeVariant(variant));
                 if (compactMode) {
                   setCompactMode(false);
                   compactMode = false;
@@ -322,6 +404,17 @@
         on:click={() => removeBrand(brand)}
       >
         {brand}
+        <span class="close">&times;</span>
+      </button>
+    {/each}
+
+    {#each selectedVariants as variant}
+      <button
+        class="selected-filter-btn selected-variant"
+        aria-label={`Remove variant: ${variant}`}
+        on:click={() => removeVariant(variant)}
+      >
+        {variant}
         <span class="close">&times;</span>
       </button>
     {/each}
@@ -436,6 +529,15 @@
 
   .selected-brand:hover {
     background: var(--additional-color);
+  }
+
+  .selected-variant {
+    background: #9b59b6;
+    color: #fff;
+  }
+
+  .selected-variant:hover {
+    background: #8e44ad;
   }
 
   .compact-indicator {
@@ -648,6 +750,15 @@
     background: var(--color-border);
   }
 
+  .filter-variant-item.selected {
+    background: none;
+    color: var(--color-text);
+  }
+
+  .filter-variant-item.selected:hover {
+    background: var(--color-border);
+  }
+
   .tag-icon {
     width: 16px;
     height: 16px;
@@ -687,6 +798,11 @@
   }
 
   .brand-text {
+    font-size: 0.85em;
+    font-weight: 500;
+  }
+
+  .variant-text {
     font-size: 0.85em;
     font-weight: 500;
   }

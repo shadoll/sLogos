@@ -15,8 +15,11 @@
   let selectedTags = [];
   let allTags = [];
   let selectedBrands = [];
+  let selectedVariants = [];
   let addBrand = () => {};
   let removeBrand = () => {};
+  let addVariant = () => {};
+  let removeVariant = () => {};
   let setTheme = () => {};
 
 
@@ -31,6 +34,7 @@
     allTags = [],
     selectedTags = [],
     selectedBrands = [],
+    selectedVariants = [],
     tagDropdownOpen = false,
     compactMode = false,
     setSearchQuery = () => {},
@@ -43,6 +47,8 @@
     removeTag = () => {},
     addBrand = () => {},
     removeBrand = () => {},
+    addVariant = () => {},
+    removeVariant = () => {},
     toggleTag = () => {},
     getTagObj = () => ({ text: "" }),
     closeDropdown = () => {},
@@ -83,6 +89,18 @@
         selectedBrands = window.appData.selectedBrands;
       }
 
+      if (window.appData.addVariant && typeof window.appData.addVariant === 'function') {
+        addVariant = window.appData.addVariant;
+      }
+
+      if (window.appData.removeVariant && typeof window.appData.removeVariant === 'function') {
+        removeVariant = window.appData.removeVariant;
+      }
+
+      if (window.appData.selectedVariants) {
+        selectedVariants = window.appData.selectedVariants;
+      }
+
       // Set up reactivity with window.appData
       const interval = setInterval(() => {
         if (window.appData) {
@@ -107,6 +125,10 @@
 
           if (window.appData.selectedBrands) {
             selectedBrands = [...window.appData.selectedBrands];
+          }
+
+          if (window.appData.selectedVariants) {
+            selectedVariants = [...window.appData.selectedVariants];
           }
         }
       }, 100);
@@ -200,12 +222,15 @@
     allTags={allTags}
     selectedTags={selectedTags}
     selectedBrands={selectedBrands}
+    selectedVariants={selectedVariants}
     {tagDropdownOpen}
     {toggleDropdown}
     {addTag}
     {removeTag}
     addBrand={addBrand}
     removeBrand={removeBrand}
+    addVariant={addVariant}
+    removeVariant={removeVariant}
     getTagObj={(tag) => (window.appData?.getTagObj ? window.appData.getTagObj(tag) : {text: tag})}
     {compactMode}
     {setCompactMode}

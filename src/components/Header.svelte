@@ -18,12 +18,15 @@
   export let allTags = [];
   export let selectedTags = [];
   export let selectedBrands = [];
+  export let selectedVariants = [];
   export let tagDropdownOpen = false;
   export let toggleDropdown = () => console.log("toggleDropdown not provided");
   export let addTag = () => console.log("addTag not provided");
   export let removeTag = () => console.log("removeTag not provided");
   export let addBrand = () => console.log("addBrand not provided");
   export let removeBrand = () => console.log("removeBrand not provided");
+  export let addVariant = () => console.log("addVariant not provided");
+  export let removeVariant = () => console.log("removeVariant not provided");
   export let getTagObj = (tag) => ({ text: tag });
   export let compactMode = false;
   export let setCompactMode = () => {};
@@ -38,7 +41,7 @@
       <h1>Logo Gallery</h1>
     </div>
     <span class="logo-count">
-      {#if (searchQuery && searchQuery.trim() !== "") || selectedTags.length > 0 || selectedBrands.length > 0 || compactMode}
+      {#if (searchQuery && searchQuery.trim() !== "") || selectedTags.length > 0 || selectedBrands.length > 0 || selectedVariants.length > 0 || compactMode}
         {displayLogos ? displayLogos.length : 0} of {allLogos ? allLogos.length : 0} images
         displayed
       {:else}
@@ -55,12 +58,15 @@
       {allTags}
       {selectedTags}
       {selectedBrands}
+      {selectedVariants}
       {tagDropdownOpen}
       {toggleDropdown}
       {addTag}
       {removeTag}
       {addBrand}
       {removeBrand}
+      {addVariant}
+      {removeVariant}
       {getTagObj}
       {compactMode}
       {setCompactMode}

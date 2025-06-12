@@ -51,11 +51,9 @@
           (logo.brand && selectedBrands.includes(logo.brand));
         const matchesVariants =
           !selectedVariants.length ||
-          (logo.variant && (
-            Array.isArray(logo.variant)
-              ? logo.variant.some((v) => selectedVariants.includes(v))
-              : selectedVariants.includes(logo.variant)
-          ));
+          (logo.variants &&
+            Array.isArray(logo.variants) &&
+            logo.variants.some((v) => selectedVariants.includes(v)));
         return matchesSearch && matchesTags && matchesBrands && matchesVariants;
       });
 
@@ -223,7 +221,51 @@
     const searchParam = params.get("search");
     if (searchParam) {
       searchQuery = searchParam;
-    }        // Restore view mode and compact mode from localStorage
+    }
+
+    // Restore selected tags from URL
+    const tagsParam = params.get("tags");
+    if (tagsParam) {
+      selectedTags = tagsParam.split(",").filter(tag => tag.trim());
+      console.log("App: Restored selectedTags from URL:", selectedTags);
+      // Update localStorage with URL values
+      localStorage.setItem("selectedTags", JSON.stringify(selectedTags));
+    }
+
+    // Restore selected brands from URL
+    const brandsParam = params.get("brands");
+    if (brandsParam) {
+      selectedBrands = brandsParam.split(",").filter(brand => brand.trim());
+      console.log("App: Restored selectedBrands from URL:", selectedBrands);
+      // Update localStorage with URL values      localStorage.setItem("selectedBrands", JSON.stringify(selectedBrands));
+    }
+
+    // Restore selected variants from URL
+    const variantsParam = params.get("variants");
+    if (variantsParam) {
+      selectedVariants = variantsParam.split(",").filter(variant => variant.trim());
+      console.log("App: Restored selectedVariants from URL:", selectedVariants);
+      // Update localStorage with URL values
+      localStorage.setItem("selectedVariants", JSON.stringify(selectedVariants));
+    }
+
+    // Force update window.appData after restoration
+    setTimeout(() => {
+      if (typeof window !== "undefined" && window.appData) {
+        window.appData.selectedTags = [...selectedTags];
+        window.appData.selectedBrands = [...selectedBrands];
+        window.appData.selectedVariants = [...selectedVariants];
+        console.log("App: Updated window.appData after restoration with variants:", selectedVariants);
+        updateFilteredLogosImmediate();
+
+        // Force re-render of components by updating references
+        selectedTags = [...selectedTags];
+        selectedBrands = [...selectedBrands];
+        selectedVariants = [...selectedVariants];
+      }
+    }, 100);
+
+        // Restore view mode and compact mode from localStorage
         const savedViewMode = localStorage.getItem("viewMode");
         if (savedViewMode === "grid" || savedViewMode === "list" || savedViewMode === "compact") {
           viewMode = savedViewMode;
@@ -233,48 +275,54 @@
       setCompactMode(savedCompact === "true");
     }
 
-    // Restore selected tags from localStorage
-    const savedTags = localStorage.getItem("selectedTags");
-    if (savedTags) {
-      try {
-        const parsedTags = JSON.parse(savedTags);
-        if (Array.isArray(parsedTags)) {
-          selectedTags = parsedTags;
-          console.log("App: Restored selectedTags from localStorage:", selectedTags);
+    // Restore selected tags from localStorage (only if not already set from URL)
+    if (!tagsParam) {
+      const savedTags = localStorage.getItem("selectedTags");
+      if (savedTags) {
+        try {
+          const parsedTags = JSON.parse(savedTags);
+          if (Array.isArray(parsedTags)) {
+            selectedTags = parsedTags;
+            console.log("App: Restored selectedTags from localStorage:", selectedTags);
+          }
+        } catch (error) {
+          console.error("App: Error parsing saved tags:", error);
+          localStorage.removeItem("selectedTags");
         }
-      } catch (error) {
-        console.error("App: Error parsing saved tags:", error);
-        localStorage.removeItem("selectedTags");
       }
     }
 
-    // Restore selected brands from localStorage
-    const savedBrands = localStorage.getItem("selectedBrands");
-    if (savedBrands) {
-      try {
-        const parsedBrands = JSON.parse(savedBrands);
-        if (Array.isArray(parsedBrands)) {
-          selectedBrands = parsedBrands;
-          console.log("App: Restored selectedBrands from localStorage:", selectedBrands);
+    // Restore selected brands from localStorage (only if not already set from URL)
+    if (!brandsParam) {
+      const savedBrands = localStorage.getItem("selectedBrands");
+      if (savedBrands) {
+        try {
+          const parsedBrands = JSON.parse(savedBrands);
+          if (Array.isArray(parsedBrands)) {
+            selectedBrands = parsedBrands;
+            console.log("App: Restored selectedBrands from localStorage:", selectedBrands);
+          }
+        } catch (error) {
+          console.error("App: Error parsing saved brands:", error);
+          localStorage.removeItem("selectedBrands");
         }
-      } catch (error) {
-        console.error("App: Error parsing saved brands:", error);
-        localStorage.removeItem("selectedBrands");
       }
     }
 
-    // Restore selected variants from localStorage
-    const savedVariants = localStorage.getItem("selectedVariants");
-    if (savedVariants) {
-      try {
-        const parsedVariants = JSON.parse(savedVariants);
-        if (Array.isArray(parsedVariants)) {
-          selectedVariants = parsedVariants;
-          console.log("App: Restored selectedVariants from localStorage:", selectedVariants);
+    // Restore selected variants from localStorage (only if not already set from URL)
+    if (!variantsParam) {
+      const savedVariants = localStorage.getItem("selectedVariants");
+      if (savedVariants) {
+        try {
+          const parsedVariants = JSON.parse(savedVariants);
+          if (Array.isArray(parsedVariants)) {
+            selectedVariants = parsedVariants;
+            console.log("App: Restored selectedVariants from localStorage:", selectedVariants);
+          }
+        } catch (error) {
+          console.error("App: Error parsing saved variants:", error);
+          localStorage.removeItem("selectedVariants");
         }
-      } catch (error) {
-        console.error("App: Error parsing saved variants:", error);
-        localStorage.removeItem("selectedVariants");
       }
     }
   });
@@ -314,11 +362,9 @@
       (logo.brand && selectedBrands.includes(logo.brand));
     const matchesVariants =
       !selectedVariants.length ||
-      (logo.variant && (
-        Array.isArray(logo.variant)
-          ? logo.variant.some((v) => selectedVariants.includes(v))
-          : selectedVariants.includes(logo.variant)
-      ));
+      (logo.variants &&
+        Array.isArray(logo.variants) &&
+        logo.variants.some((v) => selectedVariants.includes(v)));
     return matchesSearch && matchesTags && matchesBrands && matchesVariants;
   });
 
@@ -604,17 +650,51 @@
   }
 
   function addVariant(variant) {
+    console.log("App: Adding variant:", variant);
     if (!selectedVariants.includes(variant)) {
       selectedVariants = [...selectedVariants, variant];
       localStorage.setItem("selectedVariants", JSON.stringify(selectedVariants));
-      updateFilteredLogosImmediate();
+      console.log("App: Updated selectedVariants:", selectedVariants);
+
+      // Update window.appData immediately
+      if (typeof window !== "undefined" && window.appData) {
+        window.appData.selectedVariants = [...selectedVariants];
+        console.log("App: Updated selectedVariants in window.appData");
+
+        // Update filtered logos immediately
+        updateFilteredLogosImmediate();
+      }
     }
+
+    // Close dropdown after adding variant
+    tagDropdownOpen = false;
+
+    // Also update the dropdown state in window.appData
+    if (typeof window !== "undefined" && window.appData) {
+      window.appData.tagDropdownOpen = false;
+    }
+
+    // Force reactive update
+    selectedVariants = selectedVariants;
   }
 
   function removeVariant(variant) {
+    console.log("App: Removing variant:", variant);
     selectedVariants = selectedVariants.filter((v) => v !== variant);
     localStorage.setItem("selectedVariants", JSON.stringify(selectedVariants));
-    updateFilteredLogosImmediate();
+    console.log("App: Updated selectedVariants:", selectedVariants);
+
+    // Update window.appData immediately
+    if (typeof window !== "undefined" && window.appData) {
+      window.appData.selectedVariants = [...selectedVariants];
+      console.log("App: Updated selectedVariants in window.appData");
+
+      // Update filtered logos immediately
+      updateFilteredLogosImmediate();
+    }
+
+    // Force reactive update
+    selectedVariants = selectedVariants;
   }
 
   // Helper function to immediately update filtered/display logos in window.appData
@@ -636,11 +716,9 @@
           (logo.brand && selectedBrands.includes(logo.brand));
         const matchesVariants =
           !selectedVariants.length ||
-          (logo.variant && (
-            Array.isArray(logo.variant)
-              ? logo.variant.some((v) => selectedVariants.includes(v))
-              : selectedVariants.includes(logo.variant)
-          ));
+          (logo.variants &&
+            Array.isArray(logo.variants) &&
+            logo.variants.some((v) => selectedVariants.includes(v)));
         return matchesSearch && matchesTags && matchesBrands && matchesVariants;
       });
 
@@ -659,6 +737,10 @@
         window.appData.filteredLogos.length,
         window.appData.displayLogos.length,
       );
+
+      // Force update the main reactive statements as well
+      filteredLogos = [...window.appData.filteredLogos];
+      displayLogos = [...window.appData.displayLogos];
     }
   }
 
