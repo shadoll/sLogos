@@ -555,6 +555,36 @@
     }
   },
   {
+    "name": "Laravel",
+    "path": "logos/laravel.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Laravel",
+    "tags": [
+      "PHP",
+      "Framework"
+    ],
+    "colors": {
+      "red": "#ff2d20",
+      "black": "#000000",
+      "white": "#ffffff"
+    },
+    "targets": {
+      "main": "path"
+    },
+    "sets": {
+      "red": {
+        "main": "red"
+      },
+      "black": {
+        "main": "black"
+      },
+      "white": {
+        "main": "white"
+      }
+    }
+  },
+  {
     "name": "Matter",
     "path": "logos/matter.svg",
     "format": "SVG",
@@ -929,10 +959,33 @@
   },
   {
     "name": "Laravel",
-    "path": "logos/laravel.svg",
+    "path": "logos/laravel-logo.svg",
     "format": "SVG",
     "disable": false,
-    "brand": "Laravel"
+    "brand": "Laravel",
+    "tags": [
+      "PHP",
+      "Framework"
+    ],
+    "colors": {
+      "red": "#ff2d20",
+      "black": "#000000",
+      "white": "#ffffff"
+    },
+    "targets": {
+      "main": "path"
+    },
+    "sets": {
+      "red": {
+        "main": "red"
+      },
+      "black": {
+        "main": "black"
+      },
+      "white": {
+        "main": "white"
+      }
+    }
   },
   {
     "name": "Letsencrypt",
