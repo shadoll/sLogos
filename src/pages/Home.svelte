@@ -3,7 +3,6 @@
   import Header from '../components/Header.svelte';
   import List from '../components/List.svelte';
   import Footer from '../components/Footer.svelte';
-  import { push } from 'svelte-spa-router';
 
   let logos = [];
   let allLogos = [];
