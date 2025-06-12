@@ -13,29 +13,34 @@
   let setTheme = () => {}; // Default no-op function
 
   onMount(() => {
-    if (typeof window !== 'undefined' && window.appData) {
-      logos = window.appData.logos || [];
-      theme = window.appData.theme || "system";
-
-      // Check if setTheme exists in window.appData
-      if (window.appData.setTheme && typeof window.appData.setTheme === 'function') {
-        console.log("PreviewPage: Found window.appData.setTheme function");
-        setTheme = window.appData.setTheme;
-      } else {
-        console.warn("PreviewPage: window.appData.setTheme not found or not a function");
+    function tryFindLogo() {
+      if (typeof window !== 'undefined' && window.appData && Array.isArray(window.appData.logos) && window.appData.logos.length > 0) {
+        logos = window.appData.logos || [];
+        theme = window.appData.theme || "system";
+        if (window.appData.setTheme && typeof window.appData.setTheme === 'function') {
+          setTheme = window.appData.setTheme;
+        }
+        const logoName = params.logoName.replace(/-/g, ' ');
+        logo = logos.find(l =>
+          l.name.toLowerCase().replace(/\s+/g, '-') === params.logoName.toLowerCase() ||
+          l.name.toLowerCase() === logoName.toLowerCase()
+        );
+        if (!logo) {
+          console.error("Logo not found:", params.logoName);
+          push('/', { replace: true });
+        }
+        return true;
       }
+      return false;
+    }
 
-      // Find the logo based on the URL parameter
-      const logoName = params.logoName.replace(/-/g, ' ');
-      logo = logos.find(l =>
-        l.name.toLowerCase().replace(/\s+/g, '-') === params.logoName.toLowerCase() ||
-        l.name.toLowerCase() === logoName.toLowerCase()
-      );
-
-      if (!logo) {
-        console.error("Logo not found:", params.logoName);
-        push('/', { replace: true });
-      }
+    if (!tryFindLogo()) {
+      // Poll until logos are loaded
+      const interval = setInterval(() => {
+        if (tryFindLogo()) {
+          clearInterval(interval);
+        }
+      }, 100);
     }
 
     // Back button event listener
