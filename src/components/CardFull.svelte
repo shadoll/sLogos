@@ -158,11 +158,16 @@
       <div class="right-column">
         <div class="logo-details fullscreen-details">
           {#if logo.colors}
-            <ColorSwitcher {logo} {theme} mode="standard" onSelect={(color, setName) => {
-              logo._activeColor = color;
-              logo._activeSet = setName;
-              setTimeout(updateSvgSource, 100);
-            }} />
+            <ColorSwitcher
+              {logo}
+              {theme}
+              mode="standard"
+              onSelect={(color, setName) => {
+                logo._activeColor = color;
+                logo._activeSet = setName;
+                setTimeout(updateSvgSource, 100);
+              }}
+            />
           {/if}
           {#if logo.brand}
             <p><strong>Brand:</strong> <span>{logo.brand}</span></p>
@@ -207,17 +212,6 @@
 </div>
 
 <style>
-  .preview-actions-container {
-    width: 100%;
-    background: var(--color-card);
-    color: var(--color-text);
-    border-radius: 12px;
-    padding: 1.5rem;
-    box-shadow: 0 2px 16px 4px rgba(0, 0, 0, 0.18);
-    z-index: 2;
-    position: relative;
-  }
-
   .actions-wrapper {
     display: flex;
     flex-wrap: wrap;
@@ -287,17 +281,6 @@
     height: auto;
   }
 
-  .right-column {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    flex: 1;
-    min-width: 300px;
-    max-width: 400px;
-    overflow-y: auto;
-    padding: 1.5rem;
-    background: var(--color-bg);
-  }
   .logo-details.fullscreen-details {
     width: 100%;
     background: var(--color-card);
@@ -312,9 +295,29 @@
     flex-wrap: wrap;
     gap: 0.5rem;
   }
-
+  .logo-tag {
+    display: inline-block;
+    background: var(--color-accent);
+    color: var(--white);
+    border-radius: 12px;
+    padding: 0.2em 0.8em;
+    font-size: 0.85em;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    margin-right: 0.3em;
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
+    transition: background 0.2s;
+  }
   .preview-actions-container {
-    margin-top: 2rem;
+    width: 100%;
+    background: var(--color-card);
+    color: var(--color-text);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 16px 4px rgba(0, 0, 0, 0.18);
+    z-index: 2;
+    position: relative;
     border-top: 1px solid var(--color-border);
     padding-top: 1rem;
   }
@@ -367,7 +370,7 @@
     min-width: 300px;
     max-width: 400px;
     overflow-y: auto;
-    padding: 1.5rem;
+    padding: 0 1.5rem;
     background: var(--color-bg);
   }
 
@@ -404,7 +407,6 @@
   }
 
   .logo-details {
-    margin-top: 1rem;
     color: var(--color-text);
   }
 
@@ -418,5 +420,4 @@
   .logo-details span {
     color: var(--color-text);
   }
-
 </style>

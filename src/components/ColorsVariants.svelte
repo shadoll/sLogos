@@ -45,6 +45,15 @@
 {/if}
 
 <style>
+    .set-circle {
+        font-size: 10px;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        padding: 0;
+    }
     .colors-variants-list {
         display: flex;
         gap: 0.4em;
@@ -54,8 +63,6 @@
     .color-circle {
         width: 24px;
         height: 24px;
-        border-radius: 50%;
-        border: 1px solid var(--color-border, #ddd);
         cursor: pointer;
         transition: transform 0.2s;
         box-sizing: border-box;
@@ -66,5 +73,10 @@
     }
     .color-circle.active {
         box-shadow: 0 0 10px 5px var(--color-accent);
+        border-radius: 50%;
+    }
+
+    .color-circle:last-child {
+        margin-right: 0;
     }
 </style>

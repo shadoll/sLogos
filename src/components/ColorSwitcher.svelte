@@ -46,7 +46,7 @@
   {#if mode === 'compact'}
     <div class="color-chooser-wrapper">
       <span
-        class="color-circle {logo._activeSet ? '' : 'color-reset'}"
+        class="color-chooser {logo._activeSet ? '' : 'color-reset'}"
         title="Choose color"
         tabindex="0"
         role="button"
@@ -93,17 +93,15 @@
     align-items: flex-end;
     pointer-events: auto;
   }
-  .color-circle {
+  .color-chooser {
     width: 24px;
     height: 24px;
-    border-radius: 50%;
-    border: 1px solid var(--color-border, #ddd);
     cursor: pointer;
     transition: transform 0.2s;
     box-sizing: border-box;
     display: inline-block;
   }
-  .color-circle:hover {
+  .color-chooser:hover {
     transform: scale(1.1);
   }
   .color-dropdown {

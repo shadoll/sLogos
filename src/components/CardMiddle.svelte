@@ -89,10 +89,15 @@
     <div class="format-row">
       <span><strong>Format:</strong> {logo.format}</span>
       {#if logo.colors}
-        <ColorSwitcher {logo} {theme} mode="standard" onSelect={(color, setName) => {
-          logo._activeColor = color;
-          logo._activeSet = setName;
-        }} />
+        <ColorSwitcher
+          {logo}
+          {theme}
+          mode="standard"
+          onSelect={(color, setName) => {
+            logo._activeColor = color;
+            logo._activeSet = setName;
+          }}
+        />
       {/if}
     </div>
     <div class="logo-actions">
@@ -176,5 +181,4 @@
     font-size: 1.2rem;
     line-height: 1.2;
   }
-
 </style>
