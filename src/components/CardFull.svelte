@@ -2,8 +2,8 @@
   import { onMount } from "svelte";
   import InlineSvg from "./InlineSvg.svelte";
   import Actions from "./Actions.svelte";
+  import ColorSwitcher from "./ColorSwitcher.svelte";
   import { getDefaultLogoColor, getThemeColor } from "../utils/colorTheme.js";
-  import { generateColorSetCircle } from "../utils/colorCircles.js";
   import { fetchSvgSource } from "../utils/svgSource.js";
 
   export let show = false;
@@ -27,7 +27,7 @@
 
   // Watch for color changes and update SVG source
   function updateSvgSource() {
-    if (inlineSvgRef && typeof inlineSvgRef.getSvgSource === 'function') {
+    if (inlineSvgRef && typeof inlineSvgRef.getSvgSource === "function") {
       const newSource = inlineSvgRef.getSvgSource();
       if (newSource) {
         svgSource = newSource;
@@ -39,16 +39,16 @@
     return logo && logo.format && logo.format.toLowerCase() === "svg";
   }
   function copySvgSourceFromTextarea() {
-    if (inlineSvgRef && typeof inlineSvgRef.getSvgSource === 'function') {
+    if (inlineSvgRef && typeof inlineSvgRef.getSvgSource === "function") {
       // Get the updated SVG source with all color changes applied
       const updatedSource = inlineSvgRef.getSvgSource();
 
       try {
-        const tempEl = document.createElement('textarea');
+        const tempEl = document.createElement("textarea");
         tempEl.value = updatedSource || svgSource;
         document.body.appendChild(tempEl);
         tempEl.select();
-        document.execCommand('copy');
+        document.execCommand("copy");
         document.body.removeChild(tempEl);
         return true;
       } catch (err) {
@@ -157,91 +157,12 @@
       </div>
       <div class="right-column">
         <div class="logo-details fullscreen-details">
-          {#if isSvgLogo(logo) && logo.colors}
-            <div class="color-switcher-preview">
-              <span
-                class="color-circle color-reset"
-                title="Reset to theme color"
-                tabindex="0"
-                role="button"
-                aria-label="Reset to theme color"
-                style="background: none; width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center; padding: 0; margin: 0; border: none;"
-                on:click|stopPropagation={() => {
-                      logo._activeColor = undefined;
-                      logo._activeSet = undefined; // Reset activeSet too
-                      setTimeout(updateSvgSource, 100); // Update SVG source after color reset
-                    }}
-                on:keydown|stopPropagation={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    logo._activeColor = undefined;
-                    logo._activeSet = undefined;
-                    setTimeout(updateSvgSource, 100);
-                  }
-                }}
-              >
-                <svg
-                  width="100%"
-                  height="100%"
-                  viewBox="0 0 800 800"
-                  xmlns="http://www.w3.org/2000/svg"
-                  ><path
-                    d="M400,0c220.766,0 400,179.234 400,400c0,220.766 -179.234,400 -400,400c-220.766,0 -400,-179.234 -400,-400c0,-220.766 179.234,-400 400,-400Zm-251.006,583.082l434.088,-434.088c-51.359,-37.541 -114.652,-59.71 -183.082,-59.71c-171.489,0 -310.716,139.227 -310.716,310.716c0,68.43 22.169,131.723 59.71,183.082Zm502.495,-365.501l-433.908,433.908c51.241,37.248 114.283,59.227 182.419,59.227c171.489,-0 310.716,-139.227 310.716,-310.716c-0,-68.136 -21.979,-131.178 -59.227,-182.419Z"
-                    fill="#33363f"
-                  /></svg
-                >
-              </span>
-              {#if logo.sets}
-                {#each Object.entries(logo.sets) as [setName, setConfig], i}
-                  <span
-                    class="color-circle set-circle"
-                    title={`Color Set ${i + 1}: ${setName}`}
-                    tabindex="0"
-                    role="button"
-                    on:click|stopPropagation={() => {
-                      logo._activeColor = Object.values(logo.colors)[
-                        i % Object.keys(logo.colors).length
-                      ];
-                      logo._activeSet = setName;
-                      setTimeout(updateSvgSource, 100); // Update SVG source after color change
-                    }}
-                    on:keydown|stopPropagation={(e) => {
-                      if (e.key === "Enter" || e.key === " ") {
-                        logo._activeColor = Object.values(logo.colors)[
-                          i % Object.keys(logo.colors).length
-                        ];
-                        logo._activeSet = setName;
-                        setTimeout(updateSvgSource, 100); // Update SVG source after color change
-                      }
-                    }}
-                    style="padding: 0; overflow: hidden;"
-                  >
-                    {@html generateColorSetCircle(logo.colors, setConfig)}
-                  </span>
-                {/each}
-              {:else}
-                {#each Object.entries(logo.colors) as [colorName, colorValue]}
-                  <span
-                    class="color-circle"
-                    title={colorName.replace("_", " ")}
-                    style={`background:${colorValue}`}
-                    tabindex="0"
-                    role="button"
-                    on:click|stopPropagation={() => {
-                      logo._activeColor = colorValue;
-                      logo._activeSet = undefined; // Clear any active set when setting individual color
-                      setTimeout(updateSvgSource, 100); // Update SVG source after color change
-                    }}
-                    on:keydown|stopPropagation={(e) => {
-                      if (e.key === "Enter" || e.key === " ") {
-                        logo._activeColor = colorValue;
-                        logo._activeSet = undefined; // Clear any active set
-                        setTimeout(updateSvgSource, 100); // Update SVG source after color change
-                      }
-                    }}
-                  ></span>
-                {/each}
-              {/if}
-            </div>
+          {#if logo.colors}
+            <ColorSwitcher {logo} {theme} mode="standard" onSelect={(color, setName) => {
+              logo._activeColor = color;
+              logo._activeSet = setName;
+              setTimeout(updateSvgSource, 100);
+            }} />
           {/if}
           {#if logo.brand}
             <p><strong>Brand:</strong> <span>{logo.brand}</span></p>
@@ -304,20 +225,6 @@
     width: 100%;
   }
 
-  .set-circle {
-    background: var(--color-border);
-    color: var(--color-text);
-    font-size: 10px;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  :global(.dark-theme) .set-circle {
-    background: #444;
-    color: #eee;
-  }
   .preview-wrapper {
     position: relative;
     width: 100%;
@@ -406,7 +313,6 @@
     gap: 0.5rem;
   }
 
-
   .preview-actions-container {
     margin-top: 2rem;
     border-top: 1px solid var(--color-border);
@@ -417,7 +323,7 @@
       overflow-y: auto;
     }
 
-    .preview-body {
+    .preview_body {
       flex-direction: column;
       align-items: stretch;
       overflow: visible;
@@ -504,7 +410,6 @@
     overflow-y: auto;
   }
 
-
   .logo-details {
     margin-top: 1rem;
     color: var(--color-text);
@@ -520,4 +425,5 @@
   .logo-details span {
     color: var(--color-text);
   }
+
 </style>

@@ -1,18 +1,19 @@
 <script>
-  import InlineSvg from './InlineSvg.svelte';
-  import { getDefaultLogoColor } from '../utils/colorTheme.js';
+  import InlineSvg from "./InlineSvg.svelte";
+  import { getDefaultLogoColor } from "../utils/colorTheme.js";
+  import ColorSwitcher from './ColorSwitcher.svelte';
 
   export let logo;
   export let theme;
 
   function openPreview(logo) {
     // Navigate to preview page using router
-    const routerPath = `/preview/${encodeURIComponent(logo.name.replace(/\s+/g, '-').toLowerCase())}`;
+    const routerPath = `/preview/${encodeURIComponent(logo.name.replace(/\s+/g, "-").toLowerCase())}`;
     window.location.hash = routerPath;
   }
 
   function handleClick() {
-    console.log('CardTiny: Logo clicked, calling openPreview');
+    console.log("CardTiny: Logo clicked, calling openPreview");
     openPreview(logo);
   }
 
@@ -24,10 +25,11 @@
   }
 
   function isSvgLogo(logo) {
-    return logo && logo.format && logo.format.toLowerCase() === 'svg';
+    return logo && logo.format && logo.format.toLowerCase() === "svg";
   }
 
   $: getLogoThemeColor = (logo) => getDefaultLogoColor(logo.colors, theme);
+
 </script>
 
 <div
@@ -37,6 +39,7 @@
   role="button"
   tabindex="0"
   aria-label={`View ${logo.name} logo`}
+  style="position: relative;"
 >
   <div class="image-container">
     {#if isSvgLogo(logo)}
@@ -54,6 +57,12 @@
       <img src={logo.path} alt={logo.name} />
     {/if}
   </div>
+  {#if logo.colors}
+    <ColorSwitcher {logo} {theme} mode="compact" onSelect={(color, setName) => {
+      logo._activeColor = color;
+      logo._activeSet = setName;
+    }} />
+  {/if}
   <div class="name">{logo.name}</div>
 </div>
 
@@ -66,10 +75,16 @@
     border-radius: 8px;
     padding: 12px;
     cursor: pointer;
-    transition: background 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s;
+    transition:
+      background 0.2s,
+      color 0.2s,
+      transform 0.2s,
+      box-shadow 0.2s;
     display: flex;
     flex-direction: column;
     gap: 8px;
+    position: relative; /* Ensure absolute children are positioned correctly */
+    overflow: visible;
   }
 
   .card-tiny:hover {
@@ -88,6 +103,7 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    position: relative; /* Needed for color chooser absolute positioning */
   }
 
   .image-container img {
