@@ -132,7 +132,7 @@
   {#if logo}
     <div class="modal-header">
       <div class="header-spacer"></div>
-      <h2>{logo.name}</h2>
+      <h2>{logo.title || logo.name}</h2>
       <div class="header-spacer"></div>
     </div>
     <div class="preview-body">
@@ -149,10 +149,10 @@
             sets={logo.sets}
             colors={logo.colors}
             activeSet={logo._activeSet}
-            alt={logo.name}
+            alt={logo.title || logo.name}
           />
         {:else}
-          <img src={logo.path} alt={logo.name} />
+          <img src={logo.path} alt={logo.title || logo.name} />
         {/if}
       </div>
       <div class="right-column">
@@ -184,6 +184,13 @@
                 >
               {/each}
             </div>
+          {/if}
+          {#if logo.variants && logo.variants.length}
+              <div class="variants-list">
+                {#each logo.variants as variant}
+                  <span class="logo-variant">{variant}</span>
+                {/each}
+              </div>
           {/if}
         </div>
 
@@ -295,6 +302,13 @@
     flex-wrap: wrap;
     gap: 0.5rem;
   }
+
+  .variants-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
   .logo-tag {
     display: inline-block;
     background: var(--color-accent);
@@ -308,6 +322,25 @@
     margin-top: 0.2em;
     margin-bottom: 0.2em;
     transition: background 0.2s;
+  }
+
+  .logo-variant {
+    display: inline-block;
+    background: #9b59b6;
+    color: white;
+    border-radius: 12px;
+    padding: 0.2em 0.8em;
+    font-size: 0.85em;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    margin-right: 0.3em;
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
+    transition: background 0.2s;
+  }
+
+  .logo-variant:hover {
+    background: #8e44ad;
   }
   .preview-actions-container {
     width: 100%;

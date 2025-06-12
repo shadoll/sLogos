@@ -4,4 +4,4 @@
 [ ] Improove: In the preview page, add possibility select custom color for each target.
 [ ] Strategy: Add differents base/collections of images: Flags,
 [v] Strategy: WebApp, PWA
-[ ] Improove: Add to filter Image variants - just logo, line logo, square logo
+[v] Improove: Add to filter Image variants - just logo, line logo, square logo

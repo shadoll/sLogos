@@ -55,12 +55,12 @@
         />
       {/key}
     {:else}
-      <img src={logo.path} alt={logo.name} />
+      <img src={logo.path} alt={logo.title || logo.name} />
     {/if}
   </div>
   <div class="logo-content">
     <div class="logo-header">
-      <h3>{logo.name}</h3>
+      <h3>{logo.title || logo.name}</h3>
       {#if logo.brand}
         <button
           class="brand-filter-btn"

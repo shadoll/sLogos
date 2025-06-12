@@ -51,10 +51,10 @@
         sets={logo.sets}
         colors={logo.colors}
         activeSet={logo._activeSet}
-        alt={logo.name}
+        alt={logo.title || logo.name}
       />
     {:else}
-      <img src={logo.path} alt={logo.name} />
+      <img src={logo.path} alt={logo.title || logo.name} />
     {/if}
   </div>
   {#if logo.colors}
@@ -63,7 +63,7 @@
       logo._activeSet = setName;
     }} />
   {/if}
-  <div class="name">{logo.name}</div>
+  <div class="name">{logo.title || logo.name}</div>
 </div>
 
 <style>

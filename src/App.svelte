@@ -39,6 +39,7 @@
       window.appData.filteredLogos = window.appData.logos.filter((logo) => {
         const matchesSearch =
           logo.name.toLowerCase().includes(val.toLowerCase()) ||
+          (logo.title && logo.title.toLowerCase().includes(val.toLowerCase())) ||
           (logo.brand && logo.brand.toLowerCase().includes(val.toLowerCase()));
         const matchesTags =
           !selectedTags.length ||
@@ -349,6 +350,7 @@
   $: filteredLogos = logos.filter((logo) => {
     const matchesSearch =
       logo.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (logo.title && logo.title.toLowerCase().includes(searchQuery.toLowerCase())) ||
       (logo.brand &&
         logo.brand.toLowerCase().includes(searchQuery.toLowerCase()));
     const matchesTags =
@@ -704,6 +706,7 @@
       window.appData.filteredLogos = window.appData.logos.filter((logo) => {
         const matchesSearch =
           logo.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          (logo.title && logo.title.toLowerCase().includes(searchQuery.toLowerCase())) ||
           (logo.brand && logo.brand.toLowerCase().includes(searchQuery.toLowerCase()));
         const matchesTags =
           !selectedTags.length ||

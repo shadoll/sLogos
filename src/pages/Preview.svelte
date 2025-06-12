@@ -22,8 +22,10 @@
         }
         const logoName = params.logoName.replace(/-/g, ' ');
         logo = logos.find(l =>
+          l.name.toLowerCase() === params.logoName.toLowerCase() ||
           l.name.toLowerCase().replace(/\s+/g, '-') === params.logoName.toLowerCase() ||
-          l.name.toLowerCase() === logoName.toLowerCase()
+          (l.title && l.title.toLowerCase() === logoName.toLowerCase()) ||
+          (l.title && l.title.toLowerCase().replace(/\s+/g, '-') === params.logoName.toLowerCase())
         );
         if (!logo) {
           console.error("Logo not found:", params.logoName);

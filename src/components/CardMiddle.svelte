@@ -51,16 +51,16 @@
           sets={logo.sets}
           colors={logo.colors}
           activeSet={logo._activeSet}
-          alt={logo.name}
+          alt={logo.title || logo.name}
         />
       {/key}
     {:else}
-      <img src={logo.path} alt={logo.name} />
+      <img src={logo.path} alt={logo.title || logo.name}/>
     {/if}
   </div>
   <div class="logo-info">
     <div class="logo-title-row">
-      <h3>{logo.name}</h3>
+      <h3>{logo.title || logo.name}</h3>
       {#if logo.brand}
         <button
           class="brand-filter-btn"
