@@ -22,6 +22,7 @@
   let allTags = [];
   let selectedTags = [];
   let selectedBrands = [];
+  let selectedVariants = [];
   let tagDropdownOpen = false;
   let showModal = false;
   let selectedLogo = null;
@@ -48,7 +49,14 @@
         const matchesBrands =
           !selectedBrands.length ||
           (logo.brand && selectedBrands.includes(logo.brand));
-        return matchesSearch && matchesTags && matchesBrands;
+        const matchesVariants =
+          !selectedVariants.length ||
+          (logo.variant && (
+            Array.isArray(logo.variant)
+              ? logo.variant.some((v) => selectedVariants.includes(v))
+              : selectedVariants.includes(logo.variant)
+          ));
+        return matchesSearch && matchesTags && matchesBrands && matchesVariants;
       });
 
       window.appData.displayLogos =
@@ -100,6 +108,7 @@
         allTags: [],
         selectedTags: [],
         selectedBrands: [],
+        selectedVariants: [],
         tagDropdownOpen,
         compactMode,
         setSearchQuery,
@@ -118,6 +127,8 @@
         onDownload: downloadLogo,
         addBrand,
         removeBrand,
+        addVariant,
+        removeVariant,
       };
     }
 
@@ -157,6 +168,7 @@
             allTags,
             selectedTags,
             selectedBrands,
+            selectedVariants,
             tagDropdownOpen,
             compactMode,
             setSearchQuery,
@@ -175,6 +187,8 @@
             onDownload: downloadLogo,
             addBrand,
             removeBrand,
+            addVariant,
+            removeVariant,
           };
           console.log(
             "App: Updated window.appData after loading with",
@@ -248,6 +262,21 @@
         localStorage.removeItem("selectedBrands");
       }
     }
+
+    // Restore selected variants from localStorage
+    const savedVariants = localStorage.getItem("selectedVariants");
+    if (savedVariants) {
+      try {
+        const parsedVariants = JSON.parse(savedVariants);
+        if (Array.isArray(parsedVariants)) {
+          selectedVariants = parsedVariants;
+          console.log("App: Restored selectedVariants from localStorage:", selectedVariants);
+        }
+      } catch (error) {
+        console.error("App: Error parsing saved variants:", error);
+        localStorage.removeItem("selectedVariants");
+      }
+    }
   });
 
   // Make sure to apply theme whenever it changes
@@ -268,7 +297,7 @@
     ).values(),
   ).sort((a, b) => a.text.localeCompare(b.text));
 
-  // Update the filtering logic to include brand filtering in the reactive statement
+  // Update the filtering logic to include brand and variant filtering in the reactive statement
   $: filteredLogos = logos.filter((logo) => {
     const matchesSearch =
       logo.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -283,7 +312,14 @@
     const matchesBrands =
       !selectedBrands.length ||
       (logo.brand && selectedBrands.includes(logo.brand));
-    return matchesSearch && matchesTags && matchesBrands;
+    const matchesVariants =
+      !selectedVariants.length ||
+      (logo.variant && (
+        Array.isArray(logo.variant)
+          ? logo.variant.some((v) => selectedVariants.includes(v))
+          : selectedVariants.includes(logo.variant)
+      ));
+    return matchesSearch && matchesTags && matchesBrands && matchesVariants;
   });
 
   $: displayLogos =
@@ -317,6 +353,7 @@
       allTags,
       selectedTags,
       selectedBrands,
+      selectedVariants,
       tagDropdownOpen,
       compactMode,
       setSearchQuery,
@@ -333,6 +370,8 @@
       toggleTag,
       addBrand,
       removeBrand,
+      addVariant,
+      removeVariant,
       getTagObj,
       closeDropdown,
       setCompactMode,
@@ -564,6 +603,20 @@
     }
   }
 
+  function addVariant(variant) {
+    if (!selectedVariants.includes(variant)) {
+      selectedVariants = [...selectedVariants, variant];
+      localStorage.setItem("selectedVariants", JSON.stringify(selectedVariants));
+      updateFilteredLogosImmediate();
+    }
+  }
+
+  function removeVariant(variant) {
+    selectedVariants = selectedVariants.filter((v) => v !== variant);
+    localStorage.setItem("selectedVariants", JSON.stringify(selectedVariants));
+    updateFilteredLogosImmediate();
+  }
+
   // Helper function to immediately update filtered/display logos in window.appData
   function updateFilteredLogosImmediate() {
     if (typeof window !== "undefined" && window.appData) {
@@ -581,7 +634,14 @@
         const matchesBrands =
           !selectedBrands.length ||
           (logo.brand && selectedBrands.includes(logo.brand));
-        return matchesSearch && matchesTags && matchesBrands;
+        const matchesVariants =
+          !selectedVariants.length ||
+          (logo.variant && (
+            Array.isArray(logo.variant)
+              ? logo.variant.some((v) => selectedVariants.includes(v))
+              : selectedVariants.includes(logo.variant)
+          ));
+        return matchesSearch && matchesTags && matchesBrands && matchesVariants;
       });
 
       window.appData.displayLogos =

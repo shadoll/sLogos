@@ -70,7 +70,8 @@
     "tags": [
       "Design",
       "Software"
-    ]
+    ],
+    "variants": ["logo_only", "icon"]
   },
   {
     "name": "Affinity Photo",
@@ -80,7 +81,8 @@
     "brand": "Affinity",
     "tags": [
       "Software"
-    ]
+    ],
+    "variants": ["logo_only", "icon"]
   },
   {
     "name": "Affinity Publisher",
@@ -91,7 +93,8 @@
     "tags": [
       "Design",
       "Software"
-    ]
+    ],
+    "variants": ["logo_only", "icon"]
   },
   {
     "name": "Amazon",
