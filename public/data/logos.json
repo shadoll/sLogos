@@ -71,7 +71,7 @@
     "brand": "Adidas",
     "disable": false,
     "variants": [
-      "Logo only"
+      "Logo only", "Logo with bottom text"
     ],
     "tags": [
       "clothing",
@@ -253,6 +253,9 @@
     "path": "logos/apple_homekit.svg",
     "format": "SVG",
     "disable": false,
+    "variants": [
+      "Logo only"
+    ],
     "tags": [
       "IoT",
       "Smart Home"
@@ -265,6 +268,9 @@
     "path": "logos/apple_music.svg",
     "format": "SVG",
     "disable": false,
+    "variants": [
+      "Icon"
+    ],
     "tags": [
       "music",
       "streaming"
@@ -277,6 +283,9 @@
     "path": "logos/apple_books.svg",
     "format": "SVG",
     "disable": false,
+    "variants": [
+      "Icon"
+    ],
     "tags": [],
     "brand": "Apple"
   },
@@ -286,6 +295,9 @@
     "path": "logos/arm.svg",
     "format": "SVG",
     "disable": false,
+    "variants": [
+      "Logo only", "Text only"
+    ],
     "tags": [
       "tech"
     ],
@@ -313,6 +325,9 @@
     "format": "SVG",
     "disable": false,
     "brand": "ATB",
+    "variants": [
+      "Logo only", "Icon", "Square"
+    ],
     "tags": [
       "retail",
       "grocery"
@@ -325,6 +340,9 @@
     "format": "SVG",
     "disable": false,
     "brand": "Authentik",
+    "variants": [
+      "Logo with bottom text"
+    ],
     "tags": [
       "Selfhosted",
       "identity",
@@ -362,6 +380,9 @@
     "format": "SVG",
     "disable": false,
     "brand": "Authentik",
+    "variants": [
+      "Logo only"
+    ],
     "tags": [
       "Selfhosted",
       "identity",
@@ -393,6 +414,9 @@
     "title": "Binance",
     "path": "logos/binance.svg",
     "format": "SVG",
+    "variants": [
+      "Logo only"
+    ],
     "disable": false,
     "tags": [
       "crypto",
@@ -406,6 +430,9 @@
     "title": "Bitcoin",
     "path": "logos/bitcoin.svg",
     "format": "SVG",
+    "variants": [
+      "Logo with right text"
+    ],
     "disable": false,
     "tags": [
       "crypto",
@@ -420,6 +447,11 @@
     "path": "logos/bitwarden.svg",
     "format": "SVG",
     "disable": false,
+    "variants": [
+      "Logo only",
+      "Icon",
+      "Square"
+    ],
     "brand": "Bitwarden",
     "tags": [
       "Selfhosted",
@@ -433,6 +465,9 @@
     "path": "logos/bluesky.svg",
     "format": "SVG",
     "disable": false,
+    "variants": [
+      "Logo only"
+    ],
     "brand": "Bluesky",
     "tags": [
       "Social"
@@ -444,6 +479,9 @@
     "path": "logos/bmw.svg",
     "format": "SVG",
     "disable": false,
+    "variants": [
+      "Logo only", "Icon", "Circle"
+    ],
     "tags": [
       "automobile",
       "transport"
@@ -456,6 +494,9 @@
     "path": "logos/digital-ocean.svg",
     "format": "SVG",
     "disable": false,
+    "variants": [
+      "Logo only"
+    ],
     "brand": "Digital Ocean",
     "tags": [
       "cloud",
@@ -468,6 +509,9 @@
     "title": "Docker",
     "path": "logos/docker-icon.svg",
     "format": "SVG",
+    "variants": [
+      "Logo only"
+    ],
     "disable": false,
     "brand": "Docker"
   },
@@ -475,6 +519,9 @@
     "name": "dockge",
     "title": "Dockge",
     "path": "logos/dockge.svg",
+    "variants": [
+      "Logo only"
+    ],
     "format": "SVG",
     "disable": false,
     "brand": "Dockge"
@@ -484,6 +531,13 @@
     "title": "DuckDuckGo",
     "path": "logos/duckduckgo.svg",
     "format": "SVG",
+    "variants": [
+      "Logo only", "Icon", "Circle"
+    ],
+    "tags": [
+      "Search Engine",
+      "Privacy"
+    ],
     "disable": false,
     "brand": "DuckDuckGo"
   },
@@ -493,6 +547,9 @@
     "path": "logos/enpass.svg",
     "format": "SVG",
     "disable": false,
+    "variants": [
+      "Logo only"
+    ],
     "brand": "Enpass",
     "tags": [
       "Password Manager",
@@ -520,6 +577,9 @@
     "path": "logos/eufy.svg",
     "format": "SVG",
     "disable": false,
+    "variants": [
+      "Logo only", "Text only"
+    ],
     "brand": "Eufy",
     "tags": [
       "Smart Home",
@@ -551,6 +611,9 @@
     "path": "logos/homarr.svg",
     "format": "SVG",
     "disable": false,
+    "variants": [
+      "Logo only"
+    ],
     "brand": "Homarr",
     "tags": [
       "Selfhosted",
@@ -582,6 +645,9 @@
     "path": "logos/influxdb.svg",
     "format": "SVG",
     "disable": false,
+    "variants": [
+      "Logo with right text"
+    ],
     "brand": "Influxdb",
     "tags": [
       "Databases"
@@ -612,6 +678,9 @@
     "path": "logos/influxdb-logo.svg",
     "format": "SVG",
     "disable": false,
+    "variants": [
+      "Logo only"
+    ],
     "brand": "Influxdb",
     "tags": [
       "Databases"
@@ -642,6 +711,9 @@
     "path": "logos/laravel.svg",
     "format": "SVG",
     "disable": false,
+    "variants": [
+      "Logo with right text"
+    ],
     "brand": "Laravel",
     "tags": [
       "PHP",
@@ -673,6 +745,9 @@
     "path": "logos/matter.svg",
     "format": "SVG",
     "disable": false,
+    "variants": [
+      "Logo with right text"
+    ],
     "brand": "Matter",
     "tags": [
       "IoT",
@@ -705,6 +780,9 @@
     "format": "SVG",
     "disable": false,
     "brand": "Matter",
+    "variants": [
+      "Logo only"
+    ],
     "tags": [
       "IoT",
       "Smart Home"
@@ -772,6 +850,9 @@
     "path": "logos/mattermost-line.svg",
     "format": "SVG",
     "disable": false,
+    "variants": [
+      "Logo with right text"
+    ],
     "tags": [
       "Selfhosted",
       "Communication",
@@ -961,6 +1042,9 @@
     "title": "Homebridge",
     "path": "logos/homebridge.svg",
     "format": "SVG",
+    "variants": [
+      "Logo only", "Circle", "Icon"
+    ],
     "disable": false,
     "brand": "Homebridge",
     "tags": [
@@ -1123,6 +1207,9 @@
     "name": "linux-mint",
     "title": "Linux Mint",
     "path": "logos/linux-mint.svg",
+    "variants": [
+      "Logo only", "Circle", "Icon"
+    ],
     "format": "SVG",
     "disable": false,
     "brand": "Linux Mint"
@@ -1139,6 +1226,9 @@
     "name": "mariadb",
     "title": "MariaDB",
     "path": "logos/mariadb.svg",
+    "variants": [
+      "Logo with right text"
+    ],
     "format": "SVG",
     "disable": false,
     "brand": "MariaDB",
@@ -1173,6 +1263,9 @@
     "name": "chromium",
     "title": "Chromium",
     "path": "logos/chromium.svg",
+    "variants": [
+      "Logo only", "Circle", "Icon"
+    ],
     "format": "SVG",
     "disable": false,
     "tags": [
@@ -1238,6 +1331,9 @@
     "title": "Docker",
     "path": "logos/docker.svg",
     "format": "SVG",
+    "variants": [
+      "Logo with right text"
+    ],
     "disable": false,
     "tags": [
       "tech",
@@ -1329,6 +1425,9 @@
     "name": "firefox",
     "title": "Firefox",
     "path": "logos/firefox.svg",
+    "variants": [
+      "Logo only", "Circle", "Icon"
+    ],
     "format": "SVG",
     "disable": false,
     "tags": [
@@ -1378,6 +1477,9 @@
     "name": "github-logo",
     "title": "GitHub",
     "path": "logos/github-logo.svg",
+    "variants": [
+      "Logo only", "Circle", "Icon"
+    ],
     "format": "SVG",
     "disable": false,
     "tags": [
@@ -1426,6 +1528,9 @@
     "path": "logos/gitlab.svg",
     "format": "SVG",
     "disable": false,
+    "variants": [
+      "Logo with right text"
+    ],
     "tags": [
       "Selfhosted",
       "git",
@@ -1501,6 +1606,9 @@
     "title": "Google Chrome",
     "path": "logos/google_chrome.svg",
     "format": "SVG",
+    "variants": [
+      "Logo with right text"
+    ],
     "disable": false,
     "tags": [
       "web",
@@ -1512,6 +1620,9 @@
     "name": "google_chrome_icon",
     "title": "Google Chrome",
     "path": "logos/google_chrome_icon.svg",
+    "variants": [
+      "Logo only", "Circle", "Icon"
+    ],
     "format": "SVG",
     "disable": false,
     "tags": [
@@ -1550,6 +1661,9 @@
     "title": "Home Assistant",
     "path": "logos/home-assistant.svg",
     "format": "SVG",
+    "variants": [
+      "Logo with right text"
+    ],
     "disable": false,
     "tags": [
       "Selfhosted",
@@ -1600,6 +1714,9 @@
     "path": "logos/jeep.svg",
     "format": "SVG",
     "disable": false,
+    "variants": [
+      "Text only"
+    ],
     "brand": "Jeep",
     "tags": [
       "automobile",
@@ -1680,6 +1797,9 @@
     "name": "lifecell_logo",
     "title": "Lifecell Logo",
     "path": "logos/lifecell_logo.svg",
+    "variants": [
+      "Logo only", "Circle", "Icon"
+    ],
     "format": "SVG",
     "disable": false,
     "brand": "Lifecell",
@@ -1764,6 +1884,9 @@
     "name": "meta-facebook",
     "title": "Facebook",
     "path": "logos/meta-facebook.svg",
+    "variants": [
+      "Logo only", "Circle", "Icon"
+    ],
     "format": "SVG",
     "disable": false,
     "brand": "Meta",
@@ -1860,6 +1983,9 @@
     "name": "openvpn",
     "title": "OpenVPN",
     "path": "logos/openvpn.svg",
+    "variants": [
+      "Logo only", "Circle", "Icon"
+    ],
     "format": "SVG",
     "disable": false,
     "brand": "OpenVPN",
@@ -1867,7 +1993,31 @@
       "Selfhosted",
       "VPN",
       "security"
-    ]
+    ],
+    "colors": {
+      "orange": "#ed7f22",
+      "blue": "#1a3967",
+      "black": "#000000",
+      "white": "#ffffff"
+    },
+    "targets": {
+      "keyhole": "#keyhole",
+      "circle": "#circle"
+    },
+    "sets": {
+      "default": {
+        "keyhole": "blue",
+        "circle": "orange"
+      },
+      "black": {
+        "keyhole": "black",
+        "circle": "black"
+      },
+      "white": {
+        "keyhole": "white",
+        "circle": "white"
+      }
+    }
   },
   {
     "name": "reolink",
@@ -2060,6 +2210,9 @@
     "name": "microsoft",
     "title": "Microsoft",
     "path": "logos/microsoft.svg",
+    "variants": [
+      "Logo with right text"
+    ],
     "format": "SVG",
     "disable": false,
     "brand": "Microsoft"
@@ -2152,6 +2305,9 @@
     "path": "logos/mikrotik.svg",
     "format": "SVG",
     "disable": false,
+    "variants": [
+      "Logo with right text"
+    ],
     "brand": "Mikrotik",
     "tags": [
       "Network Devices",
@@ -3357,6 +3513,9 @@
     "path": "logos/bvr.svg",
     "format": "SVG",
     "disable": false,
+    "variants": [
+      "Logo only", "Icon", "Square"
+    ],
     "tags": [
       "bank",
       "finance"
