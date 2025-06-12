@@ -209,11 +209,6 @@
       align-items: flex-start;
     }
 
-    .color-switcher-container {
-      margin-left: 0;
-      margin-top: 0.5rem;
-    }
-
     .logo-actions {
       flex-wrap: wrap;
     }

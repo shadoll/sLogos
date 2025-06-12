@@ -2,7 +2,6 @@
   import { generateColorSetCircle, getNoColorCircle } from '../utils/colorCircles.js';
   import ColorsVariants from './ColorsVariants.svelte';
   export let logo;
-  export let theme;
   export let mode = 'standard'; // 'standard' or 'compact'
   export let onSelect = (color, setName) => {};
 
@@ -67,20 +66,8 @@
           on:blur={handleDropdownBlur}
         >
           <div class="color-switcher-preview">
-            <span
-              class="color-circle color-reset"
-              class:active={isActive(undefined, undefined)}
-              title="Reset to theme color"
-              tabindex="0"
-              role="button"
-              aria-label="Reset to theme color"
-              on:click|stopPropagation={(e) => handleCircleClick(undefined, undefined, e)}
-              on:keydown|stopPropagation={(e) => (e.key === 'Enter' || e.key === ' ') && handleCircleClick(undefined, undefined, e)}
-            >
-              {@html getNoColorCircle()}
-            </span>
             {#if logo.sets}
-              <ColorsVariants sets={logo.sets} colors={logo.colors} activeSet={logo._activeSet} onSelect={(setName) => handleCircleClick(Object.values(logo.colors)[Object.keys(logo.sets).indexOf(setName) % Object.keys(logo.colors).length], setName)} />
+              <ColorsVariants sets={logo.sets} colors={logo.colors} activeSet={logo._activeSet} showNoColor={true} onSelect={(setName) => handleCircleClick(setName ? Object.values(logo.colors)[Object.keys(logo.sets).indexOf(setName) % Object.keys(logo.colors).length] : undefined, setName)} />
             {/if}
           </div>
         </div>
@@ -88,20 +75,8 @@
     </div>
   {:else}
     <div class="color-switcher-preview">
-      <span
-        class="color-circle color-reset"
-        class:active={isActive(undefined, undefined)}
-        title="Reset to theme color"
-        tabindex="0"
-        role="button"
-        aria-label="Reset to theme color"
-        on:click|stopPropagation={(e) => handleCircleClick(undefined, undefined, e)}
-        on:keydown|stopPropagation={(e) => (e.key === 'Enter' || e.key === ' ') && handleCircleClick(undefined, undefined, e)}
-      >
-        {@html getNoColorCircle()}
-      </span>
       {#if logo.sets}
-        <ColorsVariants sets={logo.sets} colors={logo.colors} activeSet={logo._activeSet} onSelect={(setName) => handleCircleClick(Object.values(logo.colors)[Object.keys(logo.sets).indexOf(setName) % Object.keys(logo.colors).length], setName)} />
+        <ColorsVariants sets={logo.sets} colors={logo.colors} activeSet={logo._activeSet} showNoColor={true} onSelect={(setName) => handleCircleClick(setName ? Object.values(logo.colors)[Object.keys(logo.sets).indexOf(setName) % Object.keys(logo.colors).length] : undefined, setName)} />
       {/if}
     </div>
   {/if}
@@ -131,9 +106,6 @@
   .color-circle:hover {
     transform: scale(1.1);
   }
-  .color-circle.active {
-    box-shadow: 0 0 8px 7px rgba(70, 25, 194, 0.68);
-  }
   .color-dropdown {
     position: absolute;
     bottom: 32px;
@@ -150,10 +122,7 @@
     min-width: 120px;
     flex-wrap: wrap;
   }
-  .color-option {
-    border: 1px solid var(--color-border, #ddd);
-    margin: 0 2px 2px 0;
-  }
+
   .color-reset {
     background: none !important;
     width: 24px;

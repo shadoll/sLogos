@@ -323,13 +323,6 @@
       overflow-y: auto;
     }
 
-    .preview_body {
-      flex-direction: column;
-      align-items: stretch;
-      overflow: visible;
-      min-height: auto;
-    }
-
     .preview-container {
       flex: none;
       width: 100%;
