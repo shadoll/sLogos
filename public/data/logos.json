@@ -71,7 +71,8 @@
     "brand": "Adidas",
     "disable": false,
     "variants": [
-      "Logo only", "Logo with bottom text"
+      "Logo only",
+      "Logo with bottom text"
     ],
     "tags": [
       "clothing",
@@ -296,7 +297,8 @@
     "format": "SVG",
     "disable": false,
     "variants": [
-      "Logo only", "Text only"
+      "Logo only",
+      "Text only"
     ],
     "tags": [
       "tech"
@@ -326,7 +328,9 @@
     "disable": false,
     "brand": "ATB",
     "variants": [
-      "Logo only", "Icon", "Square"
+      "Logo only",
+      "Icon",
+      "Square"
     ],
     "tags": [
       "retail",
@@ -480,7 +484,9 @@
     "format": "SVG",
     "disable": false,
     "variants": [
-      "Logo only", "Icon", "Circle"
+      "Logo only",
+      "Icon",
+      "Circle"
     ],
     "tags": [
       "automobile",
@@ -532,7 +538,9 @@
     "path": "logos/duckduckgo.svg",
     "format": "SVG",
     "variants": [
-      "Logo only", "Icon", "Circle"
+      "Logo only",
+      "Icon",
+      "Circle"
     ],
     "tags": [
       "Search Engine",
@@ -578,7 +586,8 @@
     "format": "SVG",
     "disable": false,
     "variants": [
-      "Logo only", "Text only"
+      "Logo only",
+      "Text only"
     ],
     "brand": "Eufy",
     "tags": [
@@ -602,6 +611,44 @@
       },
       "black": {
         "main": "black"
+      }
+    }
+  },
+  {
+    "name": "Fastapi",
+    "path": "logos/fastapi-logo.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Fastapi",
+    "variants": [
+      "Logo only",
+      "Circle"
+    ],
+    "tags": [
+      "Python",
+      "Framework"
+    ],
+    "colors": {
+      "green": "#049688",
+      "black": "#000000",
+      "white": "#ffffff"
+    },
+    "targets": {
+      "logo": "#logo",
+      "circle": "#circle"
+    },
+    "sets": {
+      "white_on_green": {
+        "circle": "green",
+        "logo": "white"
+      },
+      "black_on_green": {
+        "logo": "black",
+        "circle": "green"
+      },
+      "green": {
+        "logo": "green",
+        "circle": "none"
       }
     }
   },
@@ -1043,7 +1090,9 @@
     "path": "logos/homebridge.svg",
     "format": "SVG",
     "variants": [
-      "Logo only", "Circle", "Icon"
+      "Logo only",
+      "Circle",
+      "Icon"
     ],
     "disable": false,
     "brand": "Homebridge",
@@ -1208,7 +1257,9 @@
     "title": "Linux Mint",
     "path": "logos/linux-mint.svg",
     "variants": [
-      "Logo only", "Circle", "Icon"
+      "Logo only",
+      "Circle",
+      "Icon"
     ],
     "format": "SVG",
     "disable": false,
@@ -1264,7 +1315,9 @@
     "title": "Chromium",
     "path": "logos/chromium.svg",
     "variants": [
-      "Logo only", "Circle", "Icon"
+      "Logo only",
+      "Circle",
+      "Icon"
     ],
     "format": "SVG",
     "disable": false,
@@ -1426,7 +1479,9 @@
     "title": "Firefox",
     "path": "logos/firefox.svg",
     "variants": [
-      "Logo only", "Circle", "Icon"
+      "Logo only",
+      "Circle",
+      "Icon"
     ],
     "format": "SVG",
     "disable": false,
@@ -1478,7 +1533,9 @@
     "title": "GitHub",
     "path": "logos/github-logo.svg",
     "variants": [
-      "Logo only", "Circle", "Icon"
+      "Logo only",
+      "Circle",
+      "Icon"
     ],
     "format": "SVG",
     "disable": false,
@@ -1621,7 +1678,9 @@
     "title": "Google Chrome",
     "path": "logos/google_chrome_icon.svg",
     "variants": [
-      "Logo only", "Circle", "Icon"
+      "Logo only",
+      "Circle",
+      "Icon"
     ],
     "format": "SVG",
     "disable": false,
@@ -1798,7 +1857,9 @@
     "title": "Lifecell Logo",
     "path": "logos/lifecell_logo.svg",
     "variants": [
-      "Logo only", "Circle", "Icon"
+      "Logo only",
+      "Circle",
+      "Icon"
     ],
     "format": "SVG",
     "disable": false,
@@ -1885,7 +1946,9 @@
     "title": "Facebook",
     "path": "logos/meta-facebook.svg",
     "variants": [
-      "Logo only", "Circle", "Icon"
+      "Logo only",
+      "Circle",
+      "Icon"
     ],
     "format": "SVG",
     "disable": false,
@@ -1984,7 +2047,9 @@
     "title": "OpenVPN",
     "path": "logos/openvpn.svg",
     "variants": [
-      "Logo only", "Circle", "Icon"
+      "Logo only",
+      "Circle",
+      "Icon"
     ],
     "format": "SVG",
     "disable": false,
@@ -3514,7 +3579,9 @@
     "format": "SVG",
     "disable": false,
     "variants": [
-      "Logo only", "Icon", "Square"
+      "Logo only",
+      "Icon",
+      "Square"
     ],
     "tags": [
       "bank",
