@@ -2,6 +2,7 @@
 [ ] Improove: In the preview page, add full header.
 [ ] Improove: Split header into two parts: static top and dynamic bottom.
 [ ] Improove: In the preview page, add possibility select custom color for each target.
-[ ] Strategy: Add differents base/collections of images: Flags,
+[v] Strategy: Add differents base/collections of images: Flags,
 [v] Strategy: WebApp, PWA
 [v] Improove: Add to filter Image variants - just logo, line logo, square logo
+[ ] Strategy: Add quiz game to guess the logo or flags and invert

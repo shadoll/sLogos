@@ -121,6 +121,12 @@
       },
     };
   }
+
+  // Capitalize first letter of a string
+  function capitalizeFirst(str) {
+    if (!str) return "";
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
 </script>
 
 <div
@@ -174,6 +180,15 @@
           {/if}
           <p><strong>Format:</strong> <span>{logo.format}</span></p>
           <p><strong>Path:</strong> {logo.path}</p>
+          {#if logo.meta}
+            <div class="logo-meta">
+              {#each Object.entries(logo.meta) as [key, value]}
+                <p>
+                  <strong>{capitalizeFirst(key)}:</strong> <span>{value}</span>
+                </p>
+              {/each}
+            </div>
+          {/if}
           {#if logo.tags && logo.tags.length}
             <div class="logo-tags">
               {#each logo.tags as tagObj}
@@ -186,11 +201,11 @@
             </div>
           {/if}
           {#if logo.variants && logo.variants.length}
-              <div class="variants-list">
-                {#each logo.variants as variant}
-                  <span class="logo-variant">{variant}</span>
-                {/each}
-              </div>
+            <div class="variants-list">
+              {#each logo.variants as variant}
+                <span class="logo-variant">{variant}</span>
+              {/each}
+            </div>
           {/if}
         </div>
 
@@ -295,7 +310,7 @@
     border-radius: 12px;
     padding: 1.5rem;
     box-shadow: 0 2px 16px 4px rgba(0, 0, 0, 0.18);
-    overflow-y: auto;
+    overflow-y: scroll;
   }
   .logo-tags {
     display: flex;

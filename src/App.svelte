@@ -794,36 +794,6 @@
   />
 </Router>
 
-<Header
-  {displayLogos}
-  allLogos={logos}
-  {theme}
-  {setTheme}
-  {viewMode}
-  {setGridView}
-  {setListView}
-  {setCompactView}
-  {searchQuery}
-  {setSearchQuery}
-  {allTags}
-  {selectedTags}
-  {selectedBrands}
-  {selectedVariants}
-  {tagDropdownOpen}
-  {toggleDropdown}
-  {addTag}
-  {removeTag}
-  {addBrand}
-  {removeBrand}
-  {addVariant}
-  {removeVariant}
-  {getTagObj}
-  {compactMode}
-  {setCompactMode}
-  {collection}
-  {setCollection}
-  {collections}
-/>
 
 <style>
 </style>

@@ -42,6 +42,9 @@ run:
 	@echo "Running command in container: $(CMD)"
 	$(DOCKER_COMPOSE) -f compose.dev.yml run --rm $(CONTAINER_NAME) $(CMD)
 
+exec:
+	$(DOCKER_COMPOSE) -f compose.dev.yml run --rm $(CONTAINER_NAME) $(CMD)
+
 update-data:
 	@echo "Scanning logos directory and updating logos.json for development..."
 	$(DOCKER_COMPOSE) -f compose.dev.yml run --rm $(CONTAINER_NAME) npm run update-data
@@ -83,4 +86,3 @@ generate-svg-variants:
 pwa-cache-list:
 	@echo "Generating PWA cache list..."
 	$(DOCKER_COMPOSE) -f compose.dev.yml run --rm $(CONTAINER_NAME) npm run pwa-cache-list
-
