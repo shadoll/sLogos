@@ -34,9 +34,9 @@ No local Node.js installation is required as all operations run inside Docker co
 1. Add logo files (SVG or PNG preferred) to the `public/logos/` directory
 2. Scan the logos directory and update the data file:
    ```
-   make scan-logos
+   make update-data
    ```
-   (This runs `npm run scan-logos` inside the dev container)
+   (This runs `npm run update-data` inside the dev container)
 3. The application will automatically rebuild with the new logos
 
 ### Modifying the UI
@@ -110,7 +110,7 @@ Run `make help` to see all available commands:
 - `make restart` - Restart the application
 - `make logs` - View the application logs
 - `make run CMD=<cmd>` - Run a command in the container
-- `make scan-logos` - Scan logos directory and update logos.json
+- `make update-data` - Scan logos directory and update logos.json
 - `make clean` - Clean up build artifacts
 - `make rebuild` - Completely rebuild from scratch
 
