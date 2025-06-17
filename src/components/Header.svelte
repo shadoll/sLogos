@@ -4,6 +4,7 @@
   import ThemeSwitcher from "./ThemeSwitcher.svelte";
   import ListViewSwitcher from "./ListViewSwitcher.svelte";
   import SearchBar from "./SearchBar.svelte";
+  import { collections } from "../collections.js";
 
   export let displayLogos = [];
   export let allLogos = []; // Add this to get total count
@@ -30,6 +31,8 @@
   export let getTagObj = (tag) => ({ text: tag });
   export let compactMode = false;
   export let setCompactMode = () => {};
+  export let collection = "logos";
+  export let setCollection = () => {};
 </script>
 
 <header class="main-header">
@@ -38,6 +41,11 @@
       <div class="header-icon">
         <img src="favicon.svg" alt="Logo Gallery icon" />
       </div>
+      <select class="collection-chooser" bind:value={collection} on:change={(e) => setCollection(e.target.value)} aria-label="Choose collection">
+        {#each collections as c}
+          <option value={c.name}>{c.label}</option>
+        {/each}
+      </select>
       <h1>Logo Gallery</h1>
     </div>
     <span class="logo-count">
@@ -117,6 +125,18 @@
     width: 28px;
     height: 28px;
     border-radius: 4px;
+  }
+
+  .collection-chooser {
+    font-family: inherit;
+    font-size: 1rem;
+    color: var(--color-text);
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    padding: 0.25rem 0.5rem;
+    margin-right: 1rem;
+    cursor: pointer;
   }
 
   .header-controls {

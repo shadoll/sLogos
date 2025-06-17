@@ -1,6 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import Router from "svelte-spa-router/Router.svelte";
+  import { collections } from "./collections.js";
 
   import Home from "./pages/Home.svelte";
   import Preview from "./pages/Preview.svelte";
@@ -27,6 +28,38 @@
   let showModal = false;
   let selectedLogo = null;
   let compactMode = false;
+
+  // --- Collection support ---
+  let collection = localStorage.getItem("collection") || "logos";
+  function setCollection(val) {
+    if (val !== collection) {
+      collection = val;
+      localStorage.setItem("collection", val);
+      loadCollectionData();
+    }
+  }
+
+  async function loadCollectionData() {
+    // Load the correct data file for the selected collection
+    try {
+      const timestamp = new Date().getTime();
+      const response = await fetch(`data/${collection}.json?t=${timestamp}`);
+      if (response.ok) {
+        logos = await response.json();
+        // Reset filters and state for new collection
+        searchQuery = "";
+        selectedTags = [];
+        selectedBrands = [];
+        selectedVariants = [];
+        tagDropdownOpen = false;
+        compactMode = false;
+      } else {
+        logos = [];
+      }
+    } catch (error) {
+      logos = [];
+    }
+  }
 
   function setSearchQuery(val) {
     searchQuery = val;
@@ -404,6 +437,9 @@
       selectedVariants,
       tagDropdownOpen,
       compactMode,
+      collection,
+      setCollection,
+      collections,
       setSearchQuery,
       setGridView,
       setListView,

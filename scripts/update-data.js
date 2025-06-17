@@ -4,19 +4,8 @@ const fs = require('fs');
 const path = require('path');
 const { Resvg } = require('@resvg/resvg-js');
 
-// Configuration
-const collections = [
-  { name: 'logos', label: 'Logos',
-    baseDir: 'logos',
-    genDir: 'logos_gen',
-    dataFile: 'data/logos.json'
-  },
-  { name: 'flags', label: 'Flags',
-    baseDir: 'flags',
-    genDir: 'flags_gen',
-    dataFile: 'data/flags.json'
-  }
-];
+// Use collections from src/collections.js
+const { collections } = require('../src/collections.js');
 
 // Accept collection as a CLI arg or env var
 const collectionArg = process.argv.find(arg => arg.startsWith('--collection='));

@@ -3,27 +3,44 @@
 const fs = require('fs');
 const path = require('path');
 
-const LOGOS_DIR = path.join(__dirname, '..', 'public', 'logos');
-const LOGOS_GEN_DIR = path.join(__dirname, '..', 'public', 'logos_gen');
+const collections = [
+  { name: 'logos', label: 'Logos',
+    baseDir: 'logos',
+    genDir: 'logos_gen',
+    dataFile: 'data/logos.json'
+  },
+  { name: 'flags', label: 'Flags',
+    baseDir: 'flags',
+    genDir: 'flags_gen',
+    dataFile: 'data/flags.json'
+  }
+];
+
+// Accept collection as a CLI arg or env var
+const collectionArg = process.argv.find(arg => arg.startsWith('--collection='));
+const collectionName = collectionArg ? collectionArg.split('=')[1] : (process.env.COLLECTION || 'logos');
+const collection = collections.find(c => c.name === collectionName) || collections[0];
+
+const LOGOS_DIR = path.join(__dirname, '..', 'public', collection.baseDir);
+const LOGOS_GEN_DIR = path.join(__dirname, '..', 'public', collection.genDir);
 
 // Try multiple possible locations for logos.json
 const POSSIBLE_LOGOS_JSON_PATHS = [
-  path.join(process.cwd(), 'public', 'data', 'logos.json'), // Correct location after scan-logos
-  path.join(__dirname, '..', 'public', 'data', 'logos.json'),
-  path.join(process.cwd(), 'public', 'logos.json'),
-  path.join(__dirname, '..', 'public', 'logos.json'),
-  path.join(__dirname, '..', 'src', 'data', 'logos.json')
+  path.join(process.cwd(), 'public', collection.dataFile),
+  path.join(__dirname, '..', 'public', collection.dataFile),
+  path.join(process.cwd(), 'public', collection.baseDir + '.json'),
+  path.join(__dirname, '..', 'public', collection.baseDir + '.json'),
+  path.join(__dirname, '..', 'src', 'data', collection.baseDir + '.json')
 ];
 
 function findLogosJsonPath() {
   for (const possiblePath of POSSIBLE_LOGOS_JSON_PATHS) {
     if (fs.existsSync(possiblePath)) {
-      console.log(`📁 Found logos.json at: ${possiblePath}`);
+      console.log(`📁 Found ${collection.dataFile} at: ${possiblePath}`);
       return possiblePath;
     }
   }
-
-  console.error('❌ Could not find logos.json in any of these locations:');
+  console.error(`❌ Could not find ${collection.dataFile} in any of these locations:`);
   POSSIBLE_LOGOS_JSON_PATHS.forEach(p => console.error(`   ${p}`));
   return null;
 }
@@ -93,7 +110,7 @@ function applySvgColors(svgContent, colorSet, targets) {
  * Generate SVG variants with color sets
  */
 function generateSvgVariants() {
-  console.log('🎨 Generating SVG variants with color sets...');
+  console.log(`🎨 Generating SVG variants with color sets for collection: ${collection.name}...`);
 
   // Ensure the logos_gen directory exists
   if (!fs.existsSync(LOGOS_GEN_DIR)) {
@@ -106,7 +123,7 @@ function generateSvgVariants() {
   let skippedCount = 0;
 
   if (!Array.isArray(logos)) {
-    console.error('❌ Expected logos.json to contain an array, got:', typeof logos);
+    console.error('❌ Expected data file to contain an array, got:', typeof logos);
     process.exit(1);
   }  console.log(`📊 Processing ${logos.length} logos...`);
 
