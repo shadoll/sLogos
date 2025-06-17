@@ -1,0 +1,1912 @@
+[
+  {
+    "name": "Andorra",
+    "path": "flags/ad.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Andorra",
+    "tags": ["Country","Europe"]
+  },
+  {
+    "name": "United Arab Emirates",
+    "path": "flags/ae.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "United Arab Emirates",
+    "tags": ["Country","Asia"]
+  },
+  {
+    "name": "Afghanistan",
+    "path": "flags/af.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Afghanistan",
+    "tags": ["Country","Asia"]
+  },
+  {
+    "name": "Antigua and Barbuda",
+    "path": "flags/ag.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Antigua and Barbuda",
+    "tags": ["Country","North America"]
+  },
+  {
+    "name": "Anguilla",
+    "path": "flags/ai.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Anguilla",
+    "tags": ["Country","North America"]
+  },
+  {
+    "name": "Albania",
+    "path": "flags/al.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Albania",
+    "tags": ["Country","Europe"]
+  },
+  {
+    "name": "Armenia",
+    "path": "flags/am.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Armenia",
+    "tags": ["Country","Asia"]
+  },
+  {
+    "name": "Angola",
+    "path": "flags/ao.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Angola",
+    "tags": ["Country","Africa"]
+  },
+  {
+    "name": "Antarctica",
+    "path": "flags/aq.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Antarctica",
+    "tags": ["Antarctica"]
+  },
+  {
+    "name": "Argentina",
+    "path": "flags/ar.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Argentina",
+    "tags": ["Country","South America"]
+  },
+  {
+    "name": "League of Arab States",
+    "path": "flags/arab.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "League of Arab States",
+    "tags": ["Organization"]
+  },
+  {
+    "name": "American Samoa",
+    "path": "flags/as.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "American Samoa",
+    "tags": ["Country","Oceania"]
+  },
+  {
+    "name": "Association of Southeast Asian Nations",
+    "path": "flags/asean.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Association of Southeast Asian Nations",
+    "tags": ["Organization"]
+  },
+  {
+    "name": "At",
+    "path": "flags/at.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "At"
+  },
+  {
+    "name": "Au",
+    "path": "flags/au.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Au"
+  },
+  {
+    "name": "Aw",
+    "path": "flags/aw.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Aw"
+  },
+  {
+    "name": "Ax",
+    "path": "flags/ax.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Ax"
+  },
+  {
+    "name": "Az",
+    "path": "flags/az.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Az"
+  },
+  {
+    "name": "Ba",
+    "path": "flags/ba.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Ba"
+  },
+  {
+    "name": "Bb",
+    "path": "flags/bb.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Bb"
+  },
+  {
+    "name": "Bd",
+    "path": "flags/bd.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Bd"
+  },
+  {
+    "name": "Be",
+    "path": "flags/be.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Be"
+  },
+  {
+    "name": "Bf",
+    "path": "flags/bf.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Bf"
+  },
+  {
+    "name": "Bg",
+    "path": "flags/bg.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Bg"
+  },
+  {
+    "name": "Bh",
+    "path": "flags/bh.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Bh"
+  },
+  {
+    "name": "Bi",
+    "path": "flags/bi.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Bi"
+  },
+  {
+    "name": "Bj",
+    "path": "flags/bj.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Bj"
+  },
+  {
+    "name": "Bl",
+    "path": "flags/bl.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Bl"
+  },
+  {
+    "name": "Bm",
+    "path": "flags/bm.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Bm"
+  },
+  {
+    "name": "Bn",
+    "path": "flags/bn.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Bn"
+  },
+  {
+    "name": "Bo",
+    "path": "flags/bo.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Bo"
+  },
+  {
+    "name": "Bq",
+    "path": "flags/bq.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Bq"
+  },
+  {
+    "name": "Br",
+    "path": "flags/br.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Br"
+  },
+  {
+    "name": "Bs",
+    "path": "flags/bs.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Bs"
+  },
+  {
+    "name": "Bt",
+    "path": "flags/bt.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Bt"
+  },
+  {
+    "name": "Bv",
+    "path": "flags/bv.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Bv"
+  },
+  {
+    "name": "Bw",
+    "path": "flags/bw.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Bw"
+  },
+  {
+    "name": "By",
+    "path": "flags/by.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "By"
+  },
+  {
+    "name": "Bz",
+    "path": "flags/bz.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Bz"
+  },
+  {
+    "name": "Ca",
+    "path": "flags/ca.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Ca"
+  },
+  {
+    "name": "Cc",
+    "path": "flags/cc.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Cc"
+  },
+  {
+    "name": "Cd",
+    "path": "flags/cd.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Cd"
+  },
+  {
+    "name": "Cefta",
+    "path": "flags/cefta.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Cefta"
+  },
+  {
+    "name": "Cf",
+    "path": "flags/cf.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Cf"
+  },
+  {
+    "name": "Cg",
+    "path": "flags/cg.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Cg"
+  },
+  {
+    "name": "Ch",
+    "path": "flags/ch.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Ch"
+  },
+  {
+    "name": "Ci",
+    "path": "flags/ci.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Ci"
+  },
+  {
+    "name": "Ck",
+    "path": "flags/ck.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Ck"
+  },
+  {
+    "name": "Cl",
+    "path": "flags/cl.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Cl"
+  },
+  {
+    "name": "Cm",
+    "path": "flags/cm.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Cm"
+  },
+  {
+    "name": "Cn",
+    "path": "flags/cn.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Cn"
+  },
+  {
+    "name": "Co",
+    "path": "flags/co.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Co"
+  },
+  {
+    "name": "Cp",
+    "path": "flags/cp.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Cp"
+  },
+  {
+    "name": "Cr",
+    "path": "flags/cr.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Cr"
+  },
+  {
+    "name": "Cu",
+    "path": "flags/cu.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Cu"
+  },
+  {
+    "name": "Cv",
+    "path": "flags/cv.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Cv"
+  },
+  {
+    "name": "Cw",
+    "path": "flags/cw.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Cw"
+  },
+  {
+    "name": "Cx",
+    "path": "flags/cx.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Cx"
+  },
+  {
+    "name": "Cy",
+    "path": "flags/cy.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Cy"
+  },
+  {
+    "name": "Cz",
+    "path": "flags/cz.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Cz"
+  },
+  {
+    "name": "De",
+    "path": "flags/de.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "De"
+  },
+  {
+    "name": "Dg",
+    "path": "flags/dg.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Dg"
+  },
+  {
+    "name": "Dj",
+    "path": "flags/dj.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Dj"
+  },
+  {
+    "name": "Dk",
+    "path": "flags/dk.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Dk"
+  },
+  {
+    "name": "Dm",
+    "path": "flags/dm.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Dm"
+  },
+  {
+    "name": "Do",
+    "path": "flags/do.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Do"
+  },
+  {
+    "name": "Dz",
+    "path": "flags/dz.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Dz"
+  },
+  {
+    "name": "Eac",
+    "path": "flags/eac.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Eac"
+  },
+  {
+    "name": "Ec",
+    "path": "flags/ec.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Ec"
+  },
+  {
+    "name": "Ee",
+    "path": "flags/ee.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Ee"
+  },
+  {
+    "name": "Eg",
+    "path": "flags/eg.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Eg"
+  },
+  {
+    "name": "Eh",
+    "path": "flags/eh.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Eh"
+  },
+  {
+    "name": "Er",
+    "path": "flags/er.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Er"
+  },
+  {
+    "name": "Es",
+    "path": "flags/es.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Es"
+  },
+  {
+    "name": "Es Ct",
+    "path": "flags/es-ct.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Es Ct"
+  },
+  {
+    "name": "Es Ga",
+    "path": "flags/es-ga.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Es Ga"
+  },
+  {
+    "name": "Es Pv",
+    "path": "flags/es-pv.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Es Pv"
+  },
+  {
+    "name": "Et",
+    "path": "flags/et.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Et"
+  },
+  {
+    "name": "Eu",
+    "path": "flags/eu.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Eu"
+  },
+  {
+    "name": "Fi",
+    "path": "flags/fi.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Fi"
+  },
+  {
+    "name": "Fj",
+    "path": "flags/fj.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Fj"
+  },
+  {
+    "name": "Fk",
+    "path": "flags/fk.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Fk"
+  },
+  {
+    "name": "Fm",
+    "path": "flags/fm.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Fm"
+  },
+  {
+    "name": "Fo",
+    "path": "flags/fo.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Fo"
+  },
+  {
+    "name": "Fr",
+    "path": "flags/fr.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Fr"
+  },
+  {
+    "name": "Ga",
+    "path": "flags/ga.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Ga"
+  },
+  {
+    "name": "Gb",
+    "path": "flags/gb.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Gb"
+  },
+  {
+    "name": "Gb Eng",
+    "path": "flags/gb-eng.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Gb Eng"
+  },
+  {
+    "name": "Gb Nir",
+    "path": "flags/gb-nir.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Gb Nir"
+  },
+  {
+    "name": "Gb Sct",
+    "path": "flags/gb-sct.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Gb Sct"
+  },
+  {
+    "name": "Gb Wls",
+    "path": "flags/gb-wls.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Gb Wls"
+  },
+  {
+    "name": "Gd",
+    "path": "flags/gd.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Gd"
+  },
+  {
+    "name": "Ge",
+    "path": "flags/ge.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Ge"
+  },
+  {
+    "name": "Gf",
+    "path": "flags/gf.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Gf"
+  },
+  {
+    "name": "Gg",
+    "path": "flags/gg.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Gg"
+  },
+  {
+    "name": "Gh",
+    "path": "flags/gh.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Gh"
+  },
+  {
+    "name": "Gi",
+    "path": "flags/gi.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Gi"
+  },
+  {
+    "name": "Gl",
+    "path": "flags/gl.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Gl"
+  },
+  {
+    "name": "Gm",
+    "path": "flags/gm.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Gm"
+  },
+  {
+    "name": "Gn",
+    "path": "flags/gn.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Gn"
+  },
+  {
+    "name": "Gp",
+    "path": "flags/gp.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Gp"
+  },
+  {
+    "name": "Gq",
+    "path": "flags/gq.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Gq"
+  },
+  {
+    "name": "Gr",
+    "path": "flags/gr.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Gr"
+  },
+  {
+    "name": "Gs",
+    "path": "flags/gs.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Gs"
+  },
+  {
+    "name": "Gt",
+    "path": "flags/gt.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Gt"
+  },
+  {
+    "name": "Gu",
+    "path": "flags/gu.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Gu"
+  },
+  {
+    "name": "Gw",
+    "path": "flags/gw.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Gw"
+  },
+  {
+    "name": "Gy",
+    "path": "flags/gy.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Gy"
+  },
+  {
+    "name": "Hk",
+    "path": "flags/hk.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Hk"
+  },
+  {
+    "name": "Hm",
+    "path": "flags/hm.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Hm"
+  },
+  {
+    "name": "Hn",
+    "path": "flags/hn.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Hn"
+  },
+  {
+    "name": "Hr",
+    "path": "flags/hr.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Hr"
+  },
+  {
+    "name": "Ht",
+    "path": "flags/ht.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Ht"
+  },
+  {
+    "name": "Hu",
+    "path": "flags/hu.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Hu"
+  },
+  {
+    "name": "Ic",
+    "path": "flags/ic.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Ic"
+  },
+  {
+    "name": "Id",
+    "path": "flags/id.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Id"
+  },
+  {
+    "name": "Ie",
+    "path": "flags/ie.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Ie"
+  },
+  {
+    "name": "Il",
+    "path": "flags/il.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Il"
+  },
+  {
+    "name": "Im",
+    "path": "flags/im.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Im"
+  },
+  {
+    "name": "In",
+    "path": "flags/in.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "In"
+  },
+  {
+    "name": "Io",
+    "path": "flags/io.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Io"
+  },
+  {
+    "name": "Iq",
+    "path": "flags/iq.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Iq"
+  },
+  {
+    "name": "Ir",
+    "path": "flags/ir.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Ir"
+  },
+  {
+    "name": "Is",
+    "path": "flags/is.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Is"
+  },
+  {
+    "name": "It",
+    "path": "flags/it.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "It"
+  },
+  {
+    "name": "Je",
+    "path": "flags/je.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Je"
+  },
+  {
+    "name": "Jm",
+    "path": "flags/jm.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Jm"
+  },
+  {
+    "name": "Jo",
+    "path": "flags/jo.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Jo"
+  },
+  {
+    "name": "Jp",
+    "path": "flags/jp.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Jp"
+  },
+  {
+    "name": "Ke",
+    "path": "flags/ke.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Ke"
+  },
+  {
+    "name": "Kg",
+    "path": "flags/kg.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Kg"
+  },
+  {
+    "name": "Kh",
+    "path": "flags/kh.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Kh"
+  },
+  {
+    "name": "Ki",
+    "path": "flags/ki.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Ki"
+  },
+  {
+    "name": "Km",
+    "path": "flags/km.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Km"
+  },
+  {
+    "name": "Kn",
+    "path": "flags/kn.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Kn"
+  },
+  {
+    "name": "Kp",
+    "path": "flags/kp.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Kp"
+  },
+  {
+    "name": "Kr",
+    "path": "flags/kr.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Kr"
+  },
+  {
+    "name": "Kw",
+    "path": "flags/kw.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Kw"
+  },
+  {
+    "name": "Ky",
+    "path": "flags/ky.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Ky"
+  },
+  {
+    "name": "Kz",
+    "path": "flags/kz.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Kz"
+  },
+  {
+    "name": "La",
+    "path": "flags/la.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "La"
+  },
+  {
+    "name": "Lb",
+    "path": "flags/lb.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Lb"
+  },
+  {
+    "name": "Lc",
+    "path": "flags/lc.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Lc"
+  },
+  {
+    "name": "Li",
+    "path": "flags/li.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Li"
+  },
+  {
+    "name": "Lk",
+    "path": "flags/lk.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Lk"
+  },
+  {
+    "name": "Lr",
+    "path": "flags/lr.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Lr"
+  },
+  {
+    "name": "Ls",
+    "path": "flags/ls.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Ls"
+  },
+  {
+    "name": "Lt",
+    "path": "flags/lt.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Lt"
+  },
+  {
+    "name": "Lu",
+    "path": "flags/lu.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Lu"
+  },
+  {
+    "name": "Lv",
+    "path": "flags/lv.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Lv"
+  },
+  {
+    "name": "Ly",
+    "path": "flags/ly.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Ly"
+  },
+  {
+    "name": "Ma",
+    "path": "flags/ma.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Ma"
+  },
+  {
+    "name": "Mc",
+    "path": "flags/mc.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Mc"
+  },
+  {
+    "name": "Md",
+    "path": "flags/md.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Md"
+  },
+  {
+    "name": "Me",
+    "path": "flags/me.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Me"
+  },
+  {
+    "name": "Mf",
+    "path": "flags/mf.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Mf"
+  },
+  {
+    "name": "Mg",
+    "path": "flags/mg.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Mg"
+  },
+  {
+    "name": "Mh",
+    "path": "flags/mh.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Mh"
+  },
+  {
+    "name": "Mk",
+    "path": "flags/mk.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Mk"
+  },
+  {
+    "name": "Ml",
+    "path": "flags/ml.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Ml"
+  },
+  {
+    "name": "Mm",
+    "path": "flags/mm.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Mm"
+  },
+  {
+    "name": "Mn",
+    "path": "flags/mn.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Mn"
+  },
+  {
+    "name": "Mo",
+    "path": "flags/mo.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Mo"
+  },
+  {
+    "name": "Mp",
+    "path": "flags/mp.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Mp"
+  },
+  {
+    "name": "Mq",
+    "path": "flags/mq.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Mq"
+  },
+  {
+    "name": "Mr",
+    "path": "flags/mr.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Mr"
+  },
+  {
+    "name": "Ms",
+    "path": "flags/ms.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Ms"
+  },
+  {
+    "name": "Mt",
+    "path": "flags/mt.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Mt"
+  },
+  {
+    "name": "Mu",
+    "path": "flags/mu.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Mu"
+  },
+  {
+    "name": "Mv",
+    "path": "flags/mv.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Mv"
+  },
+  {
+    "name": "Mw",
+    "path": "flags/mw.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Mw"
+  },
+  {
+    "name": "Mx",
+    "path": "flags/mx.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Mx"
+  },
+  {
+    "name": "My",
+    "path": "flags/my.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "My"
+  },
+  {
+    "name": "Mz",
+    "path": "flags/mz.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Mz"
+  },
+  {
+    "name": "Na",
+    "path": "flags/na.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Na"
+  },
+  {
+    "name": "Nc",
+    "path": "flags/nc.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Nc"
+  },
+  {
+    "name": "Ne",
+    "path": "flags/ne.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Ne"
+  },
+  {
+    "name": "Nf",
+    "path": "flags/nf.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Nf"
+  },
+  {
+    "name": "Ng",
+    "path": "flags/ng.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Ng"
+  },
+  {
+    "name": "Ni",
+    "path": "flags/ni.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Ni"
+  },
+  {
+    "name": "Nl",
+    "path": "flags/nl.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Nl"
+  },
+  {
+    "name": "No",
+    "path": "flags/no.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "No"
+  },
+  {
+    "name": "Np",
+    "path": "flags/np.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Np"
+  },
+  {
+    "name": "Nr",
+    "path": "flags/nr.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Nr"
+  },
+  {
+    "name": "Nu",
+    "path": "flags/nu.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Nu"
+  },
+  {
+    "name": "Nz",
+    "path": "flags/nz.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Nz"
+  },
+  {
+    "name": "Om",
+    "path": "flags/om.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Om"
+  },
+  {
+    "name": "Pa",
+    "path": "flags/pa.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Pa"
+  },
+  {
+    "name": "Pc",
+    "path": "flags/pc.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Pc"
+  },
+  {
+    "name": "Pe",
+    "path": "flags/pe.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Pe"
+  },
+  {
+    "name": "Pf",
+    "path": "flags/pf.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Pf"
+  },
+  {
+    "name": "Pg",
+    "path": "flags/pg.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Pg"
+  },
+  {
+    "name": "Ph",
+    "path": "flags/ph.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Ph"
+  },
+  {
+    "name": "Pk",
+    "path": "flags/pk.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Pk"
+  },
+  {
+    "name": "Pl",
+    "path": "flags/pl.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Pl"
+  },
+  {
+    "name": "Pm",
+    "path": "flags/pm.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Pm"
+  },
+  {
+    "name": "Pn",
+    "path": "flags/pn.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Pn"
+  },
+  {
+    "name": "Pr",
+    "path": "flags/pr.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Pr"
+  },
+  {
+    "name": "Ps",
+    "path": "flags/ps.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Ps"
+  },
+  {
+    "name": "Pt",
+    "path": "flags/pt.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Pt"
+  },
+  {
+    "name": "Pw",
+    "path": "flags/pw.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Pw"
+  },
+  {
+    "name": "Py",
+    "path": "flags/py.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Py"
+  },
+  {
+    "name": "Qa",
+    "path": "flags/qa.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Qa"
+  },
+  {
+    "name": "Re",
+    "path": "flags/re.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Re"
+  },
+  {
+    "name": "Ro",
+    "path": "flags/ro.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Ro"
+  },
+  {
+    "name": "Rs",
+    "path": "flags/rs.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Rs"
+  },
+  {
+    "name": "Ru",
+    "path": "flags/ru.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Ru"
+  },
+  {
+    "name": "Rw",
+    "path": "flags/rw.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Rw"
+  },
+  {
+    "name": "Sa",
+    "path": "flags/sa.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Sa"
+  },
+  {
+    "name": "Sb",
+    "path": "flags/sb.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Sb"
+  },
+  {
+    "name": "Sc",
+    "path": "flags/sc.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Sc"
+  },
+  {
+    "name": "Sd",
+    "path": "flags/sd.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Sd"
+  },
+  {
+    "name": "Se",
+    "path": "flags/se.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Se"
+  },
+  {
+    "name": "Sg",
+    "path": "flags/sg.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Sg"
+  },
+  {
+    "name": "Sh",
+    "path": "flags/sh.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Sh"
+  },
+  {
+    "name": "Sh Ac",
+    "path": "flags/sh-ac.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Sh Ac"
+  },
+  {
+    "name": "Sh Hl",
+    "path": "flags/sh-hl.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Sh Hl"
+  },
+  {
+    "name": "Sh Ta",
+    "path": "flags/sh-ta.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Sh Ta"
+  },
+  {
+    "name": "Si",
+    "path": "flags/si.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Si"
+  },
+  {
+    "name": "Sj",
+    "path": "flags/sj.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Sj"
+  },
+  {
+    "name": "Sk",
+    "path": "flags/sk.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Sk"
+  },
+  {
+    "name": "Sl",
+    "path": "flags/sl.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Sl"
+  },
+  {
+    "name": "Sm",
+    "path": "flags/sm.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Sm"
+  },
+  {
+    "name": "Sn",
+    "path": "flags/sn.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Sn"
+  },
+  {
+    "name": "So",
+    "path": "flags/so.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "So"
+  },
+  {
+    "name": "Sr",
+    "path": "flags/sr.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Sr"
+  },
+  {
+    "name": "Ss",
+    "path": "flags/ss.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Ss"
+  },
+  {
+    "name": "St",
+    "path": "flags/st.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "St"
+  },
+  {
+    "name": "Sv",
+    "path": "flags/sv.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Sv"
+  },
+  {
+    "name": "Sx",
+    "path": "flags/sx.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Sx"
+  },
+  {
+    "name": "Sy",
+    "path": "flags/sy.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Sy"
+  },
+  {
+    "name": "Sz",
+    "path": "flags/sz.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Sz"
+  },
+  {
+    "name": "Tc",
+    "path": "flags/tc.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Tc"
+  },
+  {
+    "name": "Td",
+    "path": "flags/td.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Td"
+  },
+  {
+    "name": "Tf",
+    "path": "flags/tf.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Tf"
+  },
+  {
+    "name": "Tg",
+    "path": "flags/tg.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Tg"
+  },
+  {
+    "name": "Th",
+    "path": "flags/th.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Th"
+  },
+  {
+    "name": "Tj",
+    "path": "flags/tj.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Tj"
+  },
+  {
+    "name": "Tk",
+    "path": "flags/tk.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Tk"
+  },
+  {
+    "name": "Tl",
+    "path": "flags/tl.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Tl"
+  },
+  {
+    "name": "Tm",
+    "path": "flags/tm.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Tm"
+  },
+  {
+    "name": "Tn",
+    "path": "flags/tn.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Tn"
+  },
+  {
+    "name": "To",
+    "path": "flags/to.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "To"
+  },
+  {
+    "name": "Tr",
+    "path": "flags/tr.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Tr"
+  },
+  {
+    "name": "Tt",
+    "path": "flags/tt.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Tt"
+  },
+  {
+    "name": "Tv",
+    "path": "flags/tv.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Tv"
+  },
+  {
+    "name": "Tw",
+    "path": "flags/tw.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Tw"
+  },
+  {
+    "name": "Tz",
+    "path": "flags/tz.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Tz"
+  },
+  {
+    "name": "Ua",
+    "path": "flags/ua.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Ua"
+  },
+  {
+    "name": "Ug",
+    "path": "flags/ug.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Ug"
+  },
+  {
+    "name": "Um",
+    "path": "flags/um.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Um"
+  },
+  {
+    "name": "Un",
+    "path": "flags/un.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Un"
+  },
+  {
+    "name": "Us",
+    "path": "flags/us.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Us"
+  },
+  {
+    "name": "Uy",
+    "path": "flags/uy.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Uy"
+  },
+  {
+    "name": "Uz",
+    "path": "flags/uz.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Uz"
+  },
+  {
+    "name": "Va",
+    "path": "flags/va.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Va"
+  },
+  {
+    "name": "Vc",
+    "path": "flags/vc.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Vc"
+  },
+  {
+    "name": "Ve",
+    "path": "flags/ve.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Ve"
+  },
+  {
+    "name": "Vg",
+    "path": "flags/vg.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Vg"
+  },
+  {
+    "name": "Vi",
+    "path": "flags/vi.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Vi"
+  },
+  {
+    "name": "Vn",
+    "path": "flags/vn.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Vn"
+  },
+  {
+    "name": "Vu",
+    "path": "flags/vu.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Vu"
+  },
+  {
+    "name": "Wf",
+    "path": "flags/wf.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Wf"
+  },
+  {
+    "name": "Ws",
+    "path": "flags/ws.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Ws"
+  },
+  {
+    "name": "Xk",
+    "path": "flags/xk.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Xk"
+  },
+  {
+    "name": "Xx",
+    "path": "flags/xx.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Xx"
+  },
+  {
+    "name": "Ye",
+    "path": "flags/ye.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Ye"
+  },
+  {
+    "name": "Yt",
+    "path": "flags/yt.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Yt"
+  },
+  {
+    "name": "Za",
+    "path": "flags/za.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Za"
+  },
+  {
+    "name": "Zm",
+    "path": "flags/zm.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Zm"
+  },
+  {
+    "name": "Zw",
+    "path": "flags/zw.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Zw"
+  }
+]

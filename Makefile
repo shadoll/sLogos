@@ -6,7 +6,7 @@ CONTAINER_NAME = slogos-dev
 DEV_PORT = 5006
 
 # Main targets
-.PHONY: all build start stop restart logs clean scan-logos dev rebuild favicon build-with-favicons generate-svg-variants pwa-cache-list run update-lock
+.PHONY: all build start stop restart logs clean update-data dev rebuild favicon build-with-favicons generate-svg-variants pwa-cache-list run update-lock
 
 all: build start
 
@@ -42,11 +42,10 @@ run:
 	@echo "Running command in container: $(CMD)"
 	$(DOCKER_COMPOSE) -f compose.dev.yml run --rm $(CONTAINER_NAME) $(CMD)
 
-# Scan logos.json from files in the logos directory (for dev mode)
-scan-logos:
+update-data:
 	@echo "Scanning logos directory and updating logos.json for development..."
-	$(DOCKER_COMPOSE) -f compose.dev.yml run --rm $(CONTAINER_NAME) npm run scan-logos
-	@echo "Logos have been updated - refresh the browser to see changes"
+	$(DOCKER_COMPOSE) -f compose.dev.yml run --rm $(CONTAINER_NAME) npm run update-data
+	@echo "Logos and Flags have been updated - refresh the browser to see changes"
 
 # Clean up build artifacts and temporary files
 clean:

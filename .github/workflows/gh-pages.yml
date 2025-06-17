@@ -32,7 +32,7 @@ jobs:
         run: npm run build
 
       - name: Generate logos.json
-        run: node scripts/scanLogos.js
+        run: node scripts/update-data.js
 
       - name: Generate SVG variants
         run: node scripts/generate-svg-variants.js

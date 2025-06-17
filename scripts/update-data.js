@@ -5,13 +5,31 @@ const path = require('path');
 const { Resvg } = require('@resvg/resvg-js');
 
 // Configuration
-const logosDir = path.join(__dirname, '../public/logos');
-const outputFile = path.join(__dirname, '../public/data/logos.json');
-const genDir = path.join(__dirname, '../public/logos_gen');
+const collections = [
+  { name: 'logos', label: 'Logos',
+    baseDir: 'logos',
+    genDir: 'logos_gen',
+    dataFile: 'data/logos.json'
+  },
+  { name: 'flags', label: 'Flags',
+    baseDir: 'flags',
+    genDir: 'flags_gen',
+    dataFile: 'data/flags.json'
+  }
+];
+
+// Accept collection as a CLI arg or env var
+const collectionArg = process.argv.find(arg => arg.startsWith('--collection='));
+const collectionName = collectionArg ? collectionArg.split('=')[1] : (process.env.COLLECTION || 'logos');
+const collection = collections.find(c => c.name === collectionName) || collections[0];
+
+const logosDir = path.join(__dirname, '..', 'public', collection.baseDir);
+const outputFile = path.join(__dirname, '..', 'public', collection.dataFile);
+const genDir = path.join(__dirname, '..', 'public', collection.genDir);
 
 // Remove old PNG/JPG folders if they exist
-const pngDir = path.join(__dirname, '../public/logos-png');
-const jpgDir = path.join(__dirname, '../public/logos-jpg');
+const pngDir = path.join(__dirname, '..', 'public', collection.baseDir + '-png');
+const jpgDir = path.join(__dirname, '..', 'public', collection.baseDir + '-jpg');
 if (fs.existsSync(pngDir)) fs.rmSync(pngDir, { recursive: true, force: true });
 if (fs.existsSync(jpgDir)) fs.rmSync(jpgDir, { recursive: true, force: true });
 
@@ -73,23 +91,23 @@ function svgToJpg(svgBuffer, width, height) {
 }
 
 // Pregenerate PNG and JPG images for SVG files
-function pregenerateImages(logoFiles) {
+function pregenerateImages(logoFiles, logosDir, genDir) {
   cleanDir(genDir);
-  for (const file of logoFiles) {
-    if (/\.svg$/i.test(file)) {
-      const base = getBaseName(file);
-      const svgPath = path.join(logosDir, file);
-      const pngPath = path.join(genDir, base + '.png');
-      const jpgPath = path.join(genDir, base + '.jpg');
-      try {
-        const svgBuffer = fs.readFileSync(svgPath);
-        const pngBuffer = svgToPng(svgBuffer, 256, 256);
-        fs.writeFileSync(pngPath, pngBuffer);
-        const jpgBuffer = svgToJpg(svgBuffer);
-        fs.writeFileSync(jpgPath, jpgBuffer);
-      } catch (e) {
-        console.error('Error generating PNG/JPG for', file, e);
-      }
+  // Only process SVG files
+  const svgFiles = logoFiles.filter(file => /\.svg$/i.test(file));
+  for (const file of svgFiles) {
+    const base = getBaseName(file);
+    const svgPath = path.join(logosDir, file);
+    const pngPath = path.join(genDir, base + '.png');
+    const jpgPath = path.join(genDir, base + '.jpg');
+    try {
+      const svgBuffer = fs.readFileSync(svgPath);
+      const pngBuffer = svgToPng(svgBuffer, 256, 256);
+      fs.writeFileSync(pngPath, pngBuffer);
+      const jpgBuffer = svgToJpg(svgBuffer);
+      fs.writeFileSync(jpgPath, jpgBuffer);
+    } catch (e) {
+      console.error('Error generating PNG/JPG for', file, e);
     }
   }
 }
@@ -235,11 +253,123 @@ function saveLogosToJson(logos) {
 
 // Main function
 function main() {
-  const logos = scanLogos();
-  // Pregenerate PNG/JPG for all SVGs
-  const files = fs.readdirSync(logosDir);
-  pregenerateImages(files);
-  saveLogosToJson(logos);
+  // If no collection is specified, process all collections
+  if (!collectionArg && !process.env.COLLECTION) {
+    for (const col of collections) {
+      const logosDir = path.join(__dirname, '..', 'public', col.baseDir);
+      const outputFile = path.join(__dirname, '..', 'public', col.dataFile);
+      const genDir = path.join(__dirname, '..', 'public', col.genDir);
+      if (!fs.existsSync(logosDir)) {
+        fs.mkdirSync(logosDir, { recursive: true });
+      }
+      const files = fs.readdirSync(logosDir);
+      const logos = (function scanLogosForCol() {
+        let existing = [];
+        if (fs.existsSync(outputFile)) {
+          try {
+            existing = JSON.parse(fs.readFileSync(outputFile, 'utf8'));
+          } catch (e) {
+            console.error('Could not parse existing', col.dataFile + ':', e);
+          }
+        }
+        try {
+          if (!fs.existsSync(logosDir)) {
+            console.error(`Directory does not exist: ${logosDir}`);
+            return [];
+          }
+          // Filter for image files (svg, png, jpg, jpeg)
+          const logoFiles = files.filter(file =>
+            /\.(svg|png|jpg|jpeg)$/i.test(file)
+          );
+          // Create a Set of all logo paths in the directory
+          const logoPathsSet = new Set(logoFiles.map(file => `${col.baseDir}/${file}`));
+          // Mark existing records as disabled if they are not found in the directory
+          for (const logo of existing) {
+            if (!logoPathsSet.has(logo.path)) {
+              logo.disable = true;
+            }
+          }
+          // Create a Set of existing paths to avoid duplication
+          const existingPathsSet = new Set(existing.map(logo => logo.path));
+          // Create new minimal logo objects for files that don't have records yet
+          const newLogos = logoFiles
+            .filter(file => !existingPathsSet.has(`${col.baseDir}/${file}`))
+            .map(file => {
+              const format = getFileExtension(file);
+              const logoPath = `${col.baseDir}/${file}`;
+              return {
+                name: formatName(file),
+                path: logoPath,
+                format: format,
+                disable: false,
+                brand: formatName(file)
+              };
+            })
+            .sort((a, b) => a.name.localeCompare(b.name));
+          let merged = [...existing];
+          for (const newLogo of newLogos) {
+            let insertIdx = merged.findIndex(l => newLogo.name.localeCompare(l.name) < 0);
+            if (insertIdx === -1) {
+              merged.push(newLogo);
+            } else {
+              merged.splice(insertIdx, 0, newLogo);
+            }
+          }
+          for (const logoObj of merged) {
+            if (logoObj.format?.toLowerCase() === 'svg' &&
+                logoObj.colors &&
+                Object.keys(logoObj.colors).length > 0 &&
+                logoObj.colorConfig &&
+                !logoObj.sets) {
+              if (!logoObj.targets) {
+                logoObj.targets = {};
+                if (logoObj.colorConfig.selector) {
+                  const selectors = logoObj.colorConfig.selector.split(',').map(s => s.trim());
+                  selectors.forEach((selector, index) => {
+                    logoObj.targets[`selector_${index + 1}`] = selector;
+                  });
+                } else if (logoObj.colorConfig.target) {
+                  logoObj.targets.main = logoObj.colorConfig.target;
+                }
+              }
+              if (logoObj.targets && Object.keys(logoObj.targets).length > 0) {
+                logoObj.sets = {};
+                let setIndex = 1;
+                for (const [colorName, colorValue] of Object.entries(logoObj.colors)) {
+                  const setName = `set_${setIndex}`;
+                  logoObj.sets[setName] = {};
+                  Object.keys(logoObj.targets).forEach(targetName => {
+                    logoObj.sets[setName][targetName] = colorName;
+                  });
+                  setIndex++;
+                }
+              }
+            }
+          }
+          return merged;
+        } catch (error) {
+          console.error('Error scanning directory:', logosDir, error);
+          return [];
+        }
+      })();
+      // Pregenerate PNG/JPG for all SVGs
+      pregenerateImages(files, logosDir, genDir);
+      // Save to JSON
+      try {
+        const data = JSON.stringify(logos, null, 2);
+        fs.writeFileSync(outputFile, data);
+        console.log(`Successfully wrote ${logos.length} items to ${outputFile}`);
+      } catch (error) {
+        console.error('Error writing data to file:', outputFile, error);
+      }
+    }
+  } else {
+    // Single collection mode (as before)
+    const logos = scanLogos();
+    const files = fs.readdirSync(logosDir);
+    pregenerateImages(files, logosDir, genDir);
+    saveLogosToJson(logos);
+  }
 }
 
 // Run the script
