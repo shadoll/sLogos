@@ -10,7 +10,6 @@
   export let onDownload;
   export let allLogos = [];
   export let addBrand = () => {};
-  export const setTheme = () => {};
 
   function openPreview(logo) {
     // Navigate to preview page using router

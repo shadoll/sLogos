@@ -33,6 +33,19 @@
   export let setCompactMode = () => {};
   export let collection = "logos";
   export let setCollection = () => {};
+
+  let dropdownOpen = false;
+
+  function handleTitleClick() {
+    dropdownOpen = !dropdownOpen;
+  }
+
+  function handleCollectionSelect(name) {
+    setCollection(name);
+    dropdownOpen = false;
+  }
+
+  $: currentLabel = (collections.find(c => c.name === collection)?.label || "Logo Gallery").replace(/s$/, "");
 </script>
 
 <header class="main-header">
@@ -41,12 +54,28 @@
       <div class="header-icon">
         <img src="favicon.svg" alt="Logo Gallery icon" />
       </div>
-      <select class="collection-chooser" bind:value={collection} on:change={(e) => setCollection(e.target.value)} aria-label="Choose collection">
-        {#each collections as c}
-          <option value={c.name}>{c.label}</option>
-        {/each}
-      </select>
-      <h1>Logo Gallery</h1>
+      <button class="collection-title-btn" on:click={handleTitleClick} aria-haspopup="listbox" aria-expanded={dropdownOpen}>
+        {currentLabel} Gallery <span class="triangle">▼</span>
+      </button>
+      {#if dropdownOpen}
+        <ul class="collection-dropdown" role="listbox">
+          {#each collections as c}
+            <li
+              class:active={c.name === collection}
+              role="option"
+              aria-selected={c.name === collection}
+              tabindex="0"
+              on:click={() => handleCollectionSelect(c.name)}
+              on:keydown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  handleCollectionSelect(c.name);
+                }
+              }}
+            >{c.label} Gallery</li>
+          {/each}
+        </ul>
+      {/if}
     </div>
     <span class="logo-count">
       {#if (searchQuery && searchQuery.trim() !== "") || selectedTags.length > 0 || selectedBrands.length > 0 || selectedVariants.length > 0 || compactMode}
@@ -127,16 +156,59 @@
     border-radius: 4px;
   }
 
-  .collection-chooser {
-    font-family: inherit;
+  .collection-title-btn {
+    background: none;
+    border: none;
+    font: inherit;
+    color: inherit;
+    font-size: 1.5rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 0.3em;
+    cursor: pointer;
+    padding: 0;
+    margin: 0 1rem 0 0;
+    position: relative;
+    transition: color 0.15s;
+  }
+  .collection-title-btn:hover,
+  .collection-title-btn:focus {
+    color: var(--color-primary, #0070f3);
+  }
+  .triangle {
     font-size: 1rem;
-    color: var(--color-text);
+    margin-left: 0.2em;
+    transition: transform 0.2s;
+  }
+  .collection-title-btn[aria-expanded="true"] .triangle {
+    transform: rotate(180deg);
+  }
+  .collection-dropdown {
+    position: absolute;
+    top: 2.2em;
+    left: 0;
     background: var(--color-card);
     border: 1px solid var(--color-border);
-    border-radius: 4px;
-    padding: 0.25rem 0.5rem;
-    margin-right: 1rem;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    z-index: 10;
+    min-width: 180px;
+    padding: 0.3em 0;
+    margin: 0;
+    list-style: none;
+  }
+  .collection-dropdown li {
+    padding: 0.5em 1.2em;
     cursor: pointer;
+    font-size: 1.1rem;
+    color: var(--color-text);
+    transition: background 0.13s, color 0.13s;
+  }
+  .collection-dropdown li.active,
+  .collection-dropdown li:hover {
+    background: var(--color-primary, #0070f3);
+    color: #fff;
   }
 
   .header-controls {

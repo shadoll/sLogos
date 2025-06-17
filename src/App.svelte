@@ -6,6 +6,7 @@
   import Home from "./pages/Home.svelte";
   import Preview from "./pages/Preview.svelte";
   import NotFound from "./pages/NotFound.svelte";
+  import Header from "./components/Header.svelte";
 
   export const routes = {
     "/": Home,
@@ -32,6 +33,7 @@
   // --- Collection support ---
   let collection = localStorage.getItem("collection") || "logos";
   function setCollection(val) {
+    console.log("setCollection called with", val, "current:", collection);
     if (val !== collection) {
       collection = val;
       localStorage.setItem("collection", val);
@@ -40,12 +42,18 @@
   }
 
   async function loadCollectionData() {
+    console.log("loadCollectionData: loading collection", collection);
     // Load the correct data file for the selected collection
     try {
       const timestamp = new Date().getTime();
       const response = await fetch(`data/${collection}.json?t=${timestamp}`);
+      console.log("loadCollectionData: fetch status", response.status);
       if (response.ok) {
         logos = await response.json();
+        console.log("loadCollectionData: loaded", logos.length, "items for", collection);
+        logos = [...logos]; // trigger reactivity
+        filteredLogos = logos;
+        displayLogos = logos;
         // Reset filters and state for new collection
         searchQuery = "";
         selectedTags = [];
@@ -55,9 +63,11 @@
         compactMode = false;
       } else {
         logos = [];
+        console.log("loadCollectionData: failed to load data for", collection);
       }
     } catch (error) {
       logos = [];
+      console.error("loadCollectionData: error loading data for", collection, error);
     }
   }
 
@@ -126,6 +136,7 @@
   // Load logos from JSON file with cache busting
   onMount(async () => {
     console.log("App: onMount start - before loading logos");
+    await loadCollectionData();
 
     // Set initial empty app data
     if (typeof window !== "undefined") {
@@ -164,93 +175,6 @@
       };
     }
 
-    try {
-      // Add timestamp as cache-busting query parameter
-      const timestamp = new Date().getTime();
-      const response = await fetch(`data/logos.json?t=${timestamp}`, {
-        // Force reload from server, don't use cache
-        cache: "no-cache",
-        headers: {
-          "Cache-Control": "no-cache",
-          Pragma: "no-cache",
-        },
-      });
-
-      if (response.ok) {
-        logos = await response.json();
-        filteredLogos = logos;
-        displayLogos = logos;
-        console.log(
-          "Loaded logos:",
-          logos.length,
-          "at",
-          new Date().toLocaleTimeString(),
-        );
-
-        // Update app data immediately after logos are loaded
-        if (typeof window !== "undefined") {
-          window.appData = {
-            logos,
-            filteredLogos,
-            displayLogos,
-            theme,
-            effectiveTheme,
-            viewMode,
-            searchQuery,
-            allTags,
-            selectedTags,
-            selectedBrands,
-            selectedVariants,
-            tagDropdownOpen,
-            compactMode,
-            setSearchQuery,
-            setGridView,
-            setListView,
-            setCompactView,
-            setTheme,
-            toggleDropdown,
-            addTag,
-            removeTag,
-            toggleTag,
-            getTagObj,
-            closeDropdown,
-            setCompactMode,
-            onCopy: copyUrl,
-            onDownload: downloadLogo,
-            addBrand,
-            removeBrand,
-            addVariant,
-            removeVariant,
-          };
-          console.log(
-            "App: Updated window.appData after loading with",
-            logos.length,
-            "logos",
-          );
-        }
-      } else {
-        console.error("Failed to load logos data", response.status);
-      }
-    } catch (error) {
-      console.error("Error loading logos:", error);
-    }
-
-    const stored = localStorage.getItem("theme");
-    if (stored === "light" || stored === "dark" || stored === "system") {
-      theme = stored;
-    }
-    applyTheme();
-
-    // Listen for system theme changes if using system
-    mq = window.matchMedia("(prefers-color-scheme: dark)");
-    mq.addEventListener("change", () => {
-      if (theme === "system") applyTheme();
-    });
-
-    // Open preview if URL contains anchor
-    openLogoByAnchor(window.location.hash);
-
-    // On mount, check for search param in URL and set searchQuery
     const params = new URLSearchParams(window.location.search);
     const searchParam = params.get("search");
     if (searchParam) {
@@ -836,7 +760,70 @@
   }
 </script>
 
-<Router {routes} />
+<Router {routes} let:Component>
+  <svelte:component
+    this={Component}
+    displayLogos={displayLogos}
+    allLogos={logos}
+    theme={theme}
+    setTheme={setTheme}
+    viewMode={viewMode}
+    setGridView={setGridView}
+    setListView={setListView}
+    setCompactView={setCompactView}
+    searchQuery={searchQuery}
+    setSearchQuery={setSearchQuery}
+    allTags={allTags}
+    selectedTags={selectedTags}
+    selectedBrands={selectedBrands}
+    selectedVariants={selectedVariants}
+    tagDropdownOpen={tagDropdownOpen}
+    toggleDropdown={toggleDropdown}
+    addTag={addTag}
+    removeTag={removeTag}
+    addBrand={addBrand}
+    removeBrand={removeBrand}
+    addVariant={addVariant}
+    removeVariant={removeVariant}
+    getTagObj={getTagObj}
+    compactMode={compactMode}
+    setCompactMode={setCompactMode}
+    collection={collection}
+    setCollection={setCollection}
+    collections={collections}
+  />
+</Router>
+
+<Header
+  {displayLogos}
+  allLogos={logos}
+  {theme}
+  {setTheme}
+  {viewMode}
+  {setGridView}
+  {setListView}
+  {setCompactView}
+  {searchQuery}
+  {setSearchQuery}
+  {allTags}
+  {selectedTags}
+  {selectedBrands}
+  {selectedVariants}
+  {tagDropdownOpen}
+  {toggleDropdown}
+  {addTag}
+  {removeTag}
+  {addBrand}
+  {removeBrand}
+  {addVariant}
+  {removeVariant}
+  {getTagObj}
+  {compactMode}
+  {setCompactMode}
+  {collection}
+  {setCollection}
+  {collections}
+/>
 
 <style>
 </style>

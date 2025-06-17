@@ -170,7 +170,7 @@
             />
           {/if}
           {#if logo.brand}
-            <p><strong>Brand:</strong> <span>{logo.brand}</span></p>
+            <p><strong>Owner:</strong> <span>{logo.brand}</span></p>
           {/if}
           <p><strong>Format:</strong> <span>{logo.format}</span></p>
           <p><strong>Path:</strong> {logo.path}</p>

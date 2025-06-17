@@ -20,6 +20,8 @@
   let addVariant = () => {};
   let removeVariant = () => {};
   let setTheme = () => {};
+  let collection = "logos"; // Default collection
+  let setCollection = () => {};
 
 
   $: ({
@@ -30,6 +32,7 @@
     effectiveTheme = "light",
     viewMode = "grid",
     searchQuery = "",
+    collection = "logos",
     allTags = [],
     selectedTags = [],
     selectedBrands = [],
@@ -41,6 +44,7 @@
     setListView = () => {},
     setCompactView = () => {},
     setTheme = () => {},
+    setCollection = () => {},
     toggleDropdown = () => {},
     addTag = () => {},
     removeTag = () => {},
@@ -62,6 +66,7 @@
       allLogos = window.appData.logos || [];
       viewMode = window.appData.viewMode || "grid";
       theme = window.appData.theme || "system";
+      collection = window.appData.collection || "logos";
       searchQuery = window.appData.searchQuery || "";
       compactMode = window.appData.compactMode || false;
       tagDropdownOpen = window.appData.tagDropdownOpen || false;
@@ -233,6 +238,8 @@
     getTagObj={(tag) => (window.appData?.getTagObj ? window.appData.getTagObj(tag) : {text: tag})}
     {compactMode}
     {setCompactMode}
+    {collection}
+    {setCollection}
   />
 
   <main>
