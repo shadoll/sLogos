@@ -50,8 +50,8 @@ jobs:
           cp public/favicon.png ./gh-pages-artifact/
           cp public/favicon.ico ./gh-pages-artifact/
           cp public/apple-touch-icon.png ./gh-pages-artifact/
-          cp public/icon-192x192.png ./gh-pages-artifact/
-          cp public/icon-512x512.png ./gh-pages-artifact/
+          cp public/icon-192.png ./gh-pages-artifact/
+          cp public/icon-512.png ./gh-pages-artifact/
           cp public/manifest.json ./gh-pages-artifact/
           cp public/sw.js ./gh-pages-artifact/
           cp -r public/data ./gh-pages-artifact/
