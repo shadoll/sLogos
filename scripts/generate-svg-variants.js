@@ -2,19 +2,8 @@
 
 const fs = require('fs');
 const path = require('path');
+const { collections } = require('../src/collections.js');
 
-const collections = [
-  { name: 'logos', label: 'Logos',
-    baseDir: 'logos',
-    genDir: 'logos_variants',
-    dataFile: 'data/logos.json'
-  },
-  { name: 'flags', label: 'Flags',
-    baseDir: 'flags',
-    genDir: 'flags_variants',
-    dataFile: 'data/flags.json'
-  }
-];
 
 // Accept collection as a CLI arg or env var
 const collectionArg = process.argv.find(arg => arg.startsWith('--collection='));
@@ -22,7 +11,7 @@ const collectionName = collectionArg ? collectionArg.split('=')[1] : (process.en
 const collection = collections.find(c => c.name === collectionName) || collections[0];
 
 const LOGOS_DIR = path.join(__dirname, '..', 'public', collection.baseDir);
-const LOGOS_GEN_DIR = path.join(__dirname, '..', 'public', collection.genDir);
+const LOGOS_GEN_DIR = path.join(__dirname, '..', 'public', collection.varDir);
 
 // Try multiple possible locations for logos.json
 const POSSIBLE_LOGOS_JSON_PATHS = [

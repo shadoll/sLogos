@@ -1,6 +1,7 @@
 <script>
   import { copySvgSource } from '../utils/svgSource.js';
   import Notification from './Notification.svelte';
+  import { getContext } from 'svelte';
   import { collections } from '../collections.js';
 
   export let logo;
@@ -92,46 +93,40 @@
     window.removeEventListener('click', handleClick);
   }
 
-  function getCollectionByPath(path) {
-    return collections.find(col => path.startsWith(col.baseDir.replace('images/', '')) || path.startsWith(col.baseDir));
-  }
-
-  function getBaseDir(logo) {
-    const collection = getCollectionByPath(logo.path);
-    return collection ? collection.baseDir : 'images/logos';
-  }
-
-  function getGenDir(logo) {
-    const collection = getCollectionByPath(logo.path);
-    return collection ? collection.genDir : 'images/logos_variants';
+  let collection = getContext('collection');
+  if (!collection) {
+    if (typeof window !== 'undefined' && window.appData && window.appData.collection) {
+      collection = collections.find(c => c.name === window.appData.collection) || collections[0];
+    } else {
+      collection = collections[0];
+    }
   }
 
   function getImageUrl(logo) {
-    const baseDir = getBaseDir(logo);
-    return `/${baseDir}/${logo.path.split('/').pop()}`;
+    return `/${collection.baseDir}/${logo.path}`;
   }
 
   function getSvgPath(logo) {
-    const genDir = getGenDir(logo);
     if (logo._activeSet) {
-      return `/${genDir}/${getBaseName(logo.path)}__${logo._activeSet}.svg`;
+      return `/${collection.varDir}/${getBaseName(logo.path)}__${logo._activeSet}.svg`;
     }
-    return logo.path;
+    return `/${collection.baseDir}/${logo.path}`;
   }
 
   function getPngUrl(logo) {
-    const genDir = getGenDir(logo);
-    return `/${genDir}/${logo.path.split('/').pop().replace(/\.svg$/, '.png')}`;
+    return `/${collection.varDir}/${logo.path.replace(/\.svg$/, '.png')}`;
+  }
+
+  function getJpgUrl(logo) {
+    return `/${collection.varDir}/${logo.path.replace(/\.svg$/, '.jpg')}`;
   }
 
   function getPngLink(logo) {
-    const genDir = getGenDir(logo);
-    return `${window.location.origin}/${genDir}/${getBaseName(logo.path)}.png`;
+    return `${window.location.origin}/${collection.varDir}/${logo.path.replace(/\.svg$/, '.png')}`;
   }
 
   function getJpgLink(logo) {
-    const genDir = getGenDir(logo);
-    return `${window.location.origin}/${genDir}/${getBaseName(logo.path)}.jpg`;
+    return `${window.location.origin}/${collection.varDir}/${logo.path.replace(/\.svg$/, '.jpg')}`;
   }
 
   async function handleCopyPngUrlClick(e) {
@@ -187,8 +182,8 @@
   // Download PNG using the same logic as JPG
   async function handleDownloadPngClick(e) {
     e.stopPropagation();
-    const genDir = getGenDir(logo);
-    const pngUrl = `/${genDir}/${getBaseName(logo.path)}.png`;
+    const varDir = getVarDir(logo);
+    const pngUrl = `/${varDir}/${getBaseName(logo.path)}.png`;
     try {
       const res = await fetch(pngUrl, { method: 'HEAD' });
       if (res.ok) {
@@ -220,8 +215,8 @@
   }
 
   async function downloadJpg(logo) {
-    const genDir = getGenDir(logo);
-    const jpgUrl = `/${genDir}/${getBaseName(logo.path)}.jpg`;
+    const varDir = getVarDir(logo);
+    const jpgUrl = `/${varDir}/${getBaseName(logo.path)}.jpg`;
     try {
       const res = await fetch(jpgUrl, { method: 'HEAD' });
       if (res.ok) {

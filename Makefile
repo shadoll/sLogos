@@ -83,6 +83,6 @@ generate-svg-variants:
 	@echo "SVG variants have been generated"
 
 # Generate PWA cache list
-pwa-cache-list:
+generate-pwa-cache-list:
 	@echo "Generating PWA cache list..."
 	$(DOCKER_COMPOSE) -f compose.dev.yml run --rm $(CONTAINER_NAME) npm run pwa-cache-list

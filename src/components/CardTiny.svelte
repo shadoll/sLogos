@@ -3,6 +3,7 @@
   import { getDefaultLogoColor } from "../utils/colorTheme.js";
   import ColorSwitcher from './ColorSwitcher.svelte';
   import { collections } from '../collections.js';
+  import { getContext } from 'svelte';
 
   export let logo;
   export let theme;
@@ -40,9 +41,16 @@
     return collection ? collection.baseDir : 'images/logos';
   }
 
+  let collection = getContext('collection');
+  if (!collection) {
+    if (typeof window !== 'undefined' && window.appData && window.appData.collection) {
+      collection = collections.find(c => c.name === window.appData.collection) || collections[0];
+    } else {
+      collection = collections[0];
+    }
+  }
   function getImageUrl(logo) {
-    const baseDir = getBaseDir(logo);
-    return `/${baseDir}/${logo.path.split('/').pop()}`;
+    return `/${collection.baseDir}/${logo.path}`;
   }
 
 </script>

@@ -3,6 +3,15 @@
     "name": "Escudo De España",
     "path": "Escudo_de_España.svg",
     "format": "SVG",
-    "disable": false
+    "disable": false,
+    "tags": [
+      "Spain",
+      "Coat of arms",
+      "National emblem"
+    ],
+    "meta": {
+      "description": "The coat of arms of Spain, representing the historical kingdoms and the Pillars of Hercules.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Coat_of_arms_of_Spain"
+    }
   }
 ]

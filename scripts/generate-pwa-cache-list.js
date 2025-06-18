@@ -2,11 +2,12 @@
 // Node.js script to generate a list of all files in public and images for PWA caching
 const fs = require('fs');
 const path = require('path');
+const { collections } = require('../src/collections.js');
 
 const projectRoot = path.join(__dirname, '..');
-const publicDir = path.join(projectRoot, 'public/images');
-const logosDir = path.join(projectRoot, 'logos');
-const logosGenDir = path.join(projectRoot, 'logos_variants');
+const publicDir = path.join(projectRoot, 'public');
+const imagesDir = path.join(publicDir, 'images');
+const imagesVarDir = path.join(projectRoot, 'logos_variants');
 
 // List of files to ignore
 const IGNORED_FILES = ['.DS_Store', 'CNAME', 'pwa-files-to-cache.json', '.gitignore'];
@@ -31,11 +32,11 @@ function safeWalkDir(dir, baseUrl = '') {
   return walkDir(dir, baseUrl);
 }
 
-const publicFiles = walkDir(publicDir, '').filter(f => !f.endsWith('sw.js'));
-const logosFiles = safeWalkDir(logosDir, 'logos');
-const logosGenFiles = safeWalkDir(logosGenDir, 'logos_variants');
+// Recursively walk all files in public, skipping IGNORED_FILES and sw.js
+let allFiles = walkDir(publicDir, '').filter(f => !f.endsWith('sw.js'));
 
-const allFiles = Array.from(new Set([...publicFiles, ...logosFiles, ...logosGenFiles]));
+// Remove duplicates
+allFiles = Array.from(new Set(allFiles));
 
 fs.writeFileSync(
   path.join(publicDir, 'pwa-files-to-cache.json'),
