@@ -41,7 +41,12 @@
     }
   }
   function getImageUrl(logo) {
-    return `/${collection.baseDir}/${logo.path}`;
+    // Always resolve collection for each logo based on current collection name
+    let currentCollection = collection;
+    if (typeof window !== 'undefined' && window.appData && window.appData.collection) {
+      currentCollection = collections.find(c => c.name === window.appData.collection) || collections[0];
+    }
+    return `/${currentCollection.baseDir}/${logo.path}`;
   }
 
   $: getLogoThemeColor = (logo) => getDefaultLogoColor(logo.colors, theme);

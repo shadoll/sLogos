@@ -3,6 +3,7 @@ export const collections = [
     {
         name: 'logos',
         label: 'Logos',
+        title: 'Logo Gallery',
         baseDir: 'images/logos',
         varDir: 'images/logos_variants',
         dataFile: 'data/logos.json'
@@ -10,6 +11,7 @@ export const collections = [
     {
         name: 'flags',
         label: 'Flags',
+        title: 'Flag Gallery',
         baseDir: 'images/flags',
         varDir: 'images/flags_variants',
         dataFile: 'data/flags.json'
@@ -17,6 +19,7 @@ export const collections = [
     {
         name: 'emblems',
         label: 'Emblems',
+        title: 'Emblem Gallery',
         baseDir: 'images/emblems',
         varDir: 'images/emblems_variants',
         dataFile: 'data/emblems.json'
