@@ -13,5 +13,19 @@
       "description": "The coat of arms of Spain, representing the historical kingdoms and the Pillars of Hercules.",
       "wikipedia": "https://en.wikipedia.org/wiki/Coat_of_arms_of_Spain"
     }
+  },
+  {
+    "name": "Emblem Of Ethiopia",
+    "path": "Emblem_of_Ethiopia.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "Ethiopia",
+      "National emblem"
+    ],
+    "meta": {
+      "description": "The national emblem of Ethiopia, featuring a lion and a sun.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Emblem_of_Ethiopia"
+    }
   }
 ]

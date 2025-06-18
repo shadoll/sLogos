@@ -200,7 +200,15 @@
             <div class="logo-meta">
               {#each Object.entries(logo.meta) as [key, value]}
                 <p>
-                  <strong>{capitalizeFirst(key)}:</strong> <span>{value}</span>
+                  {#if typeof value === 'string' && value.startsWith('https://')}
+                    <a class="meta-link" href={value} target="_blank" rel="noopener noreferrer">
+                      {capitalizeFirst(key)}
+                      <svg height="12" viewBox="0 0 12 12" width="12" xmlns="http://www.w3.org/2000/svg"><path d="m6 1h5v5l-2.14-2.15-4.16 4.15-.7-.7 4.15-4.16zm-4 2h2v1h-2v6h6v-2h1v2a1 1 0 0 1 -1 1h-6a1 1 0 0 1 -1-1v-6a1 1 0 0 1 1-1" fill="currentColor"/></svg>
+                    </a>
+                  {:else}
+                    <strong>{capitalizeFirst(key)}:</strong>
+                    <span>{value}</span>
+                  {/if}
                 </p>
               {/each}
             </div>
@@ -385,6 +393,19 @@
     border-top: 1px solid var(--color-border);
     padding-top: 1rem;
   }
+
+  .meta-link {
+    color: var(--color-accent);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25em;
+    transition: text-decoration 0.15s;
+  }
+  .meta-link:hover {
+    text-decoration: underline;
+  }
+
   @media (max-width: 900px) {
     .preview-wrapper {
       overflow-y: auto;

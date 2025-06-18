@@ -185,20 +185,24 @@
               >
                 Categories
               </button>
-              <button
-                class="filter-tab"
-                class:active={activeTab === "brands"}
-                on:click={() => activeTab = "brands"}
-              >
-                Brands
-              </button>
-              <button
-                class="filter-tab"
-                class:active={activeTab === "variants"}
-                on:click={() => activeTab = "variants"}
-              >
-                Variants
-              </button>
+              {#if allBrands.length > 0}
+                <button
+                  class="filter-tab"
+                  class:active={activeTab === "brands"}
+                  on:click={() => activeTab = "brands"}
+                >
+                  Brands
+                </button>
+              {/if}
+              {#if allVariants.length > 0}
+                <button
+                  class="filter-tab"
+                  class:active={activeTab === "variants"}
+                  on:click={() => activeTab = "variants"}
+                >
+                  Variants
+                </button>
+              {/if}
             </div>
 
             <div class="tags-search-bar">
@@ -277,7 +281,7 @@
                     : "No available categories"}
                 </div>
               {/if}
-            {:else if activeTab === "brands"}
+            {:else if activeTab === "brands" && allBrands.length > 0}
               {#if filteredAllBrands.length > 0}
                 <div class="filter-tags-list">
                   {#each filteredAllBrands as brand}
@@ -318,7 +322,7 @@
                     : "No available brands"}
                 </div>
               {/if}
-            {:else if activeTab === "variants"}
+            {:else if activeTab === "variants" && allVariants.length > 0}
               {#if filteredAllVariants.length > 0}
                 <div class="filter-tags-list">
                   {#each filteredAllVariants as variant}
