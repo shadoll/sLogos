@@ -126,15 +126,16 @@ function scanLogos() {
       /\.(svg|png|jpg|jpeg)$/i.test(file)
     );
 
-    console.log(`Found ${logoFiles.length} logo files`);
-
     // Create a Set of all logo paths in the directory
-    const logoPathsSet = new Set(logoFiles.map(file => `logos/${file}`));
+    const logoPathsSet = new Set(logoFiles.map(file => `${collection.baseDir}/${file}`));
 
     // Mark existing records as disabled if they are not found in the directory
     for (const logo of existing) {
       if (!logoPathsSet.has(logo.path)) {
         logo.disable = true;
+      } else if (logo.disable) {
+        // If file exists, re-enable if previously disabled
+        logo.disable = false;
       }
     }
 
@@ -143,85 +144,22 @@ function scanLogos() {
 
     // Create new minimal logo objects for files that don't have records yet
     const newLogos = logoFiles
-      .filter(file => !existingPathsSet.has(`logos/${file}`))
+      .filter(file => !existingPathsSet.has(`${collection.baseDir}/${file}`))
       .map(file => {
         const format = getFileExtension(file);
-        const logoPath = `logos/${file}`;
-
-        // Create minimal object for new logos - just the essential fields
+        const logoPath = `${collection.baseDir}/${file}`;
+        // Only add minimal fields for new files
         return {
           name: formatName(file),
           path: logoPath,
           format: format,
-          disable: false,
-          brand: formatName(file)
+          disable: false
         };
       })
       .sort((a, b) => a.name.localeCompare(b.name));
 
-    // Merge existing and new logos
-    let merged = [...existing];
-
-    // Add new logos in alphabetical order
-    for (const newLogo of newLogos) {
-      // Find the position to insert based on name
-      let insertIdx = merged.findIndex(l => newLogo.name.localeCompare(l.name) < 0);
-      if (insertIdx === -1) {
-        merged.push(newLogo);
-      } else {
-        merged.splice(insertIdx, 0, newLogo);
-      }
-    }
-
-    // Force-upgrade SVGs with older colorConfig format to the new targets+sets format
-    // but ONLY if they have colors and either a target or selector defined
-    // Don't add empty objects to logos that don't need them
-    for (const logoObj of merged) {
-      // Only proceed if this is an SVG with existing color info that needs upgrading
-      if (logoObj.format?.toLowerCase() === 'svg' &&
-          logoObj.colors &&
-          Object.keys(logoObj.colors).length > 0 &&
-          logoObj.colorConfig &&
-          !logoObj.sets) {
-
-        // Initialize targets only if needed
-        if (!logoObj.targets) {
-          logoObj.targets = {};
-
-          if (logoObj.colorConfig.selector) {
-            // Split multiple selectors (e.g., "#text, #logo_int")
-            const selectors = logoObj.colorConfig.selector.split(',').map(s => s.trim());
-
-            // Create a target for each selector
-            selectors.forEach((selector, index) => {
-              logoObj.targets[`selector_${index + 1}`] = selector;
-            });
-          } else if (logoObj.colorConfig.target) {
-            logoObj.targets.main = logoObj.colorConfig.target;
-          }
-        }
-
-        // Initialize sets only if we have both colors and targets
-        if (logoObj.targets && Object.keys(logoObj.targets).length > 0) {
-          logoObj.sets = {};
-          let setIndex = 1;
-
-          // Create a set for each color
-          for (const [colorName, colorValue] of Object.entries(logoObj.colors)) {
-            const setName = `set_${setIndex}`;
-            logoObj.sets[setName] = {};
-
-            // Apply this color to all targets
-            Object.keys(logoObj.targets).forEach(targetName => {
-              logoObj.sets[setName][targetName] = colorName;
-            });
-
-            setIndex++;
-          }
-        }
-      }
-    }
-
+    // Merge existing and new logos (add new at the end)
+    let merged = [...existing, ...newLogos];
     return merged;
   } catch (error) {
     console.error('Error scanning logos directory:', error);
@@ -252,102 +190,47 @@ function main() {
         fs.mkdirSync(logosDir, { recursive: true });
       }
       const files = fs.readdirSync(logosDir);
-      const logos = (function scanLogosForCol() {
-        let existing = [];
-        if (fs.existsSync(outputFile)) {
-          try {
-            existing = JSON.parse(fs.readFileSync(outputFile, 'utf8'));
-          } catch (e) {
-            console.error('Could not parse existing', col.dataFile + ':', e);
-          }
-        }
+      // Only update/disable/add, do not overwrite existing keys
+      let existing = [];
+      if (fs.existsSync(outputFile)) {
         try {
-          if (!fs.existsSync(logosDir)) {
-            console.error(`Directory does not exist: ${logosDir}`);
-            return [];
-          }
-          // Filter for image files (svg, png, jpg, jpeg)
-          const logoFiles = files.filter(file =>
-            /\.(svg|png|jpg|jpeg)$/i.test(file)
-          );
-          // Create a Set of all logo paths in the directory
-          const logoPathsSet = new Set(logoFiles.map(file => `${col.baseDir}/${file}`));
-          // Mark existing records as disabled if they are not found in the directory
-          for (const logo of existing) {
-            if (!logoPathsSet.has(logo.path)) {
-              logo.disable = true;
-            }
-          }
-          // Create a Set of existing paths to avoid duplication
-          const existingPathsSet = new Set(existing.map(logo => logo.path));
-          // Create new minimal logo objects for files that don't have records yet
-          const newLogos = logoFiles
-            .filter(file => !existingPathsSet.has(`${col.baseDir}/${file}`))
-            .map(file => {
-              const format = getFileExtension(file);
-              const logoPath = `${col.baseDir}/${file}`;
-              return {
-                name: formatName(file),
-                path: logoPath,
-                format: format,
-                disable: false,
-                brand: formatName(file)
-              };
-            })
-            .sort((a, b) => a.name.localeCompare(b.name));
-          let merged = [...existing];
-          for (const newLogo of newLogos) {
-            let insertIdx = merged.findIndex(l => newLogo.name.localeCompare(l.name) < 0);
-            if (insertIdx === -1) {
-              merged.push(newLogo);
-            } else {
-              merged.splice(insertIdx, 0, newLogo);
-            }
-          }
-          for (const logoObj of merged) {
-            if (logoObj.format?.toLowerCase() === 'svg' &&
-                logoObj.colors &&
-                Object.keys(logoObj.colors).length > 0 &&
-                logoObj.colorConfig &&
-                !logoObj.sets) {
-              if (!logoObj.targets) {
-                logoObj.targets = {};
-                if (logoObj.colorConfig.selector) {
-                  const selectors = logoObj.colorConfig.selector.split(',').map(s => s.trim());
-                  selectors.forEach((selector, index) => {
-                    logoObj.targets[`selector_${index + 1}`] = selector;
-                  });
-                } else if (logoObj.colorConfig.target) {
-                  logoObj.targets.main = logoObj.colorConfig.target;
-                }
-              }
-              if (logoObj.targets && Object.keys(logoObj.targets).length > 0) {
-                logoObj.sets = {};
-                let setIndex = 1;
-                for (const [colorName, colorValue] of Object.entries(logoObj.colors)) {
-                  const setName = `set_${setIndex}`;
-                  logoObj.sets[setName] = {};
-                  Object.keys(logoObj.targets).forEach(targetName => {
-                    logoObj.sets[setName][targetName] = colorName;
-                  });
-                  setIndex++;
-                }
-              }
-            }
-          }
-          return merged;
-        } catch (error) {
-          console.error('Error scanning directory:', logosDir, error);
-          return [];
+          existing = JSON.parse(fs.readFileSync(outputFile, 'utf8'));
+        } catch (e) {
+          console.error('Could not parse existing', col.dataFile + ':', e);
         }
-      })();
-      // Pregenerate PNG/JPG for all SVGs
+      }
+      // Filter for image files (svg, png, jpg, jpeg)
+      const logoFiles = files.filter(file =>
+        /\.(svg|png|jpg|jpeg)$/i.test(file)
+      );
+      const logoPathsSet = new Set(logoFiles.map(file => `${col.baseDir}/${file}`));
+      for (const logo of existing) {
+        if (!logoPathsSet.has(logo.path)) {
+          logo.disable = true;
+        } else if (logo.disable) {
+          logo.disable = false;
+        }
+      }
+      const existingPathsSet = new Set(existing.map(logo => logo.path));
+      const newLogos = logoFiles
+        .filter(file => !existingPathsSet.has(`${col.baseDir}/${file}`))
+        .map(file => {
+          const format = getFileExtension(file);
+          const logoPath = `${col.baseDir}/${file}`;
+          return {
+            name: formatName(file),
+            path: logoPath,
+            format: format,
+            disable: false
+          };
+        })
+        .sort((a, b) => a.name.localeCompare(b.name));
+      let merged = [...existing, ...newLogos];
       pregenerateImages(files, logosDir, genDir);
-      // Save to JSON
       try {
-        const data = JSON.stringify(logos, null, 2);
+        const data = JSON.stringify(merged, null, 2);
         fs.writeFileSync(outputFile, data);
-        console.log(`Successfully wrote ${logos.length} items to ${outputFile}`);
+        console.log(`Successfully wrote ${merged.length} items to ${outputFile}`);
       } catch (error) {
         console.error('Error writing data to file:', outputFile, error);
       }

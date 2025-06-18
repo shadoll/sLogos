@@ -6,12 +6,12 @@ const path = require('path');
 const collections = [
   { name: 'logos', label: 'Logos',
     baseDir: 'logos',
-    genDir: 'logos_gen',
+    genDir: 'logos_variants',
     dataFile: 'data/logos.json'
   },
   { name: 'flags', label: 'Flags',
     baseDir: 'flags',
-    genDir: 'flags_gen',
+    genDir: 'flags_variants',
     dataFile: 'data/flags.json'
   }
 ];

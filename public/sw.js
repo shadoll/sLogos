@@ -34,8 +34,8 @@ self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
   // Remove query params for cache matching for static files
   let cacheKey = url.pathname;
-  // Only do this for files we know are static (e.g., /data/, /logos/, /logos_gen/, /public/)
-  if (cacheKey.startsWith('/data/') || cacheKey.startsWith('/logos/') || cacheKey.startsWith('/logos_gen/')) {
+  // Only do this for files we know are static (e.g., /data/, /images/)
+  if (cacheKey.startsWith('/data/') || cacheKey.startsWith('/images/')) {
     // ignore query params
   } else {
     cacheKey = event.request.url;

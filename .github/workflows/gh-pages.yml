@@ -55,10 +55,7 @@ jobs:
           cp public/manifest.json ./gh-pages-artifact/
           cp public/sw.js ./gh-pages-artifact/
           cp -r public/data ./gh-pages-artifact/
-          cp -r public/logos ./gh-pages-artifact/
-          cp -r public/logos_gen ./gh-pages-artifact/
-          cp -r public/flags ./gh-pages-artifact/
-          cp -r public/flags_gen ./gh-pages-artifact/
+          cp -r public/images ./gh-pages-artifact/
           cp public/pwa-files-to-cache.json ./gh-pages-artifact/
           if [ -f public/CNAME ]; then
             cp public/CNAME ./gh-pages-artifact/CNAME

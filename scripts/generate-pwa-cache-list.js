@@ -1,12 +1,12 @@
 // Moved from project root to scripts directory for consistency
-// Node.js script to generate a list of all files in public, logos, and logos_gen for PWA caching
+// Node.js script to generate a list of all files in public and images for PWA caching
 const fs = require('fs');
 const path = require('path');
 
 const projectRoot = path.join(__dirname, '..');
-const publicDir = path.join(projectRoot, 'public');
+const publicDir = path.join(projectRoot, 'public/images');
 const logosDir = path.join(projectRoot, 'logos');
-const logosGenDir = path.join(projectRoot, 'logos_gen');
+const logosGenDir = path.join(projectRoot, 'logos_variants');
 
 // List of files to ignore
 const IGNORED_FILES = ['.DS_Store', 'CNAME', 'pwa-files-to-cache.json', '.gitignore'];
@@ -33,7 +33,7 @@ function safeWalkDir(dir, baseUrl = '') {
 
 const publicFiles = walkDir(publicDir, '').filter(f => !f.endsWith('sw.js'));
 const logosFiles = safeWalkDir(logosDir, 'logos');
-const logosGenFiles = safeWalkDir(logosGenDir, 'logos_gen');
+const logosGenFiles = safeWalkDir(logosGenDir, 'logos_variants');
 
 const allFiles = Array.from(new Set([...publicFiles, ...logosFiles, ...logosGenFiles]));
 
