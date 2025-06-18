@@ -14,7 +14,7 @@ const collection = collections.find(c => c.name === collectionName) || collectio
 
 const imagesDir = path.join(__dirname, '..', 'public', collection.baseDir);
 const outputFile = path.join(__dirname, '..', 'public', collection.dataFile);
-const imagesVarDir = path.join(__dirname, '..', 'public', collection.imagesVarDir);
+const imagesVarDir = path.join(__dirname, '..', 'public', collection.varDir);
 
 // Remove old PNG/JPG folders if they exist
 const pngDir = path.join(__dirname, '..', 'public', collection.baseDir + '-png');
