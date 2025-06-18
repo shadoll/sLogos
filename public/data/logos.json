@@ -492,7 +492,10 @@
       "Automobile",
       "transport"
     ],
-    "brand": "BMW"
+    "brand": "BMW Group",
+    "meta": {
+      "parent": "BMW Group"
+    }
   },
   {
     "name": "digital-ocean",
@@ -3766,5 +3769,109 @@
       "Automobile",
       "transport"
     ]
+  },
+  {
+    "name": "rolls-royce",
+    "title": "Rolls Royce",
+    "path": "rolls-royce.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "BMW Group",
+    "tags": [
+      "Automobile",
+      "transport"
+    ],
+    "meta": {
+      "parent": "BMW Group"
+    }
+  },
+  {
+    "name": "rolls-royce-flat",
+    "title": "Rolls Royce",
+    "path": "rolls-royce-flat.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "BMW Group",
+    "tags": [
+      "Automobile",
+      "transport"
+    ],
+    "colors": {
+      "black": "#000000",
+      "white": "#FFFFFF"
+    },
+    "targets": {
+      "main": "path"
+    },
+    "sets": {
+      "black": {
+        "main": "black"
+      },
+      "white": {
+        "main": "white"
+      }
+    },
+    "meta": {
+      "parent": "BMW Group"
+    }
+  },
+  {
+    "name": "chevrolet",
+    "title": "Chevrolet",
+    "path": "chevrolet-logo.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "General Motors",
+    "tags": [
+      "Automobile",
+      "transport"
+    ],
+    "meta": {
+      "parent": "General Motors"
+    }
+  },
+  {
+    "name": "bentley",
+    "title": "Bentley",
+    "path": "bentley.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Volkswagen Group",
+    "tags": [
+      "Automobile",
+      "transport"
+    ],
+    "meta": {
+      "parent": "Volkswagen Group"
+    }
+  },
+  {
+    "name": "Mini",
+    "path": "mini.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "BMW Group",
+    "tags": [
+      "Automobile",
+      "transport"
+    ],
+    "meta": {
+      "parent": "BMW Group"
+    },
+    "colors": {
+      "black": "#120a08",
+      "white": "#FFFFFF"
+    },
+    "targets": {
+      "main": "g"
+    },
+    "sets": {
+      "black": {
+        "main": "black"
+      },
+      "white": {
+        "main": "white"
+      }
+    }
   }
 ]

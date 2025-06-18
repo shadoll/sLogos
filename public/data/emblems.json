@@ -153,5 +153,19 @@
       "description": "The lesser coat of arms of Ukraine, featuring the trident symbol.",
       "wikipedia": "https://en.wikipedia.org/wiki/Coat_of_arms_of_Ukraine"
     }
+  },
+  {
+    "name": "Royal Badge Of Wales",
+    "path": "Royal_Badge_of_Wales_2008-2024.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "National emblem"
+    ],
+    "brand": "United Kingdom",
+    "meta": {
+      "description": "Within a circular riband vert fimbriated Or bearing the motto Pleidiol Wyf i'm Gwlad in letters the same and ensigned with a representation of the Crown proper, an escutcheon quarterly Or and gules four lions passant guardant counterchanged armed and langued azure, encircled by a wreath alternating of leek, thistle, clover, leek and rose.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Royal_Badge_of_Wales"
+    }
   }
 ]

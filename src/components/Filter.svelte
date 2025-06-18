@@ -191,7 +191,7 @@
                   class:active={activeTab === "brands"}
                   on:click={() => activeTab = "brands"}
                 >
-                  Brands
+                  Owners
                 </button>
               {/if}
               {#if allVariants.length > 0}

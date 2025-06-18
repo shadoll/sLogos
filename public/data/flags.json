@@ -5289,5 +5289,149 @@
       "ISO code": "ZW",
       "wikipedia": "https://en.wikipedia.org/wiki/Zimbabwe"
     }
+  },
+  {
+    "name": "Wales",
+    "path": "uk-Wales.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "Country",
+      "United Kingdom",
+      "Europe"
+    ],
+    "meta": {
+      "proportion": "3:5",
+      "design": "A red dragon passant on a green and white field",
+      "wikipedia flag": "https://en.wikipedia.org/wiki/Flag_of_Wales",
+      "country": "United Kingdom",
+      "region": "Wales",
+      "wikipedia country": "https://en.wikipedia.org/wiki/Wales",
+      "description": "Wales is a country that is part of the United Kingdom, known for its rugged coastline, mountainous national parks, and Celtic culture.",
+      "area": "20,779 km²",
+      "ISO code": "GB-WLS"
+    },
+    "brand": "United Kingdom",
+    "variants": [
+      "green",
+      "white",
+      "dragon",
+      "drawings",
+      "horizontal stripes"
+    ]
+  },
+  {
+    "name": "England",
+    "path": "uk-England.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "Country",
+      "United Kingdom",
+      "Europe"
+    ],
+    "meta": {
+      "proportion": "3:5",
+      "design": "A white field with centred red cross. Argent, a cross gules",
+      "wikipedia flag": "https://en.wikipedia.org/wiki/Flag_of_England",
+      "country": "United Kingdom",
+      "region": "England",
+      "wikipedia country": "https://en.wikipedia.org/wiki/England",
+      "description": "England is a country that is part of the United Kingdom, known for its rich history, cultural heritage, and landmarks such as the Tower of London and Stonehenge.",
+      "area": "130,395 km²",
+      "ISO code": "GB-ENG",
+      "wikipedia": "https://en.wikipedia.org/wiki/England"
+    },
+    "brand": "United Kingdom",
+    "variants": [
+      "red",
+      "white",
+      "cross",
+      "no drawings"
+    ]
+  },
+  {
+    "name": "Scotland",
+    "path": "uk-Scotland.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "Country",
+      "United Kingdom",
+      "Europe"
+    ],
+    "meta": {
+      "proportion": "3:5",
+      "design": "A blue field with a white saltire. Azure, a saltire argent",
+      "wikipedia flag": "https://en.wikipedia.org/wiki/Flag_of_Scotland",
+      "country": "United Kingdom",
+      "region": "Scotland",
+      "wikipedia country": "https://en.wikipedia.org/wiki/Scotland",
+      "description": "Scotland is a country that is part of the United Kingdom, known for its rugged landscapes, historic sites, and cultural heritage.",
+      "area": "78,772 km²",
+      "ISO code": "GB-SCT",
+      "wikipedia": "https://en.wikipedia.org/wiki/Scotland"
+    },
+    "brand": "United Kingdom",
+    "variants": [
+      "blue",
+      "white",
+      "cross",
+      "no drawings"
+    ]
+  },
+  {
+    "name": "The British Antarctic Territory",
+    "path": "uk-the_British_Antarctic_Territory.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "Territory",
+      "British Overseas Territory",
+      "Antarctica"
+    ],
+    "meta": {
+      "country": "The British Antarctic Territory",
+      "description": "The British Antarctic Territory is a sector of Antarctica claimed by the United Kingdom, known for its vast ice sheets and unique wildlife.",
+      "ISO code": "AQ-BT",
+      "wikipedia": "https://en.wikipedia.org/wiki/British_Antarctic_Territory"
+    },
+    "brand": "British Overseas Territory",
+    "variants": [
+      "blue",
+      "white",
+      "red",
+      "drawings",
+      "union jack"
+    ]
+  },
+  {
+    "name": "The Ukrainian Insurgent Army",
+    "path": "ua-the_Ukrainian_Insurgent_Army.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "Military",
+      "Organization",
+      "Ukraine",
+      "Europe"
+    ],
+    "meta": {
+      "proportion": "2:3",
+      "design": "A horizontal bicolour of black and red",
+      "wikipedia flag": "https://en.wikipedia.org/wiki/Flag_of_the_Ukrainian_Insurgent_Army",
+      "country": "Ukraine",
+      "organization": "The Ukrainian Insurgent Army",
+      "description": "The Ukrainian Insurgent Army (UPA) was a Ukrainian nationalist paramilitary and later guerrilla army that operated during and after World War II.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Ukrainian_Insurgent_Army"
+    },
+    "brand": "Ukraine",
+    "variants": [
+      "black",
+      "red",
+      "2 colours",
+      "no drawings",
+      "horizontal stripes"
+    ]
   }
 ]
