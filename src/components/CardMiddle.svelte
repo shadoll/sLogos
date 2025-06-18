@@ -3,6 +3,7 @@
   import Actions from "./Actions.svelte";
   import ColorSwitcher from "./ColorSwitcher.svelte";
   import { getDefaultLogoColor } from "../utils/colorTheme.js";
+  import { collections } from '../collections.js';
 
   export let logo;
   export let theme;
@@ -19,6 +20,20 @@
 
   function isSvgLogo(logo) {
     return logo && logo.format && logo.format.toLowerCase() === "svg";
+  }
+
+  function getCollectionByPath(path) {
+    return collections.find(col => path.startsWith(col.baseDir.replace('images/', '')) || path.startsWith(col.baseDir));
+  }
+
+  function getBaseDir(logo) {
+    const collection = getCollectionByPath(logo.path);
+    return collection ? collection.baseDir : 'images/logos';
+  }
+
+  function getImageUrl(logo) {
+    const baseDir = getBaseDir(logo);
+    return `/${baseDir}/${logo.path.split('/').pop()}`;
   }
 
   $: getLogoThemeColor = (logo) => getDefaultLogoColor(logo.colors, theme);
@@ -41,7 +56,7 @@
     {#if isSvgLogo(logo)}
       {#key theme + (logo._activeColor || "")}
         <InlineSvg
-          path={logo.path}
+          path={getImageUrl(logo)}
           color={logo.colors
             ? logo._activeColor || getLogoThemeColor(logo)
             : undefined}
@@ -54,7 +69,7 @@
         />
       {/key}
     {:else}
-      <img src={logo.path} alt={logo.title || logo.name}/>
+      <img src={getImageUrl(logo)} alt={logo.title || logo.name}/>
     {/if}
   </div>
   <div class="logo-info">

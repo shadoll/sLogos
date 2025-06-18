@@ -5,6 +5,7 @@
   import ColorSwitcher from "./ColorSwitcher.svelte";
   import { getDefaultLogoColor, getThemeColor } from "../utils/colorTheme.js";
   import { fetchSvgSource } from "../utils/svgSource.js";
+  import { collections } from '../collections.js';
 
   export let show = false;
   export let logo = null;
@@ -127,6 +128,20 @@
     if (!str) return "";
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
+
+  function getCollectionByPath(path) {
+    return collections.find(col => path.startsWith(col.baseDir.replace('images/', '')) || path.startsWith(col.baseDir));
+  }
+
+  function getBaseDir(logo) {
+    const collection = getCollectionByPath(logo.path);
+    return collection ? collection.baseDir : 'images/logos';
+  }
+
+  function getImageUrl(logo) {
+    const baseDir = getBaseDir(logo);
+    return `/${baseDir}/${logo.path.split('/').pop()}`;
+  }
 </script>
 
 <div
@@ -146,11 +161,11 @@
         {#if isSvgLogo(logo)}
           <InlineSvg
             bind:this={inlineSvgRef}
-            path={logo.path}
+            path={getImageUrl(logo)}
             color={logo.colors
               ? logo._activeColor || getLogoThemeColor(logo)
               : undefined}
-            colorConfig={validColorConfig}
+            colorConfig={logo.colors ? logo.colorConfig : undefined}
             targets={logo.targets}
             sets={logo.sets}
             colors={logo.colors}
@@ -158,7 +173,7 @@
             alt={logo.title || logo.name}
           />
         {:else}
-          <img src={logo.path} alt={logo.title || logo.name} />
+          <img src={getImageUrl(logo)} alt={logo.title || logo.name} />
         {/if}
       </div>
       <div class="right-column">
