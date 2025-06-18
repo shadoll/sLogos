@@ -96,222 +96,6 @@
     }
   },
   {
-    "name": "Kyiv",
-    "path": "ua-Kyiv.svg",
-    "format": "SVG",
-    "disable": false,
-    "tags": [
-      "City",
-      "Ukraine",
-      "Europe"
-    ],
-    "meta": {
-      "country": "Ukraine",
-      "city": "Kyiv",
-      "description": "Kyiv, also known as Kiev, is the capital and largest city of Ukraine. It is one of the oldest cities in Eastern Europe, known for its historical architecture, vibrant culture, and as a major political and economic center.",
-      "area": "839 km²",
-      "wikipedia": "https://en.wikipedia.org/wiki/Kyiv"
-    }
-  },
-  {
-    "name": "Chernihiv",
-    "path": "ua-Chernihiv.svg",
-    "format": "SVG",
-    "disable": false,
-    "tags": [
-      "City",
-      "Ukraine",
-      "Europe"
-    ],
-    "meta": {
-      "country": "Ukraine",
-      "city": "Chernihiv",
-      "description": "Chernihiv is a city in northern Ukraine, known for its rich history, beautiful churches, and as one of the oldest cities in the country. It is located on the Desna River and has a significant cultural heritage.",
-      "area": "79 km²",
-      "wikipedia": "https://en.wikipedia.org/wiki/Chernihiv"
-    }
-  },
-  {
-    "name": "Cherkasy",
-    "path": "ua-Cherkasy.svg",
-    "format": "SVG",
-    "disable": false,
-    "tags": [
-      "City",
-      "Ukraine",
-      "Europe"
-    ],
-    "meta": {
-      "country": "Ukraine",
-      "city": "Cherkasy",
-      "description": "Cherkasy is a city in central Ukraine, located on the Dnieper River. It is known for its historical significance, cultural institutions, and as an important industrial center.",
-      "area": "66 km²",
-      "wikipedia": "https://en.wikipedia.org/wiki/Cherkasy"
-    }
-  },
-  {
-    "name": "Ivano-Frankivsk",
-    "path": "ua-IvanoFrankivsk.svg",
-    "format": "SVG",
-    "disable": false,
-    "tags": [
-      "City",
-      "Ukraine",
-      "Europe"
-    ],
-    "meta": {
-      "country": "Ukraine",
-      "city": "Ivano-Frankivsk",
-      "description": "Ivano-Frankivsk is a city in western Ukraine, known for its picturesque landscapes, historical architecture, and as a cultural center of the Hutsul region. It is named after the Ukrainian writer Ivan Franko.",
-      "area": "102 km²",
-      "wikipedia": "https://en.wikipedia.org/wiki/Ivano-Frankivsk"
-    }
-  },
-  {
-    "name": "Bila Cerkva",
-    "path": "ua-BilaCerkva.svg",
-    "format": "SVG",
-    "disable": false,
-    "tags": [
-      "City",
-      "Ukraine",
-      "Europe"
-    ],
-    "meta": {
-      "country": "Ukraine",
-      "city": "Bila Cerkva",
-      "description": "Bila Cerkva is a city in central Ukraine, located on the Ros River. It is known for its historical significance, beautiful parks, and as an important industrial and cultural center.",
-      "area": "100 km²",
-      "wikipedia": "https://en.wikipedia.org/wiki/Bila_Cerkva"
-    }
-  },
-  {
-    "name": "Lutsk",
-    "path": "ua-Lutsk.svg",
-    "format": "SVG",
-    "disable": false,
-    "tags": [
-      "City",
-      "Ukraine",
-      "Europe"
-    ],
-    "meta": {
-      "country": "Ukraine",
-      "city": "Lutsk",
-      "description": "Lutsk is a city in northwestern Ukraine, known for its historical architecture, including the Lubart's Castle. It is the administrative center of Volyn Oblast.",
-      "area": "82 km²",
-      "wikipedia": "https://en.wikipedia.org/wiki/Lutsk"
-    }
-  },
-  {
-    "name": "Lviv",
-    "path": "ua-Lviv.svg",
-    "format": "SVG",
-    "disable": false,
-    "tags": [
-      "City",
-      "Ukraine",
-      "Europe"
-    ],
-    "meta": {
-      "country": "Ukraine",
-      "city": "Lviv",
-      "description": "Lviv is a city in western Ukraine, known for its rich cultural heritage, historic architecture, and vibrant coffee scene. It is a UNESCO World Heritage Site and a major center of education and tourism.",
-      "area": "182 km²",
-      "wikipedia": "https://en.wikipedia.org/wiki/Lviv"
-    }
-  },
-  {
-    "name": "Rivne",
-    "path": "ua-Rivne.svg",
-    "format": "SVG",
-    "disable": false,
-    "tags": [
-      "City",
-      "Ukraine",
-      "Europe"
-    ],
-    "meta": {
-      "country": "Ukraine",
-      "city": "Rivne",
-      "description": "Rivne is a city in western Ukraine, known for its beautiful parks, cultural institutions, and as a center of education and industry.",
-      "area": "80 km²",
-      "wikipedia": "https://en.wikipedia.org/wiki/Rivne"
-    }
-  },
-  {
-    "name": "Ternopil",
-    "path": "ua-Ternopil.svg",
-    "format": "SVG",
-    "disable": false,
-    "tags": [
-      "City",
-      "Ukraine",
-      "Europe"
-    ],
-    "meta": {
-      "country": "Ukraine",
-      "city": "Ternopil",
-      "description": "Ternopil is a city in western Ukraine, known for its picturesque lakes, historical architecture, and as a cultural and educational center of the region.",
-      "area": "72 km²",
-      "wikipedia": "https://en.wikipedia.org/wiki/Ternopil"
-    }
-  },
-  {
-    "name": "Uzhhorod",
-    "path": "ua-Uzhhorod.svg",
-    "format": "SVG",
-    "disable": false,
-    "tags": [
-      "City",
-      "Ukraine",
-      "Europe"
-    ],
-    "meta": {
-      "country": "Ukraine",
-      "city": "Uzhhorod",
-      "description": "Uzhhorod is a city in western Ukraine, located on the border with Slovakia. It is known for its historical architecture, including the Uzhhorod Castle, and its picturesque setting along the Uzh River.",
-      "area": "65 km²",
-      "wikipedia": "https://en.wikipedia.org/wiki/Uzhhorod"
-    }
-  },
-  {
-    "name": "Vinnycia",
-    "path": "ua-Vinnycia.svg",
-    "format": "SVG",
-    "disable": false,
-    "tags": [
-      "City",
-      "Ukraine",
-      "Europe"
-    ],
-    "meta": {
-      "country": "Ukraine",
-      "city": "Vinnycia",
-      "description": "Vinnycia is a city in central Ukraine, known for its historical significance and cultural heritage. It is an important administrative and economic center in the region.",
-      "area": "113 km²",
-      "wikipedia": "https://en.wikipedia.org/wiki/Vinnytsia"
-    }
-  },
-  {
-    "name": "Zhytomyr",
-    "path": "ua-Zhytomyr.svg",
-    "format": "SVG",
-    "disable": false,
-    "tags": [
-      "City",
-      "Ukraine",
-      "Europe"
-    ],
-    "meta": {
-      "country": "Ukraine",
-      "city": "Zhytomyr",
-      "description": "Zhytomyr is a city in northwestern Ukraine, known for its historical significance and cultural heritage. It is an important administrative center in the region.",
-      "area": "65 km²",
-      "wikipedia": "https://en.wikipedia.org/wiki/Zhytomyr"
-    }
-  },
-  {
     "name": "United Arab Emirates",
     "path": "ae.svg",
     "format": "SVG",
@@ -702,13 +486,25 @@
       "North America"
     ],
     "meta": {
+      "proportion": "2:3",
+      "design": "A vertical tricolour of ultramarine, gold, and ultramarine with a black trident head in the center.",
+      "wikipedia flag": "https://en.wikipedia.org/wiki/Flag_of_Barbados",
       "country": "Barbados",
+      "wikipedia": "https://en.wikipedia.org/wiki/Barbados",
       "capital": "Bridgetown",
       "description": "Barbados is an island country in the Caribbean, located to the east of Saint Vincent and the Grenadines. It is known for its beautiful beaches, vibrant culture, and as a popular tourist destination.",
       "area": "430 km²",
-      "ISO code": "BB",
-      "wikipedia": "https://en.wikipedia.org/wiki/Barbados"
-    }
+      "ISO code": "BB"
+    },
+    "variants": [
+      "vertical stripes",
+      "2 colours",
+      "blue",
+      "yellow",
+      "drawing",
+      "trident"
+    ],
+    "brand": "Barbados"
   },
   {
     "name": "Bangladesh",
@@ -1028,13 +824,47 @@
       "Europe"
     ],
     "meta": {
+      "proportion": "1:2",
+      "design": "A red and green bicolor with a white and red ornament pattern on the hoist side.",
+      "wikipedia flag": "https://en.wikipedia.org/wiki/Flag_of_Belarus",
       "country": "Belarus",
+      "wikipedia": "https://en.wikipedia.org/wiki/Belarus",
       "capital": "Minsk",
       "description": "Belarus is a landlocked country in Eastern Europe, bordered by Russia to the northeast, Ukraine to the south, Poland to the west, and Lithuania and Latvia to the northwest. It is known for its rich history, diverse culture, and as one of the last remaining authoritarian states in Europe.",
       "area": "207,600 km²",
-      "ISO code": "BY",
-      "wikipedia": "https://en.wikipedia.org/wiki/Belarus"
-    }
+      "ISO code": "BY"
+    },
+    "variants": [
+      "red",
+      "green",
+      "ornament",
+      "2 colours",
+      "drawing"
+    ],
+    "brand": "Belarus"
+  },
+  {
+    "name": "Belarus (1918, 1991–1995)",
+    "path": "by-1918,1991–1995.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "Historical Flag"
+    ],
+    "meta": {
+      "proportion": "1:2",
+      "design": "A red field with a green stripe at the bottom and a white ornament pattern on the hoist side.",
+      "description": "The flag of Belarus from 1918 and from 1991 to 1995, before the current design was adopted.",
+      "wikipedia flag": "https://en.wikipedia.org/wiki/Flag_of_Belarus"
+    },
+    "variants": [
+      "red",
+      "white",
+      "2 colours",
+      "no drawing",
+      "horizontal stripes"
+    ],
+    "brand": "Belarus"
   },
   {
     "name": "Belize",
@@ -1064,13 +894,24 @@
       "North America"
     ],
     "meta": {
+      "proportion": "1:2",
+      "design": "A vertical triband of red (hoist-side and fly-side) and white (double width) with one red maple leaf centred on the white band.",
+      "wikipedia flag": "https://en.wikipedia.org/wiki/Flag_of_Canada",
       "country": "Canada",
+      "wikipedia": "https://en.wikipedia.org/wiki/Canada",
       "capital": "Ottawa",
       "description": "Canada is a country in North America, known for its vast wilderness, multicultural cities, and strong economy. It is the second-largest country in the world by total area.",
       "area": "9,984,670 km²",
-      "ISO code": "CA",
-      "wikipedia": "https://en.wikipedia.org/wiki/Canada"
-    }
+      "ISO code": "CA"
+    },
+    "variants": [
+      "red",
+      "white",
+      "leaf",
+      "2 colours",
+      "drawing"
+    ],
+    "brand": "Canada"
   },
   {
     "name": "Cocos (Keeling) Islands",
@@ -4821,13 +4662,252 @@
       "Europe"
     ],
     "meta": {
+      "proportion": "2:3",
+      "design": "A horizontal bicolour of blue and yellow",
+      "wikipedia flag": "https://en.wikipedia.org/wiki/Flag_of_Ukraine",
       "country": "Ukraine",
+      "wikipedia": "https://en.wikipedia.org/wiki/Ukraine",
       "capital": "Kyiv",
       "description": "Ukraine is a country in Eastern Europe, bordered by Belarus to the north, Russia to the northeast and east, and by the Black Sea to the south.",
       "area": "603,500 km²",
-      "ISO code": "UA",
-      "wikipedia": "https://en.wikipedia.org/wiki/Ukraine"
-    }
+      "ISO code": "UA"
+    },
+    "brand": "Ukraine",
+    "variants": [
+      "yellow",
+      "blue",
+      "2 colours",
+      "no drawings",
+      "horizontal stripes"
+    ]
+  },
+  {
+    "name": "Kyiv",
+    "path": "ua-Kyiv.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "City",
+      "Ukraine",
+      "Europe"
+    ],
+    "meta": {
+      "country": "Ukraine",
+      "city": "Kyiv",
+      "description": "Kyiv, also known as Kiev, is the capital and largest city of Ukraine. It is one of the oldest cities in Eastern Europe, known for its historical architecture, vibrant culture, and as a major political and economic center.",
+      "area": "839 km²",
+      "wikipedia": "https://en.wikipedia.org/wiki/Kyiv"
+    },
+    "brand": "Ukraine"
+  },
+  {
+    "name": "Chernihiv",
+    "path": "ua-Chernihiv.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "City",
+      "Ukraine",
+      "Europe"
+    ],
+    "meta": {
+      "country": "Ukraine",
+      "city": "Chernihiv",
+      "description": "Chernihiv is a city in northern Ukraine, known for its rich history, beautiful churches, and as one of the oldest cities in the country. It is located on the Desna River and has a significant cultural heritage.",
+      "area": "79 km²",
+      "wikipedia": "https://en.wikipedia.org/wiki/Chernihiv"
+    },
+    "brand": "Ukraine"
+  },
+  {
+    "name": "Cherkasy",
+    "path": "ua-Cherkasy.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "City",
+      "Ukraine",
+      "Europe"
+    ],
+    "meta": {
+      "country": "Ukraine",
+      "city": "Cherkasy",
+      "description": "Cherkasy is a city in central Ukraine, located on the Dnieper River. It is known for its historical significance, cultural institutions, and as an important industrial center.",
+      "area": "66 km²",
+      "wikipedia": "https://en.wikipedia.org/wiki/Cherkasy"
+    },
+    "brand": "Ukraine"
+  },
+  {
+    "name": "Ivano-Frankivsk",
+    "path": "ua-IvanoFrankivsk.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "City",
+      "Ukraine",
+      "Europe"
+    ],
+    "meta": {
+      "country": "Ukraine",
+      "city": "Ivano-Frankivsk",
+      "description": "Ivano-Frankivsk is a city in western Ukraine, known for its picturesque landscapes, historical architecture, and as a cultural center of the Hutsul region. It is named after the Ukrainian writer Ivan Franko.",
+      "area": "102 km²",
+      "wikipedia": "https://en.wikipedia.org/wiki/Ivano-Frankivsk"
+    },
+    "brand": "Ukraine"
+  },
+  {
+    "name": "Bila Cerkva",
+    "path": "ua-BilaCerkva.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "City",
+      "Ukraine",
+      "Europe"
+    ],
+    "meta": {
+      "country": "Ukraine",
+      "city": "Bila Cerkva",
+      "description": "Bila Cerkva is a city in central Ukraine, located on the Ros River. It is known for its historical significance, beautiful parks, and as an important industrial and cultural center.",
+      "area": "100 km²",
+      "wikipedia": "https://en.wikipedia.org/wiki/Bila_Cerkva"
+    },
+    "brand": "Ukraine"
+  },
+  {
+    "name": "Lutsk",
+    "path": "ua-Lutsk.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "City",
+      "Ukraine",
+      "Europe"
+    ],
+    "meta": {
+      "country": "Ukraine",
+      "city": "Lutsk",
+      "description": "Lutsk is a city in northwestern Ukraine, known for its historical architecture, including the Lubart's Castle. It is the administrative center of Volyn Oblast.",
+      "area": "82 km²",
+      "wikipedia": "https://en.wikipedia.org/wiki/Lutsk"
+    },
+    "brand": "Ukraine"
+  },
+  {
+    "name": "Lviv",
+    "path": "ua-Lviv.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "City",
+      "Ukraine",
+      "Europe"
+    ],
+    "meta": {
+      "country": "Ukraine",
+      "city": "Lviv",
+      "description": "Lviv is a city in western Ukraine, known for its rich cultural heritage, historic architecture, and vibrant coffee scene. It is a UNESCO World Heritage Site and a major center of education and tourism.",
+      "area": "182 km²",
+      "wikipedia": "https://en.wikipedia.org/wiki/Lviv"
+    },
+    "brand": "Ukraine"
+  },
+  {
+    "name": "Rivne",
+    "path": "ua-Rivne.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "City",
+      "Ukraine",
+      "Europe"
+    ],
+    "meta": {
+      "country": "Ukraine",
+      "city": "Rivne",
+      "description": "Rivne is a city in western Ukraine, known for its beautiful parks, cultural institutions, and as a center of education and industry.",
+      "area": "80 km²",
+      "wikipedia": "https://en.wikipedia.org/wiki/Rivne"
+    },
+    "brand": "Ukraine"
+  },
+  {
+    "name": "Ternopil",
+    "path": "ua-Ternopil.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "City",
+      "Ukraine",
+      "Europe"
+    ],
+    "meta": {
+      "country": "Ukraine",
+      "city": "Ternopil",
+      "description": "Ternopil is a city in western Ukraine, known for its picturesque lakes, historical architecture, and as a cultural and educational center of the region.",
+      "area": "72 km²",
+      "wikipedia": "https://en.wikipedia.org/wiki/Ternopil"
+    },
+    "brand": "Ukraine"
+  },
+  {
+    "name": "Uzhhorod",
+    "path": "ua-Uzhhorod.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "City",
+      "Ukraine",
+      "Europe"
+    ],
+    "meta": {
+      "country": "Ukraine",
+      "city": "Uzhhorod",
+      "description": "Uzhhorod is a city in western Ukraine, located on the border with Slovakia. It is known for its historical architecture, including the Uzhhorod Castle, and its picturesque setting along the Uzh River.",
+      "area": "65 km²",
+      "wikipedia": "https://en.wikipedia.org/wiki/Uzhhorod"
+    },
+    "brand": "Ukraine"
+  },
+  {
+    "name": "Vinnycia",
+    "path": "ua-Vinnycia.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "City",
+      "Ukraine",
+      "Europe"
+    ],
+    "meta": {
+      "country": "Ukraine",
+      "city": "Vinnycia",
+      "description": "Vinnycia is a city in central Ukraine, known for its historical significance and cultural heritage. It is an important administrative and economic center in the region.",
+      "area": "113 km²",
+      "wikipedia": "https://en.wikipedia.org/wiki/Vinnytsia"
+    },
+    "brand": "Ukraine"
+  },
+  {
+    "name": "Zhytomyr",
+    "path": "ua-Zhytomyr.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "City",
+      "Ukraine",
+      "Europe"
+    ],
+    "meta": {
+      "country": "Ukraine",
+      "city": "Zhytomyr",
+      "description": "Zhytomyr is a city in northwestern Ukraine, known for its historical significance and cultural heritage. It is an important administrative center in the region.",
+      "area": "65 km²",
+      "wikipedia": "https://en.wikipedia.org/wiki/Zhytomyr"
+    },
+    "brand": "Ukraine"
   },
   {
     "name": "Uganda",

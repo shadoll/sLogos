@@ -1,6 +1,6 @@
 [
   {
-    "name": "Escudo De España",
+    "name": "Escudo de España",
     "path": "Escudo_de_Espana.svg",
     "format": "SVG",
     "disable": false,
@@ -15,7 +15,7 @@
     }
   },
   {
-    "name": "Emblem Of Ethiopia",
+    "name": "Emblem of Ethiopia",
     "path": "Emblem_of_Ethiopia.svg",
     "format": "SVG",
     "disable": false,
@@ -44,13 +44,13 @@
     }
   },
   {
-    "name": "Emblem Of The United Arab Emirates",
+    "name": "Emblem of the United Arab Emirates",
     "path": "Emblem_of_the_United_Arab_Emirates.svg",
     "format": "SVG",
     "disable": false
   },
   {
-    "name": "Coat Of Arms Of Antigua And Barbuda",
+    "name": "Coat of Arms of Antigua and Barbuda",
     "path": "Coat_of_arms_of_Antigua_and_Barbuda.svg",
     "format": "SVG",
     "disable": false,
@@ -65,7 +65,7 @@
     }
   },
   {
-    "name": "Coat Of Arms Of Albania",
+    "name": "Coat of Arms of Albania",
     "path": "Coat_of_arms_of_Albania.svg",
     "format": "SVG",
     "disable": false,
@@ -80,7 +80,7 @@
     }
   },
   {
-    "name": "Coat Of Arms Of Armenia",
+    "name": "Coat of Arms of Armenia",
     "path": "Coat_of_arms_of_Armenia.svg",
     "format": "SVG",
     "disable": false,
@@ -92,6 +92,66 @@
     "meta": {
       "description": "The coat of arms of Armenia, featuring a shield with a lion and a sun.",
       "wikipedia": "https://en.wikipedia.org/wiki/Coat_of_arms_of_Armenia"
+    }
+  },
+  {
+    "name": "Coat of Arms of Barbados",
+    "path": "Coat_of_arms_of_Barbados_3.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "Coat of arms",
+      "National emblem"
+    ],
+    "brand": "Barbados",
+    "meta": {
+      "description": "The coat of arms of Barbados, featuring a shield with a dolphin and a sugar cane.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Coat_of_arms_of_Barbados"
+    }
+  },
+  {
+    "name": "Coat of Arms of Barbados",
+    "path": "Coat_of_arms_of_Barbados_1.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "Coat of arms",
+      "National emblem"
+    ],
+    "brand": "Barbados",
+    "meta": {
+      "description": "The coat of arms of Barbados, featuring a shield with a dolphin and a sugar cane.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Coat_of_arms_of_Barbados"
+    }
+  },
+  {
+    "name": "Coat of Arms of Barbados",
+    "path": "Coat_of_arms_of_Barbados_2.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "Coat of arms",
+      "National emblem"
+    ],
+    "brand": "Barbados",
+    "meta": {
+      "description": "The coat of arms of Barbados, featuring a shield with a dolphin and a sugar cane.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Coat_of_arms_of_Barbados"
+    }
+  },
+  {
+    "name": "Coat of Arms of Ukraine",
+    "path": "Lesser_Coat_of_Arms_of_Ukraine.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "Coat of arms",
+      "National emblem"
+    ],
+    "brand": "Ukraine",
+    "meta": {
+      "description": "The lesser coat of arms of Ukraine, featuring the trident symbol.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Coat_of_arms_of_Ukraine"
     }
   }
 ]
