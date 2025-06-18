@@ -45,7 +45,8 @@
     dropdownOpen = false;
   }
 
-  $: currentLabel = (collections.find(c => c.name === collection)?.label || "Logo Gallery").replace(/s$/, "");
+  $: currentCollectionObj = collections.find(c => c.name === collection);
+  $: currentLabel = (currentCollectionObj?.title || currentCollectionObj?.label || "Logo Gallery").replace(/s$/, "");
 </script>
 
 <header class="main-header">
@@ -55,7 +56,7 @@
         <img src="favicon.svg" alt="Logo Gallery icon" />
       </div>
       <button class="collection-title-btn" on:click={handleTitleClick} aria-haspopup="listbox" aria-expanded={dropdownOpen}>
-        {currentLabel} Gallery <span class="triangle">▼</span>
+        {currentLabel} <span class="triangle">▼</span>
       </button>
       {#if dropdownOpen}
         <ul class="collection-dropdown" role="listbox">
@@ -72,7 +73,7 @@
                   handleCollectionSelect(c.name);
                 }
               }}
-            >{c.label} Gallery</li>
+            >{c.title} Gallery</li>
           {/each}
         </ul>
       {/if}
@@ -107,6 +108,7 @@
       {getTagObj}
       {compactMode}
       {setCompactMode}
+      collection={currentCollectionObj}
     />
     <ListViewSwitcher
       {viewMode}
