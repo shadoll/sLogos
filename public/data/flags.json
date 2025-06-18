@@ -8,14 +8,74 @@
       "Country",
       "Europe"
     ],
+    "brand": "Andorra",
     "meta": {
+      "proportion": "7:10",
+      "wikipedia flag": "https://en.wikipedia.org/wiki/Flag_of_Andorra",
+      "design": "A vertical tricolour of blue, yellow and red with the National Coat of Arms centred on the yellow band.",
       "country": "Andorra",
+      "wikipedia country": "https://en.wikipedia.org/wiki/Andorra",
       "capital": "Andorra la Vella",
       "description": "Andorra is a small, landlocked country in the eastern Pyrenees mountains, bordered by France and Spain. It is known for its ski resorts and a tax-haven status that attracts tourists.",
       "area": "468 km²",
       "ISO code": "AD",
-      "wikipedia": "https://en.wikipedia.org/wiki/Andorra"
-    }
+      "Official languages": "Catalan"
+    },
+    "variants": [
+      "vertical stripes",
+      "3 colours",
+      "blue",
+      "yellow",
+      "red",
+      "drawing"
+    ]
+  },
+  {
+    "name": "Andorra (1806–1866)",
+    "path": "ad-1806–1866.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "Historical Flag"
+    ],
+    "brand": "Andorra",
+    "meta": {
+      "proportion": "2:3",
+      "design": "Two equally sized red and yellow vertical (sometimes horizontal) bands",
+      "description": "The flag of Andorra from 1806 to 1866, before the current design was adopted.",
+      "wikipedia flag": "https://en.wikipedia.org/wiki/Flag_of_Andorra"
+    },
+    "variants": [
+      "vertical stripes",
+      "2 colours",
+      "yellow",
+      "red",
+      "no drawing"
+    ]
+  },
+  {
+    "name": "Andorra (1866–1939)",
+    "path": "ad-1866-1939.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "Historical Flag"
+    ],
+    "brand": "Andorra",
+    "meta": {
+      "proportion": "2:3",
+      "design": "A vertical tricolour of blue, yellow and red.",
+      "description": "The flag of Andorra from 1866 to 1939, before the current design was adopted.",
+      "wikipedia flag": "https://en.wikipedia.org/wiki/Flag_of_Andorra"
+    },
+    "variants": [
+      "vertical stripes",
+      "3 colours",
+      "blue",
+      "yellow",
+      "red",
+      "drawing"
+    ]
   },
   {
     "name": "Chișinău",
@@ -261,12 +321,14 @@
       "Asia"
     ],
     "meta": {
+      "proportion": "1:2",
+      "wikipedia flag": "https://en.wikipedia.org/wiki/Flag_of_the_United_Arab_Emirates",
       "country": "United Arab Emirates",
+      "wikipedia country": "https://en.wikipedia.org/wiki/United_Arab_Emirates",
       "capital": "Abu Dhabi",
       "description": "The United Arab Emirates (UAE) is a federation of seven emirates located on the southeast corner of the Arabian Peninsula. It is known for its modern architecture, luxury shopping, and vibrant culture.",
       "area": "83,600 km²",
-      "ISO code": "AE",
-      "wikipedia": "https://en.wikipedia.org/wiki/United_Arab_Emirates"
+      "ISO code": "AE"
     }
   },
   {
@@ -296,13 +358,31 @@
       "Country",
       "North America"
     ],
+    "brand": "Antigua and Barbuda",
     "meta": {
+      "proportion": "2:3",
+      "wikipedia flag": "https://en.wikipedia.org/wiki/Flag_of_Antigua_and_Barbuda",
       "country": "Antigua and Barbuda",
+      "wikipedia country": "https://en.wikipedia.org/wiki/Antigua_and_Barbuda",
       "capital": "Saint John's",
-      "description": "",
-      "area": "",
-      "ISO code": "AG",
-      "wikipedia": "https://en.wikipedia.org/wiki/Antigua_and_Barbuda"
+      "description": "Antigua and Barbuda is a twin-island nation in the Caribbean, known for its beautiful beaches and vibrant culture.",
+      "area": "442 km²",
+      "ISO code": "AG"
+    }
+  },
+  {
+    "name": "Antigua and Barbuda (1962–1967)",
+    "path": "ag-1962–1967.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "Historical Flag"
+    ],
+    "brand": "Antigua and Barbuda",
+    "meta": {
+      "proportion": "1:2",
+      "description": "The flag of Antigua and Barbuda from 1962 to 1967, before the current design was adopted.",
+      "wikipedia flag": "https://en.wikipedia.org/wiki/Flag_of_Antigua_and_Barbuda"
     }
   },
   {
@@ -334,13 +414,25 @@
       "Europe"
     ],
     "meta": {
+      "proportion": "5:7",
+      "design": "A red field with a black two-headed eagle in the center.",
+      "wikipedia flag": "https://en.wikipedia.org/wiki/Flag_of_Albania",
       "country": "Albania",
+      "wikipedia country": "https://en.wikipedia.org/wiki/Albania",
       "capital": "Tirana",
       "description": "Albania is a country in Southeast Europe on the Balkan Peninsula. It is bordered by Montenegro, Kosovo, North Macedonia, and Greece, and has a coastline along the Adriatic and Ionian Seas.",
       "area": "28,748 km²",
-      "ISO code": "AL",
-      "wikipedia": "https://en.wikipedia.org/wiki/Albania"
-    }
+      "ISO code": "AL"
+    },
+    "variants": [
+      "red",
+      "black",
+      "1 colour",
+      "two-headed",
+      "eagle",
+      "drawing"
+    ],
+    "brand": "Albania"
   },
   {
     "name": "Armenia",
@@ -352,13 +444,48 @@
       "Asia"
     ],
     "meta": {
+      "proportion": "1:2",
+      "wikipedia flag": "https://en.wikipedia.org/wiki/Flag_of_Armenia",
+      "design": "Three horizontal stripes of red, blue, and orange, with the red stripe on top.",
       "country": "Armenia",
+      "wikipedia": "https://en.wikipedia.org/wiki/Armenia",
       "capital": "Yerevan",
       "description": "Armenia is a landlocked country in the South Caucasus region of Eurasia, bordered by Turkey, Georgia, Azerbaijan, and Iran. It is known for its rich cultural heritage and historical significance as one of the first countries to adopt Christianity.",
       "area": "29,743 km²",
-      "ISO code": "AM",
-      "wikipedia": "https://en.wikipedia.org/wiki/Armenia"
-    }
+      "ISO code": "AM"
+    },
+    "variants": [
+      "horizontal stripes",
+      "3 colours",
+      "red",
+      "blue",
+      "orange",
+      "no drawing"
+    ],
+    "brand": "Armenia"
+  },
+  {
+    "name": "Armenia (1952–1990)",
+    "path": "am-1952–1990.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "Historical Flag"
+    ],
+    "meta": {
+      "proportion": "1:2",
+      "design": "A red field, with a horizontal blue stripe running through the center",
+      "description": "The flag of Armenia from 1952 to 1990, before the current design was adopted.",
+      "wikipedia flag": "https://en.wikipedia.org/wiki/Flag_of_Armenia"
+    },
+    "variants": [
+      "red",
+      "blue",
+      "2 colours",
+      "horizontal stripes",
+      "no drawing"
+    ],
+    "brand": "Armenia"
   },
   {
     "name": "Angola",

@@ -5,10 +5,10 @@
     "format": "SVG",
     "disable": false,
     "tags": [
-      "Spain",
       "Coat of arms",
       "National emblem"
     ],
+    "brand": "Spain",
     "meta": {
       "description": "The coat of arms of Spain, representing the historical kingdoms and the Pillars of Hercules.",
       "wikipedia": "https://en.wikipedia.org/wiki/Coat_of_arms_of_Spain"
@@ -20,9 +20,9 @@
     "format": "SVG",
     "disable": false,
     "tags": [
-      "Ethiopia",
       "National emblem"
     ],
+    "brand": "Ethiopia",
     "meta": {
       "description": "The national emblem of Ethiopia, featuring a lion and a sun.",
       "wikipedia": "https://en.wikipedia.org/wiki/Emblem_of_Ethiopia"
@@ -34,13 +34,64 @@
     "format": "SVG",
     "disable": false,
     "tags": [
-      "Andorra",
       "Coat of arms",
       "National emblem"
     ],
+    "brand": "Andorra",
     "meta": {
       "description": "The coat of arms of Andorra, featuring a shield with the symbols of the four founding families.",
       "wikipedia": "https://en.wikipedia.org/wiki/Coat_of_arms_of_Andorra"
+    }
+  },
+  {
+    "name": "Emblem Of The United Arab Emirates",
+    "path": "Emblem_of_the_United_Arab_Emirates.svg",
+    "format": "SVG",
+    "disable": false
+  },
+  {
+    "name": "Coat Of Arms Of Antigua And Barbuda",
+    "path": "Coat_of_arms_of_Antigua_and_Barbuda.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "Coat of arms",
+      "National emblem"
+    ],
+    "brand": "Antigua and Barbuda",
+    "meta": {
+      "description": "The coat of arms of Antigua and Barbuda, featuring a shield with a sun and a palm tree.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Coat_of_arms_of_Antigua_and_Barbuda"
+    }
+  },
+  {
+    "name": "Coat Of Arms Of Albania",
+    "path": "Coat_of_arms_of_Albania.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "Coat of arms",
+      "National emblem"
+    ],
+    "brand": "Albania",
+    "meta": {
+      "description": "The coat of arms of Albania, featuring a black double-headed eagle on a red background.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Coat_of_arms_of_Albania"
+    }
+  },
+  {
+    "name": "Coat Of Arms Of Armenia",
+    "path": "Coat_of_arms_of_Armenia.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "Coat of arms",
+      "National emblem"
+    ],
+    "brand": "Armenia",
+    "meta": {
+      "description": "The coat of arms of Armenia, featuring a shield with a lion and a sun.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Coat_of_arms_of_Armenia"
     }
   }
 ]

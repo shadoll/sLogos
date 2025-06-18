@@ -182,8 +182,7 @@
   // Download PNG using the same logic as JPG
   async function handleDownloadPngClick(e) {
     e.stopPropagation();
-    const varDir = getVarDir(logo);
-    const pngUrl = `/${varDir}/${getBaseName(logo.path)}.png`;
+    const pngUrl = `/${collection.varDir}/${getBaseName(logo.path)}.png`;
     try {
       const res = await fetch(pngUrl, { method: 'HEAD' });
       if (res.ok) {
@@ -215,8 +214,7 @@
   }
 
   async function downloadJpg(logo) {
-    const varDir = getVarDir(logo);
-    const jpgUrl = `/${varDir}/${getBaseName(logo.path)}.jpg`;
+    const jpgUrl = `/${collection.varDir}/${getBaseName(logo.path)}.jpg`;
     try {
       const res = await fetch(jpgUrl, { method: 'HEAD' });
       if (res.ok) {
@@ -264,6 +262,10 @@
       showCopyNotification('Error copying SVG source', 'error');
       console.error('Error copying SVG source:', err);
     }
+  }
+
+  function getBaseName(filename) {
+    return filename.replace(/^.*[\\/]/, '').replace(/\.[^/.]+$/, '');
   }
 </script>
 

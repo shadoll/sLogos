@@ -50,23 +50,39 @@
       console.log("loadCollectionData: fetch status", response.status);
       if (response.ok) {
         logos = await response.json();
-        console.log("loadCollectionData: loaded", logos.length, "items for", collection);
-        logos = [...logos]; // trigger reactivity
+        // Only use the current collection's data
+        allTags = [];
+        selectedTags = [];
+        selectedBrands = [];
+        selectedVariants = [];
         filteredLogos = logos;
         displayLogos = logos;
         // Reset filters and state for new collection
         searchQuery = "";
+        tagDropdownOpen = false;
+        compactMode = false;
+      } else {
+        logos = [];
+        filteredLogos = [];
+        displayLogos = [];
+        allTags = [];
         selectedTags = [];
         selectedBrands = [];
         selectedVariants = [];
         tagDropdownOpen = false;
         compactMode = false;
-      } else {
-        logos = [];
         console.log("loadCollectionData: failed to load data for", collection);
       }
     } catch (error) {
       logos = [];
+      filteredLogos = [];
+      displayLogos = [];
+      allTags = [];
+      selectedTags = [];
+      selectedBrands = [];
+      selectedVariants = [];
+      tagDropdownOpen = false;
+      compactMode = false;
       console.error("loadCollectionData: error loading data for", collection, error);
     }
   }

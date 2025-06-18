@@ -86,7 +86,7 @@
   $: if (show && logo) {
     if (logo.format === "SVG" && !svgSource) {
       isFetchingSvgSource = true;
-      fetchSvgSource(logo.path)
+      fetchSvgSource(getImageUrl(logo))
         .then((source) => {
           svgSource = source;
           isFetchingSvgSource = false;
