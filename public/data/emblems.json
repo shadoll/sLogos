@@ -27,5 +27,20 @@
       "description": "The national emblem of Ethiopia, featuring a lion and a sun.",
       "wikipedia": "https://en.wikipedia.org/wiki/Emblem_of_Ethiopia"
     }
+  },
+  {
+    "name": "Coat of Arms of Andorra",
+    "path": "Coat_of_arms_of_Andorra.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "Andorra",
+      "Coat of arms",
+      "National emblem"
+    ],
+    "meta": {
+      "description": "The coat of arms of Andorra, featuring a shield with the symbols of the four founding families.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Coat_of_arms_of_Andorra"
+    }
   }
 ]

@@ -312,9 +312,9 @@
     "disable": false,
     "tags": [
       "Country",
-      "North America",
-      "British Overseas Territory"
+      "North America"
     ],
+    "brand": "British Overseas Territory",
     "meta": {
       "country": "Anguilla",
       "capital": "The Valley",
@@ -735,9 +735,9 @@
     "disable": false,
     "tags": [
       "Country",
-      "North America",
-      "British Overseas Territory"
+      "North America"
     ],
+    "brand": "British Overseas Territory",
     "meta": {
       "country": "Bermuda",
       "capital": "Hamilton",
@@ -1072,9 +1072,9 @@
     "disable": false,
     "tags": [
       "Country",
-      "Oceania",
-      "British Overseas Territory"
+      "Oceania"
     ],
+    "brand": "British Overseas Territory",
     "meta": {
       "country": "Cook Islands",
       "capital": "Avarua",
@@ -1327,9 +1327,9 @@
     "disable": false,
     "tags": [
       "Country",
-      "Asia",
-      "British Overseas Territory"
+      "Asia"
     ],
+    "brand": "British Overseas Territory",
     "meta": {
       "country": "Diego Garcia",
       "capital": "",
@@ -1686,6 +1686,7 @@
       "Country",
       "South America"
     ],
+    "brand": "British Overseas Territory",
     "meta": {
       "country": "Falkland Islands",
       "capital": "Stanley",
@@ -1924,9 +1925,9 @@
     "disable": false,
     "tags": [
       "Country",
-      "Europe",
-      "British Crown Dependency"
+      "Europe"
     ],
+    "brand": "British Crown Dependency",
     "meta": {
       "country": "Guernsey",
       "capital": "St. Peter Port",
@@ -1961,9 +1962,9 @@
     "disable": false,
     "tags": [
       "Country",
-      "Europe",
-      "British Overseas Territory"
+      "Europe"
     ],
+    "brand": "British Overseas Territory",
     "meta": {
       "country": "Gibraltar",
       "capital": "Gibraltar",
@@ -2090,9 +2091,9 @@
     "disable": false,
     "tags": [
       "Country",
-      "Antarctica",
-      "British Overseas Territory"
+      "Antarctica"
     ],
+    "brand": "British Overseas Territory",
     "meta": {
       "country": "South Georgia and the South Sandwich Islands",
       "capital": "King Edward Point",
@@ -2363,9 +2364,9 @@
     "disable": false,
     "tags": [
       "Country",
-      "British Crown Dependency",
       "Europe"
     ],
+    "brand": "British Crown Dependency",
     "meta": {
       "country": "Isle of Man",
       "capital": "Douglas",
@@ -2400,9 +2401,9 @@
     "disable": false,
     "tags": [
       "Country",
-      "British Overseas Territory",
       "Asia"
     ],
+    "brand": "British Overseas Territory",
     "meta": {
       "country": "British Indian Ocean Territory",
       "capital": "Diego Garcia",
@@ -2491,9 +2492,9 @@
     "disable": false,
     "tags": [
       "Country",
-      "Europe",
-      "British Crown Dependency"
+      "Europe"
     ],
+    "brand": "British Crown Dependency",
     "meta": {
       "country": "Jersey",
       "capital": "Saint Helier",
@@ -2726,9 +2727,9 @@
     "disable": false,
     "tags": [
       "Country",
-      "North America",
-      "British Overseas Territory"
+      "North America"
     ],
+    "brand": "British Overseas Territory",
     "meta": {
       "country": "Cayman Islands",
       "capital": "George Town",
@@ -3234,9 +3235,9 @@
     "disable": false,
     "tags": [
       "Country",
-      "North America",
-      "British Overseas Territory"
+      "North America"
     ],
+    "brand": "British Overseas Territory",
     "meta": {
       "country": "Montserrat",
       "capital": "Plymouth",
@@ -4086,9 +4087,9 @@
     "disable": false,
     "tags": [
       "Country",
-      "North America",
-      "British Overseas Territory"
+      "North America"
     ],
+    "brand": "British Overseas Territory",
     "meta": {
       "country": "Saint Kitts and Nevis",
       "capital": "Basseterre",
@@ -4105,9 +4106,9 @@
     "disable": false,
     "tags": [
       "Country",
-      "Africa",
-      "British Overseas Territory"
+      "Africa"
     ],
+    "brand": "British Overseas Territory",
     "meta": {
       "country": "Saint Helena, Ascension and Tristan da Cunha",
       "capital": "Jamestown",
@@ -4124,9 +4125,9 @@
     "disable": false,
     "tags": [
       "Country",
-      "Africa",
-      "British Overseas Territory"
+      "Africa"
     ],
+    "brand": "British Overseas Territory",
     "meta": {
       "country": "Tristan da Cunha",
       "capital": "Edinburgh of the Seven Seas",
@@ -4397,9 +4398,9 @@
     "disable": false,
     "tags": [
       "Country",
-      "North America",
-      "British Overseas Territory"
+      "North America"
     ],
+    "brand": "British Overseas Territory",
     "meta": {
       "country": "Turks and Caicos Islands",
       "capital": "Cockburn Town",
@@ -4634,9 +4635,9 @@
     "disable": false,
     "tags": [
       "Country",
-      "Oceania",
-      "British Overseas Territory"
+      "Oceania"
     ],
+    "brand": "British Overseas Territory",
     "meta": {
       "country": "Tuvalu",
       "capital": "Funafuti",
@@ -4869,9 +4870,9 @@
     "disable": false,
     "tags": [
       "Country",
-      "North America",
-      "British Overseas Territory"
+      "North America"
     ],
+    "brand": "British Overseas Territory",
     "meta": {
       "country": "Virgin Islands (British)",
       "capital": "Road Town",
