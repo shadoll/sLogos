@@ -489,7 +489,7 @@
       "Circle"
     ],
     "tags": [
-      "automobile",
+      "Automobile",
       "transport"
     ],
     "brand": "BMW"
@@ -1414,7 +1414,7 @@
     "disable": false,
     "brand": "Dodge",
     "tags": [
-      "automobile",
+      "Automobile",
       "transport"
     ],
     "colors": {
@@ -1469,7 +1469,7 @@
     "format": "SVG",
     "disable": false,
     "tags": [
-      "automobile",
+      "Automobile",
       "transport"
     ],
     "brand": "Fiat"
@@ -1498,7 +1498,7 @@
     "format": "SVG",
     "disable": false,
     "tags": [
-      "automobile",
+      "Automobile",
       "transport"
     ],
     "brand": "Ford"
@@ -1738,7 +1738,7 @@
     "format": "SVG",
     "disable": false,
     "tags": [
-      "automobile",
+      "Automobile",
       "transport"
     ],
     "brand": "Honda"
@@ -1778,7 +1778,7 @@
     ],
     "brand": "Jeep",
     "tags": [
-      "automobile",
+      "Automobile",
       "transport"
     ],
     "colors": {
@@ -3156,7 +3156,7 @@
     "format": "SVG",
     "disable": false,
     "tags": [
-      "automobile",
+      "Automobile",
       "transport"
     ],
     "brand": "Suzuki"
@@ -3168,7 +3168,7 @@
     "format": "SVG",
     "disable": false,
     "tags": [
-      "automobile",
+      "Automobile",
       "transport"
     ],
     "brand": "Suzuki"
@@ -3208,7 +3208,7 @@
     "format": "SVG",
     "disable": false,
     "tags": [
-      "automobile",
+      "Automobile",
       "transport"
     ],
     "brand": "Tesla",
@@ -3243,7 +3243,7 @@
     "format": "SVG",
     "disable": false,
     "tags": [
-      "automobile",
+      "Automobile",
       "transport"
     ],
     "brand": "Toyota",
@@ -3266,7 +3266,7 @@
     "format": "SVG",
     "disable": false,
     "tags": [
-      "automobile",
+      "Automobile",
       "transport"
     ],
     "brand": "Toyota",
@@ -3588,5 +3588,183 @@
       "finance"
     ],
     "brand": "Bvr"
+  },
+  {
+    "name": "Jaguar",
+    "path": "jaguar.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Jaguar",
+    "tags": [
+      "Automobile",
+      "transport"
+    ],
+    "colors": {
+      "black": "#000000",
+      "white": "#FFFFFF"
+    },
+    "targets": {
+      "main": "g"
+    },
+    "sets": {
+      "black": {
+        "main": "black"
+      },
+      "white": {
+        "main": "white"
+      }
+    }
+  },
+  {
+    "name": "Mercedes Benz",
+    "path": "mercedes-benz.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Mercedes Benz",
+    "tags": [
+      "Automobile",
+      "transport"
+    ],
+    "colors": {
+      "black": "#000000",
+      "white": "#FFFFFF"
+    },
+    "targets": {
+      "main": "path"
+    },
+    "sets": {
+      "black": {
+        "main": "black"
+      },
+      "white": {
+        "main": "white"
+      }
+    }
+  },
+  {
+    "name": "Nissan",
+    "path": "nissan.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Nissan",
+    "tags": [
+      "Automobile",
+      "transport"
+    ],
+    "colors": {
+      "black": "#000000",
+      "white": "#FFFFFF"
+    },
+    "targets": {
+      "main": "g"
+    },
+    "sets": {
+      "black": {
+        "main": "black"
+      },
+      "white": {
+        "main": "white"
+      }
+    }
+  },
+  {
+    "name": "Subaru",
+    "path": "subaru.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Subaru",
+    "tags": [
+      "Automobile",
+      "transport"
+    ],
+    "colors": {
+      "black": "#000000",
+      "white": "#FFFFFF"
+    },
+    "targets": {
+      "main": "path"
+    },
+    "sets": {
+      "black": {
+        "main": "black"
+      },
+      "white": {
+        "main": "white"
+      }
+    }
+  },
+  {
+    "name": "Volvo",
+    "path": "volvo.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Volvo",
+    "tags": [
+      "Automobile",
+      "transport"
+    ]
+  },
+  {
+    "name": "Mitsubishi",
+    "path": "mitsubishi.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Mitsubishi",
+    "tags": [
+      "Automobile",
+      "transport"
+    ],
+    "colors": {
+      "red": "#E60012",
+      "black": "#000000",
+      "white": "#FFFFFF"
+    },
+    "targets": {
+      "main": "path"
+    },
+    "sets": {
+      "red": {
+        "main": "red"
+      },
+      "black": {
+        "main": "black"
+      },
+      "white": {
+        "main": "white"
+      }
+    }
+  },
+  {
+    "name": "Lamborghini",
+    "path": "lamborghini.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Lamborghini",
+    "tags": [
+      "Automobile",
+      "transport"
+    ]
+  },
+  {
+    "name": "Porsche",
+    "path": "porsche.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Porsche",
+    "tags": [
+      "Automobile",
+      "transport"
+    ]
+  },
+  {
+    "name": "Alfa Romeo",
+    "path": "alfa-romeo.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Alfa Romeo",
+    "tags": [
+      "Automobile",
+      "transport"
+    ]
   }
 ]
