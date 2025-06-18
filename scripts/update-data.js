@@ -126,32 +126,34 @@ function scanLogos() {
       /\.(svg|png|jpg|jpeg)$/i.test(file)
     );
 
-    // Create a Set of all logo paths in the directory
-    const logoPathsSet = new Set(logoFiles.map(file => `${collection.baseDir}/${file}`));
+    // Create a Set of all logo filenames in the directory
+    const logoFilesSet = new Set(logoFiles);
 
     // Mark existing records as disabled if they are not found in the directory
     for (const logo of existing) {
-      if (!logoPathsSet.has(logo.path)) {
+      // Fix: If logo.path contains a slash, strip to filename only
+      if (logo.path.includes('/')) {
+        logo.path = logo.path.split('/').pop();
+      }
+      if (!logoFilesSet.has(logo.path)) {
         logo.disable = true;
       } else if (logo.disable) {
-        // If file exists, re-enable if previously disabled
         logo.disable = false;
       }
     }
 
-    // Create a Set of existing paths to avoid duplication
+    // Create a Set of existing filenames to avoid duplication
     const existingPathsSet = new Set(existing.map(logo => logo.path));
 
     // Create new minimal logo objects for files that don't have records yet
     const newLogos = logoFiles
-      .filter(file => !existingPathsSet.has(`${collection.baseDir}/${file}`))
+      .filter(file => !existingPathsSet.has(file))
       .map(file => {
         const format = getFileExtension(file);
-        const logoPath = `${collection.baseDir}/${file}`;
         // Only add minimal fields for new files
         return {
           name: formatName(file),
-          path: logoPath,
+          path: file,
           format: format,
           disable: false
         };
@@ -203,9 +205,13 @@ function main() {
       const logoFiles = files.filter(file =>
         /\.(svg|png|jpg|jpeg)$/i.test(file)
       );
-      const logoPathsSet = new Set(logoFiles.map(file => `${col.baseDir}/${file}`));
+      const logoFilesSet = new Set(logoFiles);
       for (const logo of existing) {
-        if (!logoPathsSet.has(logo.path)) {
+        // Fix: If logo.path contains a slash, strip to filename only
+        if (logo.path.includes('/')) {
+          logo.path = logo.path.split('/').pop();
+        }
+        if (!logoFilesSet.has(logo.path)) {
           logo.disable = true;
         } else if (logo.disable) {
           logo.disable = false;
@@ -213,13 +219,12 @@ function main() {
       }
       const existingPathsSet = new Set(existing.map(logo => logo.path));
       const newLogos = logoFiles
-        .filter(file => !existingPathsSet.has(`${col.baseDir}/${file}`))
+        .filter(file => !existingPathsSet.has(file))
         .map(file => {
           const format = getFileExtension(file);
-          const logoPath = `${col.baseDir}/${file}`;
           return {
             name: formatName(file),
-            path: logoPath,
+            path: file,
             format: format,
             disable: false
           };
