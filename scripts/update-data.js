@@ -190,6 +190,26 @@ function validateAndFixSvg(svgPath) {
     let svgContent = fs.readFileSync(svgPath, 'utf8');
     let modified = false;
 
+    // Clean up SVG content
+    const originalContent = svgContent;
+
+    // Remove XML declaration
+    svgContent = svgContent.replace(/<\?xml[^>]*\?>\s*/gi, '');
+
+    // Remove DOCTYPE declaration
+    svgContent = svgContent.replace(/<!DOCTYPE[^>]*>\s*/gi, '');
+
+    // Remove comments
+    svgContent = svgContent.replace(/<!--[\s\S]*?-->/g, '');
+
+    // Remove leading/trailing whitespace and ensure it starts with <svg
+    svgContent = svgContent.trim();
+
+    if (originalContent !== svgContent) {
+      modified = true;
+      console.log(`${path.basename(svgPath)}: Cleaned up SVG (removed XML/DOCTYPE/comments)`);
+    }
+
     // Parse SVG tag attributes
     const svgTagMatch = svgContent.match(/<svg[^>]*>/i);
     if (!svgTagMatch) {
