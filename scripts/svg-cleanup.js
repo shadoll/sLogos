@@ -106,24 +106,24 @@ function processSvgFiles(collectionName) {
   }
 
   const imagesDir = path.join(__dirname, '..', 'public', collection.baseDir);
-  
+
   if (!fs.existsSync(imagesDir)) {
     console.error(`Directory does not exist: ${imagesDir}`);
     return;
   }
 
   console.log(`Processing SVG files in collection: ${collection.label}`);
-  
+
   const files = fs.readdirSync(imagesDir);
   const svgFiles = files.filter(file => /\.svg$/i.test(file));
-  
+
   console.log(`Found ${svgFiles.length} SVG files`);
-  
+
   for (const file of svgFiles) {
     const svgPath = path.join(imagesDir, file);
     validateAndFixSvg(svgPath);
   }
-  
+
   console.log(`Completed processing SVG files for ${collection.label}`);
 }
 
