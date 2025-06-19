@@ -10,6 +10,57 @@ const { collections } = require('../src/collections.js');
 const collectionArg = process.argv.find(arg => arg.startsWith('--collection='));
 const collectionName = collectionArg ? collectionArg.split('=')[1] : (process.env.COLLECTION || 'logos');
 
+// Fix single-letter ID conflicts in SVG content
+function fixSvgIds(svgContent, filename) {
+  let content = svgContent;
+  let updated = false;
+  let count = 0;
+
+  // Find all single-letter IDs (both lowercase and uppercase)
+  const idMatches = content.match(/\bid\s*=\s*["']([a-zA-Z])["']/g);
+
+  if (!idMatches) {
+    return { content, updated, count };
+  }
+
+  // Create a map of old ID to new ID
+  const idMap = new Map();
+
+  for (const match of idMatches) {
+    const idMatch = match.match(/\bid\s*=\s*["']([a-zA-Z])["']/);
+    if (idMatch) {
+      const oldId = idMatch[1];
+      const newId = `${filename}_${oldId}`;
+
+      if (!idMap.has(oldId)) {
+        idMap.set(oldId, newId);
+      }
+    }
+  }
+
+  // Replace all single-letter IDs with prefixed versions
+  for (const [oldId, newId] of idMap) {
+    // Replace id attribute declarations
+    const idRegex = new RegExp(`\\bid\\s*=\\s*["']${oldId}["']`, 'g');
+    content = content.replace(idRegex, `id="${newId}"`);
+
+    // Replace references to the ID in url(), href, and other attributes
+    const urlRegex = new RegExp(`url\\(#${oldId}\\)`, 'g');
+    content = content.replace(urlRegex, `url(#${newId})`);
+
+    const hrefRegex = new RegExp(`href\\s*=\\s*["']#${oldId}["']`, 'g');
+    content = content.replace(hrefRegex, `href="#${newId}"`);
+
+    const xlinkHrefRegex = new RegExp(`xlink:href\\s*=\\s*["']#${oldId}["']`, 'g');
+    content = content.replace(xlinkHrefRegex, `xlink:href="#${newId}"`);
+
+    count++;
+    updated = true;
+  }
+
+  return { content, updated, count };
+}
+
 // SVG validation and fixing function
 function validateAndFixSvg(svgPath) {
   try {
@@ -86,8 +137,18 @@ function validateAndFixSvg(svgPath) {
       console.log(`${path.basename(svgPath)}: Updated height to 100%`);
     }
 
+    // Fix ID conflicts - rename single-letter IDs
+    const idUpdates = fixSvgIds(svgContent, path.basename(svgPath, '.svg'));
+    if (idUpdates.updated) {
+      svgContent = idUpdates.content;
+      modified = true;
+      console.log(`${path.basename(svgPath)}: Updated ${idUpdates.count} single-letter IDs`);
+    }
+
     if (modified) {
-      svgContent = svgContent.replace(svgTag, newSvgTag);
+      if (newSvgTag !== svgTag) {
+        svgContent = svgContent.replace(svgTag, newSvgTag);
+      }
       fs.writeFileSync(svgPath, svgContent, 'utf8');
       console.log(`${path.basename(svgPath)}: SVG file updated`);
     }
