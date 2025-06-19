@@ -87,6 +87,10 @@ function pregenerateImages(logoFiles, imagesDir, imagesVarDir) {
   for (const file of svgFiles) {
     const base = getBaseName(file);
     const svgPath = path.join(imagesDir, file);
+
+    // Validate and fix SVG before processing
+    validateAndFixSvg(svgPath);
+
     const pngPath = path.join(imagesVarDir, base + '.png');
     const jpgPath = path.join(imagesVarDir, base + '.jpg');
     try {
@@ -180,6 +184,73 @@ function saveLogosToJson(logos) {
   }
 }
 
+// SVG validation and fixing function
+function validateAndFixSvg(svgPath) {
+  try {
+    let svgContent = fs.readFileSync(svgPath, 'utf8');
+    let modified = false;
+
+    // Parse SVG tag attributes
+    const svgTagMatch = svgContent.match(/<svg[^>]*>/i);
+    if (!svgTagMatch) {
+      console.warn(`No SVG tag found in ${path.basename(svgPath)}`);
+      return;
+    }
+
+    const svgTag = svgTagMatch[0];
+    const viewBoxMatch = svgTag.match(/viewBox\s*=\s*["']([^"']+)["']/i);
+    const widthMatch = svgTag.match(/width\s*=\s*["']([^"']+)["']/i);
+    const heightMatch = svgTag.match(/height\s*=\s*["']([^"']+)["']/i);
+
+    const hasViewBox = !!viewBoxMatch;
+    const hasWidth = !!widthMatch;
+    const hasHeight = !!heightMatch;
+    const width = hasWidth ? widthMatch[1] : null;
+    const height = hasHeight ? heightMatch[1] : null;
+
+    if (!hasViewBox && !hasWidth && !hasHeight) {
+      console.warn(`${path.basename(svgPath)}: No viewBox, width, or height found - cannot determine dimensions`);
+      return;
+    }
+
+    let newSvgTag = svgTag;
+
+    if (!hasViewBox && hasWidth && hasHeight) {
+      // Add viewBox using width and height
+      const widthValue = parseFloat(width);
+      const heightValue = parseFloat(height);
+      if (!isNaN(widthValue) && !isNaN(heightValue)) {
+        const viewBoxValue = `0 0 ${widthValue} ${heightValue}`;
+        newSvgTag = newSvgTag.replace(/(<svg[^>]*?)>/i, `$1 viewBox="${viewBoxValue}">`);
+        modified = true;
+        console.log(`${path.basename(svgPath)}: Added viewBox="${viewBoxValue}"`);
+      }
+    }
+
+    // Update width and height to 100% if they exist
+    if (hasWidth && width !== '100%') {
+      newSvgTag = newSvgTag.replace(/width\s*=\s*["'][^"']+["']/i, 'width="100%"');
+      modified = true;
+      console.log(`${path.basename(svgPath)}: Updated width to 100%`);
+    }
+
+    if (hasHeight && height !== '100%') {
+      newSvgTag = newSvgTag.replace(/height\s*=\s*["'][^"']+["']/i, 'height="100%"');
+      modified = true;
+      console.log(`${path.basename(svgPath)}: Updated height to 100%`);
+    }
+
+    if (modified) {
+      svgContent = svgContent.replace(svgTag, newSvgTag);
+      fs.writeFileSync(svgPath, svgContent, 'utf8');
+      console.log(`${path.basename(svgPath)}: SVG file updated`);
+    }
+
+  } catch (error) {
+    console.error(`Error processing SVG ${path.basename(svgPath)}:`, error.message);
+  }
+}
+
 // Main function
 function main() {
   // If no collection is specified, process all collections
@@ -206,6 +277,14 @@ function main() {
         /\.(svg|png|jpg|jpeg)$/i.test(file)
       );
       const logoFilesSet = new Set(logoFiles);
+
+      // Validate and fix SVG files
+      const svgFiles = logoFiles.filter(file => /\.svg$/i.test(file));
+      for (const file of svgFiles) {
+        const svgPath = path.join(imagesDir, file);
+        validateAndFixSvg(svgPath);
+      }
+
       for (const logo of existing) {
         // Fix: If logo.path contains a slash, strip to filename only
         if (logo.path.includes('/')) {
