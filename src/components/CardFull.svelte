@@ -6,6 +6,7 @@
   import { getDefaultLogoColor, getThemeColor } from "../utils/colorTheme.js";
   import { fetchSvgSource } from "../utils/svgSource.js";
   import { collections } from '../collections.js';
+    import { get } from "svelte/store";
 
   export let show = false;
   export let logo = null;
@@ -101,28 +102,6 @@
     window.scrollTo(0, 0);
   }
 
-  // Svelte action to remove width/height from SVGs for responsive scaling
-  function removeSvgSize(node) {
-    function cleanSvg() {
-      const svgs = node.querySelectorAll("svg");
-      svgs.forEach((svg) => {
-        svg.removeAttribute("width");
-        svg.removeAttribute("height");
-        svg.style.width = "100%";
-        svg.style.height = "100%";
-      });
-    }
-    cleanSvg();
-    // In case SVG is loaded async (e.g. InlineSvg), observe for changes
-    const observer = new MutationObserver(cleanSvg);
-    observer.observe(node, { childList: true, subtree: true });
-    return {
-      destroy() {
-        observer.disconnect();
-      },
-    };
-  }
-
   // Capitalize first letter of a string
   function capitalizeFirst(str) {
     if (!str) return "";
@@ -158,7 +137,7 @@
       <div class="header-spacer"></div>
     </div>
     <div class="preview-body">
-      <div class="preview-container" use:removeSvgSize>
+      <div class="preview-container" >
         {#if isSvgLogo(logo)}
           <InlineSvg
             bind:this={inlineSvgRef}
@@ -317,14 +296,16 @@
     color: var(--color-text);
     overflow: hidden;
     position: relative;
+    contain: layout style paint; /* CSS containment */
   }
 
   .preview-container img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
+    max-width: 90%;
+    max-height: 90%;
     width: auto;
     height: auto;
+    object-fit: contain;
+    display: block;
   }
 
   .logo-details.fullscreen-details {

@@ -26,17 +26,73 @@
         const doc = parser.parseFromString(text, "image/svg+xml");
         const svg = doc.documentElement;
 
+        // Fix SVG dimensions here too
+        const viewBox = svg.getAttribute('viewBox');
+        if (viewBox) {
+          // Remove any existing style and dimension attributes
+          svg.removeAttribute('style');
+          svg.removeAttribute('width');
+          svg.removeAttribute('height');
+
+          // Set percentage dimensions to allow scaling
+          svg.setAttribute('width', '100%');
+          svg.setAttribute('height', '100%');
+          // svg.setAttribute('preserveAspectRatio', 'none');
+
+          // Ensure viewBox is preserved for proper clipping
+          svg.setAttribute('viewBox', viewBox);
+        } else {
+          svg.removeAttribute('style');
+          svg.setAttribute('width', '100%');
+          svg.setAttribute('height', '100%');
+        }
+
         // Set currentColor on SVG element if no fill is specified
         if (!svg.hasAttribute("fill")) {
           svg.setAttribute("fill", "currentColor");
         }
 
         svgHtml = doc.documentElement.outerHTML;
+        svgSource = svgHtml;
         return;
       }
       // Parse and update color only if user selected
       const parser = new DOMParser();
       const doc = parser.parseFromString(text, "image/svg+xml");
+
+      // Add proper SVG clipping first (before color processing)
+      const svg = doc.documentElement;
+
+      // Fix SVG dimensions based on viewBox
+      const viewBox = svg.getAttribute('viewBox');
+      if (viewBox) {
+        // Remove any existing style attribute and fixed dimensions
+        svg.removeAttribute('style');
+        svg.removeAttribute('width');
+        svg.removeAttribute('height');
+
+        // Set percentage dimensions to allow scaling
+        svg.setAttribute('width', '100%');
+        svg.setAttribute('height', '100%');
+
+        // Ensure viewBox is preserved for proper clipping
+        svg.setAttribute('viewBox', viewBox);
+
+        // Add preserveAspectRatio to ensure proper scaling
+        if (!svg.hasAttribute('preserveAspectRatio')) {
+          svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+        }
+      } else {
+        // If no viewBox, remove style and set percentage dimensions
+        svg.removeAttribute('style');
+        svg.setAttribute('width', '100%');
+        svg.setAttribute('height', '100%');
+      }
+
+      // Ensure proper overflow handling
+      svg.setAttribute('overflow', 'visible'); // Let CSS handle the clipping
+
+      // Now process color changes
       // 1. Parse <style> rules and apply as inline attributes before removing <style>
       const styleEls = Array.from(doc.querySelectorAll("style"));
       styleEls.forEach((styleEl) => {
@@ -149,12 +205,17 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
+    isolation: isolate;
+    contain: layout style paint;
+    position: relative;
   }
+
   .svg-wrapper :global(svg) {
     width: 100%;
     height: 100%;
-    max-width: 100%;
-    max-height: 100%;
     object-fit: contain;
+    display: block;
+    transform-origin: center;
   }
 </style>
