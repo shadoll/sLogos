@@ -1,0 +1,17 @@
+<svg height="100%" width="100%" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 900 600">
+    <g>
+        <path d="m0 0h900v600h-900z" fill="#002868" />
+        <path d="m0-.00001801h900v300.00001801h-900z" fill="#bf0a30" />
+        <path d="m0 195.33 450 104.67-450-229.680327z" fill="#f0f" />
+        <path id="usAzPath_a" d="m0 195.33 450 104.67-450-229.680327z" fill="#fed700" />
+        <path id="usAzPath_b" d="m103.14.00006 346.86 299.99994-217.17-299.99999901z" fill="#fed700" />
+        <path id="usAzPath_c" d="m332.82.00006 117.18 299.99994-42.21-299.99999901z" fill="#fed700" />
+        <g transform="matrix(-1 0 0 1 900 0)">
+            <use xlink:href="#usAzPath_a" />
+            <use xlink:href="#usAzPath_b" />
+            <use xlink:href="#usAzPath_c" />
+        </g>
+        <path d="m450.00046 148.63814 97.53142 300.17086-255.34058-185.5158h315.6183l-255.34058 185.5158z"
+            fill="#ce5c17" />
+    </g>
+</svg>

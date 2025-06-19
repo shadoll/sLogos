@@ -5433,5 +5433,1473 @@
       "no drawings",
       "horizontal stripes"
     ]
+  },
+  {
+    "name": "Arkansas",
+    "path": "us-ar.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "2:3",
+      "design": "The flag features a red field with a white diamond bordered by blue and containing 25 white stars. The diamond signifies Arkansas as a diamond-producing state, and the 25 stars denote its position as the 25th state admitted to the Union. The lone star above the state name represents its membership in the Confederacy.",
+      "country": "United States of America",
+      "state": "Arkansas",
+      "capital": "Little Rock",
+      "description": "Arkansas is a state in the southern region of the United States, known for its diverse geography, including mountains, forests, and rivers.",
+      "area": "137,732 km²",
+      "ISO code": "US-AR",
+      "wikipedia": "https://en.wikipedia.org/wiki/Arkansas"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "red",
+      "blue",
+      "white",
+      "drawings",
+      "stars"
+    ]
+  },
+  {
+    "name": "Alabama",
+    "path": "us-al.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "2:3",
+      "design": "A white field with a red saltire. Argent, a saltire gules",
+      "country": "United States of America",
+      "state": "Alabama",
+      "capital": "Montgomery",
+      "description": "Alabama is a state in the southeastern region of the United States, known for its rich history, diverse culture, and significant role in the civil rights movement.",
+      "area": "135,767 km²",
+      "ISO code": "US-AL",
+      "wikipedia": "https://en.wikipedia.org/wiki/Alabama"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "red",
+      "white",
+      "cross",
+      "no drawings"
+    ]
+  },
+  {
+    "name": "Alaska",
+    "path": "us-ak.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "2:3",
+      "design": "Alaska's flag displays the Big Dipper and Polaris on a dark blue field. The Big Dipper is a symbol of strength, and Polaris represents Alaska's northern position. The blue field symbolizes the sky and the forget-me-not, an Alaskan flower.",
+      "country": "United States of America",
+      "state": "Alaska",
+      "capital": "Juneau",
+      "description": "Alaska is a state located in the far northwest of North America, known for its vast wilderness, mountains, and wildlife.",
+      "area": "1,723,337 km²",
+      "ISO code": "US-AK",
+      "wikipedia": "https://en.wikipedia.org/wiki/Alaska"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "blue",
+      "orange",
+      "drawings",
+      "stars"
+    ]
+  },
+  {
+    "name": "Arizona",
+    "path": "us-az.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "2:3",
+      "design": "The flag of Arizona features a copper-colored star in the center, with 13 red and yellow rays on the top half representing the original 13 colonies and the Western setting sun. The bottom half is blue, symbolizing liberty.",
+      "country": "United States of America",
+      "state": "Arizona",
+      "capital": "Phoenix",
+      "description": "Arizona is a southwestern U.S. state known for its desert climate, the Grand Canyon, and vibrant Native American culture.",
+      "area": "295,234 km²",
+      "ISO code": "US-AZ",
+      "wikipedia": "https://en.wikipedia.org/wiki/Arizona"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "red",
+      "yellow",
+      "blue",
+      "star",
+      "rays"
+    ]
+  },
+  {
+    "name": "California",
+    "path": "us-ca.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "2:3",
+      "design": "The flag of California, known as the Bear Flag, features a grizzly bear walking on a patch of green grass, a red star in the upper hoist, and a red stripe along the bottom, with 'California Republic' inscribed.",
+      "country": "United States of America",
+      "state": "California",
+      "capital": "Sacramento",
+      "description": "California is a western U.S. state known for its diverse geography, large population, and major cities like Los Angeles and San Francisco.",
+      "area": "423,970 km²",
+      "ISO code": "US-CA",
+      "wikipedia": "https://en.wikipedia.org/wiki/California"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "white",
+      "red",
+      "green",
+      "bear",
+      "star",
+      "drawing"
+    ]
+  },
+  {
+    "name": "Colorado",
+    "path": "us-co.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "2:3",
+      "design": "The flag of Colorado consists of three horizontal stripes of blue, white, and blue, with a circular red 'C' filled with a golden disk in the center.",
+      "country": "United States of America",
+      "state": "Colorado",
+      "capital": "Denver",
+      "description": "Colorado is a state in the western United States, known for its Rocky Mountains, outdoor recreation, and vibrant cities.",
+      "area": "269,601 km²",
+      "ISO code": "US-CO",
+      "wikipedia": "https://en.wikipedia.org/wiki/Colorado"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "blue",
+      "white",
+      "red",
+      "yellow",
+      "letter",
+      "circle"
+    ]
+  },
+  {
+    "name": "Connecticut",
+    "path": "us-ct.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "3:4",
+      "design": "The flag of Connecticut features a white baroque shield with three grapevines on a field of azure blue, with a banner below displaying the state motto 'Qui Transtulit Sustinet'.",
+      "country": "United States of America",
+      "state": "Connecticut",
+      "capital": "Hartford",
+      "description": "Connecticut is a state in the northeastern United States, known for its colonial history and coastal cities.",
+      "area": "14,357 km²",
+      "ISO code": "US-CT",
+      "wikipedia": "https://en.wikipedia.org/wiki/Connecticut"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "blue",
+      "white",
+      "green",
+      "drawing",
+      "grapevines"
+    ]
+  },
+  {
+    "name": "Delaware",
+    "path": "us-de.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "2:3",
+      "design": "The flag of Delaware consists of a buff-colored diamond on a colonial blue field, with the state coat of arms in the center and the date December 7, 1787 below.",
+      "country": "United States of America",
+      "state": "Delaware",
+      "capital": "Dover",
+      "description": "Delaware is a small Mid-Atlantic state, known as the first state to ratify the U.S. Constitution.",
+      "area": "6,446 km²",
+      "ISO code": "US-DE",
+      "wikipedia": "https://en.wikipedia.org/wiki/Delaware"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "blue",
+      "buff",
+      "diamond",
+      "coat of arms"
+    ]
+  },
+  {
+    "name": "Florida",
+    "path": "us-fl.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "2:3",
+      "design": "The flag of Florida features a red saltire on a white field, with the state seal in the center.",
+      "country": "United States of America",
+      "state": "Florida",
+      "capital": "Tallahassee",
+      "description": "Florida is a southeastern U.S. state known for its beaches, theme parks, and subtropical climate.",
+      "area": "170,312 km²",
+      "ISO code": "US-FL",
+      "wikipedia": "https://en.wikipedia.org/wiki/Florida"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "white",
+      "red",
+      "seal",
+      "cross"
+    ]
+  },
+  {
+    "name": "Georgia",
+    "path": "us-ga.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "2:3",
+      "design": "The flag of Georgia has three horizontal stripes of red, white, and red, with a blue canton containing a ring of 13 white stars surrounding the state coat of arms.",
+      "country": "United States of America",
+      "state": "Georgia",
+      "capital": "Atlanta",
+      "description": "Georgia is a southeastern U.S. state known for its diverse landscapes, history, and the city of Atlanta.",
+      "area": "153,910 km²",
+      "ISO code": "US-GA",
+      "wikipedia": "https://en.wikipedia.org/wiki/Georgia_(U.S._state)"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "red",
+      "white",
+      "blue",
+      "stars",
+      "coat of arms"
+    ]
+  },
+  {
+    "name": "Hawaii",
+    "path": "us-hi.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "1:2",
+      "design": "The flag of Hawaii features eight horizontal stripes of white, red, and blue, with the Union Jack in the canton.",
+      "country": "United States of America",
+      "state": "Hawaii",
+      "capital": "Honolulu",
+      "description": "Hawaii is a U.S. state located in the Pacific Ocean, known for its islands, beaches, and volcanic landscapes.",
+      "area": "28,313 km²",
+      "ISO code": "US-HI",
+      "wikipedia": "https://en.wikipedia.org/wiki/Hawaii"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "red",
+      "white",
+      "blue",
+      "union jack",
+      "stripes"
+    ]
+  },
+  {
+    "name": "Iowa",
+    "path": "us-ia.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "2:3",
+      "design": "The flag of Iowa consists of three vertical stripes of blue, white, and red, with a flying bald eagle carrying a ribbon with the state motto in its beak.",
+      "country": "United States of America",
+      "state": "Iowa",
+      "capital": "Des Moines",
+      "description": "Iowa is a Midwestern U.S. state known for its agriculture and rolling plains.",
+      "area": "145,746 km²",
+      "ISO code": "US-IA",
+      "wikipedia": "https://en.wikipedia.org/wiki/Iowa"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "blue",
+      "white",
+      "red",
+      "eagle",
+      "motto"
+    ]
+  },
+  {
+    "name": "Idaho",
+    "path": "us-id.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "26:33",
+      "design": "The flag of Idaho features the state seal on a field of blue, with the words 'State of Idaho' in a red and gold banner below.",
+      "wikipedia flag": "https://en.wikipedia.org/wiki/Flag_of_Idaho",
+      "country": "United States of America",
+      "state": "Idaho",
+      "capital": "Boise",
+      "description": "Idaho is a northwestern U.S. state known for its mountainous landscapes and outdoor recreation.",
+      "area": "216,443 km²",
+      "ISO code": "US-ID",
+      "wikipedia": "https://en.wikipedia.org/wiki/Idaho"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "blue",
+      "seal",
+      "banner"
+    ]
+  },
+  {
+    "name": "Illinois",
+    "path": "us-il.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "3:5",
+      "design": "The flag of Illinois features the state seal, which includes a bald eagle holding a shield and a banner with the state motto, on a white field with the word 'Illinois' below.",
+      "country": "United States of America",
+      "state": "Illinois",
+      "capital": "Springfield",
+      "description": "Illinois is a Midwestern U.S. state known for Chicago, its largest city, and its agricultural productivity.",
+      "area": "149,995 km²",
+      "ISO code": "US-IL",
+      "wikipedia": "https://en.wikipedia.org/wiki/Illinois"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "white",
+      "eagle",
+      "seal",
+      "motto"
+    ]
+  },
+  {
+    "name": "Indiana",
+    "path": "us-in.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "2:3",
+      "design": "The flag of Indiana features a gold torch surrounded by an outer circle of thirteen stars, an inner semi-circle of five stars, and a large star above the torch, all on a blue field.",
+      "country": "United States of America",
+      "state": "Indiana",
+      "capital": "Indianapolis",
+      "description": "Indiana is a Midwestern U.S. state known for its farmland, auto racing, and manufacturing.",
+      "area": "94,326 km²",
+      "ISO code": "US-IN",
+      "wikipedia": "https://en.wikipedia.org/wiki/Indiana"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "blue",
+      "gold",
+      "torch",
+      "stars"
+    ]
+  },
+  {
+    "name": "Kansas",
+    "path": "us-ks.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "3:5",
+      "design": "The flag of Kansas consists of the state seal centered on a blue field, with a sunflower above and the word 'Kansas' below.",
+      "country": "United States of America",
+      "state": "Kansas",
+      "capital": "Topeka",
+      "description": "Kansas is a Midwestern U.S. state known for its prairies and agriculture.",
+      "area": "213,100 km²",
+      "ISO code": "US-KS",
+      "wikipedia": "https://en.wikipedia.org/wiki/Kansas"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "blue",
+      "seal",
+      "sunflower",
+      "wordmark"
+    ]
+  },
+  {
+    "name": "Kentucky",
+    "path": "us-ky.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "10:19",
+      "design": "The flag of Kentucky features the state seal on a navy blue field, with the words 'Commonwealth of Kentucky' above and sprigs of goldenrod below.",
+      "country": "United States of America",
+      "state": "Kentucky",
+      "capital": "Frankfort",
+      "description": "Kentucky is a southeastern U.S. state known for horse racing, bourbon, and bluegrass music.",
+      "area": "104,656 km²",
+      "ISO code": "US-KY",
+      "wikipedia": "https://en.wikipedia.org/wiki/Kentucky"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "blue",
+      "seal",
+      "goldenrod",
+      "wordmark"
+    ]
+  },
+  {
+    "name": "Louisiana",
+    "path": "us-la.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "2:3",
+      "design": "The flag of Louisiana features a pelican feeding its young in a nest, with a ribbon below displaying the state motto 'Union, Justice, Confidence', all on a blue field.",
+      "country": "United States of America",
+      "state": "Louisiana",
+      "capital": "Baton Rouge",
+      "description": "Louisiana is a southern U.S. state known for its unique Creole and Cajun culture, and the city of New Orleans.",
+      "area": "135,659 km²",
+      "ISO code": "US-LA",
+      "wikipedia": "https://en.wikipedia.org/wiki/Louisiana"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "blue",
+      "white",
+      "pelican",
+      "motto"
+    ]
+  },
+  {
+    "name": "Massachusetts",
+    "path": "us-ma.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "2:3",
+      "design": "The flag of Massachusetts features the state coat of arms on a white field, with a blue shield, a Native American, and a silver star, topped by an arm holding a sword.",
+      "country": "United States of America",
+      "state": "Massachusetts",
+      "capital": "Boston",
+      "description": "Massachusetts is a northeastern U.S. state known for its colonial history, prestigious universities, and the city of Boston.",
+      "area": "27,336 km²",
+      "ISO code": "US-MA",
+      "wikipedia": "https://en.wikipedia.org/wiki/Massachusetts"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "white",
+      "blue",
+      "coat of arms",
+      "star"
+    ]
+  },
+  {
+    "name": "Maryland",
+    "path": "us-md.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "2:3",
+      "design": "The flag of Maryland consists of the heraldic banner of George Calvert, Lord Baltimore, with alternating quadrants of yellow and black, and red and white.",
+      "country": "United States of America",
+      "state": "Maryland",
+      "capital": "Annapolis",
+      "description": "Maryland is a Mid-Atlantic U.S. state known for its waterways, the Chesapeake Bay, and proximity to Washington, D.C.",
+      "area": "32,131 km²",
+      "ISO code": "US-MD",
+      "wikipedia": "https://en.wikipedia.org/wiki/Maryland"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "yellow",
+      "black",
+      "red",
+      "white",
+      "heraldic"
+    ]
+  },
+  {
+    "name": "Maine",
+    "path": "us-me.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "26:33",
+      "design": "The flag of Maine features the state coat of arms on a blue field, with a moose resting under a pine tree, flanked by a farmer and a seaman.",
+      "country": "United States of America",
+      "state": "Maine",
+      "capital": "Augusta",
+      "description": "Maine is a northeastern U.S. state known for its rocky coastline, maritime history, and natural areas like Acadia National Park.",
+      "area": "91,646 km²",
+      "ISO code": "US-ME",
+      "wikipedia": "https://en.wikipedia.org/wiki/Maine"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "blue",
+      "coat of arms",
+      "moose",
+      "pine tree"
+    ]
+  },
+  {
+    "name": "Michigan",
+    "path": "us-mi.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "2:3",
+      "design": "The flag of Michigan features the state coat of arms on a dark blue field, with an elk and moose supporting a shield, and a bald eagle above.",
+      "country": "United States of America",
+      "state": "Michigan",
+      "capital": "Lansing",
+      "description": "Michigan is a Midwestern U.S. state known for its Great Lakes, automotive industry, and natural beauty.",
+      "area": "250,493 km²",
+      "ISO code": "US-MI",
+      "wikipedia": "https://en.wikipedia.org/wiki/Michigan"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "blue",
+      "coat of arms",
+      "elk",
+      "moose",
+      "eagle"
+    ]
+  },
+  {
+    "name": "Minnesota",
+    "path": "us-mn.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "2:3",
+      "design": "The flag of Minnesota features the state seal on a blue field, surrounded by a wreath of pink-and-white lady's slippers, the state flower.",
+      "country": "United States of America",
+      "state": "Minnesota",
+      "capital": "Saint Paul",
+      "description": "Minnesota is a northern U.S. state known for its lakes, forests, and the Twin Cities of Minneapolis and Saint Paul.",
+      "area": "225,163 km²",
+      "ISO code": "US-MN",
+      "wikipedia": "https://en.wikipedia.org/wiki/Minnesota"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "blue",
+      "seal",
+      "flowers"
+    ]
+  },
+  {
+    "name": "Missouri",
+    "path": "us-mo.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "7:12",
+      "design": "The flag of Missouri consists of three horizontal stripes of red, white, and blue, with the state seal in the center surrounded by a blue band with 24 white stars.",
+      "country": "United States of America",
+      "state": "Missouri",
+      "capital": "Jefferson City",
+      "description": "Missouri is a Midwestern U.S. state known for the Missouri River, Ozark Mountains, and the city of St. Louis.",
+      "area": "180,540 km²",
+      "ISO code": "US-MO",
+      "wikipedia": "https://en.wikipedia.org/wiki/Missouri"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "red",
+      "white",
+      "blue",
+      "seal",
+      "stars"
+    ]
+  },
+  {
+    "name": "Mississippi",
+    "path": "us-ms.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "3:5",
+      "design": "Mississippi's flag features a magnolia tree on a dark blue field with red and gold stripes. The magnolia symbolizes the state's hospitality and rich history, while the 20 stars represent Mississippi as the 20th state. The gold five-point star symbolizes the indigenous Native American tribes.",
+      "country": "United States of America",
+      "state": "Mississippi",
+      "capital": "Jackson",
+      "description": "Mississippi is a southern U.S. state known for its river, blues music, and southern culture.",
+      "area": "125,438 km²",
+      "ISO code": "US-MS",
+      "wikipedia": "https://en.wikipedia.org/wiki/Mississippi"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "blue",
+      "white",
+      "red",
+      "stars"
+    ]
+  },
+  {
+    "name": "Montana",
+    "path": "us-mt.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "2:3",
+      "design": "The flag of Montana features the state seal centered on a blue field, with the word 'Montana' above in gold letters.",
+      "country": "United States of America",
+      "state": "Montana",
+      "capital": "Helena",
+      "description": "Montana is a western U.S. state known for its Rocky Mountains, wide-open spaces, and Glacier National Park.",
+      "area": "380,831 km²",
+      "ISO code": "US-MT",
+      "wikipedia": "https://en.wikipedia.org/wiki/Montana"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "blue",
+      "seal",
+      "wordmark"
+    ]
+  },
+  {
+    "name": "North Carolina",
+    "path": "us-nc.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "2:3",
+      "design": "The flag of North Carolina features a blue vertical stripe at the hoist with a white star and the letters 'N' and 'C', and two horizontal stripes of red and white, with two dates in gold scrolls.",
+      "country": "United States of America",
+      "state": "North Carolina",
+      "capital": "Raleigh",
+      "description": "North Carolina is a southeastern U.S. state known for its Atlantic beaches, the Blue Ridge Mountains, and the city of Charlotte.",
+      "area": "139,391 km²",
+      "ISO code": "US-NC",
+      "wikipedia": "https://en.wikipedia.org/wiki/North_Carolina"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "blue",
+      "red",
+      "white",
+      "star",
+      "letters"
+    ]
+  },
+  {
+    "name": "North Dakota",
+    "path": "us-nd.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "33:26",
+      "design": "The flag of North Dakota features a bald eagle holding an olive branch and arrows, with a ribbon in its beak reading 'E Pluribus Unum', on a blue field with a red scroll below reading 'North Dakota'.",
+      "country": "United States of America",
+      "state": "North Dakota",
+      "capital": "Bismarck",
+      "description": "North Dakota is a northern U.S. state known for its Great Plains, agriculture, and Native American heritage.",
+      "area": "183,108 km²",
+      "ISO code": "US-ND",
+      "wikipedia": "https://en.wikipedia.org/wiki/North_Dakota"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "blue",
+      "eagle",
+      "scroll",
+      "stars"
+    ]
+  },
+  {
+    "name": "Nebraska",
+    "path": "us-ne.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "3:5",
+      "design": "The flag of Nebraska features the state seal in gold and silver on a blue field, with a blacksmith, a settler's cabin, and a train.",
+      "country": "United States of America",
+      "state": "Nebraska",
+      "capital": "Lincoln",
+      "description": "Nebraska is a Midwestern U.S. state known for its prairies, agriculture, and the city of Omaha.",
+      "area": "200,330 km²",
+      "ISO code": "US-NE",
+      "wikipedia": "https://en.wikipedia.org/wiki/Nebraska"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "blue",
+      "seal",
+      "gold"
+    ]
+  },
+  {
+    "name": "New Hampshire",
+    "path": "us-nh.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "2:3",
+      "design": "The flag of New Hampshire features the state seal on a blue field, with a ship on the water and laurel leaves.",
+      "country": "United States of America",
+      "state": "New Hampshire",
+      "capital": "Concord",
+      "description": "New Hampshire is a northeastern U.S. state known for its quaint towns, large expanses of wilderness, and the White Mountains.",
+      "area": "24,214 km²",
+      "ISO code": "US-NH",
+      "wikipedia": "https://en.wikipedia.org/wiki/New_Hampshire"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "blue",
+      "seal",
+      "ship"
+    ]
+  },
+  {
+    "name": "New Jersey",
+    "path": "us-nj.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "2:3",
+      "design": "The flag of New Jersey features the state coat of arms in the center of a buff-colored field, with three plows on a shield, a knight's helmet, and two female figures.",
+      "country": "United States of America",
+      "state": "New Jersey",
+      "capital": "Trenton",
+      "description": "New Jersey is a northeastern U.S. state known for its Atlantic coastline, cities, and proximity to New York City and Philadelphia.",
+      "area": "22,591 km²",
+      "ISO code": "US-NJ",
+      "wikipedia": "https://en.wikipedia.org/wiki/New_Jersey"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "buff",
+      "coat of arms",
+      "plows"
+    ]
+  },
+  {
+    "name": "New Mexico",
+    "path": "us-nm.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "2:3",
+      "design": "The flag of New Mexico features a red sun symbol of the Zia people on a field of gold (yellow).",
+      "country": "United States of America",
+      "state": "New Mexico",
+      "capital": "Santa Fe",
+      "description": "New Mexico is a southwestern U.S. state known for its desert landscapes, Native American culture, and the city of Santa Fe.",
+      "area": "314,917 km²",
+      "ISO code": "US-NM",
+      "wikipedia": "https://en.wikipedia.org/wiki/New_Mexico"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "yellow",
+      "red",
+      "sun",
+      "zia"
+    ]
+  },
+  {
+    "name": "Nevada",
+    "path": "us-nv.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "5:8",
+      "design": "The flag of Nevada features a cobalt blue field with a silver star in the upper hoist, below a golden-yellow scroll reading 'Battle Born', and two sprays of sagebrush.",
+      "country": "United States of America",
+      "state": "Nevada",
+      "capital": "Carson City",
+      "description": "Nevada is a western U.S. state known for its desert landscapes, casinos, and the city of Las Vegas.",
+      "area": "286,380 km²",
+      "ISO code": "US-NV",
+      "wikipedia": "https://en.wikipedia.org/wiki/Nevada"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "blue",
+      "silver",
+      "star",
+      "sagebrush"
+    ]
+  },
+  {
+    "name": "New York",
+    "path": "us-ny.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "2:3",
+      "design": "The flag of New York features the state coat of arms on a blue field, with Liberty and Justice supporting a shield, and an eagle atop a globe.",
+      "country": "United States of America",
+      "state": "New York",
+      "capital": "Albany",
+      "description": "New York is a northeastern U.S. state known for New York City, Niagara Falls, and its diverse geography.",
+      "area": "141,297 km²",
+      "ISO code": "US-NY",
+      "wikipedia": "https://en.wikipedia.org/wiki/New_York_(state)"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "blue",
+      "coat of arms",
+      "eagle"
+    ]
+  },
+  {
+    "name": "Ohio",
+    "path": "us-oh.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "8:13",
+      "design": "The flag of Ohio is a swallowtail burgee with five horizontal stripes of red and white, a blue triangle at the hoist with a white circle and 17 white stars.",
+      "country": "United States of America",
+      "state": "Ohio",
+      "capital": "Columbus",
+      "description": "Ohio is a Midwestern U.S. state known for its cities, manufacturing, and the Ohio River.",
+      "area": "116,098 km²",
+      "ISO code": "US-OH",
+      "wikipedia": "https://en.wikipedia.org/wiki/Ohio"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "red",
+      "white",
+      "blue",
+      "stars",
+      "swallowtail"
+    ]
+  },
+  {
+    "name": "Oklahoma",
+    "path": "us-ok.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "2:3",
+      "design": "The flag of Oklahoma features an Osage warrior's shield with six crosses and seven eagle feathers, with a calumet (peace pipe) and olive branch, on a blue field with 'Oklahoma' below.",
+      "country": "United States of America",
+      "state": "Oklahoma",
+      "capital": "Oklahoma City",
+      "description": "Oklahoma is a south-central U.S. state known for its Native American history, prairies, and tornadoes.",
+      "area": "181,037 km²",
+      "ISO code": "US-OK",
+      "wikipedia": "https://en.wikipedia.org/wiki/Oklahoma"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "blue",
+      "shield",
+      "feathers",
+      "pipe",
+      "olive branch"
+    ]
+  },
+  {
+    "name": "Oregon",
+    "path": "us-or.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "3:5",
+      "design": "The flag of Oregon is navy blue with gold lettering and symbols. The obverse features the state seal, a heart-shaped shield with a covered wagon, mountains, forests, and an eagle, with 'State of Oregon' above and '1859' below. The reverse shows a gold beaver, the state animal.",
+      "country": "United States of America",
+      "state": "Oregon",
+      "capital": "Salem",
+      "description": "Oregon is a state in the Pacific Northwest region of the United States, known for its diverse landscapes, forests, and coastline.",
+      "area": "254,799 km²",
+      "ISO code": "US-OR",
+      "wikipedia": "https://en.wikipedia.org/wiki/Oregon"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "blue",
+      "gold",
+      "seal",
+      "beaver",
+      "wordmark"
+    ]
+  },
+  {
+    "name": "Pennsylvania",
+    "path": "us-pa.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "2:3",
+      "design": "The flag of Pennsylvania features the state coat of arms on a blue field. The coat of arms includes a shield flanked by horses, an eagle, a ship, a plough, and three sheaves of wheat, with a banner below reading 'Virtue, Liberty and Independence'.",
+      "country": "United States of America",
+      "state": "Pennsylvania",
+      "capital": "Harrisburg",
+      "description": "Pennsylvania is a northeastern U.S. state known for its rich history, rolling hills, and major cities like Philadelphia and Pittsburgh.",
+      "area": "119,280 km²",
+      "ISO code": "US-PA",
+      "wikipedia": "https://en.wikipedia.org/wiki/Pennsylvania"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "blue",
+      "coat of arms",
+      "horses",
+      "eagle",
+      "banner"
+    ]
+  },
+  {
+    "name": "Rhode Island",
+    "path": "us-ri.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "29:33",
+      "design": "The flag of Rhode Island features a gold anchor in the center of a white field, surrounded by thirteen gold stars and a blue ribbon below with the word 'Hope'.",
+      "country": "United States of America",
+      "state": "Rhode Island",
+      "capital": "Providence",
+      "description": "Rhode Island is the smallest U.S. state by area, known for its sandy shores and seaside colonial towns.",
+      "area": "4,001 km²",
+      "ISO code": "US-RI",
+      "wikipedia": "https://en.wikipedia.org/wiki/Rhode_Island"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "white",
+      "gold",
+      "anchor",
+      "stars",
+      "ribbon"
+    ]
+  },
+  {
+    "name": "South Carolina",
+    "path": "us-sc.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "2:3",
+      "design": "The flag of South Carolina features a white palmetto tree and crescent on an indigo field.",
+      "country": "United States of America",
+      "state": "South Carolina",
+      "capital": "Columbia",
+      "description": "South Carolina is a southeastern U.S. state known for its shoreline of subtropical beaches and marshlike sea islands.",
+      "area": "82,932 km²",
+      "ISO code": "US-SC",
+      "wikipedia": "https://en.wikipedia.org/wiki/South_Carolina"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "indigo",
+      "white",
+      "palmetto",
+      "crescent"
+    ]
+  },
+  {
+    "name": "South Dakota",
+    "path": "us-sd.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "3:5",
+      "design": "The flag of South Dakota features the state seal surrounded by a gold sun on a sky blue field, with 'South Dakota' above and 'The Mount Rushmore State' below.",
+      "country": "United States of America",
+      "state": "South Dakota",
+      "capital": "Pierre",
+      "description": "South Dakota is a Midwestern U.S. state known for the Black Hills, Badlands, and Mount Rushmore.",
+      "area": "199,729 km²",
+      "ISO code": "US-SD",
+      "wikipedia": "https://en.wikipedia.org/wiki/South_Dakota"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "blue",
+      "gold",
+      "seal",
+      "sun",
+      "wordmark"
+    ]
+  },
+  {
+    "name": "Tennessee",
+    "path": "us-tn.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "3:5",
+      "design": "The flag of Tennessee features a blue circle with three white stars on a red field, with a blue bar on the fly end.",
+      "country": "United States of America",
+      "state": "Tennessee",
+      "capital": "Nashville",
+      "description": "Tennessee is a southeastern U.S. state known for its music scene, mountains, and vibrant cities.",
+      "area": "109,153 km²",
+      "ISO code": "US-TN",
+      "wikipedia": "https://en.wikipedia.org/wiki/Tennessee"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "red",
+      "blue",
+      "white",
+      "stars",
+      "circle"
+    ]
+  },
+  {
+    "name": "Texas",
+    "path": "us-tx.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "2:3",
+      "design": "The flag of Texas, known as the 'Lone Star Flag', features a vertical blue stripe with a single white star, and horizontal stripes of white and red.",
+      "country": "United States of America",
+      "state": "Texas",
+      "capital": "Austin",
+      "description": "Texas is the second largest U.S. state, known for its size, diverse landscapes, and cultural heritage.",
+      "area": "695,662 km²",
+      "ISO code": "US-TX",
+      "wikipedia": "https://en.wikipedia.org/wiki/Texas"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "blue",
+      "white",
+      "red",
+      "star"
+    ]
+  },
+  {
+    "name": "Utah",
+    "path": "us-ut.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "5:8",
+      "design": "The flag of Utah features the state seal on a blue field, with a bald eagle, beehive, sego lilies, and the state motto 'Industry'.",
+      "country": "United States of America",
+      "state": "Utah",
+      "capital": "Salt Lake City",
+      "description": "Utah is a western U.S. state known for its diverse natural landscapes, including mountains, deserts, and national parks.",
+      "area": "219,887 km²",
+      "ISO code": "US-UT",
+      "wikipedia": "https://en.wikipedia.org/wiki/Utah"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "blue",
+      "seal",
+      "eagle",
+      "beehive",
+      "flowers"
+    ]
+  },
+  {
+    "name": "Virginia",
+    "path": "us-va.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "7:11",
+      "design": "The flag of Virginia features the state seal on a blue field, with the Roman goddess Virtus standing over a defeated tyrant, and the motto 'Sic Semper Tyrannis'.",
+      "country": "United States of America",
+      "state": "Virginia",
+      "capital": "Richmond",
+      "description": "Virginia is a southeastern U.S. state, rich in American history and known for its varied geography from the Atlantic coast to the Appalachian Mountains.",
+      "area": "110,787 km²",
+      "ISO code": "US-VA",
+      "wikipedia": "https://en.wikipedia.org/wiki/Virginia"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "blue",
+      "seal",
+      "goddess",
+      "motto"
+    ]
+  },
+  {
+    "name": "Vermont",
+    "path": "us-vt.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "2:3",
+      "design": "The flag of Vermont features the state coat of arms on a blue field, with a pine tree, cow, and sheaves of wheat.",
+      "country": "United States of America",
+      "state": "Vermont",
+      "capital": "Montpelier",
+      "description": "Vermont is a northeastern U.S. state known for its forested natural landscape, maple syrup, and ski resorts.",
+      "area": "24,906 km²",
+      "ISO code": "US-VT",
+      "wikipedia": "https://en.wikipedia.org/wiki/Vermont"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "blue",
+      "coat of arms",
+      "pine tree",
+      "cow",
+      "wheat"
+    ]
+  },
+  {
+    "name": "Washington",
+    "path": "us-wa.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "10:19",
+      "design": "The flag of Washington features the state seal, which includes a portrait of George Washington, on a dark green field.",
+      "country": "United States of America",
+      "state": "Washington",
+      "capital": "Olympia",
+      "description": "Washington is a Pacific Northwest state known for its forests, mountains, and technology industry.",
+      "area": "184,661 km²",
+      "ISO code": "US-WA",
+      "wikipedia": "https://en.wikipedia.org/wiki/Washington_(state)"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "green",
+      "seal",
+      "portrait"
+    ]
+  },
+  {
+    "name": "Wisconsin",
+    "path": "us-wi.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "2:3",
+      "design": "The flag of Wisconsin features the state coat of arms on a blue field, with a sailor and miner supporting a shield, and the word 'Wisconsin' above and '1848' below.",
+      "country": "United States of America",
+      "state": "Wisconsin",
+      "capital": "Madison",
+      "description": "Wisconsin is a Midwestern U.S. state known for its dairy industry, lakes, and forests.",
+      "area": "169,635 km²",
+      "ISO code": "US-WI",
+      "wikipedia": "https://en.wikipedia.org/wiki/Wisconsin"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "blue",
+      "coat of arms",
+      "sailor",
+      "miner",
+      "wordmark"
+    ]
+  },
+  {
+    "name": "West Virginia",
+    "path": "us-wv.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "10:19",
+      "design": "The flag of West Virginia features the state coat of arms in the center on a white field, bordered by blue, with a rock, two men, and a red ribbon reading 'State of West Virginia'.",
+      "country": "United States of America",
+      "state": "West Virginia",
+      "capital": "Charleston",
+      "description": "West Virginia is an Appalachian state known for its mountains, coal mining, and outdoor recreation.",
+      "area": "62,756 km²",
+      "ISO code": "US-WV",
+      "wikipedia": "https://en.wikipedia.org/wiki/West_Virginia"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "white",
+      "blue",
+      "coat of arms",
+      "ribbon"
+    ]
+  },
+  {
+    "name": "Wyoming",
+    "path": "us-wy.svg",
+    "format": "SVG",
+    "disable": false,
+    "tags": [
+      "State",
+      "United States",
+      "North America"
+    ],
+    "meta": {
+      "proportion": "7:10",
+      "design": "The flag of Wyoming features a white bison on a blue field, bordered by white and red, with the state seal on the bison.",
+      "country": "United States of America",
+      "state": "Wyoming",
+      "capital": "Cheyenne",
+      "description": "Wyoming is a western U.S. state known for its wide-open spaces, national parks, and cowboy culture.",
+      "area": "253,600 km²",
+      "ISO code": "US-WY",
+      "wikipedia": "https://en.wikipedia.org/wiki/Wyoming"
+    },
+    "brand": "United States of America",
+    "variants": [
+      "blue",
+      "white",
+      "red",
+      "bison",
+      "seal"
+    ]
   }
 ]
