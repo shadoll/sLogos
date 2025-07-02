@@ -1,12 +1,10 @@
 <script>
   import { onMount } from "svelte";
-  import Router from "svelte-spa-router/Router.svelte";
   import { collections } from "./collections.js";
 
   import Home from "./pages/Home.svelte";
   import Preview from "./pages/Preview.svelte";
   import NotFound from "./pages/NotFound.svelte";
-  import Header from "./components/Header.svelte";
 
   export const routes = {
     "/": Home,
@@ -20,7 +18,6 @@
   let filteredLogos = [];
   let displayLogos = [];
   let theme = "system";
-  let mq;
   let allTags = [];
   let selectedTags = [];
   let selectedBrands = [];
