@@ -2956,10 +2956,10 @@
       "ua_yellow": "#FFDD00"
     },
     "targets": {
-      "part_s": "#s",
-      "part_s_stroke": "#s&stroke",
-      "part_l": "#l",
-      "part_l_stroke": "#l&stroke"
+      "part_s": "#shadoll_s",
+      "part_s_stroke": "#shadoll_s&stroke",
+      "part_l": "#shadoll_l",
+      "part_l_stroke": "#shadoll_l&stroke"
     },
     "sets": {
       "light": {
