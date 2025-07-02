@@ -1,10 +1,11 @@
 <script>
   import { onMount } from "svelte";
   import { collections } from "./collections.js";
-  import { Router } from "svelte-spa-router";
+  import Router from "svelte-spa-router/Router.svelte";
   import Home from "./pages/Home.svelte";
   import Preview from "./pages/Preview.svelte";
   import NotFound from "./pages/NotFound.svelte";
+  import Header from "./components/Header.svelte";
 
   export const routes = {
     "/": Home,
