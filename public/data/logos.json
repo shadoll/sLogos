@@ -3873,5 +3873,44 @@
         "main": "white"
       }
     }
+  },
+  {
+    "name": "Ntfy",
+    "path": "ntfy.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "NTFY",
+    "tags": [
+      "Selfhosted",
+      "Notifications"
+    ],
+    "colors": {
+      "white": "#FFFFFF",
+      "green": "#49a996",
+      "black": "#000000"
+    },
+    "targets": {
+      "background_outer": "#background>rect",
+      "background_inner": "#background>path",
+      "logo": "#logo"
+    },
+    "sets": {
+      "light": {
+        "background_outer": "green",
+        "background_inner": "green",
+        "logo": "white"
+      },
+      "dark": {
+        "background_outer": "green",
+        "background_inner": "green",
+        "logo": "black"
+      }
+    }
+  },
+  {
+    "name": "Vite",
+    "path": "vite.svg",
+    "format": "SVG",
+    "disable": false
   }
 ]
