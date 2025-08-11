@@ -4,7 +4,7 @@
   import Footer from '../components/Footer.svelte';
   import InlineSvg from '../components/InlineSvg.svelte';
   import Achievements from '../components/Achievements.svelte';
-  import AchievementButton from '../components/AchievementButton.svelte';
+  import QuizSettings from '../components/QuizSettings.svelte';
 
   // Game data
   let flags = [];
@@ -26,6 +26,12 @@
   let timeoutId = null;
   let showCountryInfo = false;
   let showResultCountryInfo = false;
+
+  // Auto-advance timer variables
+  let autoAdvanceTimer = null;
+  let timerProgress = 0;
+  let timerDuration = 2000; // 2 seconds
+  let timerStartTime = 0;
 
   // Scoring
   let score = { correct: 0, total: 0, skipped: 0 };
@@ -197,6 +203,9 @@
   showCountryInfo = false;
   showResultCountryInfo = false;
 
+    // Cancel any active auto-advance timer
+    cancelAutoAdvanceTimer();
+
     // Randomly choose question type
     questionType = Math.random() < 0.5 ? 'flag-to-country' : 'country-to-flag';
 
@@ -348,9 +357,7 @@
     // Auto-advance to next question with different delays if auto mode is on
     if (autoAdvance) {
       const delay = isCorrect ? 2000 : 4000; // Double delay for wrong answers
-      setTimeout(() => {
-        generateQuestion();
-      }, delay);
+      startAutoAdvanceTimer(delay);
     }
   }  function skipQuestion() {
     if (gameState !== 'question') return;
@@ -377,6 +384,38 @@
     generateQuestion();
   }
 
+  function startAutoAdvanceTimer(duration) {
+    timerDuration = duration;
+    timerProgress = 0;
+    timerStartTime = Date.now();
+
+    // Clear any existing timer
+    if (autoAdvanceTimer) {
+      clearInterval(autoAdvanceTimer);
+    }
+
+    // Update progress every 50ms for smooth animation
+    autoAdvanceTimer = setInterval(() => {
+      const elapsed = Date.now() - timerStartTime;
+      timerProgress = Math.min((elapsed / duration) * 100, 100);
+
+      if (timerProgress >= 100) {
+        clearInterval(autoAdvanceTimer);
+        autoAdvanceTimer = null;
+        timerProgress = 0;
+        generateQuestion();
+      }
+    }, 50);
+  }
+
+  function cancelAutoAdvanceTimer() {
+    if (autoAdvanceTimer) {
+      clearInterval(autoAdvanceTimer);
+      autoAdvanceTimer = null;
+      timerProgress = 0;
+    }
+  }
+
   function resetGame() {
     score = { correct: 0, total: 0, skipped: 0 };
     generateQuestion();
@@ -396,23 +435,23 @@
     showSettings = !showSettings;
   }
 
-  function handleOverlayClick(event) {
-    if (event.target === event.currentTarget) {
-      toggleSettings();
-    }
+  function handleSettingsChange(event) {
+    const { autoAdvance: newAutoAdvance, focusWrongAnswers: newFocusWrong, reduceCorrectAnswers: newReduceCorrect, soundEnabled: newSoundEnabled } = event.detail;
+    autoAdvance = newAutoAdvance;
+    focusWrongAnswers = newFocusWrong;
+    reduceCorrectAnswers = newReduceCorrect;
+    soundEnabled = newSoundEnabled;
   }
 
-  function handleOverlayKeydown(event) {
-    if (event.key === 'Escape') {
-      toggleSettings();
-    }
+  function handleSettingsToggle(event) {
+    showSettings = event.detail;
   }
 
-  function resetAllStats() {
-    showResetConfirmation = true;
+  function handleResetConfirmation(event) {
+    showResetConfirmation = event.detail;
   }
 
-  function confirmReset() {
+  function handleResetStats() {
     // Reset game statistics
     gameStats = { correct: 0, wrong: 0, total: 0, skipped: 0 };
     score = { correct: 0, total: 0, skipped: 0 };
@@ -427,16 +466,12 @@
     correctAnswers = new Map();
     localStorage.removeItem('flagQuizCorrectAnswers');
 
-    // Reset achievements
+    // Reset achievements if component is available
     if (achievementsComponent) {
-      localStorage.removeItem('flagQuizAchievements');
-      // Reinitialize achievements component
-      achievementsComponent.loadAchievements();
-      updateAchievementCount();
+      achievementsComponent.resetAllAchievements();
     }
 
     showResetConfirmation = false;
-    showSettings = false;
   }
 
   function cancelReset() {
@@ -535,115 +570,21 @@
   <div class="container">
 
 
-  <!-- Settings Popup -->
-  {#if showSettings}
-    <div
-      class="settings-overlay"
-      on:click={handleOverlayClick}
-      tabindex="0"
-      role="button"
-      aria-label="Close settings (click background or press Escape)"
-      on:keydown={handleOverlayKeydown}
-    >
-      <div
-        class="settings-modal"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="settings-title"
-      >
-        <div class="settings-header">
-          <InlineSvg path="/icons/settings.svg" alt="Settings" />
-          <h2 id="settings-title">Game Settings</h2>
-          <button class="close-btn" on:click={toggleSettings}>✕</button>
-        </div>
-
-        <div class="settings-content">
-          <div class="setting-item">
-            <label>
-              <input
-                type="checkbox"
-                bind:checked={autoAdvance}
-              />
-              Auto-advance to next question after answering
-            </label>
-          </div>
-
-          <div class="setting-item">
-            <label>
-              <input
-                type="checkbox"
-                bind:checked={focusWrongAnswers}
-              />
-              Focus on previously answered incorrectly flags
-            </label>
-          </div>
-
-          <div class="setting-item">
-            <label>
-              <input
-                type="checkbox"
-                bind:checked={reduceCorrectAnswers}
-              />
-              Show correctly answered flags less frequently
-            </label>
-          </div>
-
-          <div class="setting-item">
-            <label>
-              <input
-                type="checkbox"
-                bind:checked={soundEnabled}
-              />
-              Enable sound effects for answers
-            </label>
-          </div>
-
-          <div class="setting-actions">
-            <button class="reset-stats-btn" on:click={resetAllStats}>
-              Reset All Statistics
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  {/if}
-
-  <!-- Reset Confirmation Dialog -->
-  {#if showResetConfirmation}
-    <div
-      class="confirmation-overlay"
-      role="button"
-      tabindex="0"
-      aria-label="Close confirmation dialog (click background or press Escape)"
-      on:click={(e) => e.target === e.currentTarget && cancelReset()}
-      on:keydown={(e) => {
-        if (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') {
-          cancelReset();
-        }
-      }}
-    >
-      <div class="confirmation-dialog">
-        <div class="confirmation-header">
-          <h3>⚠️ Reset All Data</h3>
-        </div>
-        <div class="confirmation-content">
-          <p>This action will permanently delete:</p>
-          <ul>
-            <li>✗ All game statistics (correct, wrong, skipped answers)</li>
-            <li>✗ Current session score</li>
-            <li>✗ All unlocked achievements</li>
-            <li>✗ Achievement progress</li>
-            <li>✗ Wrong answer tracking data</li>
-          </ul>
-          <p><strong>This cannot be undone!</strong></p>
-        </div>
-        <div class="confirmation-actions">
-          <button class="cancel-btn" on:click={cancelReset}>Cancel</button>
-          <button class="confirm-btn" on:click={confirmReset}>Reset Everything</button>
-        </div>
-      </div>
-    </div>
-  {/if}
+  <!-- Quiz Settings Component -->
+  <QuizSettings
+    bind:autoAdvance
+    bind:focusWrongAnswers
+    bind:reduceCorrectAnswers
+    bind:soundEnabled
+    bind:showSettings
+    bind:showResetConfirmation
+    focusWrongLabel="Focus on previously answered incorrectly flags"
+    reduceCorrectLabel="Show correctly answered flags less frequently"
+    on:settingsChange={handleSettingsChange}
+    on:settingsToggle={handleSettingsToggle}
+    on:resetConfirmation={handleResetConfirmation}
+    on:resetStats={handleResetStats}
+  />
 
   <!-- Achievements Component -->
   <Achievements
@@ -763,6 +704,16 @@
           <button class="btn btn-skip btn-next-full" on:click={skipQuestion}>Skip Question</button>
         {:else if !autoAdvance && gameState === 'answered'}
           <button class="btn btn-primary btn-next-full" on:click={nextQuestion}>Next Question →</button>
+        {/if}
+
+        <!-- Auto-advance timer display -->
+        {#if autoAdvance && gameState === 'answered' && timerProgress > 0}
+          <div class="auto-advance-timer">
+            <div class="timer-bar">
+              <div class="timer-progress" style="width: {timerProgress}%"></div>
+            </div>
+            <span class="timer-text">Next question in {Math.ceil((timerDuration - (timerProgress / 100 * timerDuration)) / 1000)}s</span>
+          </div>
         {/if}
       </div>
     {/if}
@@ -1351,6 +1302,35 @@
   .btn-skip:hover {
     opacity: 1;
     background: var(--color-text-primary);
+  }
+
+  /* Auto-advance timer styles */
+  .auto-advance-timer {
+    margin-top: 1rem;
+    text-align: center;
+  }
+
+  .timer-bar {
+    width: 100%;
+    height: 6px;
+    background: var(--color-bg-tertiary);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+    border: 1px solid var(--color-border);
+  }
+
+  .timer-progress {
+    height: 100%;
+    background: var(--color-primary);
+    transition: width 0.05s linear;
+    border-radius: 2px;
+  }
+
+  .timer-text {
+    font-size: 0.8rem;
+    color: var(--color-text-secondary);
+    font-weight: 500;
   }
 
   @media (max-width: 768px) {
