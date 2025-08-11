@@ -399,10 +399,6 @@
     color: #6b7280; /* gray */
   }
 
-  .achievement-block {
-    margin-left: auto;
-  }
-
   @media (max-width: 700px) {
     .header-row {
       grid-template-columns: 1fr auto auto;

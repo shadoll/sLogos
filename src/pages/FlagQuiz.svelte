@@ -33,6 +33,9 @@
   let timerDuration = 2000; // 2 seconds
   let timerStartTime = 0;
 
+  // Force component re-render key to prevent button state persistence
+  let questionKey = 0;
+
   // Scoring
   let score = { correct: 0, total: 0, skipped: 0 };
   let gameStats = { correct: 0, wrong: 0, total: 0, skipped: 0 };
@@ -205,6 +208,26 @@
 
     // Cancel any active auto-advance timer
     cancelAutoAdvanceTimer();
+
+    // Increment question key to force complete re-render and clear button states
+    questionKey++;
+
+    // Remove focus from any previously focused buttons and ensure clean state
+    if (typeof document !== 'undefined') {
+      // Use setTimeout to ensure DOM updates are complete
+      setTimeout(() => {
+        const activeElement = document.activeElement;
+        if (activeElement && activeElement.tagName === 'BUTTON') {
+          activeElement.blur();
+        }
+        // Force removal of any residual button states
+        const buttons = document.querySelectorAll('.option, .flag-option');
+        buttons.forEach(button => {
+          button.blur();
+          button.classList.remove('selected', 'correct', 'wrong');
+        });
+      }, 0);
+    }
 
     // Randomly choose question type
     questionType = Math.random() < 0.5 ? 'flag-to-country' : 'country-to-flag';
@@ -647,7 +670,7 @@
             <img src={getFlagImage(currentQuestion.correct)} alt="Flag" class="quiz-flag" />
           </div>
 
-          <div class="options">
+          <div class="options" key={questionKey}>
             {#each currentQuestion.options as option, index}
               <button
                 class="option"
@@ -684,7 +707,7 @@
             </h2>
           </div>
 
-          <div class="flag-options">
+          <div class="flag-options" key={questionKey}>
             {#each currentQuestion.options as option, index}
               <button
                 class="flag-option"
@@ -1078,6 +1101,12 @@
     background: var(--color-bg-hover);
   }
 
+  /* Prevent residual hover states on new questions */
+  .option:not(:hover):not(.selected):not(.correct):not(.wrong) {
+    border-color: var(--color-border);
+    background: var(--color-bg-primary);
+  }
+
   .option.selected {
     border-color: var(--color-primary);
     background: var(--color-primary-light);
@@ -1117,6 +1146,12 @@
   .flag-option:hover:not(:disabled) {
     border-color: var(--color-primary);
     background: var(--color-bg-hover);
+  }
+
+  /* Prevent residual hover states on new questions for flag options */
+  .flag-option:not(:hover):not(.selected):not(.correct):not(.wrong) {
+    border-color: var(--color-border);
+    background: var(--color-bg-primary);
   }
 
   .flag-option.selected {
