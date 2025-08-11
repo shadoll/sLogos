@@ -11,6 +11,13 @@
       description: 'Test your knowledge of world flags',
       icon: '🏳️',
       route: '#/game/flags'
+    },
+    {
+      name: 'capitals',
+      title: 'Capitals Quiz',
+      description: 'Test your knowledge of world capitals',
+      icon: '🏛️',
+      route: '#/game/capitals'
     }
     // Future games will be added here
   ];
@@ -72,10 +79,6 @@
       <h3>⏳ Coming Soon</h3>
       <div class="upcoming-games">
         <div class="upcoming-game">
-          <span class="icon">🏛️</span>
-          <span>Capital Quiz</span>
-        </div>
-        <div class="upcoming-game">
           <span class="icon">🏢</span>
           <span>Logo Quiz</span>
         </div>
@@ -119,6 +122,7 @@
 
   .game-grid {
     display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 2rem;
     margin-bottom: 4rem;
   }
@@ -208,6 +212,10 @@
     .container {
       padding: 1rem;
       padding-top: 100px;
+    }
+
+    .game-grid {
+      grid-template-columns: 1fr;
     }
 
     h1 {

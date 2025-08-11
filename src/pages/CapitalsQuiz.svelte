@@ -11,11 +11,9 @@
   // Game data
   let flags = [];
   let currentQuestion = null;
-  let questionType = "flag-to-country"; // 'flag-to-country' or 'country-to-flag'
 
   // Question and answer arrays
-  let currentCountryOptions = [];
-  let currentFlagOptions = [];
+  let currentCapitalOptions = [];
   let correctAnswer = "";
 
   // Game states
@@ -92,7 +90,7 @@
   // Save settings when they change (after initial load)
   $: if (settingsLoaded && typeof reduceCorrectAnswers !== "undefined") {
     localStorage.setItem(
-      "flagQuizSettings",
+      "capitalsQuizSettings",
       JSON.stringify({
         autoAdvance,
         focusWrongAnswers,
@@ -113,14 +111,14 @@
     if (typeof window !== "undefined") {
       window.appData = {
         ...window.appData,
-        collection: "flags",
+        collection: "capitals",
         setCollection: () => {},
         theme,
         setTheme,
       };
 
       // Load saved game stats
-      const savedStats = localStorage.getItem("flagQuizStats");
+      const savedStats = localStorage.getItem("capitalsQuizStats");
       if (savedStats) {
         try {
           const loadedStats = JSON.parse(savedStats);
@@ -137,7 +135,7 @@
       }
 
       // Load wrong answers tracking
-      const savedWrongAnswers = localStorage.getItem("flagQuizWrongAnswers");
+      const savedWrongAnswers = localStorage.getItem("capitalsQuizWrongAnswers");
       if (savedWrongAnswers) {
         try {
           const loadedWrongAnswers = JSON.parse(savedWrongAnswers);
@@ -149,7 +147,7 @@
 
       // Load correct answers tracking
       const savedCorrectAnswers = localStorage.getItem(
-        "flagQuizCorrectAnswers",
+        "capitalsQuizCorrectAnswers",
       );
       if (savedCorrectAnswers) {
         try {
@@ -161,7 +159,7 @@
       }
 
       // Load settings
-      const savedSettings = localStorage.getItem("flagQuizSettings");
+      const savedSettings = localStorage.getItem("capitalsQuizSettings");
       if (savedSettings) {
         try {
           const settings = JSON.parse(savedSettings);
@@ -210,11 +208,12 @@
     try {
       const response = await fetch("/data/flags.json");
       const data = await response.json();
-      // Filter for only country flags (has "Country" tag) and ensure we have country name
+      // Filter for only country flags (has "Country" tag) and ensure we have country name and capital
       flags = data.filter(
         (flag) =>
           !flag.disable &&
           flag.meta?.country &&
+          flag.meta?.capital &&
           flag.tags &&
           flag.tags.includes("Country"),
       );
@@ -232,7 +231,7 @@
       }
 
       flags = uniqueFlags;
-      console.log(`Loaded ${flags.length} unique country flags for quiz`);
+      console.log(`Loaded ${flags.length} unique country flags for capitals quiz`);
     } catch (error) {
       console.error("Error loading flags:", error);
       flags = [];
@@ -253,11 +252,11 @@
       sessionStartTime,
       questionKey,
     };
-    localStorage.setItem("flagQuizSessionState", JSON.stringify(sessionState));
+    localStorage.setItem("capitalsQuizSessionState", JSON.stringify(sessionState));
   }
 
   function loadSessionState() {
-    const savedState = localStorage.getItem("flagQuizSessionState");
+    const savedState = localStorage.getItem("capitalsQuizSessionState");
     if (savedState) {
       try {
         const state = JSON.parse(savedState);
@@ -306,7 +305,7 @@
   }
 
   function clearSessionState() {
-    localStorage.removeItem("flagQuizSessionState");
+    localStorage.removeItem("capitalsQuizSessionState");
   }
 
   function generateQuestion() {
@@ -338,16 +337,13 @@
           activeElement.blur();
         }
         // Force removal of any residual button states
-        const buttons = document.querySelectorAll(".option, .flag-option");
+        const buttons = document.querySelectorAll(".option");
         buttons.forEach((button) => {
           button.blur();
           button.classList.remove("selected", "correct", "wrong");
         });
       }, 0);
     }
-
-    // Randomly choose question type
-    questionType = Math.random() < 0.5 ? "flag-to-country" : "country-to-flag";
 
     // Pick correct answer with adaptive learning settings
     let correctFlag;
@@ -392,23 +388,23 @@
       correctFlag = flags[Math.floor(Math.random() * flags.length)];
     }
 
-    const correctCountry = getCountryName(correctFlag).toLowerCase();
+    const correctCapital = correctFlag.meta.capital.toLowerCase();
 
-    // Generate 3 wrong answers ensuring no duplicate country names
+    // Generate 3 wrong answers ensuring no duplicate capitals
     const wrongOptions = [];
-    const usedCountries = new Set([correctCountry]);
+    const usedCapitals = new Set([correctCapital]);
 
     while (wrongOptions.length < 3 && wrongOptions.length < flags.length - 1) {
       const randomFlag = flags[Math.floor(Math.random() * flags.length)];
-      const randomCountry = getCountryName(randomFlag).toLowerCase();
+      const randomCapital = randomFlag.meta.capital.toLowerCase();
 
-      if (!usedCountries.has(randomCountry)) {
+      if (!usedCapitals.has(randomCapital)) {
         wrongOptions.push(randomFlag);
-        usedCountries.add(randomCountry);
+        usedCapitals.add(randomCapital);
       }
     }
 
-    // If we couldn't find 3 unique countries, fill with random flags
+    // If we couldn't find 3 unique capitals, fill with random flags
     while (wrongOptions.length < 3) {
       const randomFlag = flags[Math.floor(Math.random() * flags.length)];
       if (randomFlag !== correctFlag && !wrongOptions.includes(randomFlag)) {
@@ -421,17 +417,18 @@
       () => Math.random() - 0.5,
     );
     currentQuestion = {
-      type: questionType,
+      type: "country-to-capital",
       correct: correctFlag,
       options: allOptions,
       correctIndex: allOptions.indexOf(correctFlag),
     };
 
-    console.log("Generated question:", currentQuestion);
+    console.log("Generated capitals question:", currentQuestion);
 
     // Save session state
     saveSessionState();
   }
+
   function selectAnswer(index) {
     if (gameState !== "question") return;
 
@@ -462,7 +459,7 @@
         correctAnswers.set(flagName, (correctAnswers.get(flagName) || 0) + 1);
         // Save correct answers to localStorage
         localStorage.setItem(
-          "flagQuizCorrectAnswers",
+          "capitalsQuizCorrectAnswers",
           JSON.stringify(Object.fromEntries(correctAnswers)),
         );
       }
@@ -502,7 +499,7 @@
         wrongAnswers.set(flagName, (wrongAnswers.get(flagName) || 0) + 1);
         // Save wrong answers to localStorage
         localStorage.setItem(
-          "flagQuizWrongAnswers",
+          "capitalsQuizWrongAnswers",
           JSON.stringify(Object.fromEntries(wrongAnswers)),
         );
       }
@@ -514,7 +511,7 @@
     gameStats.total++;
 
     // Save stats to localStorage
-    localStorage.setItem("flagQuizStats", JSON.stringify(gameStats));
+    localStorage.setItem("capitalsQuizStats", JSON.stringify(gameStats));
 
     // Update global stats
     updateGlobalStats(isCorrect);
@@ -551,6 +548,7 @@
       startAutoAdvanceTimer(delay);
     }
   }
+
   function skipQuestion() {
     if (gameState !== "question") return;
 
@@ -573,7 +571,7 @@
     }
 
     // Save stats to localStorage
-    localStorage.setItem("flagQuizStats", JSON.stringify(gameStats));
+    localStorage.setItem("capitalsQuizStats", JSON.stringify(gameStats));
 
     // Update global stats (skipped question)
     updateGlobalStats(null, true);
@@ -666,12 +664,12 @@
 
   function resetStats() {
     gameStats = { correct: 0, wrong: 0, total: 0, skipped: 0 };
-    localStorage.setItem("flagQuizStats", JSON.stringify(gameStats));
+    localStorage.setItem("capitalsQuizStats", JSON.stringify(gameStats));
   }
 
   function saveSettings() {
     const settings = { autoAdvance };
-    localStorage.setItem("flagQuizSettings", JSON.stringify(settings));
+    localStorage.setItem("capitalsQuizSettings", JSON.stringify(settings));
   }
 
   function toggleSettings() {
@@ -717,15 +715,15 @@
       total: 0,
       sessionLength,
     };
-    localStorage.setItem("flagQuizStats", JSON.stringify(gameStats));
+    localStorage.setItem("capitalsQuizStats", JSON.stringify(gameStats));
 
     // Reset wrong answers tracking
     wrongAnswers = new Map();
-    localStorage.removeItem("flagQuizWrongAnswers");
+    localStorage.removeItem("capitalsQuizWrongAnswers");
 
     // Reset correct answers tracking
     correctAnswers = new Map();
-    localStorage.removeItem("flagQuizCorrectAnswers");
+    localStorage.removeItem("capitalsQuizCorrectAnswers");
 
     // Reset achievements if component is available
     if (achievementsComponent) {
@@ -784,6 +782,10 @@
     return flag.meta?.country || flag.name || "Unknown";
   }
 
+  function getCapitalName(flag) {
+    return flag.meta?.capital || "Unknown";
+  }
+
   function getFlagImage(flag) {
     return `/images/flags/${flag.path}`;
   }
@@ -825,25 +827,25 @@
     }
 
     // Initialize stats structure if it doesn't exist
-    if (!globalStats.flagQuiz) {
-      globalStats.flagQuiz = { correct: 0, wrong: 0, total: 0, skipped: 0 };
+    if (!globalStats.capitalsQuiz) {
+      globalStats.capitalsQuiz = { correct: 0, wrong: 0, total: 0, skipped: 0 };
     }
     if (!globalStats.overall) {
       globalStats.overall = { correct: 0, wrong: 0, total: 0, skipped: 0 };
     }
 
-    // Update flag quiz stats
-    globalStats.flagQuiz.total++;
+    // Update capitals quiz stats
+    globalStats.capitalsQuiz.total++;
     globalStats.overall.total++;
 
     if (isSkipped) {
-      globalStats.flagQuiz.skipped++;
+      globalStats.capitalsQuiz.skipped++;
       globalStats.overall.skipped++;
     } else if (isCorrect) {
-      globalStats.flagQuiz.correct++;
+      globalStats.capitalsQuiz.correct++;
       globalStats.overall.correct++;
     } else {
-      globalStats.flagQuiz.wrong++;
+      globalStats.capitalsQuiz.wrong++;
       globalStats.overall.wrong++;
     }
 
@@ -920,7 +922,7 @@
 </script>
 
 <svelte:head>
-  <title>Flag Quiz</title>
+  <title>Capitals Quiz</title>
 </svelte:head>
 
 <Header
@@ -933,7 +935,7 @@
   onAchievementClick={() => (showAchievements = true)}
 />
 
-<main class="flag-quiz">
+<main class="capitals-quiz">
   <div class="container">
     <!-- Quiz Settings Component -->
     <QuizSettings
@@ -944,8 +946,8 @@
       bind:sessionLength
       bind:showSettings
       bind:showResetConfirmation
-      focusWrongLabel="Focus on previously answered incorrectly flags"
-      reduceCorrectLabel="Show correctly answered flags less frequently"
+      focusWrongLabel="Focus on previously answered incorrectly countries"
+      reduceCorrectLabel="Show correctly answered countries less frequently"
       on:settingsChange={handleSettingsChange}
       on:settingsToggle={handleSettingsToggle}
       on:resetConfirmation={handleResetConfirmation}
@@ -985,7 +987,7 @@
     {:else if quizSubpage === "quiz"}
       <!-- Quiz Subpage -->
       {#if gameState === "loading"}
-        <div class="loading">Loading flags...</div>
+        <div class="loading">Loading countries...</div>
       {:else if currentQuestion}
         <div class="question-container">
           <div class="question-header">
@@ -993,9 +995,7 @@
               Question {currentSessionQuestions + 1} from {sessionLength}
             </div>
             <div class="question-type">
-              {currentQuestion.type === "flag-to-country"
-                ? "Which country does this flag belong to?"
-                : "Which flag belongs to this country?"}
+              What is the capital of this country?
             </div>
           </div>
 
@@ -1021,75 +1021,47 @@
                       /></span
                     >
                     Wrong!
-                    {#if currentQuestion.type === "flag-to-country"}
-                      <span class="result-country-info">
-                        The correct answer is: {getCountryName(
-                          currentQuestion.correct,
-                        )}.
-                        <button
-                          class="info-icon result-info-btn"
-                          aria-label="Show country info"
-                          aria-expanded={showResultCountryInfo}
-                          on:click={() =>
-                            (showResultCountryInfo = !showResultCountryInfo)}
-                          on:keydown={(e) => {
-                            if (e.key === "Escape")
-                              showResultCountryInfo = false;
-                          }}
+                    <span class="result-country-info">
+                      The correct answer is: {getCapitalName(currentQuestion.correct)}.
+                      <button
+                        class="info-icon result-info-btn"
+                        aria-label="Show country info"
+                        aria-expanded={showResultCountryInfo}
+                        on:click={() =>
+                          (showResultCountryInfo = !showResultCountryInfo)}
+                        on:keydown={(e) => {
+                          if (e.key === "Escape")
+                            showResultCountryInfo = false;
+                        }}
+                      >
+                        <InlineSvg
+                          path="/icons/info-square.svg"
+                          alt="Country info"
+                        />
+                      </button>
+                      {#if showResultCountryInfo}
+                        <div
+                          class="info-tooltip result-info-tooltip"
+                          role="dialog"
+                          aria-live="polite"
                         >
-                          <InlineSvg
-                            path="/icons/info-square.svg"
-                            alt="Country info"
-                          />
-                        </button>
-                        {#if showResultCountryInfo}
-                          <div
-                            class="info-tooltip result-info-tooltip"
-                            role="dialog"
-                            aria-live="polite"
-                          >
-                            {currentQuestion.correct.meta.description}
-                          </div>
-                        {/if}
-                      </span>
-                    {:else}
-                      You selected the {getCountryName(
-                        currentQuestion.options[selectedAnswer],
-                      )} flag.
-                    {/if}
+                          {currentQuestion.correct.meta.description}
+                        </div>
+                      {/if}
+                    </span>
                   </div>
                 {/if}
               </div>
             {/if}
           </div>
 
-          {#if currentQuestion.type === "flag-to-country"}
-            <div class="flag-display">
+          <div class="country-display">
+            <div class="flag-and-country">
               <img
                 src={getFlagImage(currentQuestion.correct)}
                 alt="Flag"
                 class="quiz-flag"
               />
-            </div>
-
-            <div class="options" key={questionKey}>
-              {#each currentQuestion.options as option, index}
-                <button
-                  class="option"
-                  class:selected={selectedAnswer === index}
-                  class:correct={showResult && index === correctAnswer}
-                  class:wrong={showResult &&
-                    selectedAnswer === index &&
-                    index !== correctAnswer}
-                  on:click={() => selectAnswer(index)}
-                  disabled={gameState === "answered"}
-                >
-                  {getCountryName(option)}
-                </button>
-              {/each}
-            </div>
-          {:else}
-            <div class="country-display">
               <h2 class="country-name">
                 {getCountryName(currentQuestion.correct)}
                 {#if currentQuestion.correct?.meta?.description}
@@ -1115,28 +1087,24 @@
                 {/if}
               </h2>
             </div>
+          </div>
 
-            <div class="flag-options" key={questionKey}>
-              {#each currentQuestion.options as option, index}
-                <button
-                  class="flag-option"
-                  class:selected={selectedAnswer === index}
-                  class:correct={showResult && index === correctAnswer}
-                  class:wrong={showResult &&
-                    selectedAnswer === index &&
-                    index !== correctAnswer}
-                  on:click={() => selectAnswer(index)}
-                  disabled={gameState === "answered"}
-                >
-                  <img
-                    src={getFlagImage(option)}
-                    alt={getCountryName(option)}
-                    class="option-flag"
-                  />
-                </button>
-              {/each}
-            </div>
-          {/if}
+          <div class="options" key={questionKey}>
+            {#each currentQuestion.options as option, index}
+              <button
+                class="option"
+                class:selected={selectedAnswer === index}
+                class:correct={showResult && index === correctAnswer}
+                class:wrong={showResult &&
+                  selectedAnswer === index &&
+                  index !== correctAnswer}
+                on:click={() => selectAnswer(index)}
+                disabled={gameState === "answered"}
+              >
+                {getCapitalName(option)}
+              </button>
+            {/each}
+          </div>
 
           {#if gameState === "question"}
             <button class="btn btn-skip btn-next-full" on:click={skipQuestion}
@@ -1182,7 +1150,7 @@
 <Footer />
 
 <style>
-  .flag-quiz {
+  .capitals-quiz {
     min-height: 100vh;
     background: var(--color-bg-primary);
     color: var(--color-text-primary);
@@ -1193,8 +1161,6 @@
     margin: 0 auto;
     padding: 1.25rem 1rem;
   }
-
-  /* Removed header-top/settings-btn styles; settings now lives in controls */
 
   .loading {
     text-align: center;
@@ -1236,15 +1202,21 @@
     margin-bottom: 1rem;
   }
 
-  .flag-display {
+  .country-display {
     text-align: center;
     margin-bottom: 2rem;
   }
 
+  .flag-and-country {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
   .quiz-flag {
-    width: 400px;
+    width: 300px;
     height: auto;
-    /* max-height: 240px; */
     object-fit: contain;
     border: 2px solid var(--color-border);
     border-radius: 8px;
@@ -1252,17 +1224,12 @@
     padding: 1rem;
   }
 
-  .country-display {
-    text-align: center;
-    margin-bottom: 2rem;
-    position: relative;
-  }
-
   .country-name {
     font-size: 2rem;
     font-weight: 600;
     color: var(--color-text-primary);
     margin: 0;
+    position: relative;
   }
 
   .info-icon {
@@ -1354,58 +1321,6 @@
     border-color: #ef4444;
     background: #ef4444;
     color: white;
-  }
-
-  .flag-options {
-    display: grid;
-    gap: 1rem;
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .flag-option {
-    background: var(--color-bg-primary);
-    border: 2px solid var(--color-border);
-    border-radius: 8px;
-    padding: 1rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    /* aspect-ratio: 3/2; */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .flag-option:hover:not(:disabled) {
-    border-color: var(--color-primary);
-    background: var(--color-bg-hover);
-  }
-
-  /* Prevent residual hover states on new questions for flag options */
-  .flag-option:not(:hover):not(.selected):not(.correct):not(.wrong) {
-    border-color: var(--color-border);
-    background: var(--color-bg-primary);
-  }
-
-  .flag-option.selected {
-    border-color: var(--color-primary);
-    background: var(--color-primary-light);
-  }
-
-  .flag-option.correct {
-    border-color: #22c55e;
-    background: #22c55e;
-  }
-
-  .flag-option.wrong {
-    border-color: #ef4444;
-    background: #ef4444;
-  }
-
-  .option-flag {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-    border-radius: 4px;
   }
 
   .result {
@@ -1593,14 +1508,13 @@
       grid-template-columns: 1fr;
     }
 
-    /* Keep 2x2 grid for Country-to-Flag on mobile */
-    .flag-options {
-      grid-template-columns: 1fr 1fr;
+    .quiz-flag {
+      width: 250px;
+      max-height: 150px;
     }
 
-    .quiz-flag {
-      width: 300px;
-      max-height: 180px;
+    .country-name {
+      font-size: 1.5rem;
     }
 
     .info-tooltip {

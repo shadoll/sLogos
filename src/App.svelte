@@ -6,6 +6,7 @@
   import Preview from "./pages/Preview.svelte";
   import Game from "./pages/Game.svelte";
   import FlagQuiz from "./pages/FlagQuiz.svelte";
+  import CapitalsQuiz from "./pages/CapitalsQuiz.svelte";
   import NotFound from "./pages/NotFound.svelte";
   import Header from "./components/Header.svelte";
 
@@ -14,6 +15,7 @@
     "/preview/:logoName": Preview,
     "/game": Game,
     "/game/flags": FlagQuiz,
+    "/game/capitals": CapitalsQuiz,
     "*": NotFound,
   };
 

@@ -1,5 +1,6 @@
 [ ] Improove: In the preview page, add full header.
 [ ] Improove: In the preview page, add possibility select custom color for each target.
+[ ] Add Games: Logo Quiz, Emblem Quiz
 
 Done:
 [v] Strategy: Add quiz game to guess the logo or flags and invert
