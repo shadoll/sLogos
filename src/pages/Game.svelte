@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
   import { collections } from '../collections.js';
   import Header from '../components/Header.svelte';
+  import Footer from '../components/Footer.svelte';
 
   let availableGames = [
     {
@@ -82,6 +83,8 @@
     </div>
   </div>
 </main>
+
+<Footer />
 
 <style>
   .game-selection {

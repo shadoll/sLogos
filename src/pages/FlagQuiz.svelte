@@ -1,6 +1,7 @@
 <script>
   import { onMount } from 'svelte';
   import Header from '../components/Header.svelte';
+  import Footer from '../components/Footer.svelte';
   import InlineSvg from '../components/InlineSvg.svelte';
   import Achievements from '../components/Achievements.svelte';
   import AchievementButton from '../components/AchievementButton.svelte';
@@ -702,6 +703,8 @@
       <button class="btn btn-secondary" on:click={toggleSettings} title="Settings">Settings</button>
     </div>
 </main>
+
+<Footer />
 
 <style>
   .flag-quiz {
