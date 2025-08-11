@@ -46,6 +46,7 @@
   let showResetConfirmation = false;
   let focusWrongAnswers = false;
   let reduceCorrectAnswers = false;
+  let soundEnabled = true;
 
   // Theme
   let theme = 'system';
@@ -63,7 +64,7 @@
 
   // Save settings when they change (after initial load)
   $: if (settingsLoaded && typeof reduceCorrectAnswers !== 'undefined') {
-    localStorage.setItem('flagQuizSettings', JSON.stringify({ autoAdvance, focusWrongAnswers, reduceCorrectAnswers }));
+    localStorage.setItem('flagQuizSettings', JSON.stringify({ autoAdvance, focusWrongAnswers, reduceCorrectAnswers, soundEnabled }));
   }
 
   // Load game stats from localStorage
@@ -129,6 +130,7 @@
           autoAdvance = settings.autoAdvance !== undefined ? settings.autoAdvance : true;
           focusWrongAnswers = settings.focusWrongAnswers !== undefined ? settings.focusWrongAnswers : false;
           reduceCorrectAnswers = settings.reduceCorrectAnswers !== undefined ? settings.reduceCorrectAnswers : false;
+          soundEnabled = settings.soundEnabled !== undefined ? settings.soundEnabled : true;
         } catch (e) {
           console.error('Error loading settings:', e);
         }
@@ -289,6 +291,9 @@
       gameStats.correct++;
       currentStreak++;
 
+      // Play correct sound
+      playCorrectSound();
+
       // Track correct answer for this flag
       if (currentQuestion.correct?.name) {
         const flagName = currentQuestion.correct.name;
@@ -314,6 +319,9 @@
     } else {
       gameStats.wrong++;
       currentStreak = 0; // Reset streak on wrong answer
+
+      // Play wrong sound
+      playWrongSound();
 
       // Track wrong answer for this flag
       if (currentQuestion.correct?.name) {
@@ -456,6 +464,58 @@
   function handleAchievementsUnlocked() {
     updateAchievementCount();
   }
+
+  // Sound functions
+  function playCorrectSound() {
+    if (!soundEnabled) return;
+
+    try {
+      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+
+      // Pleasant ascending tone for correct answer
+      oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime); // C5
+      oscillator.frequency.setValueAtTime(659.25, audioContext.currentTime + 0.1); // E5
+      oscillator.frequency.setValueAtTime(783.99, audioContext.currentTime + 0.2); // G5
+
+      gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.4);
+
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + 0.4);
+    } catch (e) {
+      console.log('Audio not supported:', e);
+    }
+  }
+
+  function playWrongSound() {
+    if (!soundEnabled) return;
+
+    try {
+      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+
+      // Descending tone for wrong answer
+      oscillator.frequency.setValueAtTime(400, audioContext.currentTime); // Lower frequency
+      oscillator.frequency.setValueAtTime(300, audioContext.currentTime + 0.15);
+
+      gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.3);
+
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + 0.3);
+    } catch (e) {
+      console.log('Audio not supported:', e);
+    }
+  }
 </script>
 
 <svelte:head>
@@ -525,6 +585,16 @@
                 bind:checked={reduceCorrectAnswers}
               />
               Show correctly answered flags less frequently
+            </label>
+          </div>
+
+          <div class="setting-item">
+            <label>
+              <input
+                type="checkbox"
+                bind:checked={soundEnabled}
+              />
+              Enable sound effects for answers
             </label>
           </div>
 
