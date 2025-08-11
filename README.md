@@ -2,11 +2,25 @@
 
 A collection of company and brand logos hosted on GitHub Pages. This project provides an easy way to access and use various brand logos in SVG and PNG formats with a user-friendly interface.
 
+## Features
+
 - Browse logos in grid or list view
 - Search functionality to find specific logos
 - Copy direct URL to any logo with one click
 - Download logos directly
 - Responsive design that works on mobile and desktop
+
+## Quiz Games
+
+Test and study your knowledge with interactive quiz games:
+
+- **Flag Quiz**: Challenge yourself to identify world flags or match countries to their flags
+  - Adaptive learning system that focuses on flags you've answered incorrectly
+  - Option to reduce frequency of flags you've answered correctly
+  - Achievement system to track your progress
+  - Persistent settings and score tracking
+
+More quiz types coming soon, including logo and emblem quizzes!
 
 For setup, development, and deployment instructions, see [DEVELOPMENT.md](./DEVELOPMENT.md).
 
