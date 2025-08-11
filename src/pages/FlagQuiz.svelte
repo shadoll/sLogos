@@ -224,6 +224,17 @@
       score.correct++;
       gameStats.correct++;
       currentStreak++;
+
+      // Track continent progress for correct answers
+      if (achievementsComponent && currentQuestion.correct?.tags) {
+        const continent = currentQuestion.correct.tags.find(tag =>
+          ['Europe', 'Asia', 'Africa', 'North America', 'South America', 'Oceania'].includes(tag)
+        );
+        if (continent) {
+          achievementsComponent.incrementContinentProgress(continent);
+        }
+      }
+
       // Reset consecutive skips on correct answer
       if (achievementsComponent) {
         achievementsComponent.resetConsecutiveSkips();

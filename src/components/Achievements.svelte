@@ -19,44 +19,49 @@
       name: "First Victory",
       description: "Answer your first question correctly",
       icon: "smile-squre.svg",
+      iconColor: "#fbbf24", // gold
       requirement: () => gameStats.correct >= 1,
     },
     party_time: {
       name: "Party Time!",
       description: "Answer 5 questions correctly in a row",
       icon: "confetti-minimalistic.svg",
+      iconColor: "#fbbf24", // gold
       requirement: () => currentStreak >= 5,
     },
     dedication: {
       name: "Dedicated Learner",
       description: "Answer 10 questions in total",
       icon: "check-circle.svg",
+      iconColor: "#fbbf24", // gold
       requirement: () => gameStats.total >= 10,
     },
     perfect_10: {
       name: "Perfect Ten",
       description: "Answer 10 questions correctly without any mistakes",
       icon: "medal-star.svg",
+      iconColor: "#fbbf24", // gold
       requirement: () => currentStreak >= 10,
     },
     speedrunner: {
       name: "Speed Runner",
       description: "Skip 10 questions in a row",
       icon: "running.svg",
+      iconColor: "#fbbf24", // gold
       requirement: () => achievements.consecutive_skips >= 10,
     },
-
     persistent: {
       name: "Persistent Scholar",
       description: "Answer 25 questions (correct or wrong)",
       icon: "medal-ribbons-star.svg",
+      iconColor: "#fbbf24", // gold
       requirement: () => gameStats.total >= 25,
     },
-
     perfectionist: {
       name: "Perfectionist",
       description: "Achieve 90% accuracy with at least 20 answers",
       icon: "medal-star-circle.svg",
+      iconColor: "#fbbf24", // gold
       requirement: () =>
         gameStats.total >= 20 && gameStats.correct / gameStats.total >= 0.9,
     },
@@ -64,21 +69,110 @@
       name: "World Explorer",
       description: "Answer 50 questions correctly",
       icon: "crown-minimalistic.svg",
+      iconColor: "#fbbf24", // gold
       requirement: () => gameStats.correct >= 50,
     },
-
     master: {
       name: "Flag Master",
       description: "Answer 100 questions correctly",
       icon: "cup-first.svg",
+      iconColor: "#fbbf24", // gold
       requirement: () => gameStats.correct >= 100,
     },
-
     legend: {
       name: "Geography Legend",
       description: "Answer 200 questions correctly",
       icon: "crown-star.svg",
+      iconColor: "#fbbf24", // gold
       requirement: () => gameStats.correct >= 200,
+    },
+
+    // Continent Knowledge Achievements - Beginner Level
+    europe_explorer: {
+      name: "European Explorer",
+      description: "Answer 10 European country questions correctly",
+      icon: "point-on-map.svg",
+      iconColor: "#3b82f6", // blue
+      requirement: () => (achievements.continents?.Europe || 0) >= 10,
+    },
+    asia_wanderer: {
+      name: "Asian Wanderer",
+      description: "Answer 10 Asian country questions correctly",
+      icon: "point-on-map.svg",
+      iconColor: "#ef4444", // red
+      requirement: () => (achievements.continents?.Asia || 0) >= 10,
+    },
+    africa_adventurer: {
+      name: "African Adventurer",
+      description: "Answer 10 African country questions correctly",
+      icon: "point-on-map.svg",
+      iconColor: "#22c55e", // green
+      requirement: () => (achievements.continents?.Africa || 0) >= 10,
+    },
+    north_america_navigator: {
+      name: "North American Navigator",
+      description: "Answer 10 North American country questions correctly",
+      icon: "point-on-map.svg",
+      iconColor: "#8b5cf6", // purple
+      requirement: () => (achievements.continents?.["North America"] || 0) >= 10,
+    },
+    south_america_scout: {
+      name: "South American Scout",
+      description: "Answer 10 South American country questions correctly",
+      icon: "point-on-map.svg",
+      iconColor: "#f59e0b", // amber
+      requirement: () => (achievements.continents?.["South America"] || 0) >= 10,
+    },
+    oceania_voyager: {
+      name: "Oceania Voyager",
+      description: "Answer 10 Oceania country questions correctly",
+      icon: "point-on-map.svg",
+      iconColor: "#06b6d4", // cyan
+      requirement: () => (achievements.continents?.Oceania || 0) >= 10,
+    },
+
+    // Continent Knowledge Achievements - Expert Level
+    europe_master: {
+      name: "European Master",
+      description: "Answer 25 European country questions correctly",
+      icon: "flag.svg",
+      iconColor: "#3b82f6", // blue
+      requirement: () => (achievements.continents?.Europe || 0) >= 25,
+    },
+    asia_master: {
+      name: "Asian Master",
+      description: "Answer 25 Asian country questions correctly",
+      icon: "flag.svg",
+      iconColor: "#ef4444", // red
+      requirement: () => (achievements.continents?.Asia || 0) >= 25,
+    },
+    africa_master: {
+      name: "African Master",
+      description: "Answer 25 African country questions correctly",
+      icon: "flag.svg",
+      iconColor: "#22c55e", // green
+      requirement: () => (achievements.continents?.Africa || 0) >= 25,
+    },
+    north_america_master: {
+      name: "North American Master",
+      description: "Answer 25 North American country questions correctly",
+      icon: "flag.svg",
+      iconColor: "#8b5cf6", // purple
+      requirement: () => (achievements.continents?.["North America"] || 0) >= 25,
+    },
+    south_america_master: {
+      name: "South American Master",
+      description: "Answer 25 South American country questions correctly",
+      icon: "flag.svg",
+      iconColor: "#f59e0b", // amber
+      requirement: () => (achievements.continents?.["South America"] || 0) >= 25,
+    },
+    oceania_master: {
+      name: "Oceania Master",
+      description: "Answer 25 Oceania country questions correctly",
+      icon: "flag.svg",
+      iconColor: "#06b6d4", // cyan
+      requirement: () => (achievements.continents?.Oceania || 0) >= 25,
     },
   };
 
@@ -91,9 +185,49 @@
       } else {
         achievements = { consecutive_skips: 0 };
       }
+
+      // Initialize continent tracking if not exists
+      if (!achievements.continents) {
+        achievements.continents = {
+          "Europe": 0,
+          "Asia": 0,
+          "Africa": 0,
+          "North America": 0,
+          "South America": 0,
+          "Oceania": 0
+        };
+      }
     } catch (error) {
       console.error("Error loading achievements:", error);
-      achievements = { consecutive_skips: 0 };
+      achievements = {
+        consecutive_skips: 0,
+        continents: {
+          "Europe": 0,
+          "Asia": 0,
+          "Africa": 0,
+          "North America": 0,
+          "South America": 0,
+          "Oceania": 0
+        }
+      };
+    }
+  }
+
+  export function incrementContinentProgress(continent) {
+    if (!achievements.continents) {
+      achievements.continents = {
+        "Europe": 0,
+        "Asia": 0,
+        "Africa": 0,
+        "North America": 0,
+        "South America": 0,
+        "Oceania": 0
+      };
+    }
+
+    if (achievements.continents[continent] !== undefined) {
+      achievements.continents[continent]++;
+      saveAchievements();
     }
   }
 
@@ -209,7 +343,10 @@
             class="achievement-item"
             class:unlocked={achievements[key]?.unlocked}
           >
-            <div class="achievement-icon">
+            <div
+              class="achievement-icon"
+              style={achievements[key]?.unlocked ? `color: ${def.iconColor}` : ''}
+            >
               <InlineSvg path={`/icons/${def.icon}`} alt={def.name} />
             </div>
             <div class="achievement-info">
@@ -344,10 +481,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-
-  .achievement-item.unlocked .achievement-icon {
-    color: #fbbf24;
   }
 
   .achievement-info {
