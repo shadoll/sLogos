@@ -44,6 +44,7 @@ jobs:
         run: |
           mkdir -p ./gh-pages-artifact/build
           cp public/build/* ./gh-pages-artifact/build/
+          cp public/icons/* ./gh-pages-artifact/icons/
           cp public/index.html ./gh-pages-artifact/
           cp public/global.css ./gh-pages-artifact/
           cp public/favicon.svg ./gh-pages-artifact/
