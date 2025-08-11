@@ -1,6 +1,6 @@
 <script>
-  import { createEventDispatcher } from 'svelte';
-  import InlineSvg from './InlineSvg.svelte';
+  import { createEventDispatcher } from "svelte";
+  import InlineSvg from "./InlineSvg.svelte";
 
   const dispatch = createEventDispatcher();
 
@@ -15,85 +15,90 @@
 
   // Achievement definitions
   const achievementDefinitions = {
-    'first_correct': {
-      name: 'First Victory',
-      description: 'Answer your first question correctly',
-      icon: 'smile-squre.svg',
-      requirement: () => gameStats.correct >= 1
+    first_correct: {
+      name: "First Victory",
+      description: "Answer your first question correctly",
+      icon: "smile-squre.svg",
+      requirement: () => gameStats.correct >= 1,
     },
-    'perfect_10': {
-      name: 'Perfect Ten',
-      description: 'Answer 10 questions correctly without any mistakes',
-      icon: 'medal-star.svg',
-      requirement: () => currentStreak >= 10
+    party_time: {
+      name: "Party Time!",
+      description: "Answer 5 questions correctly in a row",
+      icon: "confetti-minimalistic.svg",
+      requirement: () => currentStreak >= 5,
     },
-    'speedrunner': {
-      name: 'Speed Runner',
-      description: 'Skip 10 questions in a row',
-      icon: 'running.svg',
-      requirement: () => achievements.consecutive_skips >= 10
+    dedication: {
+      name: "Dedicated Learner",
+      description: "Answer 10 questions in total",
+      icon: "check-circle.svg",
+      requirement: () => gameStats.total >= 10,
     },
-    'explorer': {
-      name: 'World Explorer',
-      description: 'Answer 50 questions correctly',
-      icon: 'crown-minimalistic.svg',
-      requirement: () => gameStats.correct >= 50
+    perfect_10: {
+      name: "Perfect Ten",
+      description: "Answer 10 questions correctly without any mistakes",
+      icon: "medal-star.svg",
+      requirement: () => currentStreak >= 10,
     },
-    'master': {
-      name: 'Flag Master',
-      description: 'Answer 100 questions correctly',
-      icon: 'cup-first.svg',
-      requirement: () => gameStats.correct >= 100
+    speedrunner: {
+      name: "Speed Runner",
+      description: "Skip 10 questions in a row",
+      icon: "running.svg",
+      requirement: () => achievements.consecutive_skips >= 10,
     },
-    'persistent': {
-      name: 'Persistent Scholar',
-      description: 'Answer 25 questions (correct or wrong)',
-      icon: 'medal-ribbons-star.svg',
-      requirement: () => gameStats.total >= 25
+
+    persistent: {
+      name: "Persistent Scholar",
+      description: "Answer 25 questions (correct or wrong)",
+      icon: "medal-ribbons-star.svg",
+      requirement: () => gameStats.total >= 25,
     },
-    'perfectionist': {
-      name: 'Perfectionist',
-      description: 'Achieve 90% accuracy with at least 20 answers',
-      icon: 'medal-star-circle.svg',
-      requirement: () => gameStats.total >= 20 && (gameStats.correct / gameStats.total) >= 0.9
+
+    perfectionist: {
+      name: "Perfectionist",
+      description: "Achieve 90% accuracy with at least 20 answers",
+      icon: "medal-star-circle.svg",
+      requirement: () =>
+        gameStats.total >= 20 && gameStats.correct / gameStats.total >= 0.9,
     },
-    'party_time': {
-      name: 'Party Time!',
-      description: 'Answer 5 questions correctly in a row',
-      icon: 'confetti-minimalistic.svg',
-      requirement: () => currentStreak >= 5
+    explorer: {
+      name: "World Explorer",
+      description: "Answer 50 questions correctly",
+      icon: "crown-minimalistic.svg",
+      requirement: () => gameStats.correct >= 50,
     },
-    'dedication': {
-      name: 'Dedicated Learner',
-      description: 'Answer 10 questions in total',
-      icon: 'check-circle.svg',
-      requirement: () => gameStats.total >= 10
+
+    master: {
+      name: "Flag Master",
+      description: "Answer 100 questions correctly",
+      icon: "cup-first.svg",
+      requirement: () => gameStats.correct >= 100,
     },
-    'legend': {
-      name: 'Geography Legend',
-      description: 'Answer 200 questions correctly',
-      icon: 'crown-star.svg',
-      requirement: () => gameStats.correct >= 200
-    }
+
+    legend: {
+      name: "Geography Legend",
+      description: "Answer 200 questions correctly",
+      icon: "crown-star.svg",
+      requirement: () => gameStats.correct >= 200,
+    },
   };
 
   // Achievement functions
   export function loadAchievements() {
     try {
-      const saved = localStorage.getItem('flagQuizAchievements');
+      const saved = localStorage.getItem("flagQuizAchievements");
       if (saved) {
         achievements = JSON.parse(saved);
       } else {
         achievements = { consecutive_skips: 0 };
       }
     } catch (error) {
-      console.error('Error loading achievements:', error);
+      console.error("Error loading achievements:", error);
       achievements = { consecutive_skips: 0 };
     }
   }
 
   function saveAchievements() {
-    localStorage.setItem('flagQuizAchievements', JSON.stringify(achievements));
+    localStorage.setItem("flagQuizAchievements", JSON.stringify(achievements));
   }
 
   export function checkAchievements() {
@@ -103,11 +108,11 @@
       if (!achievements[key] && achievement.requirement()) {
         achievements[key] = {
           unlocked: true,
-          unlockedAt: Date.now()
+          unlockedAt: Date.now(),
         };
         newUnlocked.push({
           key,
-          ...achievement
+          ...achievement,
         });
       }
     });
@@ -116,7 +121,7 @@
       newAchievements = [...newAchievements, ...newUnlocked];
       saveAchievements();
       showNewAchievements();
-      dispatch('achievementsUnlocked', newUnlocked);
+      dispatch("achievementsUnlocked", newUnlocked);
     }
   }
 
@@ -133,14 +138,14 @@
       .map(([key, data]) => ({
         key,
         ...achievementDefinitions[key],
-        ...data
+        ...data,
       }));
   }
 
   export function getAchievementCount() {
     return {
-      unlocked: Object.values(achievements).filter(a => a.unlocked).length,
-      total: Object.keys(achievementDefinitions).length
+      unlocked: Object.values(achievements).filter((a) => a.unlocked).length,
+      total: Object.keys(achievementDefinitions).length,
     };
   }
 
@@ -160,20 +165,20 @@
   function handleOverlayClick(event) {
     if (event.target === event.currentTarget) {
       show = false;
-      dispatch('close');
+      dispatch("close");
     }
   }
 
   function handleOverlayKeydown(event) {
-    if (event.key === 'Escape') {
+    if (event.key === "Escape") {
       show = false;
-      dispatch('close');
+      dispatch("close");
     }
   }
 
   function closeModal() {
     show = false;
-    dispatch('close');
+    dispatch("close");
   }
 </script>
 
@@ -200,7 +205,10 @@
 
       <div class="achievements-content">
         {#each Object.entries(achievementDefinitions) as [key, def]}
-          <div class="achievement-item" class:unlocked={achievements[key]?.unlocked}>
+          <div
+            class="achievement-item"
+            class:unlocked={achievements[key]?.unlocked}
+          >
             <div class="achievement-icon">
               <InlineSvg path={`/icons/${def.icon}`} alt={def.name} />
             </div>
@@ -271,7 +279,7 @@
     width: 90%;
     max-height: 80vh;
     overflow-y: auto;
-    box-shadow: 0 10px 24px rgba(0,0,0,0.25);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
   }
 
   .achievements-header {
@@ -415,7 +423,7 @@
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     animation: slideInRight 0.3s ease-out;
     max-width: 300px;
   }
@@ -426,7 +434,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(255,255,255,0.2);
+    background: rgba(255, 255, 255, 0.2);
     border-radius: 50%;
   }
 
