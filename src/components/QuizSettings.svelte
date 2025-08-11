@@ -9,9 +9,9 @@
   export let focusWrongAnswers = false;
   export let reduceCorrectAnswers = false;
   export let soundEnabled = true;
+  export let sessionLength = 10;
   export let showSettings = false;
   export let showResetConfirmation = false;
-  export let quizType = 'flag'; // 'flag', 'logo', 'emblem', etc.
 
   // Customizable labels for different quiz types
   export let focusWrongLabel = 'Focus on previously answered incorrectly items';
@@ -24,6 +24,13 @@
 
   function handleOverlayKeydown(event) {
     if (event.key === 'Escape') {
+      toggleSettings();
+    }
+  }
+
+  function handleOverlayClick(event) {
+    // Only close if clicking on the overlay itself, not the modal content
+    if (event.target === event.currentTarget) {
       toggleSettings();
     }
   }
@@ -43,13 +50,14 @@
     autoAdvance,
     focusWrongAnswers,
     reduceCorrectAnswers,
-    soundEnabled
+    soundEnabled,
+    sessionLength
   });
 </script>
 
 {#if showSettings}
-  <div class="settings-overlay" on:click={toggleSettings} on:keydown={handleOverlayKeydown} role="button" tabindex="0">
-    <div class="settings-modal" role="dialog" aria-modal="true" on:click|stopPropagation>
+  <div class="settings-overlay" on:click={handleOverlayClick} on:keydown={handleOverlayKeydown} role="button" tabindex="0" aria-label="Close settings">
+    <div class="settings-modal" role="dialog" aria-modal="true">
       <div class="settings-header">
         <InlineSvg path="/icons/settings.svg" alt="Settings" />
         <h3>Game Settings</h3>
@@ -99,6 +107,20 @@
           </label>
         </div>
 
+        <div class="setting-item">
+          <label for="sessionLength">
+            Quiz length (number of questions):
+            <select id="sessionLength" bind:value={sessionLength}>
+              <option value={5}>5 questions</option>
+              <option value={10}>10 questions</option>
+              <option value={15}>15 questions</option>
+              <option value={20}>20 questions</option>
+              <option value={25}>25 questions</option>
+              <option value={50}>50 questions</option>
+            </select>
+          </label>
+        </div>
+
         <div class="setting-actions">
           <button class="reset-stats-btn" on:click={resetAllStats}>
             Reset All Statistics
@@ -120,7 +142,7 @@
         <p>This action will permanently delete:</p>
         <ul>
           <li>✗ All game statistics (correct, wrong, skipped answers)</li>
-          <li>✗ Current session score</li>
+          <li>✗ Current quiz score</li>
           <li>✗ All unlocked achievements</li>
           <li>✗ Achievement progress</li>
           <li>✗ Wrong answer tracking data</li>
@@ -241,10 +263,53 @@
     font-size: 0.9rem;
   }
 
+  .setting-item label[for="sessionLength"] {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    cursor: default;
+  }
+
   .setting-item input[type="checkbox"] {
     width: 1rem;
     height: 1rem;
     cursor: pointer;
+  }
+
+  .setting-item select {
+    background: var(--color-bg-secondary);
+    color: var(--color-text-primary);
+    border: 2px solid var(--color-border);
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    width: 100%;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1rem;
+    padding-right: 2.5rem;
+    transition: all 0.2s ease;
+    font-family: inherit;
+  }
+
+  .setting-item select:hover {
+    border-color: var(--color-primary);
+    background-color: var(--color-bg-hover, var(--color-bg-secondary));
+  }
+
+  .setting-item select:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(70, 25, 194, 0.1);
+  }
+
+  .setting-item select option {
+    background: var(--color-bg-secondary);
+    color: var(--color-text-primary);
+    padding: 0.5rem;
   }
 
   .setting-actions {

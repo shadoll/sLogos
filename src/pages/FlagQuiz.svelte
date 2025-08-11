@@ -5,6 +5,7 @@
   import InlineSvg from '../components/InlineSvg.svelte';
   import Achievements from '../components/Achievements.svelte';
   import QuizSettings from '../components/QuizSettings.svelte';
+  import WelcomeStats from '../components/WelcomeStats.svelte';
 
   // Game data
   let flags = [];
@@ -17,7 +18,8 @@
   let correctAnswer = '';
 
   // Game states
-  let gameState = 'loading'; // 'loading', 'question', 'answered', 'finished'
+  let gameState = 'welcome'; // 'welcome', 'loading', 'question', 'answered', 'session-complete'
+  let quizSubpage = 'welcome'; // 'welcome' or 'quiz'
   let selectedAnswer = null;
   let answered = false;
   let isAnswered = false;
@@ -56,6 +58,15 @@
   let focusWrongAnswers = false;
   let reduceCorrectAnswers = false;
   let soundEnabled = true;
+  let sessionLength = 10;
+
+  // Session management
+  let currentSessionQuestions = 0;
+  let sessionStats = { correct: 0, wrong: 0, skipped: 0, total: 0, sessionLength: 10 };
+  let showSessionResults = false;
+  let sessionInProgress = false;
+  let sessionStartTime = null;
+  let sessionRestoredFromReload = false; // Track if session was restored from page reload
 
   // Theme
   let theme = 'system';
@@ -73,7 +84,7 @@
 
   // Save settings when they change (after initial load)
   $: if (settingsLoaded && typeof reduceCorrectAnswers !== 'undefined') {
-    localStorage.setItem('flagQuizSettings', JSON.stringify({ autoAdvance, focusWrongAnswers, reduceCorrectAnswers, soundEnabled }));
+    localStorage.setItem('flagQuizSettings', JSON.stringify({ autoAdvance, focusWrongAnswers, reduceCorrectAnswers, soundEnabled, sessionLength }));
   }
 
   // Load game stats from localStorage
@@ -140,6 +151,7 @@
           focusWrongAnswers = settings.focusWrongAnswers !== undefined ? settings.focusWrongAnswers : false;
           reduceCorrectAnswers = settings.reduceCorrectAnswers !== undefined ? settings.reduceCorrectAnswers : false;
           soundEnabled = settings.soundEnabled !== undefined ? settings.soundEnabled : true;
+          sessionLength = settings.sessionLength !== undefined ? settings.sessionLength : 10;
         } catch (e) {
           console.error('Error loading settings:', e);
         }
@@ -148,7 +160,9 @@
 
   await loadFlags();
   settingsLoaded = true;
-  generateQuestion();
+
+  // Load or initialize session
+  loadSessionState();
   });
 
   function applyTheme(theme) {
@@ -190,6 +204,70 @@
       console.error('Error loading flags:', error);
       flags = [];
     }
+  }
+
+  function saveSessionState() {
+    const sessionState = {
+      sessionInProgress,
+      currentSessionQuestions,
+      sessionStats,
+      score,
+      currentQuestion,
+      selectedAnswer,
+      showResult,
+      gameState,
+      quizSubpage,
+      sessionStartTime,
+      questionKey
+    };
+    localStorage.setItem('flagQuizSessionState', JSON.stringify(sessionState));
+  }
+
+  function loadSessionState() {
+    const savedState = localStorage.getItem('flagQuizSessionState');
+    if (savedState) {
+      try {
+        const state = JSON.parse(savedState);
+        if (state.sessionInProgress) {
+          // Restore session
+          sessionInProgress = state.sessionInProgress;
+          currentSessionQuestions = state.currentSessionQuestions || 0;
+          sessionStats = state.sessionStats || { correct: 0, wrong: 0, skipped: 0, total: 0, sessionLength };
+          score = state.score || { correct: 0, total: 0, skipped: 0 };
+          currentQuestion = state.currentQuestion;
+          selectedAnswer = state.selectedAnswer;
+          showResult = state.showResult || false;
+          gameState = state.gameState || 'question';
+          quizSubpage = 'quiz';
+          sessionStartTime = state.sessionStartTime;
+          questionKey = state.questionKey || 0;
+
+          // Mark that session was restored from reload
+          sessionRestoredFromReload = true;
+
+          // If we don't have a current question, generate one
+          if (!currentQuestion) {
+            generateQuestion();
+          }
+        } else {
+          // No active session, show welcome page
+          quizSubpage = 'welcome';
+          gameState = 'welcome';
+        }
+      } catch (e) {
+        console.error('Error loading session state:', e);
+        quizSubpage = 'welcome';
+        gameState = 'welcome';
+      }
+    } else {
+      // No saved state, show welcome page
+      quizSubpage = 'welcome';
+      gameState = 'welcome';
+    }
+  }
+
+  function clearSessionState() {
+    localStorage.removeItem('flagQuizSessionState');
   }
 
   function generateQuestion() {
@@ -306,6 +384,9 @@
     };
 
     console.log('Generated question:', currentQuestion);
+
+    // Save session state
+    saveSessionState();
   }  function selectAnswer(index) {
     if (gameState !== 'question') return;
 
@@ -317,10 +398,14 @@
 
     // Update score
     score.total++;
+    currentSessionQuestions++;
+    sessionStats.total++;
+
     const isCorrect = index === correctAnswer;
     if (isCorrect) {
       score.correct++;
       gameStats.correct++;
+      sessionStats.correct++;
       currentStreak++;
 
       // Play correct sound
@@ -350,6 +435,7 @@
       }
     } else {
       gameStats.wrong++;
+      sessionStats.wrong++;
       currentStreak = 0; // Reset streak on wrong answer
 
       // Play wrong sound
@@ -377,6 +463,27 @@
       achievementsComponent.checkAchievements();
     }
 
+    // Save session state
+    saveSessionState();
+
+    // Check if session is complete
+    if (currentSessionQuestions >= sessionLength) {
+      // Session complete - show results and return to welcome page
+      gameState = 'session-complete';
+      sessionStats.sessionLength = sessionLength;
+
+      if (autoAdvance) {
+        const delay = isCorrect ? 2000 : 4000;
+        setTimeout(() => {
+          endSession();
+        }, delay);
+      } else {
+        // Show session complete state immediately
+        endSession();
+      }
+      return;
+    }
+
     // Auto-advance to next question with different delays if auto mode is on
     if (autoAdvance) {
       const delay = isCorrect ? 2000 : 4000; // Double delay for wrong answers
@@ -389,6 +496,9 @@
     score.skipped++;
     gameStats.skipped++;
     gameStats.total++;
+    currentSessionQuestions++;
+    sessionStats.skipped++;
+    sessionStats.total++;
 
     // Track consecutive skips for Speed Runner achievement
     if (achievementsComponent) {
@@ -402,6 +512,17 @@
 
     // Save stats to localStorage
     localStorage.setItem('flagQuizStats', JSON.stringify(gameStats));
+
+    // Save session state
+    saveSessionState();
+
+    // Check if session is complete
+    if (currentSessionQuestions >= sessionLength) {
+      gameState = 'session-complete';
+      sessionStats.sessionLength = sessionLength;
+      endSession();
+      return;
+    }
 
     // Move to next question immediately
     generateQuestion();
@@ -439,9 +560,37 @@
     }
   }
 
-  function resetGame() {
+  function startNewSession() {
+    // Reset session data
     score = { correct: 0, total: 0, skipped: 0 };
+    currentSessionQuestions = 0;
+    sessionStats = { correct: 0, wrong: 0, skipped: 0, total: 0, sessionLength };
+    sessionInProgress = true;
+    sessionStartTime = Date.now();
+    showSessionResults = false;
+    sessionRestoredFromReload = false; // Reset reload flag for new sessions
+
+    // Switch to quiz subpage
+    quizSubpage = 'quiz';
+    gameState = 'loading';
+
+    // Generate first question
     generateQuestion();
+  }
+
+  function endSession() {
+    // Clear session state
+    sessionInProgress = false;
+    clearSessionState();
+
+    // Switch to welcome/stats page
+    quizSubpage = 'welcome';
+    gameState = 'welcome';
+    showSessionResults = true; // Show results on welcome page
+  }
+
+  function resetGame() {
+    endSession();
   }
 
   function resetStats() {
@@ -459,11 +608,15 @@
   }
 
   function handleSettingsChange(event) {
-    const { autoAdvance: newAutoAdvance, focusWrongAnswers: newFocusWrong, reduceCorrectAnswers: newReduceCorrect, soundEnabled: newSoundEnabled } = event.detail;
+    const { autoAdvance: newAutoAdvance, focusWrongAnswers: newFocusWrong, reduceCorrectAnswers: newReduceCorrect, soundEnabled: newSoundEnabled, sessionLength: newSessionLength } = event.detail;
     autoAdvance = newAutoAdvance;
     focusWrongAnswers = newFocusWrong;
     reduceCorrectAnswers = newReduceCorrect;
     soundEnabled = newSoundEnabled;
+    sessionLength = newSessionLength;
+
+    // Update current session stats with new session length
+    sessionStats.sessionLength = newSessionLength;
   }
 
   function handleSettingsToggle(event) {
@@ -479,6 +632,8 @@
     gameStats = { correct: 0, wrong: 0, total: 0, skipped: 0 };
     score = { correct: 0, total: 0, skipped: 0 };
     currentStreak = 0;
+    currentSessionQuestions = 0;
+    sessionStats = { correct: 0, wrong: 0, skipped: 0, total: 0, sessionLength };
     localStorage.setItem('flagQuizStats', JSON.stringify(gameStats));
 
     // Reset wrong answers tracking
@@ -497,11 +652,24 @@
     showResetConfirmation = false;
   }
 
+  function handleSessionPlayAgain() {
+    resetGame();
+  }
+
+  function handleSessionGoToGames() {
+    window.location.hash = '#/game';
+  }
+
+  function handleSessionClose() {
+    showSessionResults = false;
+  }
+
   function cancelReset() {
     showResetConfirmation = false;
   }
 
   function nextQuestion() {
+    sessionRestoredFromReload = false; // Clear reload flag when user manually continues
     generateQuestion();
   }
 
@@ -583,169 +751,184 @@
 <Header
   {theme}
   {setTheme}
-  {score}
   {gameStats}
   {achievementCount}
+  sessionStats={sessionStats}
+  isQuizActive={sessionInProgress && quizSubpage === 'quiz'}
   onAchievementClick={() => showAchievements = true}
 />
 
 <main class="flag-quiz">
   <div class="container">
+    <!-- Quiz Settings Component -->
+    <QuizSettings
+      bind:autoAdvance
+      bind:focusWrongAnswers
+      bind:reduceCorrectAnswers
+      bind:soundEnabled
+      bind:sessionLength
+      bind:showSettings
+      bind:showResetConfirmation
+      focusWrongLabel="Focus on previously answered incorrectly flags"
+      reduceCorrectLabel="Show correctly answered flags less frequently"
+      on:settingsChange={handleSettingsChange}
+      on:settingsToggle={handleSettingsToggle}
+      on:resetConfirmation={handleResetConfirmation}
+      on:resetStats={handleResetStats}
+    />
 
+    <!-- Achievements Component -->
+    <Achievements
+      bind:this={achievementsComponent}
+      {gameStats}
+      {currentStreak}
+      show={showAchievements}
+      on:close={() => showAchievements = false}
+      on:achievementsUnlocked={handleAchievementsUnlocked}
+    />
 
-  <!-- Quiz Settings Component -->
-  <QuizSettings
-    bind:autoAdvance
-    bind:focusWrongAnswers
-    bind:reduceCorrectAnswers
-    bind:soundEnabled
-    bind:showSettings
-    bind:showResetConfirmation
-    focusWrongLabel="Focus on previously answered incorrectly flags"
-    reduceCorrectLabel="Show correctly answered flags less frequently"
-    on:settingsChange={handleSettingsChange}
-    on:settingsToggle={handleSettingsToggle}
-    on:resetConfirmation={handleResetConfirmation}
-    on:resetStats={handleResetStats}
-  />
-
-  <!-- Achievements Component -->
-  <Achievements
-    bind:this={achievementsComponent}
-    {gameStats}
-    {currentStreak}
-    show={showAchievements}
-    on:close={() => showAchievements = false}
-    on:achievementsUnlocked={handleAchievementsUnlocked}
-  />
-    {#if gameState === 'loading'}
-      <div class="loading">Loading flags...</div>
-    {:else if currentQuestion}
-      <div class="question-container">
-        <div class="question-header">
-          <div class="question-number">Question {score.total + 1}</div>
-          <div class="question-type">
-            {currentQuestion.type === 'flag-to-country' ? 'Which country does this flag belong to?' : 'Which flag belongs to this country?'}
+    {#if quizSubpage === 'welcome'}
+      <!-- Welcome/Stats Subpage -->
+      <WelcomeStats
+        {gameStats}
+        {sessionStats}
+        {sessionLength}
+        showSessionResults={showSessionResults}
+        on:startQuiz={startNewSession}
+        on:openSettings={() => showSettings = true}
+        on:closeResults={() => showSessionResults = false}
+      />
+    {:else if quizSubpage === 'quiz'}
+      <!-- Quiz Subpage -->
+      {#if gameState === 'loading'}
+        <div class="loading">Loading flags...</div>
+      {:else if currentQuestion}
+        <div class="question-container">
+          <div class="question-header">
+            <div class="question-number">Question {currentSessionQuestions + 1} from {sessionLength}</div>
+            <div class="question-type">
+              {currentQuestion.type === 'flag-to-country' ? 'Which country does this flag belong to?' : 'Which flag belongs to this country?'}
+            </div>
           </div>
-        </div>
 
-        <!-- Fixed height result area -->
-        <div class="result-area">
-          {#if showResult}
-            <div class="result">
-              {#if selectedAnswer === correctAnswer}
-                <div class="correct-result"><span class="result-icon smile-icon"><InlineSvg path="/icons/smile-squre.svg" alt="Correct" /></span> Correct!</div>
-              {:else}
-                <div class="wrong-result">
-                  <span class="result-icon sad-icon"><InlineSvg path="/icons/sad-square.svg" alt="Wrong" /></span> Wrong!
-                  {#if currentQuestion.type === 'flag-to-country'}
-                    <span class="result-country-info">
-                      The correct answer is: {getCountryName(currentQuestion.correct)}.
-                      <button
-                        class="info-icon result-info-btn"
-                        aria-label="Show country info"
-                        aria-expanded={showResultCountryInfo}
-                        on:click={() => (showResultCountryInfo = !showResultCountryInfo)}
-                        on:keydown={(e) => { if (e.key === 'Escape') showResultCountryInfo = false; }}
-                      >
-                        <InlineSvg path="/icons/info-square.svg" alt="Country info" />
-                      </button>
-                      {#if showResultCountryInfo}
-                        <div class="info-tooltip result-info-tooltip" role="dialog" aria-live="polite">
-                          {currentQuestion.correct.meta.description}
-                        </div>
-                      {/if}
-                    </span>
-                  {:else}
-                    You selected the {getCountryName(currentQuestion.options[selectedAnswer])} flag.
+          <!-- Fixed height result area -->
+          <div class="result-area">
+            {#if showResult}
+              <div class="result">
+                {#if selectedAnswer === correctAnswer}
+                  <div class="correct-result"><span class="result-icon smile-icon"><InlineSvg path="/icons/smile-squre.svg" alt="Correct" /></span> Correct!</div>
+                {:else}
+                  <div class="wrong-result">
+                    <span class="result-icon sad-icon"><InlineSvg path="/icons/sad-square.svg" alt="Wrong" /></span> Wrong!
+                    {#if currentQuestion.type === 'flag-to-country'}
+                      <span class="result-country-info">
+                        The correct answer is: {getCountryName(currentQuestion.correct)}.
+                        <button
+                          class="info-icon result-info-btn"
+                          aria-label="Show country info"
+                          aria-expanded={showResultCountryInfo}
+                          on:click={() => (showResultCountryInfo = !showResultCountryInfo)}
+                          on:keydown={(e) => { if (e.key === 'Escape') showResultCountryInfo = false; }}
+                        >
+                          <InlineSvg path="/icons/info-square.svg" alt="Country info" />
+                        </button>
+                        {#if showResultCountryInfo}
+                          <div class="info-tooltip result-info-tooltip" role="dialog" aria-live="polite">
+                            {currentQuestion.correct.meta.description}
+                          </div>
+                        {/if}
+                      </span>
+                    {:else}
+                      You selected the {getCountryName(currentQuestion.options[selectedAnswer])} flag.
+                    {/if}
+                  </div>
+                {/if}
+              </div>
+            {/if}
+          </div>
+
+          {#if currentQuestion.type === 'flag-to-country'}
+            <div class="flag-display">
+              <img src={getFlagImage(currentQuestion.correct)} alt="Flag" class="quiz-flag" />
+            </div>
+
+            <div class="options" key={questionKey}>
+              {#each currentQuestion.options as option, index}
+                <button
+                  class="option"
+                  class:selected={selectedAnswer === index}
+                  class:correct={showResult && index === correctAnswer}
+                  class:wrong={showResult && selectedAnswer === index && index !== correctAnswer}
+                  on:click={() => selectAnswer(index)}
+                  disabled={gameState === 'answered'}
+                >
+                  {getCountryName(option)}
+                </button>
+              {/each}
+            </div>
+          {:else}
+            <div class="country-display">
+              <h2 class="country-name">
+                {getCountryName(currentQuestion.correct)}
+                {#if currentQuestion.correct?.meta?.description}
+                  <button
+                    class="info-icon"
+                    aria-label="Show country info"
+                    aria-expanded={showCountryInfo}
+                    on:click={() => (showCountryInfo = !showCountryInfo)}
+                    on:keydown={(e) => { if (e.key === 'Escape') showCountryInfo = false; }}
+                  >
+                    <InlineSvg path="/icons/info-square.svg" alt="Country info" />
+                  </button>
+                  {#if showCountryInfo}
+                    <div class="info-tooltip" role="dialog" aria-live="polite">
+                      {currentQuestion.correct.meta.description}
+                    </div>
                   {/if}
-                </div>
-              {/if}
+                {/if}
+              </h2>
+            </div>
+
+            <div class="flag-options" key={questionKey}>
+              {#each currentQuestion.options as option, index}
+                <button
+                  class="flag-option"
+                  class:selected={selectedAnswer === index}
+                  class:correct={showResult && index === correctAnswer}
+                  class:wrong={showResult && selectedAnswer === index && index !== correctAnswer}
+                  on:click={() => selectAnswer(index)}
+                  disabled={gameState === 'answered'}
+                >
+                  <img src={getFlagImage(option)} alt={getCountryName(option)} class="option-flag" />
+                </button>
+              {/each}
+            </div>
+          {/if}
+
+          {#if gameState === 'question'}
+            <button class="btn btn-skip btn-next-full" on:click={skipQuestion}>Skip Question</button>
+          {:else if (!autoAdvance && gameState === 'answered') || (autoAdvance && gameState === 'answered' && sessionRestoredFromReload)}
+            <button class="btn btn-primary btn-next-full" on:click={nextQuestion}>Next Question →</button>
+          {/if}
+
+          <!-- Auto-advance timer display -->
+          {#if autoAdvance && gameState === 'answered' && timerProgress > 0 && !sessionRestoredFromReload}
+            <div class="auto-advance-timer">
+              <div class="timer-bar">
+                <div class="timer-progress" style="width: {timerProgress}%"></div>
+              </div>
+              <span class="timer-text">Next question in {Math.ceil((timerDuration - (timerProgress / 100 * timerDuration)) / 1000)}s</span>
             </div>
           {/if}
         </div>
+      {/if}
 
-  {#if currentQuestion.type === 'flag-to-country'}
-          <div class="flag-display">
-            <img src={getFlagImage(currentQuestion.correct)} alt="Flag" class="quiz-flag" />
-          </div>
-
-          <div class="options" key={questionKey}>
-            {#each currentQuestion.options as option, index}
-              <button
-                class="option"
-                class:selected={selectedAnswer === index}
-                class:correct={showResult && index === correctAnswer}
-                class:wrong={showResult && selectedAnswer === index && index !== correctAnswer}
-                on:click={() => selectAnswer(index)}
-                disabled={gameState === 'answered'}
-              >
-                {getCountryName(option)}
-              </button>
-            {/each}
-          </div>
-  {:else}
-          <div class="country-display">
-            <h2 class="country-name">
-              {getCountryName(currentQuestion.correct)}
-              {#if currentQuestion.correct?.meta?.description}
-                <button
-                  class="info-icon"
-                  aria-label="Show country info"
-                  aria-expanded={showCountryInfo}
-                  on:click={() => (showCountryInfo = !showCountryInfo)}
-                  on:keydown={(e) => { if (e.key === 'Escape') showCountryInfo = false; }}
-                >
-                  <InlineSvg path="/icons/info-square.svg" alt="Country info" />
-                </button>
-                {#if showCountryInfo}
-                  <div class="info-tooltip" role="dialog" aria-live="polite">
-                    {currentQuestion.correct.meta.description}
-                  </div>
-                {/if}
-              {/if}
-            </h2>
-          </div>
-
-          <div class="flag-options" key={questionKey}>
-            {#each currentQuestion.options as option, index}
-              <button
-                class="flag-option"
-                class:selected={selectedAnswer === index}
-                class:correct={showResult && index === correctAnswer}
-                class:wrong={showResult && selectedAnswer === index && index !== correctAnswer}
-                on:click={() => selectAnswer(index)}
-                disabled={gameState === 'answered'}
-              >
-                <img src={getFlagImage(option)} alt={getCountryName(option)} class="option-flag" />
-              </button>
-            {/each}
-          </div>
-        {/if}
-
-        {#if gameState === 'question'}
-          <button class="btn btn-skip btn-next-full" on:click={skipQuestion}>Skip Question</button>
-        {:else if !autoAdvance && gameState === 'answered'}
-          <button class="btn btn-primary btn-next-full" on:click={nextQuestion}>Next Question →</button>
-        {/if}
-
-        <!-- Auto-advance timer display -->
-        {#if autoAdvance && gameState === 'answered' && timerProgress > 0}
-          <div class="auto-advance-timer">
-            <div class="timer-bar">
-              <div class="timer-progress" style="width: {timerProgress}%"></div>
-            </div>
-            <span class="timer-text">Next question in {Math.ceil((timerDuration - (timerProgress / 100 * timerDuration)) / 1000)}s</span>
-          </div>
-        {/if}
+      <div class="controls">
+        <button class="btn btn-secondary" on:click={endSession}>End Quiz</button>
+        <button class="btn btn-secondary" on:click={toggleSettings} title="Settings">Settings</button>
       </div>
     {/if}
-
-    <div class="controls">
-      <a href="#/game" class="btn btn-secondary">Back to Games</a>
-      <button class="btn btn-secondary" on:click={resetGame}>New Session</button>
-      <button class="btn btn-secondary" on:click={toggleSettings} title="Settings">Settings</button>
-    </div>
+  </div>
 </main>
 
 <Footer />
@@ -764,205 +947,6 @@
   }
 
   /* Removed header-top/settings-btn styles; settings now lives in controls */
-
-  .settings-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-
-  .settings-modal {
-    background: var(--color-bg-secondary);
-    border: 2px solid var(--color-border);
-    border-radius: 1rem;
-    padding: 0;
-    max-width: 500px;
-    width: 90%;
-    max-height: 80vh;
-    overflow-y: auto;
-    box-shadow: 0 10px 24px rgba(0,0,0,0.25);
-  }
-
-  .settings-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.5rem;
-    border-bottom: 2px solid var(--color-border);
-  }
-
-  .settings-header :global(.svg-wrapper) {
-    width: 24px;
-    height: 24px;
-    display: inline-flex;
-    flex-shrink: 0;
-  }
-
-  .settings-header h2 {
-    margin: 0;
-    color: var(--color-text-primary);
-  }
-  .close-btn {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: var(--color-text-primary);
-    padding: 0.25rem;
-    border-radius: 0.25rem;
-    transition: background-color 0.3s ease;
-  }
-
-  .close-btn:hover {
-    background-color: var(--color-border);
-  }
-
-  .settings-content {
-    padding: 1.5rem;
-  }
-
-  .setting-item {
-    margin-bottom: 1.5rem;
-  }
-
-  .setting-item label {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    font-size: 1rem;
-    color: var(--color-text-primary);
-    cursor: pointer;
-  }
-
-  .setting-item input[type="checkbox"] {
-    width: 1.2rem;
-    height: 1.2rem;
-    cursor: pointer;
-  }
-
-  .setting-actions {
-    border-top: 2px solid var(--border-color);
-    padding-top: 1.5rem;
-    text-align: center;
-  }
-
-  .reset-stats-btn {
-    background: #ff4444;
-    color: white;
-    border: none;
-    border-radius: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-
-  .reset-stats-btn:hover {
-    background: #cc3333;
-  }
-
-  /* Confirmation Dialog Styles */
-  .confirmation-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.6);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1001;
-  }
-
-  .confirmation-dialog {
-    background: var(--color-bg-primary);
-    border: 2px solid var(--color-border);
-    border-radius: 1rem;
-    padding: 0;
-    max-width: 500px;
-    width: 90%;
-    box-shadow: 0 10px 24px rgba(0,0,0,0.25);
-  }
-
-  .confirmation-header {
-    padding: 1.5rem 1.5rem 1rem 1.5rem;
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  .confirmation-header h3 {
-    margin: 0;
-    font-size: 1.3rem;
-    color: #dc2626;
-  }
-
-  .confirmation-content {
-    padding: 1.5rem;
-  }
-
-  .confirmation-content p {
-    margin: 0 0 1rem 0;
-    color: var(--color-text-primary);
-  }
-
-  .confirmation-content ul {
-    margin: 1rem 0;
-    padding-left: 1.5rem;
-    color: var(--color-text-secondary);
-  }
-
-  .confirmation-content li {
-    margin: 0.5rem 0;
-  }
-
-  .confirmation-actions {
-    display: flex;
-    gap: 1rem;
-    padding: 1rem 1.5rem 1.5rem 1.5rem;
-    justify-content: flex-end;
-    border-top: 1px solid var(--color-border);
-  }
-
-  .cancel-btn {
-    background: var(--color-bg-secondary);
-    border: 1px solid var(--color-border);
-    color: var(--color-text-primary);
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.5rem;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-
-  .cancel-btn:hover {
-    background: var(--color-bg-hover);
-    border-color: var(--color-primary);
-  }
-
-  .confirm-btn {
-    background: #dc2626;
-    border: 1px solid #dc2626;
-    color: white;
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.5rem;
-    font-size: 0.9rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-
-  .confirm-btn:hover {
-    background: #b91c1c;
-    border-color: #b91c1c;
-  }
-
 
   .loading {
     text-align: center;

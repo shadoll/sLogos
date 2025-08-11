@@ -37,16 +37,39 @@
   export let collection = "logos";
   export let setCollection = () => {};
   // Quiz-only data
-  export let score = null;
   export let gameStats = null;
   export let achievementCount = { unlocked: 0, total: 0 };
   export let onAchievementClick = () => {};
+  export let sessionStats = null; // New prop for session stats
+  export let isQuizActive = false; // New prop to determine if quiz is active
 
   let dropdownOpen = false;
+  let showAllTimeStats = false; // State to toggle between session and all-time stats
+  let previousQuizState = false; // Track previous quiz state to detect new quiz start
 
   // Check if we're in game mode
   $: isGameMode = $location && $location.startsWith('/game');
   $: isQuizPage = $location && $location.startsWith('/game/flags');
+
+  // Determine default stats view based on quiz state
+  $: {
+    // Detect when quiz becomes active (new quiz started)
+    if (isQuizActive && !previousQuizState) {
+      // New quiz started - show session stats by default
+      showAllTimeStats = false;
+    } else if (!isQuizActive) {
+      // Quiz not active - show all-time stats
+      showAllTimeStats = true;
+    }
+    // Update previous state
+    previousQuizState = isQuizActive;
+  }
+
+  function toggleStatsView() {
+    if (isQuizActive) {
+      showAllTimeStats = !showAllTimeStats;
+    }
+  }
 
   function handleTitleClick() {
     dropdownOpen = !dropdownOpen;
@@ -123,13 +146,27 @@
     <div class="header-row header-controls" class:quiz-mode={isQuizPage}>
       {#if isQuizPage}
         <div class="quiz-header-stats">
-          <div class="qh-block">
-            <span class="qh-label">Current:</span>
-            <span class="qh-value">{score ? `${score.correct}/${score.total}` : '0/0'} {score && score.skipped > 0 ? `(` : ''}{#if score && score.skipped > 0}<span class="quiz-icon quiz-skip"><InlineSvg path="/icons/skip-square.svg" alt="Skipped" /></span> {score.skipped}){/if}</span>
-          </div>
-          <div class="qh-block">
-            <span class="qh-label">All Time:</span>
-            <span class="qh-value"><span class="quiz-icon quiz-ok"><InlineSvg path="/icons/ok-square.svg" alt="Correct" /></span> {gameStats?.correct || 0} <span class="quiz-icon quiz-fail"><InlineSvg path="/icons/fail-square.svg" alt="Wrong" /></span> {gameStats?.wrong || 0} {gameStats?.skipped > 0 ? `` : ''}{#if gameStats?.skipped > 0}<span class="quiz-icon quiz-skip"><InlineSvg path="/icons/skip-square.svg" alt="Skipped" /></span> {gameStats.skipped}{/if}</span>
+          <div class="qh-block stats-block">
+            {#if isQuizActive && !showAllTimeStats}
+              <!-- Session Stats -->
+              <span class="qh-value">
+                <span class="quiz-icon quiz-ok"><InlineSvg path="/icons/ok-square.svg" alt="Correct" /></span> {sessionStats?.correct || 0}
+                <span class="quiz-icon quiz-fail"><InlineSvg path="/icons/fail-square.svg" alt="Wrong" /></span> {sessionStats?.wrong || 0}
+                <span class="quiz-icon quiz-skip"><InlineSvg path="/icons/skip-square.svg" alt="Skipped" /></span> {sessionStats?.skipped || 0}
+              </span>
+            {:else}
+              <!-- All Time Stats -->
+              <span class="qh-value">
+                <span class="quiz-icon quiz-ok"><InlineSvg path="/icons/ok-square.svg" alt="Correct" /></span> {gameStats?.correct || 0}
+                <span class="quiz-icon quiz-fail"><InlineSvg path="/icons/fail-square.svg" alt="Wrong" /></span> {gameStats?.wrong || 0}
+                <span class="quiz-icon quiz-skip"><InlineSvg path="/icons/skip-square.svg" alt="Skipped" /></span> {gameStats?.skipped || 0}
+              </span>
+            {/if}
+            {#if isQuizActive}
+              <button class="stats-toggle-btn" class:active={showAllTimeStats} on:click={toggleStatsView} title={showAllTimeStats ? "Show session stats" : "Show all-time stats"}>
+                <InlineSvg path="/icons/chart-square.svg" alt="Toggle stats" />
+              </button>
+            {/if}
           </div>
           <div class="qh-block achievement-block">
             <AchievementButton
@@ -371,12 +408,50 @@
     font-size: 0.9rem;
     color: var(--color-text);
   }
-  .qh-label {
-    color: var(--color-text-secondary);
-    margin-right: 0.35rem;
+
+  .qh-block.stats-block {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    position: relative;
   }
+
   .qh-value {
     font-weight: 600;
+  }
+
+  .stats-toggle-btn {
+    background: none;
+    border: none;
+    padding: 0.25rem;
+    cursor: pointer;
+    color: var(--color-text-secondary);
+    transition: all 0.2s ease;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+  }
+
+  .stats-toggle-btn:hover {
+    background: var(--color-bg-hover);
+    color: var(--color-text-primary);
+  }
+
+  .stats-toggle-btn.active {
+    color: var(--color-primary);
+  }
+
+  .stats-toggle-btn.active:hover {
+    background: var(--color-bg-hover);
+    color: var(--color-primary-dark);
+  }
+
+  .stats-toggle-btn :global(.svg-wrapper) {
+    width: 16px;
+    height: 16px;
   }
 
   .quiz-icon {
