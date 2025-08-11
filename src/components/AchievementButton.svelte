@@ -43,11 +43,6 @@
     color: var(--color-primary);
   }
 
-  .achievement-button .qh-label {
-    color: var(--color-text-secondary);
-    margin-right: 0.35rem;
-  }
-
   .achievement-button .qh-value {
     font-weight: 600;
     display: flex;

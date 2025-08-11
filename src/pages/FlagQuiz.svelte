@@ -415,7 +415,18 @@
 
   <!-- Reset Confirmation Dialog -->
   {#if showResetConfirmation}
-    <div class="confirmation-overlay" on:click={(e) => e.target === e.currentTarget && cancelReset()}>
+    <div
+      class="confirmation-overlay"
+      role="button"
+      tabindex="0"
+      aria-label="Close confirmation dialog (click background or press Escape)"
+      on:click={(e) => e.target === e.currentTarget && cancelReset()}
+      on:keydown={(e) => {
+        if (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') {
+          cancelReset();
+        }
+      }}
+    >
       <div class="confirmation-dialog">
         <div class="confirmation-header">
           <h3>⚠️ Reset All Data</h3>
