@@ -5,6 +5,8 @@
   import ThemeSwitcher from "./ThemeSwitcher.svelte";
   import ListViewSwitcher from "./ListViewSwitcher.svelte";
   import SearchBar from "./SearchBar.svelte";
+  import InlineSvg from "./InlineSvg.svelte";
+  import AchievementButton from "./AchievementButton.svelte";
   import { collections } from "../collections.js";
 
   export let displayLogos = [];
@@ -37,6 +39,8 @@
   // Quiz-only data
   export let score = null;
   export let gameStats = null;
+  export let achievementCount = { unlocked: 0, total: 0 };
+  export let onAchievementClick = () => {};
 
   let dropdownOpen = false;
 
@@ -70,43 +74,47 @@
 
 <header class="main-header">
   <div class="header-row">
-    <div class="header-title">
-      <div class="header-icon">
-        <img src="favicon.svg" alt="Logo Gallery icon" />
+    <div class="header-left">
+      <div class="header-title">
+        <div class="header-icon">
+          <img src="favicon.svg" alt="Logo Gallery icon" />
+        </div>
+        <button class="collection-title-btn" on:click={handleTitleClick} aria-haspopup="listbox" aria-expanded={dropdownOpen}>
+          {displayLabel} <span class="triangle">▼</span>
+        </button>
+        {#if dropdownOpen}
+          <ul class="collection-dropdown" role="listbox">
+            {#each collections as c}
+              <li
+                class:active={c.name === collection}
+                role="option"
+                aria-selected={c.name === collection}
+                tabindex="0"
+                on:click={() => handleCollectionSelect(c.name)}
+                on:keydown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    handleCollectionSelect(c.name);
+                  }
+                }}
+              >{c.title} Gallery</li>
+            {/each}
+          </ul>
+        {/if}
       </div>
-      <button class="collection-title-btn" on:click={handleTitleClick} aria-haspopup="listbox" aria-expanded={dropdownOpen}>
-        {displayLabel} <span class="triangle">▼</span>
-      </button>
-      {#if dropdownOpen}
-        <ul class="collection-dropdown" role="listbox">
-          {#each collections as c}
-            <li
-              class:active={c.name === collection}
-              role="option"
-              aria-selected={c.name === collection}
-              tabindex="0"
-              on:click={() => handleCollectionSelect(c.name)}
-              on:keydown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  e.preventDefault();
-                  handleCollectionSelect(c.name);
-                }
-              }}
-            >{c.title} Gallery</li>
-          {/each}
-        </ul>
+      {#if !isGameMode}
+        <span class="logo-count">
+          {#if (searchQuery && searchQuery.trim() !== "") || selectedTags.length > 0 || selectedBrands.length > 0 || selectedVariants.length > 0 || compactMode}
+            {displayLogos ? displayLogos.length : 0} of {allLogos ? allLogos.length : 0} images
+            displayed
+          {:else}
+            {allLogos ? allLogos.length : 0} images in gallery
+          {/if}
+        </span>
       {/if}
     </div>
-    <span class="logo-count">
-      {#if (searchQuery && searchQuery.trim() !== "") || selectedTags.length > 0 || selectedBrands.length > 0 || selectedVariants.length > 0 || compactMode}
-        {displayLogos ? displayLogos.length : 0} of {allLogos ? allLogos.length : 0} images
-        displayed
-      {:else}
-        {allLogos ? allLogos.length : 0} images in gallery
-      {/if}
-    </span>
     <a href="#/game" class="game-button" class:active={isGameMode} title={isGameMode ? "Back to Main" : "Quiz Games"} on:click|preventDefault={handleGameClick}>
-      🎮
+      <span class="icon"><InlineSvg path="/icons/gamepad.svg" alt="Games" /></span>
     </a>
     <ThemeSwitcher {theme} {setTheme} />
   </div>
@@ -117,40 +125,50 @@
         <div class="quiz-header-stats">
           <div class="qh-block">
             <span class="qh-label">Current:</span>
-            <span class="qh-value">{score ? `${score.correct}/${score.total}` : '0/0'} {score && score.skipped > 0 ? `(⏭️ ${score.skipped})` : ''}</span>
+            <span class="qh-value">{score ? `${score.correct}/${score.total}` : '0/0'} {score && score.skipped > 0 ? `(` : ''}{#if score && score.skipped > 0}<span class="quiz-icon quiz-skip"><InlineSvg path="/icons/skip-square.svg" alt="Skipped" /></span> {score.skipped}){/if}</span>
           </div>
           <div class="qh-block">
             <span class="qh-label">All Time:</span>
-            <span class="qh-value">✅ {gameStats?.correct || 0} ❌ {gameStats?.wrong || 0} {gameStats?.skipped > 0 ? `⏭️ ${gameStats.skipped}` : ''}</span>
+            <span class="qh-value"><span class="quiz-icon quiz-ok"><InlineSvg path="/icons/ok-square.svg" alt="Correct" /></span> {gameStats?.correct || 0} <span class="quiz-icon quiz-fail"><InlineSvg path="/icons/fail-square.svg" alt="Wrong" /></span> {gameStats?.wrong || 0} {gameStats?.skipped > 0 ? `` : ''}{#if gameStats?.skipped > 0}<span class="quiz-icon quiz-skip"><InlineSvg path="/icons/skip-square.svg" alt="Skipped" /></span> {gameStats.skipped}{/if}</span>
+          </div>
+          <div class="qh-block achievement-block">
+            <AchievementButton
+              {achievementCount}
+              on:click={onAchievementClick}
+            />
           </div>
         </div>
       {:else}
-        <SearchBar {searchQuery} {setSearchQuery} />
-        <Filter
-          {allLogos}
-          {allTags}
-          {selectedTags}
-          {selectedBrands}
-          {selectedVariants}
-          {tagDropdownOpen}
-          {toggleDropdown}
-          {addTag}
-          {removeTag}
-          {addBrand}
-          {removeBrand}
-          {addVariant}
-          {removeVariant}
-          {getTagObj}
-          {compactMode}
-          {setCompactMode}
-          collection={currentCollectionObj}
-        />
-        <ListViewSwitcher
-          {viewMode}
-          {setGridView}
-          {setListView}
-          {setCompactView}
-        />
+        <div class="header-controls-left">
+          <SearchBar {searchQuery} {setSearchQuery} />
+          <Filter
+            {allLogos}
+            {allTags}
+            {selectedTags}
+            {selectedBrands}
+            {selectedVariants}
+            {tagDropdownOpen}
+            {toggleDropdown}
+            {addTag}
+            {removeTag}
+            {addBrand}
+            {removeBrand}
+            {addVariant}
+            {removeVariant}
+            {getTagObj}
+            {compactMode}
+            {setCompactMode}
+            collection={currentCollectionObj}
+          />
+        </div>
+        <div class="header-controls-right">
+          <ListViewSwitcher
+            {viewMode}
+            {setGridView}
+            {setListView}
+            {setCompactView}
+          />
+        </div>
       {/if}
     </div>
   {/if}
@@ -166,10 +184,25 @@
   }
 
   .header-row {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    grid-template-areas: "left center right";
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .header-left {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 1.5rem;
+    gap: 1rem;
+    grid-area: left;
+    justify-self: start;
+  }
+
+  .header-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
   }
 
   .logo-count {
@@ -178,9 +211,8 @@
     font-weight: normal;
     color: var(--color-text);
     opacity: 0.7;
-    margin-left: 1rem;
     align-self: center;
-    padding-top: 0.9rem;
+    white-space: nowrap;
   }
 
   .game-button {
@@ -195,20 +227,21 @@
     text-decoration: none;
     font-size: 1.2rem;
     transition: all 0.3s ease;
-    margin-left: 0.5rem;
     cursor: pointer;
+    color: var(--color-text);
+    grid-area: center;
+    justify-self: center;
   }
 
   .game-button:hover {
     background: var(--color-primary);
     border-color: var(--color-primary);
-    transform: translateY(-1px);
   }
 
   .game-button.active {
     background: var(--color-primary);
     border-color: var(--color-primary);
-    color: white;
+  color: white;
   }
 
   .game-button.active:hover {
@@ -216,10 +249,24 @@
     border-color: var(--color-primary-dark, #0056b3);
   }
 
+  .game-button .icon {
+    width: 22px;
+    height: 22px;
+    display: inline-flex;
+  }
+
+  .main-header :global(.theme-switcher) {
+    grid-area: right;
+    justify-self: end;
+    margin-left: 0;
+  }
+
   .header-title {
     display: flex;
     align-items: center;
     gap: 0.5em;
+    grid-area: left;
+    justify-self: start;
   }
 
 
@@ -288,11 +335,24 @@
   .header-controls {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 1rem;
     margin: 1rem 0;
   }
   .header-controls.quiz-mode {
     justify-content: center;
+  }
+
+  .header-controls-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .header-controls-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
   }
 
   .quiz-header-stats {
@@ -319,35 +379,50 @@
     font-weight: 600;
   }
 
+  .quiz-icon {
+    display: inline-flex;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 0.25rem;
+  }
+
+  .quiz-icon.quiz-ok {
+    color: #22c55e; /* green */
+  }
+
+  .quiz-icon.quiz-fail {
+    color: #ef4444; /* red */
+  }
+
+  .quiz-icon.quiz-skip {
+    color: #6b7280; /* gray */
+  }
+
+  .achievement-block {
+    margin-left: auto;
+  }
+
   @media (max-width: 700px) {
     .header-row {
-      display: grid;
-      grid-template-columns: 1fr auto auto auto;
+      grid-template-columns: 1fr auto auto;
       grid-template-rows: auto auto;
+      grid-template-areas:
+        "left center right"
+        "count count count";
       gap: 0.5rem;
-      align-items: center;
     }
 
-    .header-title {
-      grid-column: 1;
-      grid-row: 1;
-    }
-
-    .game-button {
-      grid-column: 2;
-      grid-row: 1;
-      margin-left: 0;
+    .header-left {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
     }
 
     .logo-count {
-      grid-column: 1 / -1;
-      grid-row: 2;
-      margin-left: 0;
-      padding-top: 0;
+      grid-area: count;
       justify-self: start;
-    }
-
-    .header-controls {
+    }    .header-controls {
       display: grid;
       grid-template-columns: 1fr auto;
       grid-template-rows: auto auto;
@@ -355,19 +430,18 @@
       margin: 1rem 0;
     }
 
-    .header-controls :global(.search-bar) {
+    .header-controls-left {
       grid-column: 1;
-      grid-row: 1;
+      grid-row: 1 / -1;
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto;
+      gap: 1rem;
     }
 
-    .header-controls :global(.view-toggle) {
+    .header-controls-right {
       grid-column: 2;
       grid-row: 1;
-    }
-
-    .header-controls :global(.filter-section) {
-      grid-column: 1 / -1;
-      grid-row: 2;
     }
 
     /* Prevent header title from wrapping and reduce size on small screens */

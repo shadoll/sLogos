@@ -1,4 +1,5 @@
 <script>
+  import InlineSvg from "./InlineSvg.svelte";
   export let allLogos = [];
   export let allTags = [];
   export let selectedTags = [];
@@ -122,18 +123,9 @@
       aria-label="Open filter options"
       class:active={tagDropdownOpen}
     >
-      <svg
-        width="16"
-        height="16"
-        viewBox="0 0 24 24"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M3 4a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v2a1 1 0 0 1-.293.707L14 13.414V19a1 1 0 0 1-.553.894l-2 1A1 1 0 0 1 10 20v-6.586L3.293 6.707A1 1 0 0 1 3 6V4z"
-          fill="currentColor"
-        />
-      </svg>
+      <span class="filter-icon">
+        <InlineSvg path="/icons/filter.svg" alt="Filter" />
+      </span>
       {#if selectedTags.length + selectedBrands.length + selectedVariants.length + (compactMode ? 1 : 0) > 0}
         <span class="filter-count"
           >{selectedTags.length + selectedBrands.length + selectedVariants.length + (compactMode ? 1 : 0)}</span
@@ -142,6 +134,7 @@
     </button>
     {#if tagDropdownOpen}
       <!-- svelte-ignore a11y-click-events-have-key-events -->
+      <!-- svelte-ignore a11y-no-static-element-interactions -->
       <div class="filter-dropdown-panel" on:click|stopPropagation>
         <div class="filter-options">
           <button
@@ -587,6 +580,12 @@
     background: var(--color-accent);
     color: #fff;
     border-color: var(--color-accent);
+  }
+
+  .filter-icon {
+    width: 16px;
+    height: 16px;
+    display: inline-flex;
   }
 
   .filter-count {

@@ -1,6 +1,9 @@
 <script>
   import { onMount } from 'svelte';
   import Header from '../components/Header.svelte';
+  import InlineSvg from '../components/InlineSvg.svelte';
+  import Achievements from '../components/Achievements.svelte';
+  import AchievementButton from '../components/AchievementButton.svelte';
 
   // Game data
   let flags = [];
@@ -20,15 +23,24 @@
   let resultMessage = '';
   let showResult = false;
   let timeoutId = null;
+  let showCountryInfo = false;
+  let showResultCountryInfo = false;
 
   // Scoring
   let score = { correct: 0, total: 0, skipped: 0 };
   let gameStats = { correct: 0, wrong: 0, total: 0, skipped: 0 };
 
+  // Achievement System
+  let currentStreak = 0;
+  let showAchievements = false;
+  let achievementsComponent;
+  let achievementCount = { unlocked: 0, total: 0 };
+
   // Settings
   let autoAdvance = true;
   let showSettings = false;
   let settingsLoaded = false;
+  let showResetConfirmation = false;
 
   // Theme
   let theme = 'system';
@@ -42,6 +54,11 @@
   // Save settings when they change (after initial load)
   $: if (settingsLoaded) {
     localStorage.setItem('flagQuizSettings', JSON.stringify({ autoAdvance }));
+  }
+
+  // Update achievement count when achievements component is available
+  $: if (achievementsComponent) {
+    updateAchievementCount();
   }
 
   // Load game stats from localStorage
@@ -146,6 +163,8 @@
   selectedAnswer = null;
   correctAnswer = null;
   answered = false;
+  showCountryInfo = false;
+  showResultCountryInfo = false;
 
     // Randomly choose question type
     questionType = Math.random() < 0.5 ? 'flag-to-country' : 'country-to-flag';
@@ -204,13 +223,27 @@
     if (isCorrect) {
       score.correct++;
       gameStats.correct++;
+      currentStreak++;
+      // Reset consecutive skips on correct answer
+      if (achievementsComponent) {
+        achievementsComponent.resetConsecutiveSkips();
+      }
     } else {
       gameStats.wrong++;
+      currentStreak = 0; // Reset streak on wrong answer
+      if (achievementsComponent) {
+        achievementsComponent.resetConsecutiveSkips();
+      }
     }
     gameStats.total++;
 
     // Save stats to localStorage
     localStorage.setItem('flagQuizStats', JSON.stringify(gameStats));
+
+    // Check for new achievements
+    if (achievementsComponent) {
+      achievementsComponent.checkAchievements();
+    }
 
     // Auto-advance to next question with different delays if auto mode is on
     if (autoAdvance) {
@@ -219,15 +252,23 @@
         generateQuestion();
       }, delay);
     }
-  }
-
-  function skipQuestion() {
+  }  function skipQuestion() {
     if (gameState !== 'question') return;
 
     // Update skip counters
     score.skipped++;
     gameStats.skipped++;
     gameStats.total++;
+
+    // Track consecutive skips for Speed Runner achievement
+    if (achievementsComponent) {
+      achievementsComponent.incrementConsecutiveSkips();
+    }
+
+    // Check for achievements
+    if (achievementsComponent) {
+      achievementsComponent.checkAchievements();
+    }
 
     // Save stats to localStorage
     localStorage.setItem('flagQuizStats', JSON.stringify(gameStats));
@@ -268,10 +309,30 @@
   }
 
   function resetAllStats() {
-    gameStats = { correct: 0, wrong: 0, skipped: 0 };
+    showResetConfirmation = true;
+  }
+
+  function confirmReset() {
+    // Reset game statistics
+    gameStats = { correct: 0, wrong: 0, total: 0, skipped: 0 };
     score = { correct: 0, total: 0, skipped: 0 };
+    currentStreak = 0;
     localStorage.setItem('flagQuizStats', JSON.stringify(gameStats));
+
+    // Reset achievements
+    if (achievementsComponent) {
+      localStorage.removeItem('flagQuizAchievements');
+      // Reinitialize achievements component
+      achievementsComponent.loadAchievements();
+      updateAchievementCount();
+    }
+
+    showResetConfirmation = false;
     showSettings = false;
+  }
+
+  function cancelReset() {
+    showResetConfirmation = false;
   }
 
   function nextQuestion() {
@@ -285,9 +346,26 @@
   function getFlagImage(flag) {
     return `/images/flags/${flag.path}`;
   }
+
+  function updateAchievementCount() {
+    if (achievementsComponent) {
+      achievementCount = achievementsComponent.getAchievementCount();
+    }
+  }
+
+  function handleAchievementsUnlocked() {
+    updateAchievementCount();
+  }
 </script>
 
-<Header {theme} {setTheme} {score} {gameStats} />
+<Header
+  {theme}
+  {setTheme}
+  {score}
+  {gameStats}
+  {achievementCount}
+  onAchievementClick={() => showAchievements = true}
+/>
 
 <main class="flag-quiz">
   <div class="container">
@@ -334,6 +412,41 @@
       </div>
     </div>
   {/if}
+
+  <!-- Reset Confirmation Dialog -->
+  {#if showResetConfirmation}
+    <div class="confirmation-overlay" on:click={(e) => e.target === e.currentTarget && cancelReset()}>
+      <div class="confirmation-dialog">
+        <div class="confirmation-header">
+          <h3>⚠️ Reset All Data</h3>
+        </div>
+        <div class="confirmation-content">
+          <p>This action will permanently delete:</p>
+          <ul>
+            <li>✗ All game statistics (correct, wrong, skipped answers)</li>
+            <li>✗ Current session score</li>
+            <li>✗ All unlocked achievements</li>
+            <li>✗ Achievement progress</li>
+          </ul>
+          <p><strong>This cannot be undone!</strong></p>
+        </div>
+        <div class="confirmation-actions">
+          <button class="cancel-btn" on:click={cancelReset}>Cancel</button>
+          <button class="confirm-btn" on:click={confirmReset}>Reset Everything</button>
+        </div>
+      </div>
+    </div>
+  {/if}
+
+  <!-- Achievements Component -->
+  <Achievements
+    bind:this={achievementsComponent}
+    {gameStats}
+    {currentStreak}
+    show={showAchievements}
+    on:close={() => showAchievements = false}
+    on:achievementsUnlocked={handleAchievementsUnlocked}
+  />
     {#if gameState === 'loading'}
       <div class="loading">Loading flags...</div>
     {:else if currentQuestion}
@@ -350,12 +463,28 @@
           {#if showResult}
             <div class="result">
               {#if selectedAnswer === correctAnswer}
-                <div class="correct-result">✅ Correct!</div>
+                <div class="correct-result"><span class="result-icon smile-icon"><InlineSvg path="/icons/smile-squre.svg" alt="Correct" /></span> Correct!</div>
               {:else}
                 <div class="wrong-result">
-                  ❌ Wrong!
+                  <span class="result-icon sad-icon"><InlineSvg path="/icons/sad-square.svg" alt="Wrong" /></span> Wrong!
                   {#if currentQuestion.type === 'flag-to-country'}
-                    The correct answer is: {getCountryName(currentQuestion.correct)}.
+                    <span class="result-country-info">
+                      The correct answer is: {getCountryName(currentQuestion.correct)}.
+                      <button
+                        class="info-icon result-info-btn"
+                        aria-label="Show country info"
+                        aria-expanded={showResultCountryInfo}
+                        on:click={() => (showResultCountryInfo = !showResultCountryInfo)}
+                        on:keydown={(e) => { if (e.key === 'Escape') showResultCountryInfo = false; }}
+                      >
+                        <InlineSvg path="/icons/info-square.svg" alt="Country info" />
+                      </button>
+                      {#if showResultCountryInfo}
+                        <div class="info-tooltip result-info-tooltip" role="dialog" aria-live="polite">
+                          {currentQuestion.correct.meta.description}
+                        </div>
+                      {/if}
+                    </span>
                   {:else}
                     You selected the {getCountryName(currentQuestion.options[selectedAnswer])} flag.
                   {/if}
@@ -386,7 +515,25 @@
           </div>
   {:else}
           <div class="country-display">
-            <h2 class="country-name">{getCountryName(currentQuestion.correct)}</h2>
+            <h2 class="country-name">
+              {getCountryName(currentQuestion.correct)}
+              {#if currentQuestion.correct?.meta?.description}
+                <button
+                  class="info-icon"
+                  aria-label="Show country info"
+                  aria-expanded={showCountryInfo}
+                  on:click={() => (showCountryInfo = !showCountryInfo)}
+                  on:keydown={(e) => { if (e.key === 'Escape') showCountryInfo = false; }}
+                >
+                  <InlineSvg path="/icons/info-square.svg" alt="Country info" />
+                </button>
+                {#if showCountryInfo}
+                  <div class="info-tooltip" role="dialog" aria-live="polite">
+                    {currentQuestion.correct.meta.description}
+                  </div>
+                {/if}
+              {/if}
+            </h2>
           </div>
 
           <div class="flag-options">
@@ -414,9 +561,9 @@
     {/if}
 
     <div class="controls">
+      <a href="#/game" class="btn btn-secondary">Back to Games</a>
       <button class="btn btn-secondary" on:click={resetGame}>New Session</button>
       <button class="btn btn-secondary" on:click={toggleSettings} title="Settings">Settings</button>
-      <a href="#/game" class="btn btn-primary">Back to Games</a>
     </div>
 </main>
 
@@ -532,6 +679,101 @@
     background: #cc3333;
   }
 
+  /* Confirmation Dialog Styles */
+  .confirmation-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1001;
+  }
+
+  .confirmation-dialog {
+    background: var(--color-bg-primary);
+    border: 2px solid var(--color-border);
+    border-radius: 1rem;
+    padding: 0;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.25);
+  }
+
+  .confirmation-header {
+    padding: 1.5rem 1.5rem 1rem 1.5rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .confirmation-header h3 {
+    margin: 0;
+    font-size: 1.3rem;
+    color: #dc2626;
+  }
+
+  .confirmation-content {
+    padding: 1.5rem;
+  }
+
+  .confirmation-content p {
+    margin: 0 0 1rem 0;
+    color: var(--color-text-primary);
+  }
+
+  .confirmation-content ul {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+    color: var(--color-text-secondary);
+  }
+
+  .confirmation-content li {
+    margin: 0.5rem 0;
+  }
+
+  .confirmation-actions {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem 1.5rem 1.5rem 1.5rem;
+    justify-content: flex-end;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .cancel-btn {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-primary);
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .cancel-btn:hover {
+    background: var(--color-bg-hover);
+    border-color: var(--color-primary);
+  }
+
+  .confirm-btn {
+    background: #dc2626;
+    border: 1px solid #dc2626;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .confirm-btn:hover {
+    background: #b91c1c;
+    border-color: #b91c1c;
+  }
+
 
   .loading {
     text-align: center;
@@ -592,6 +834,7 @@
   .country-display {
     text-align: center;
     margin-bottom: 2rem;
+  position: relative;
   }
 
   .country-name {
@@ -599,6 +842,52 @@
     font-weight: 600;
     color: var(--color-text-primary);
     margin: 0;
+  }
+
+  .info-icon {
+    margin-left: 0.5rem;
+    width: 2rem;
+    height: 2rem;
+    vertical-align: middle;
+    background: none;
+    color: var(--color-text-primary);
+    cursor: pointer;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 5px;
+  }
+
+  .info-icon :global(.svg-wrapper) {
+    width: 100%;
+    height: 100%;
+  }
+
+  .info-icon:hover,
+  .info-icon:focus {
+    color: var(--color-text-primary);
+    border-color: var(--color-border);
+    outline: none;
+  }
+
+  .info-tooltip {
+    position: absolute;
+    left: 50%;
+    top: calc(100% + 8px);
+    transform: translateX(-50%);
+    background: var(--color-bg-secondary);
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    width: min(90vw, 520px);
+    max-height: 40vh;
+    overflow: auto;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    z-index: 5;
+    text-align: left;
+    font-size: 0.95rem;
   }
 
   .options {
@@ -700,6 +989,100 @@
     color: #ef4444;
   }
 
+  .result-icon {
+    display: inline-flex;
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+  }
+
+  .result-icon.smile-icon {
+    color: #22c55e; /* green for correct */
+    animation: correctBounce 0.6s ease-out;
+  }
+
+  .result-icon.sad-icon {
+    color: #ef4444; /* red for wrong */
+    animation: wrongShake 0.5s ease-in-out;
+  }
+
+  @keyframes correctBounce {
+    0% {
+      transform: scale(0) rotate(0deg);
+      opacity: 0;
+    }
+    50% {
+      transform: scale(1.3) rotate(5deg);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1) rotate(0deg);
+      opacity: 1;
+    }
+  }
+
+  @keyframes wrongShake {
+    0% {
+      transform: translateX(0) scale(0);
+      opacity: 0;
+    }
+    25% {
+      transform: translateX(-5px) scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: translateX(5px) scale(1);
+    }
+    75% {
+      transform: translateX(-3px) scale(1);
+    }
+    100% {
+      transform: translateX(0) scale(1);
+      opacity: 1;
+    }
+  }
+
+  .result-country-info {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .result-info-btn {
+    margin-left: 0.25rem;
+    width: 2rem;
+    height: 2rem;
+    vertical-align: middle;
+    background: none;
+    border: none;
+    color: var(--color-text-primary);
+    cursor: pointer;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+
+  .result-info-btn:hover,
+  .result-info-btn:focus {
+    opacity: 1;
+    outline: none;
+  }
+
+  .result-info-tooltip {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 0.5rem;
+    min-width: 200px;
+    max-width: 300px;
+  }
+
   .controls {
     display: flex;
     justify-content: center;
@@ -757,8 +1140,8 @@
 
   @media (max-width: 768px) {
     .container {
-  padding: 0.75rem;
-  padding-top: 0.75rem;
+      padding: 0.75rem;
+      padding-top: 0.75rem;
     }
 
     .options {
@@ -773,6 +1156,12 @@
     .quiz-flag {
       width: 300px;
       max-height: 180px;
+    }
+
+    .info-tooltip {
+      width: 92vw;
+      left: 50%;
+      transform: translateX(-50%);
     }
 
     .controls {

@@ -1,4 +1,5 @@
 <script>
+  import InlineSvg from "./InlineSvg.svelte";
   export let theme = "system";
   export let setTheme = () => {};
 </script>
@@ -10,66 +11,21 @@
       class:active={theme === "system"}
       aria-label="System theme"
     >
-      <svg
-        width="20"
-        height="20"
-        viewBox="0 0 20 20"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        ><circle
-          cx="10"
-          cy="10"
-          r="8"
-          stroke="currentColor"
-          stroke-width="2"
-        /><path
-          d="M10 2a8 8 0 0 1 8 8"
-          stroke="currentColor"
-          stroke-width="2"
-        /></svg
-      >
+      <span class="icon"><InlineSvg path="/icons/record.svg" alt="System theme" /></span>
     </button>
     <button
       on:click={() => setTheme("light")}
       class:active={theme === "light"}
       aria-label="Light mode"
     >
-      <svg
-        width="20"
-        height="20"
-        viewBox="0 0 20 20"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        ><circle
-          cx="10"
-          cy="10"
-          r="5"
-          stroke="currentColor"
-          stroke-width="2"
-        /><path
-          d="M10 1v2M10 17v2M3.22 3.22l1.42 1.42M15.36 15.36l1.42 1.42M1 10h2M17 10h2M3.22 16.78l1.42-1.42M15.36 4.64l1.42-1.42"
-          stroke="currentColor"
-          stroke-width="2"
-        /></svg
-      >
+      <span class="icon"><InlineSvg path="/icons/sun.svg" alt="Light mode" /></span>
     </button>
     <button
       on:click={() => setTheme("dark")}
       class:active={theme === "dark"}
       aria-label="Dark mode"
     >
-      <svg
-        width="20"
-        height="20"
-        viewBox="0 0 20 20"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        ><path
-          d="M15.5 13A7 7 0 0 1 7 4.5a7 7 0 1 0 8.5 8.5z"
-          stroke="currentColor"
-          stroke-width="2"
-        /></svg
-      >
+      <span class="icon"><InlineSvg path="/icons/moon.svg" alt="Dark mode" /></span>
     </button>
   </div>
 </div>
@@ -80,5 +36,11 @@
     align-items: center;
     gap: 0.2rem;
     margin-left: auto;
+  }
+
+  .theme-switch-group .icon {
+    width: 20px;
+    height: 20px;
+    display: inline-flex;
   }
 </style>
