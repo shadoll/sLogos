@@ -55,7 +55,7 @@
 <main class="game-selection">
   <div class="container">
     <h1>🎮 Quiz Games</h1>
-    <p class="subtitle">Test your knowledge with our interactive quiz games</p>
+    <p class="subtitle">Test and study your knowledge with our interactive quiz games</p>
 
     <div class="game-grid">
       {#each availableGames as game}
@@ -71,6 +71,10 @@
     <div class="coming-soon">
       <h3>🚧 Coming Soon</h3>
       <div class="upcoming-games">
+        <div class="upcoming-game">
+          <span class="icon">🏛️</span>
+          <span>Capital Quiz</span>
+        </div>
         <div class="upcoming-game">
           <span class="icon">🏢</span>
           <span>Logo Quiz</span>
