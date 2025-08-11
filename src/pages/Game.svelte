@@ -69,7 +69,7 @@
     </div>
 
     <div class="coming-soon">
-      <h3>🚧 Coming Soon</h3>
+      <h3>⏳ Coming Soon</h3>
       <div class="upcoming-games">
         <div class="upcoming-game">
           <span class="icon">🏛️</span>
