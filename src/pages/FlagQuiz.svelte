@@ -29,6 +29,8 @@
   // Scoring
   let score = { correct: 0, total: 0, skipped: 0 };
   let gameStats = { correct: 0, wrong: 0, total: 0, skipped: 0 };
+  let wrongAnswers = new Map(); // Track flags answered incorrectly: flag.name -> count
+  let correctAnswers = new Map(); // Track flags answered correctly: flag.name -> count
 
   // Achievement System
   let currentStreak = 0;
@@ -41,6 +43,8 @@
   let showSettings = false;
   let settingsLoaded = false;
   let showResetConfirmation = false;
+  let focusWrongAnswers = false;
+  let reduceCorrectAnswers = false;
 
   // Theme
   let theme = 'system';
@@ -51,14 +55,14 @@
     theme = t;
   }
 
-  // Save settings when they change (after initial load)
-  $: if (settingsLoaded) {
-    localStorage.setItem('flagQuizSettings', JSON.stringify({ autoAdvance }));
-  }
-
   // Update achievement count when achievements component is available
   $: if (achievementsComponent) {
     updateAchievementCount();
+  }
+
+  // Save settings when they change (after initial load)
+  $: if (settingsLoaded && typeof reduceCorrectAnswers !== 'undefined') {
+    localStorage.setItem('flagQuizSettings', JSON.stringify({ autoAdvance, focusWrongAnswers, reduceCorrectAnswers }));
   }
 
   // Load game stats from localStorage
@@ -94,12 +98,36 @@
         }
       }
 
+      // Load wrong answers tracking
+      const savedWrongAnswers = localStorage.getItem('flagQuizWrongAnswers');
+      if (savedWrongAnswers) {
+        try {
+          const loadedWrongAnswers = JSON.parse(savedWrongAnswers);
+          wrongAnswers = new Map(Object.entries(loadedWrongAnswers));
+        } catch (e) {
+          console.error('Error loading wrong answers:', e);
+        }
+      }
+
+      // Load correct answers tracking
+      const savedCorrectAnswers = localStorage.getItem('flagQuizCorrectAnswers');
+      if (savedCorrectAnswers) {
+        try {
+          const loadedCorrectAnswers = JSON.parse(savedCorrectAnswers);
+          correctAnswers = new Map(Object.entries(loadedCorrectAnswers));
+        } catch (e) {
+          console.error('Error loading correct answers:', e);
+        }
+      }
+
       // Load settings
       const savedSettings = localStorage.getItem('flagQuizSettings');
       if (savedSettings) {
         try {
           const settings = JSON.parse(savedSettings);
           autoAdvance = settings.autoAdvance !== undefined ? settings.autoAdvance : true;
+          focusWrongAnswers = settings.focusWrongAnswers !== undefined ? settings.focusWrongAnswers : false;
+          reduceCorrectAnswers = settings.reduceCorrectAnswers !== undefined ? settings.reduceCorrectAnswers : false;
         } catch (e) {
           console.error('Error loading settings:', e);
         }
@@ -107,8 +135,8 @@
     }
 
   await loadFlags();
-  generateQuestion();
   settingsLoaded = true;
+  generateQuestion();
   });
 
   function applyTheme(theme) {
@@ -169,38 +197,73 @@
     // Randomly choose question type
     questionType = Math.random() < 0.5 ? 'flag-to-country' : 'country-to-flag';
 
-    // Pick a random correct answer
-    const correctFlag = flags[Math.floor(Math.random() * flags.length)];
+    // Pick correct answer with adaptive learning settings
+    let correctFlag;
+
+    // Simple fallback to avoid uninitialized variable errors
+    if (settingsLoaded && (focusWrongAnswers || reduceCorrectAnswers)) { // Re-enable adaptive learning
+      // Create weighted array based on learning settings
+      const weightedFlags = [];
+      for (const flag of flags) {
+        const wrongCount = wrongAnswers.get(flag.name) || 0;
+        const correctCount = correctAnswers.get(flag.name) || 0;
+
+        let weight = 1; // Base weight
+
+        // Increase weight for flags with wrong answers (if setting enabled)
+        if (focusWrongAnswers && wrongCount > 0) {
+          weight = Math.min(wrongCount + 1, 4); // Max 4x weight for wrong answers
+        }
+
+        // Decrease weight for flags with correct answers (if setting enabled)
+        if (reduceCorrectAnswers && correctCount > 0) {
+          weight = weight / Math.min(correctCount + 1, 4); // Reduce weight, min 0.25x
+        }
+
+        // Add flag to weighted array based on calculated weight
+        const finalWeight = Math.max(0.25, weight); // Minimum weight to ensure variety
+        const timesToAdd = Math.ceil(finalWeight);
+        for (let i = 0; i < timesToAdd; i++) {
+          weightedFlags.push(flag);
+        }
+      }
+
+      if (weightedFlags.length > 0) {
+        correctFlag = weightedFlags[Math.floor(Math.random() * weightedFlags.length)];
+      } else {
+        correctFlag = flags[Math.floor(Math.random() * flags.length)];
+      }
+    } else {
+      // Normal random selection
+      correctFlag = flags[Math.floor(Math.random() * flags.length)];
+    }
+
     const correctCountry = getCountryName(correctFlag).toLowerCase();
 
     // Generate 3 wrong answers ensuring no duplicate country names
-    const wrongAnswers = [];
+    const wrongOptions = [];
     const usedCountries = new Set([correctCountry]);
 
-    while (wrongAnswers.length < 3 && wrongAnswers.length < flags.length - 1) {
+    while (wrongOptions.length < 3 && wrongOptions.length < flags.length - 1) {
       const randomFlag = flags[Math.floor(Math.random() * flags.length)];
       const randomCountry = getCountryName(randomFlag).toLowerCase();
 
-      if (randomFlag !== correctFlag &&
-          !wrongAnswers.includes(randomFlag) &&
-          !usedCountries.has(randomCountry)) {
-        wrongAnswers.push(randomFlag);
+      if (!usedCountries.has(randomCountry)) {
+        wrongOptions.push(randomFlag);
         usedCountries.add(randomCountry);
       }
     }
 
-    // Ensure we have enough options
-    if (wrongAnswers.length < 3) {
-      console.warn(`Only found ${wrongAnswers.length + 1} unique countries, regenerating...`);
-      // Try again
-      generateQuestion();
-      return;
+    // If we couldn't find 3 unique countries, fill with random flags
+    while (wrongOptions.length < 3) {
+      const randomFlag = flags[Math.floor(Math.random() * flags.length)];
+      if (randomFlag !== correctFlag && !wrongOptions.includes(randomFlag)) {
+        wrongOptions.push(randomFlag);
+      }
     }
 
-    // Shuffle all options
-    const allOptions = [correctFlag, ...wrongAnswers].sort(() => Math.random() - 0.5);
-
-    currentQuestion = {
+    // Combine correct and wrong answers
+    const allOptions = [correctFlag, ...wrongOptions].sort(() => Math.random() - 0.5);    currentQuestion = {
       type: questionType,
       correct: correctFlag,
       options: allOptions,
@@ -225,6 +288,14 @@
       gameStats.correct++;
       currentStreak++;
 
+      // Track correct answer for this flag
+      if (currentQuestion.correct?.name) {
+        const flagName = currentQuestion.correct.name;
+        correctAnswers.set(flagName, (correctAnswers.get(flagName) || 0) + 1);
+        // Save correct answers to localStorage
+        localStorage.setItem('flagQuizCorrectAnswers', JSON.stringify(Object.fromEntries(correctAnswers)));
+      }
+
       // Track continent progress for correct answers
       if (achievementsComponent && currentQuestion.correct?.tags) {
         const continent = currentQuestion.correct.tags.find(tag =>
@@ -242,6 +313,15 @@
     } else {
       gameStats.wrong++;
       currentStreak = 0; // Reset streak on wrong answer
+
+      // Track wrong answer for this flag
+      if (currentQuestion.correct?.name) {
+        const flagName = currentQuestion.correct.name;
+        wrongAnswers.set(flagName, (wrongAnswers.get(flagName) || 0) + 1);
+        // Save wrong answers to localStorage
+        localStorage.setItem('flagQuizWrongAnswers', JSON.stringify(Object.fromEntries(wrongAnswers)));
+      }
+
       if (achievementsComponent) {
         achievementsComponent.resetConsecutiveSkips();
       }
@@ -330,6 +410,14 @@
     currentStreak = 0;
     localStorage.setItem('flagQuizStats', JSON.stringify(gameStats));
 
+    // Reset wrong answers tracking
+    wrongAnswers = new Map();
+    localStorage.removeItem('flagQuizWrongAnswers');
+
+    // Reset correct answers tracking
+    correctAnswers = new Map();
+    localStorage.removeItem('flagQuizCorrectAnswers');
+
     // Reset achievements
     if (achievementsComponent) {
       localStorage.removeItem('flagQuizAchievements');
@@ -369,6 +457,10 @@
   }
 </script>
 
+<svelte:head>
+  <title>Flag Quiz</title>
+</svelte:head>
+
 <Header
   {theme}
   {setTheme}
@@ -399,7 +491,8 @@
         aria-labelledby="settings-title"
       >
         <div class="settings-header">
-          <h2 id="settings-title">⚙️ Game Settings</h2>
+          <InlineSvg path="/icons/settings.svg" alt="Settings" />
+          <h2 id="settings-title">Game Settings</h2>
           <button class="close-btn" on:click={toggleSettings}>✕</button>
         </div>
 
@@ -411,6 +504,26 @@
                 bind:checked={autoAdvance}
               />
               Auto-advance to next question after answering
+            </label>
+          </div>
+
+          <div class="setting-item">
+            <label>
+              <input
+                type="checkbox"
+                bind:checked={focusWrongAnswers}
+              />
+              Focus on previously answered incorrectly flags
+            </label>
+          </div>
+
+          <div class="setting-item">
+            <label>
+              <input
+                type="checkbox"
+                bind:checked={reduceCorrectAnswers}
+              />
+              Show correctly answered flags less frequently
             </label>
           </div>
 
@@ -449,6 +562,7 @@
             <li>✗ Current session score</li>
             <li>✗ All unlocked achievements</li>
             <li>✗ Achievement progress</li>
+            <li>✗ Wrong answer tracking data</li>
           </ul>
           <p><strong>This cannot be undone!</strong></p>
         </div>
@@ -637,11 +751,17 @@
     border-bottom: 2px solid var(--color-border);
   }
 
+  .settings-header :global(.svg-wrapper) {
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    flex-shrink: 0;
+  }
+
   .settings-header h2 {
     margin: 0;
     color: var(--color-text-primary);
   }
-
   .close-btn {
     background: none;
     border: none;
