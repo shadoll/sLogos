@@ -1,29 +1,30 @@
 <script>
-  import { onMount } from 'svelte';
-  import Header from '../components/Header.svelte';
-  import Footer from '../components/Footer.svelte';
-  import InlineSvg from '../components/InlineSvg.svelte';
-  import Achievements from '../components/Achievements.svelte';
-  import QuizSettings from '../components/QuizSettings.svelte';
-  import WelcomeStats from '../components/WelcomeStats.svelte';
+  import { onMount } from "svelte";
+  import Header from "../components/Header.svelte";
+  import Footer from "../components/Footer.svelte";
+  import InlineSvg from "../components/InlineSvg.svelte";
+  import Achievements from "../components/Achievements.svelte";
+  import QuizSettings from "../components/QuizSettings.svelte";
+  import WelcomeStats from "../components/WelcomeStats.svelte";
+  import ActionButtons from "../components/ActionButtons.svelte";
 
   // Game data
   let flags = [];
   let currentQuestion = null;
-  let questionType = 'flag-to-country'; // 'flag-to-country' or 'country-to-flag'
+  let questionType = "flag-to-country"; // 'flag-to-country' or 'country-to-flag'
 
   // Question and answer arrays
   let currentCountryOptions = [];
   let currentFlagOptions = [];
-  let correctAnswer = '';
+  let correctAnswer = "";
 
   // Game states
-  let gameState = 'welcome'; // 'welcome', 'loading', 'question', 'answered', 'session-complete'
-  let quizSubpage = 'welcome'; // 'welcome' or 'quiz'
+  let gameState = "welcome"; // 'welcome', 'loading', 'question', 'answered', 'session-complete'
+  let quizSubpage = "welcome"; // 'welcome' or 'quiz'
   let selectedAnswer = null;
   let answered = false;
   let isAnswered = false;
-  let resultMessage = '';
+  let resultMessage = "";
   let showResult = false;
   let timeoutId = null;
   let showCountryInfo = false;
@@ -62,17 +63,23 @@
 
   // Session management
   let currentSessionQuestions = 0;
-  let sessionStats = { correct: 0, wrong: 0, skipped: 0, total: 0, sessionLength: 10 };
+  let sessionStats = {
+    correct: 0,
+    wrong: 0,
+    skipped: 0,
+    total: 0,
+    sessionLength: 10,
+  };
   let showSessionResults = false;
   let sessionInProgress = false;
   let sessionStartTime = null;
   let sessionRestoredFromReload = false; // Track if session was restored from page reload
 
   // Theme
-  let theme = 'system';
+  let theme = "system";
 
   function setTheme(t) {
-    localStorage.setItem('theme', t);
+    localStorage.setItem("theme", t);
     applyTheme(t);
     theme = t;
   }
@@ -83,28 +90,37 @@
   }
 
   // Save settings when they change (after initial load)
-  $: if (settingsLoaded && typeof reduceCorrectAnswers !== 'undefined') {
-    localStorage.setItem('flagQuizSettings', JSON.stringify({ autoAdvance, focusWrongAnswers, reduceCorrectAnswers, soundEnabled, sessionLength }));
+  $: if (settingsLoaded && typeof reduceCorrectAnswers !== "undefined") {
+    localStorage.setItem(
+      "flagQuizSettings",
+      JSON.stringify({
+        autoAdvance,
+        focusWrongAnswers,
+        reduceCorrectAnswers,
+        soundEnabled,
+        sessionLength,
+      }),
+    );
   }
 
   // Load game stats from localStorage
   onMount(async () => {
-  // Initialize theme
-  theme = localStorage.getItem('theme') || 'system';
-  applyTheme(theme);
+    // Initialize theme
+    theme = localStorage.getItem("theme") || "system";
+    applyTheme(theme);
 
-  // Set window.appData for header compatibility
-    if (typeof window !== 'undefined') {
+    // Set window.appData for header compatibility
+    if (typeof window !== "undefined") {
       window.appData = {
         ...window.appData,
-        collection: 'flags',
+        collection: "flags",
         setCollection: () => {},
-    theme,
-    setTheme
+        theme,
+        setTheme,
       };
 
       // Load saved game stats
-      const savedStats = localStorage.getItem('flagQuizStats');
+      const savedStats = localStorage.getItem("flagQuizStats");
       if (savedStats) {
         try {
           const loadedStats = JSON.parse(savedStats);
@@ -113,77 +129,91 @@
             correct: loadedStats.correct || 0,
             wrong: loadedStats.wrong || 0,
             total: loadedStats.total || 0,
-            skipped: loadedStats.skipped || 0
+            skipped: loadedStats.skipped || 0,
           };
         } catch (e) {
-          console.error('Error loading game stats:', e);
+          console.error("Error loading game stats:", e);
         }
       }
 
       // Load wrong answers tracking
-      const savedWrongAnswers = localStorage.getItem('flagQuizWrongAnswers');
+      const savedWrongAnswers = localStorage.getItem("flagQuizWrongAnswers");
       if (savedWrongAnswers) {
         try {
           const loadedWrongAnswers = JSON.parse(savedWrongAnswers);
           wrongAnswers = new Map(Object.entries(loadedWrongAnswers));
         } catch (e) {
-          console.error('Error loading wrong answers:', e);
+          console.error("Error loading wrong answers:", e);
         }
       }
 
       // Load correct answers tracking
-      const savedCorrectAnswers = localStorage.getItem('flagQuizCorrectAnswers');
+      const savedCorrectAnswers = localStorage.getItem(
+        "flagQuizCorrectAnswers",
+      );
       if (savedCorrectAnswers) {
         try {
           const loadedCorrectAnswers = JSON.parse(savedCorrectAnswers);
           correctAnswers = new Map(Object.entries(loadedCorrectAnswers));
         } catch (e) {
-          console.error('Error loading correct answers:', e);
+          console.error("Error loading correct answers:", e);
         }
       }
 
       // Load settings
-      const savedSettings = localStorage.getItem('flagQuizSettings');
+      const savedSettings = localStorage.getItem("flagQuizSettings");
       if (savedSettings) {
         try {
           const settings = JSON.parse(savedSettings);
-          autoAdvance = settings.autoAdvance !== undefined ? settings.autoAdvance : true;
-          focusWrongAnswers = settings.focusWrongAnswers !== undefined ? settings.focusWrongAnswers : false;
-          reduceCorrectAnswers = settings.reduceCorrectAnswers !== undefined ? settings.reduceCorrectAnswers : false;
-          soundEnabled = settings.soundEnabled !== undefined ? settings.soundEnabled : true;
-          sessionLength = settings.sessionLength !== undefined ? settings.sessionLength : 10;
+          autoAdvance =
+            settings.autoAdvance !== undefined ? settings.autoAdvance : true;
+          focusWrongAnswers =
+            settings.focusWrongAnswers !== undefined
+              ? settings.focusWrongAnswers
+              : false;
+          reduceCorrectAnswers =
+            settings.reduceCorrectAnswers !== undefined
+              ? settings.reduceCorrectAnswers
+              : false;
+          soundEnabled =
+            settings.soundEnabled !== undefined ? settings.soundEnabled : true;
+          sessionLength =
+            settings.sessionLength !== undefined ? settings.sessionLength : 10;
         } catch (e) {
-          console.error('Error loading settings:', e);
+          console.error("Error loading settings:", e);
         }
       }
     }
 
-  await loadFlags();
-  settingsLoaded = true;
+    await loadFlags();
+    settingsLoaded = true;
 
-  // Load or initialize session
-  loadSessionState();
+    // Load or initialize session
+    loadSessionState();
   });
 
   function applyTheme(theme) {
     let effectiveTheme = theme;
-    if (theme === 'system') {
-      effectiveTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    if (theme === "system") {
+      effectiveTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
     }
-    document.documentElement.setAttribute('data-theme', effectiveTheme);
+    document.documentElement.setAttribute("data-theme", effectiveTheme);
     document.documentElement.className = effectiveTheme;
   }
 
   async function loadFlags() {
     try {
-      const response = await fetch('/data/flags.json');
+      const response = await fetch("/data/flags.json");
       const data = await response.json();
       // Filter for only country flags (has "Country" tag) and ensure we have country name
-      flags = data.filter(flag =>
-        !flag.disable &&
-        flag.meta?.country &&
-        flag.tags &&
-        flag.tags.includes('Country')
+      flags = data.filter(
+        (flag) =>
+          !flag.disable &&
+          flag.meta?.country &&
+          flag.tags &&
+          flag.tags.includes("Country"),
       );
 
       // Remove duplicates based on country name
@@ -201,7 +231,7 @@
       flags = uniqueFlags;
       console.log(`Loaded ${flags.length} unique country flags for quiz`);
     } catch (error) {
-      console.error('Error loading flags:', error);
+      console.error("Error loading flags:", error);
       flags = [];
     }
   }
@@ -218,13 +248,13 @@
       gameState,
       quizSubpage,
       sessionStartTime,
-      questionKey
+      questionKey,
     };
-    localStorage.setItem('flagQuizSessionState', JSON.stringify(sessionState));
+    localStorage.setItem("flagQuizSessionState", JSON.stringify(sessionState));
   }
 
   function loadSessionState() {
-    const savedState = localStorage.getItem('flagQuizSessionState');
+    const savedState = localStorage.getItem("flagQuizSessionState");
     if (savedState) {
       try {
         const state = JSON.parse(savedState);
@@ -232,13 +262,19 @@
           // Restore session
           sessionInProgress = state.sessionInProgress;
           currentSessionQuestions = state.currentSessionQuestions || 0;
-          sessionStats = state.sessionStats || { correct: 0, wrong: 0, skipped: 0, total: 0, sessionLength };
+          sessionStats = state.sessionStats || {
+            correct: 0,
+            wrong: 0,
+            skipped: 0,
+            total: 0,
+            sessionLength,
+          };
           score = state.score || { correct: 0, total: 0, skipped: 0 };
           currentQuestion = state.currentQuestion;
           selectedAnswer = state.selectedAnswer;
           showResult = state.showResult || false;
-          gameState = state.gameState || 'question';
-          quizSubpage = 'quiz';
+          gameState = state.gameState || "question";
+          quizSubpage = "quiz";
           sessionStartTime = state.sessionStartTime;
           questionKey = state.questionKey || 0;
 
@@ -251,38 +287,38 @@
           }
         } else {
           // No active session, show welcome page
-          quizSubpage = 'welcome';
-          gameState = 'welcome';
+          quizSubpage = "welcome";
+          gameState = "welcome";
         }
       } catch (e) {
-        console.error('Error loading session state:', e);
-        quizSubpage = 'welcome';
-        gameState = 'welcome';
+        console.error("Error loading session state:", e);
+        quizSubpage = "welcome";
+        gameState = "welcome";
       }
     } else {
       // No saved state, show welcome page
-      quizSubpage = 'welcome';
-      gameState = 'welcome';
+      quizSubpage = "welcome";
+      gameState = "welcome";
     }
   }
 
   function clearSessionState() {
-    localStorage.removeItem('flagQuizSessionState');
+    localStorage.removeItem("flagQuizSessionState");
   }
 
   function generateQuestion() {
     if (flags.length < 4) {
-      console.error('Not enough flags to generate question');
+      console.error("Not enough flags to generate question");
       return;
     }
 
-  gameState = 'question';
-  showResult = false;
-  selectedAnswer = null;
-  correctAnswer = null;
-  answered = false;
-  showCountryInfo = false;
-  showResultCountryInfo = false;
+    gameState = "question";
+    showResult = false;
+    selectedAnswer = null;
+    correctAnswer = null;
+    answered = false;
+    showCountryInfo = false;
+    showResultCountryInfo = false;
 
     // Cancel any active auto-advance timer
     cancelAutoAdvanceTimer();
@@ -291,30 +327,31 @@
     questionKey++;
 
     // Remove focus from any previously focused buttons and ensure clean state
-    if (typeof document !== 'undefined') {
+    if (typeof document !== "undefined") {
       // Use setTimeout to ensure DOM updates are complete
       setTimeout(() => {
         const activeElement = document.activeElement;
-        if (activeElement && activeElement.tagName === 'BUTTON') {
+        if (activeElement && activeElement.tagName === "BUTTON") {
           activeElement.blur();
         }
         // Force removal of any residual button states
-        const buttons = document.querySelectorAll('.option, .flag-option');
-        buttons.forEach(button => {
+        const buttons = document.querySelectorAll(".option, .flag-option");
+        buttons.forEach((button) => {
           button.blur();
-          button.classList.remove('selected', 'correct', 'wrong');
+          button.classList.remove("selected", "correct", "wrong");
         });
       }, 0);
     }
 
     // Randomly choose question type
-    questionType = Math.random() < 0.5 ? 'flag-to-country' : 'country-to-flag';
+    questionType = Math.random() < 0.5 ? "flag-to-country" : "country-to-flag";
 
     // Pick correct answer with adaptive learning settings
     let correctFlag;
 
     // Simple fallback to avoid uninitialized variable errors
-    if (settingsLoaded && (focusWrongAnswers || reduceCorrectAnswers)) { // Re-enable adaptive learning
+    if (settingsLoaded && (focusWrongAnswers || reduceCorrectAnswers)) {
+      // Re-enable adaptive learning
       // Create weighted array based on learning settings
       const weightedFlags = [];
       for (const flag of flags) {
@@ -342,7 +379,8 @@
       }
 
       if (weightedFlags.length > 0) {
-        correctFlag = weightedFlags[Math.floor(Math.random() * weightedFlags.length)];
+        correctFlag =
+          weightedFlags[Math.floor(Math.random() * weightedFlags.length)];
       } else {
         correctFlag = flags[Math.floor(Math.random() * flags.length)];
       }
@@ -376,25 +414,29 @@
     }
 
     // Combine correct and wrong answers
-    const allOptions = [correctFlag, ...wrongOptions].sort(() => Math.random() - 0.5);    currentQuestion = {
+    const allOptions = [correctFlag, ...wrongOptions].sort(
+      () => Math.random() - 0.5,
+    );
+    currentQuestion = {
       type: questionType,
       correct: correctFlag,
       options: allOptions,
-      correctIndex: allOptions.indexOf(correctFlag)
+      correctIndex: allOptions.indexOf(correctFlag),
     };
 
-    console.log('Generated question:', currentQuestion);
+    console.log("Generated question:", currentQuestion);
 
     // Save session state
     saveSessionState();
-  }  function selectAnswer(index) {
-    if (gameState !== 'question') return;
+  }
+  function selectAnswer(index) {
+    if (gameState !== "question") return;
 
     selectedAnswer = index;
     correctAnswer = currentQuestion.correctIndex;
-  showResult = true;
-  gameState = 'answered';
-  answered = true;
+    showResult = true;
+    gameState = "answered";
+    answered = true;
 
     // Update score
     score.total++;
@@ -416,13 +458,23 @@
         const flagName = currentQuestion.correct.name;
         correctAnswers.set(flagName, (correctAnswers.get(flagName) || 0) + 1);
         // Save correct answers to localStorage
-        localStorage.setItem('flagQuizCorrectAnswers', JSON.stringify(Object.fromEntries(correctAnswers)));
+        localStorage.setItem(
+          "flagQuizCorrectAnswers",
+          JSON.stringify(Object.fromEntries(correctAnswers)),
+        );
       }
 
       // Track continent progress for correct answers
       if (achievementsComponent && currentQuestion.correct?.tags) {
-        const continent = currentQuestion.correct.tags.find(tag =>
-          ['Europe', 'Asia', 'Africa', 'North America', 'South America', 'Oceania'].includes(tag)
+        const continent = currentQuestion.correct.tags.find((tag) =>
+          [
+            "Europe",
+            "Asia",
+            "Africa",
+            "North America",
+            "South America",
+            "Oceania",
+          ].includes(tag),
         );
         if (continent) {
           achievementsComponent.incrementContinentProgress(continent);
@@ -446,7 +498,10 @@
         const flagName = currentQuestion.correct.name;
         wrongAnswers.set(flagName, (wrongAnswers.get(flagName) || 0) + 1);
         // Save wrong answers to localStorage
-        localStorage.setItem('flagQuizWrongAnswers', JSON.stringify(Object.fromEntries(wrongAnswers)));
+        localStorage.setItem(
+          "flagQuizWrongAnswers",
+          JSON.stringify(Object.fromEntries(wrongAnswers)),
+        );
       }
 
       if (achievementsComponent) {
@@ -456,7 +511,7 @@
     gameStats.total++;
 
     // Save stats to localStorage
-    localStorage.setItem('flagQuizStats', JSON.stringify(gameStats));
+    localStorage.setItem("flagQuizStats", JSON.stringify(gameStats));
 
     // Check for new achievements
     if (achievementsComponent) {
@@ -469,7 +524,7 @@
     // Check if session is complete
     if (currentSessionQuestions >= sessionLength) {
       // Session complete - show results and return to welcome page
-      gameState = 'session-complete';
+      gameState = "session-complete";
       sessionStats.sessionLength = sessionLength;
 
       if (autoAdvance) {
@@ -489,8 +544,9 @@
       const delay = isCorrect ? 2000 : 4000; // Double delay for wrong answers
       startAutoAdvanceTimer(delay);
     }
-  }  function skipQuestion() {
-    if (gameState !== 'question') return;
+  }
+  function skipQuestion() {
+    if (gameState !== "question") return;
 
     // Update skip counters
     score.skipped++;
@@ -511,14 +567,14 @@
     }
 
     // Save stats to localStorage
-    localStorage.setItem('flagQuizStats', JSON.stringify(gameStats));
+    localStorage.setItem("flagQuizStats", JSON.stringify(gameStats));
 
     // Save session state
     saveSessionState();
 
     // Check if session is complete
     if (currentSessionQuestions >= sessionLength) {
-      gameState = 'session-complete';
+      gameState = "session-complete";
       sessionStats.sessionLength = sessionLength;
       endSession();
       return;
@@ -564,15 +620,21 @@
     // Reset session data
     score = { correct: 0, total: 0, skipped: 0 };
     currentSessionQuestions = 0;
-    sessionStats = { correct: 0, wrong: 0, skipped: 0, total: 0, sessionLength };
+    sessionStats = {
+      correct: 0,
+      wrong: 0,
+      skipped: 0,
+      total: 0,
+      sessionLength,
+    };
     sessionInProgress = true;
     sessionStartTime = Date.now();
     showSessionResults = false;
     sessionRestoredFromReload = false; // Reset reload flag for new sessions
 
     // Switch to quiz subpage
-    quizSubpage = 'quiz';
-    gameState = 'loading';
+    quizSubpage = "quiz";
+    gameState = "loading";
 
     // Generate first question
     generateQuestion();
@@ -584,8 +646,8 @@
     clearSessionState();
 
     // Switch to welcome/stats page
-    quizSubpage = 'welcome';
-    gameState = 'welcome';
+    quizSubpage = "welcome";
+    gameState = "welcome";
     showSessionResults = true; // Show results on welcome page
   }
 
@@ -595,12 +657,12 @@
 
   function resetStats() {
     gameStats = { correct: 0, wrong: 0, total: 0, skipped: 0 };
-    localStorage.setItem('flagQuizStats', JSON.stringify(gameStats));
+    localStorage.setItem("flagQuizStats", JSON.stringify(gameStats));
   }
 
   function saveSettings() {
     const settings = { autoAdvance };
-    localStorage.setItem('flagQuizSettings', JSON.stringify(settings));
+    localStorage.setItem("flagQuizSettings", JSON.stringify(settings));
   }
 
   function toggleSettings() {
@@ -608,7 +670,13 @@
   }
 
   function handleSettingsChange(event) {
-    const { autoAdvance: newAutoAdvance, focusWrongAnswers: newFocusWrong, reduceCorrectAnswers: newReduceCorrect, soundEnabled: newSoundEnabled, sessionLength: newSessionLength } = event.detail;
+    const {
+      autoAdvance: newAutoAdvance,
+      focusWrongAnswers: newFocusWrong,
+      reduceCorrectAnswers: newReduceCorrect,
+      soundEnabled: newSoundEnabled,
+      sessionLength: newSessionLength,
+    } = event.detail;
     autoAdvance = newAutoAdvance;
     focusWrongAnswers = newFocusWrong;
     reduceCorrectAnswers = newReduceCorrect;
@@ -633,16 +701,22 @@
     score = { correct: 0, total: 0, skipped: 0 };
     currentStreak = 0;
     currentSessionQuestions = 0;
-    sessionStats = { correct: 0, wrong: 0, skipped: 0, total: 0, sessionLength };
-    localStorage.setItem('flagQuizStats', JSON.stringify(gameStats));
+    sessionStats = {
+      correct: 0,
+      wrong: 0,
+      skipped: 0,
+      total: 0,
+      sessionLength,
+    };
+    localStorage.setItem("flagQuizStats", JSON.stringify(gameStats));
 
     // Reset wrong answers tracking
     wrongAnswers = new Map();
-    localStorage.removeItem('flagQuizWrongAnswers');
+    localStorage.removeItem("flagQuizWrongAnswers");
 
     // Reset correct answers tracking
     correctAnswers = new Map();
-    localStorage.removeItem('flagQuizCorrectAnswers');
+    localStorage.removeItem("flagQuizCorrectAnswers");
 
     // Reset achievements if component is available
     if (achievementsComponent) {
@@ -657,7 +731,7 @@
   }
 
   function handleSessionGoToGames() {
-    window.location.hash = '#/game';
+    window.location.hash = "#/game";
   }
 
   function handleSessionClose() {
@@ -673,8 +747,32 @@
     generateQuestion();
   }
 
+  function handleActionButtonClick(event) {
+    const { action } = event.detail;
+
+    switch (action) {
+      case "startQuiz":
+        startNewSession();
+        break;
+      case "playAgain":
+        startNewSession();
+        break;
+      case "goToGames":
+        window.location.hash = "#/game";
+        break;
+      case "openSettings":
+        showSettings = true;
+        break;
+      case "endSession":
+        endSession();
+        break;
+      default:
+        console.warn("Unknown action:", action);
+    }
+  }
+
   function getCountryName(flag) {
-    return flag.meta?.country || flag.name || 'Unknown';
+    return flag.meta?.country || flag.name || "Unknown";
   }
 
   function getFlagImage(flag) {
@@ -696,7 +794,8 @@
     if (!soundEnabled) return;
 
     try {
-      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      const audioContext = new (window.AudioContext ||
+        window.webkitAudioContext)();
       const oscillator = audioContext.createOscillator();
       const gainNode = audioContext.createGain();
 
@@ -705,16 +804,25 @@
 
       // Pleasant ascending tone for correct answer
       oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime); // C5
-      oscillator.frequency.setValueAtTime(659.25, audioContext.currentTime + 0.1); // E5
-      oscillator.frequency.setValueAtTime(783.99, audioContext.currentTime + 0.2); // G5
+      oscillator.frequency.setValueAtTime(
+        659.25,
+        audioContext.currentTime + 0.1,
+      ); // E5
+      oscillator.frequency.setValueAtTime(
+        783.99,
+        audioContext.currentTime + 0.2,
+      ); // G5
 
       gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-      gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.4);
+      gainNode.gain.exponentialRampToValueAtTime(
+        0.001,
+        audioContext.currentTime + 0.4,
+      );
 
       oscillator.start(audioContext.currentTime);
       oscillator.stop(audioContext.currentTime + 0.4);
     } catch (e) {
-      console.log('Audio not supported:', e);
+      console.log("Audio not supported:", e);
     }
   }
 
@@ -722,7 +830,8 @@
     if (!soundEnabled) return;
 
     try {
-      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      const audioContext = new (window.AudioContext ||
+        window.webkitAudioContext)();
       const oscillator = audioContext.createOscillator();
       const gainNode = audioContext.createGain();
 
@@ -734,12 +843,15 @@
       oscillator.frequency.setValueAtTime(300, audioContext.currentTime + 0.15);
 
       gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-      gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.3);
+      gainNode.gain.exponentialRampToValueAtTime(
+        0.001,
+        audioContext.currentTime + 0.3,
+      );
 
       oscillator.start(audioContext.currentTime);
       oscillator.stop(audioContext.currentTime + 0.3);
     } catch (e) {
-      console.log('Audio not supported:', e);
+      console.log("Audio not supported:", e);
     }
   }
 </script>
@@ -753,9 +865,9 @@
   {setTheme}
   {gameStats}
   {achievementCount}
-  sessionStats={sessionStats}
-  isQuizActive={sessionInProgress && quizSubpage === 'quiz'}
-  onAchievementClick={() => showAchievements = true}
+  {sessionStats}
+  isQuizActive={sessionInProgress && quizSubpage === "quiz"}
+  onAchievementClick={() => (showAchievements = true)}
 />
 
 <main class="flag-quiz">
@@ -783,31 +895,44 @@
       {gameStats}
       {currentStreak}
       show={showAchievements}
-      on:close={() => showAchievements = false}
+      on:close={() => (showAchievements = false)}
       on:achievementsUnlocked={handleAchievementsUnlocked}
     />
 
-    {#if quizSubpage === 'welcome'}
+    {#if quizSubpage === "welcome"}
       <!-- Welcome/Stats Subpage -->
       <WelcomeStats
         {gameStats}
         {sessionStats}
         {sessionLength}
-        showSessionResults={showSessionResults}
+        {showSessionResults}
         on:startQuiz={startNewSession}
-        on:openSettings={() => showSettings = true}
-        on:closeResults={() => showSessionResults = false}
+        on:openSettings={() => (showSettings = true)}
+        on:closeResults={() => (showSessionResults = false)}
       />
-    {:else if quizSubpage === 'quiz'}
+
+      <ActionButtons
+        mode={showSessionResults ? "results" : "welcome"}
+        sessionInfo={showSessionResults
+          ? ""
+          : `${sessionLength} questions per quiz`}
+        hasPlayedBefore={gameStats.total > 0}
+        on:action={handleActionButtonClick}
+      />
+    {:else if quizSubpage === "quiz"}
       <!-- Quiz Subpage -->
-      {#if gameState === 'loading'}
+      {#if gameState === "loading"}
         <div class="loading">Loading flags...</div>
       {:else if currentQuestion}
         <div class="question-container">
           <div class="question-header">
-            <div class="question-number">Question {currentSessionQuestions + 1} from {sessionLength}</div>
+            <div class="question-number">
+              Question {currentSessionQuestions + 1} from {sessionLength}
+            </div>
             <div class="question-type">
-              {currentQuestion.type === 'flag-to-country' ? 'Which country does this flag belong to?' : 'Which flag belongs to this country?'}
+              {currentQuestion.type === "flag-to-country"
+                ? "Which country does this flag belong to?"
+                : "Which flag belongs to this country?"}
             </div>
           </div>
 
@@ -816,30 +941,58 @@
             {#if showResult}
               <div class="result">
                 {#if selectedAnswer === correctAnswer}
-                  <div class="correct-result"><span class="result-icon smile-icon"><InlineSvg path="/icons/smile-squre.svg" alt="Correct" /></span> Correct!</div>
+                  <div class="correct-result">
+                    <span class="result-icon smile-icon"
+                      ><InlineSvg
+                        path="/icons/smile-squre.svg"
+                        alt="Correct"
+                      /></span
+                    > Correct!
+                  </div>
                 {:else}
                   <div class="wrong-result">
-                    <span class="result-icon sad-icon"><InlineSvg path="/icons/sad-square.svg" alt="Wrong" /></span> Wrong!
-                    {#if currentQuestion.type === 'flag-to-country'}
+                    <span class="result-icon sad-icon"
+                      ><InlineSvg
+                        path="/icons/sad-square.svg"
+                        alt="Wrong"
+                      /></span
+                    >
+                    Wrong!
+                    {#if currentQuestion.type === "flag-to-country"}
                       <span class="result-country-info">
-                        The correct answer is: {getCountryName(currentQuestion.correct)}.
+                        The correct answer is: {getCountryName(
+                          currentQuestion.correct,
+                        )}.
                         <button
                           class="info-icon result-info-btn"
                           aria-label="Show country info"
                           aria-expanded={showResultCountryInfo}
-                          on:click={() => (showResultCountryInfo = !showResultCountryInfo)}
-                          on:keydown={(e) => { if (e.key === 'Escape') showResultCountryInfo = false; }}
+                          on:click={() =>
+                            (showResultCountryInfo = !showResultCountryInfo)}
+                          on:keydown={(e) => {
+                            if (e.key === "Escape")
+                              showResultCountryInfo = false;
+                          }}
                         >
-                          <InlineSvg path="/icons/info-square.svg" alt="Country info" />
+                          <InlineSvg
+                            path="/icons/info-square.svg"
+                            alt="Country info"
+                          />
                         </button>
                         {#if showResultCountryInfo}
-                          <div class="info-tooltip result-info-tooltip" role="dialog" aria-live="polite">
+                          <div
+                            class="info-tooltip result-info-tooltip"
+                            role="dialog"
+                            aria-live="polite"
+                          >
                             {currentQuestion.correct.meta.description}
                           </div>
                         {/if}
                       </span>
                     {:else}
-                      You selected the {getCountryName(currentQuestion.options[selectedAnswer])} flag.
+                      You selected the {getCountryName(
+                        currentQuestion.options[selectedAnswer],
+                      )} flag.
                     {/if}
                   </div>
                 {/if}
@@ -847,9 +1000,13 @@
             {/if}
           </div>
 
-          {#if currentQuestion.type === 'flag-to-country'}
+          {#if currentQuestion.type === "flag-to-country"}
             <div class="flag-display">
-              <img src={getFlagImage(currentQuestion.correct)} alt="Flag" class="quiz-flag" />
+              <img
+                src={getFlagImage(currentQuestion.correct)}
+                alt="Flag"
+                class="quiz-flag"
+              />
             </div>
 
             <div class="options" key={questionKey}>
@@ -858,9 +1015,11 @@
                   class="option"
                   class:selected={selectedAnswer === index}
                   class:correct={showResult && index === correctAnswer}
-                  class:wrong={showResult && selectedAnswer === index && index !== correctAnswer}
+                  class:wrong={showResult &&
+                    selectedAnswer === index &&
+                    index !== correctAnswer}
                   on:click={() => selectAnswer(index)}
-                  disabled={gameState === 'answered'}
+                  disabled={gameState === "answered"}
                 >
                   {getCountryName(option)}
                 </button>
@@ -876,9 +1035,14 @@
                     aria-label="Show country info"
                     aria-expanded={showCountryInfo}
                     on:click={() => (showCountryInfo = !showCountryInfo)}
-                    on:keydown={(e) => { if (e.key === 'Escape') showCountryInfo = false; }}
+                    on:keydown={(e) => {
+                      if (e.key === "Escape") showCountryInfo = false;
+                    }}
                   >
-                    <InlineSvg path="/icons/info-square.svg" alt="Country info" />
+                    <InlineSvg
+                      path="/icons/info-square.svg"
+                      alt="Country info"
+                    />
                   </button>
                   {#if showCountryInfo}
                     <div class="info-tooltip" role="dialog" aria-live="polite">
@@ -895,38 +1059,59 @@
                   class="flag-option"
                   class:selected={selectedAnswer === index}
                   class:correct={showResult && index === correctAnswer}
-                  class:wrong={showResult && selectedAnswer === index && index !== correctAnswer}
+                  class:wrong={showResult &&
+                    selectedAnswer === index &&
+                    index !== correctAnswer}
                   on:click={() => selectAnswer(index)}
-                  disabled={gameState === 'answered'}
+                  disabled={gameState === "answered"}
                 >
-                  <img src={getFlagImage(option)} alt={getCountryName(option)} class="option-flag" />
+                  <img
+                    src={getFlagImage(option)}
+                    alt={getCountryName(option)}
+                    class="option-flag"
+                  />
                 </button>
               {/each}
             </div>
           {/if}
 
-          {#if gameState === 'question'}
-            <button class="btn btn-skip btn-next-full" on:click={skipQuestion}>Skip Question</button>
-          {:else if (!autoAdvance && gameState === 'answered') || (autoAdvance && gameState === 'answered' && sessionRestoredFromReload)}
-            <button class="btn btn-primary btn-next-full" on:click={nextQuestion}>Next Question →</button>
+          {#if gameState === "question"}
+            <button class="btn btn-skip btn-next-full" on:click={skipQuestion}
+              >Skip Question</button
+            >
+          {:else if (!autoAdvance && gameState === "answered") || (autoAdvance && gameState === "answered" && sessionRestoredFromReload)}
+            <button
+              class="btn btn-primary btn-next-full"
+              on:click={nextQuestion}>Next Question →</button
+            >
           {/if}
 
           <!-- Auto-advance timer display -->
-          {#if autoAdvance && gameState === 'answered' && timerProgress > 0 && !sessionRestoredFromReload}
+          {#if autoAdvance && gameState === "answered" && timerProgress > 0 && !sessionRestoredFromReload}
             <div class="auto-advance-timer">
               <div class="timer-bar">
-                <div class="timer-progress" style="width: {timerProgress}%"></div>
+                <div
+                  class="timer-progress"
+                  style="width: {timerProgress}%"
+                ></div>
               </div>
-              <span class="timer-text">Next question in {Math.ceil((timerDuration - (timerProgress / 100 * timerDuration)) / 1000)}s</span>
+              <span class="timer-text"
+                >Next question in {Math.ceil(
+                  (timerDuration - (timerProgress / 100) * timerDuration) /
+                    1000,
+                )}s</span
+              >
             </div>
           {/if}
         </div>
       {/if}
 
-      <div class="controls">
-        <button class="btn btn-secondary" on:click={endSession}>End Quiz</button>
-        <button class="btn btn-secondary" on:click={toggleSettings} title="Settings">Settings</button>
-      </div>
+      <ActionButtons
+        mode="quiz"
+        sessionInfo="Question {currentSessionQuestions +
+          1} from {sessionLength}"
+        on:action={handleActionButtonClick}
+      />
     {/if}
   </div>
 </main>
@@ -1007,7 +1192,7 @@
   .country-display {
     text-align: center;
     margin-bottom: 2rem;
-  position: relative;
+    position: relative;
   }
 
   .country-name {
@@ -1057,7 +1242,7 @@
     width: min(90vw, 520px);
     max-height: 40vh;
     overflow: auto;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
     z-index: 5;
     text-align: left;
     font-size: 0.95rem;
@@ -1268,13 +1453,6 @@
     max-width: 300px;
   }
 
-  .controls {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-
   .btn {
     padding: 0.75rem 1.5rem;
     border: none;
@@ -1300,16 +1478,6 @@
     width: 100%;
     margin-top: 1rem;
     text-align: center;
-  }
-
-  .btn-secondary {
-    background: var(--color-bg-secondary);
-    color: var(--color-text-primary);
-    border: 1px solid var(--color-border);
-  }
-
-  .btn-secondary:hover {
-    background: var(--color-bg-hover);
   }
 
   .btn-skip {
@@ -1376,14 +1544,6 @@
       width: 92vw;
       left: 50%;
       transform: translateX(-50%);
-    }
-
-    .controls {
-      flex-direction: row;
-      flex-wrap: nowrap;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      justify-content: center;
     }
   }
 </style>
