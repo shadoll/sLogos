@@ -72,7 +72,7 @@
     'legend': {
       name: 'Geography Legend',
       description: 'Answer 200 questions correctly',
-      icon: 'crown-minimalistic.svg',
+      icon: 'crown-star.svg',
       requirement: () => gameStats.correct >= 200
     }
   };
