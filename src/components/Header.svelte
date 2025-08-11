@@ -1,5 +1,6 @@
 <script>
   import { onMount } from "svelte";
+  import { location } from "svelte-spa-router";
   import Filter from "./Filter.svelte";
   import ThemeSwitcher from "./ThemeSwitcher.svelte";
   import ListViewSwitcher from "./ListViewSwitcher.svelte";
@@ -33,11 +34,28 @@
   export let setCompactMode = () => {};
   export let collection = "logos";
   export let setCollection = () => {};
+  // Quiz-only data
+  export let score = null;
+  export let gameStats = null;
 
   let dropdownOpen = false;
 
+  // Check if we're in game mode
+  $: isGameMode = $location && $location.startsWith('/game');
+  $: isQuizPage = $location && $location.startsWith('/game/flags');
+
   function handleTitleClick() {
     dropdownOpen = !dropdownOpen;
+  }
+
+  function handleGameClick() {
+    if (isGameMode) {
+      // Go back to main page if we're in game mode
+      window.location.hash = '#/';
+    } else {
+      // Go to games page if we're not in game mode
+      window.location.hash = '#/game';
+    }
   }
 
   function handleCollectionSelect(name) {
@@ -47,6 +65,7 @@
 
   $: currentCollectionObj = collections.find(c => c.name === collection);
   $: currentLabel = (currentCollectionObj?.title || currentCollectionObj?.label || "Logo Gallery").replace(/s$/, "");
+  $: displayLabel = isGameMode ? "Flag Quiz" : currentLabel;
 </script>
 
 <header class="main-header">
@@ -56,7 +75,7 @@
         <img src="favicon.svg" alt="Logo Gallery icon" />
       </div>
       <button class="collection-title-btn" on:click={handleTitleClick} aria-haspopup="listbox" aria-expanded={dropdownOpen}>
-        {currentLabel} <span class="triangle">▼</span>
+        {displayLabel} <span class="triangle">▼</span>
       </button>
       {#if dropdownOpen}
         <ul class="collection-dropdown" role="listbox">
@@ -86,37 +105,55 @@
         {allLogos ? allLogos.length : 0} images in gallery
       {/if}
     </span>
+    <a href="#/game" class="game-button" class:active={isGameMode} title={isGameMode ? "Back to Main" : "Quiz Games"} on:click|preventDefault={handleGameClick}>
+      🎮
+    </a>
     <ThemeSwitcher {theme} {setTheme} />
   </div>
 
-  <div class="header-row header-controls">
-    <SearchBar {searchQuery} {setSearchQuery} />
-    <Filter
-      {allLogos}
-      {allTags}
-      {selectedTags}
-      {selectedBrands}
-      {selectedVariants}
-      {tagDropdownOpen}
-      {toggleDropdown}
-      {addTag}
-      {removeTag}
-      {addBrand}
-      {removeBrand}
-      {addVariant}
-      {removeVariant}
-      {getTagObj}
-      {compactMode}
-      {setCompactMode}
-      collection={currentCollectionObj}
-    />
-    <ListViewSwitcher
-      {viewMode}
-      {setGridView}
-      {setListView}
-      {setCompactView}
-    />
-  </div>
+  {#if !isGameMode || isQuizPage}
+    <div class="header-row header-controls" class:quiz-mode={isQuizPage}>
+      {#if isQuizPage}
+        <div class="quiz-header-stats">
+          <div class="qh-block">
+            <span class="qh-label">Current:</span>
+            <span class="qh-value">{score ? `${score.correct}/${score.total}` : '0/0'} {score && score.skipped > 0 ? `(⏭️ ${score.skipped})` : ''}</span>
+          </div>
+          <div class="qh-block">
+            <span class="qh-label">All Time:</span>
+            <span class="qh-value">✅ {gameStats?.correct || 0} ❌ {gameStats?.wrong || 0} {gameStats?.skipped > 0 ? `⏭️ ${gameStats.skipped}` : ''}</span>
+          </div>
+        </div>
+      {:else}
+        <SearchBar {searchQuery} {setSearchQuery} />
+        <Filter
+          {allLogos}
+          {allTags}
+          {selectedTags}
+          {selectedBrands}
+          {selectedVariants}
+          {tagDropdownOpen}
+          {toggleDropdown}
+          {addTag}
+          {removeTag}
+          {addBrand}
+          {removeBrand}
+          {addVariant}
+          {removeVariant}
+          {getTagObj}
+          {compactMode}
+          {setCompactMode}
+          collection={currentCollectionObj}
+        />
+        <ListViewSwitcher
+          {viewMode}
+          {setGridView}
+          {setListView}
+          {setCompactView}
+        />
+      {/if}
+    </div>
+  {/if}
 </header>
 
 <style>
@@ -146,11 +183,46 @@
     padding-top: 0.9rem;
   }
 
+  .game-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    margin-left: 0.5rem;
+    cursor: pointer;
+  }
+
+  .game-button:hover {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    transform: translateY(-1px);
+  }
+
+  .game-button.active {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: white;
+  }
+
+  .game-button.active:hover {
+    background: var(--color-primary-dark, #0056b3);
+    border-color: var(--color-primary-dark, #0056b3);
+  }
+
   .header-title {
     display: flex;
     align-items: center;
     gap: 0.5em;
   }
+
+
 
   .header-icon {
     width: 28px;
@@ -219,11 +291,38 @@
     gap: 1rem;
     margin: 1rem 0;
   }
+  .header-controls.quiz-mode {
+    justify-content: center;
+  }
+
+  .quiz-header-stats {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 0 auto;
+  }
+  .qh-block {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.9rem;
+    color: var(--color-text);
+  }
+  .qh-label {
+    color: var(--color-text-secondary);
+    margin-right: 0.35rem;
+  }
+  .qh-value {
+    font-weight: 600;
+  }
 
   @media (max-width: 700px) {
     .header-row {
       display: grid;
-      grid-template-columns: 1fr auto;
+      grid-template-columns: 1fr auto auto auto;
       grid-template-rows: auto auto;
       gap: 0.5rem;
       align-items: center;
@@ -232,6 +331,12 @@
     .header-title {
       grid-column: 1;
       grid-row: 1;
+    }
+
+    .game-button {
+      grid-column: 2;
+      grid-row: 1;
+      margin-left: 0;
     }
 
     .logo-count {
@@ -263,6 +368,15 @@
     .header-controls :global(.filter-section) {
       grid-column: 1 / -1;
       grid-row: 2;
+    }
+
+    /* Prevent header title from wrapping and reduce size on small screens */
+  .collection-title-btn {
+      font-size: 1.1rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 50vw;
     }
   }
 </style>

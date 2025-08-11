@@ -4,12 +4,16 @@
   import Router from "svelte-spa-router/Router.svelte";
   import Home from "./pages/Home.svelte";
   import Preview from "./pages/Preview.svelte";
+  import Game from "./pages/Game.svelte";
+  import FlagQuiz from "./pages/FlagQuiz.svelte";
   import NotFound from "./pages/NotFound.svelte";
   import Header from "./components/Header.svelte";
 
   export const routes = {
     "/": Home,
     "/preview/:logoName": Preview,
+    "/game": Game,
+    "/game/flags": FlagQuiz,
     "*": NotFound,
   };
 
