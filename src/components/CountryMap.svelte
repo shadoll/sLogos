@@ -180,7 +180,7 @@
 </script>
 
 <div class="country-map-section">
-    <div bind:this={wrapperRef} style="width:100%;height:100%;position:relative;">
+    <div bind:this={wrapperRef} style="width:100%;height:100%;position:relative; cursor: grab;" on:mousedown={onMouseDown}>
         <InlineSvg path={mapPath} alt="World map" color={undefined} />
         {#if countryScale}
         <div class="map-controls-on-map">
@@ -210,16 +210,9 @@
         z-index: 10;
     }
     .zoom-btn-on-map {
-        background: var(--color-accent, #222);
-        color: var(--color-bg, #4f8cff);
-        border: 1px solid var(--color-border, #222);
         border-radius: 50%;
         width: 20px;
         height: 20px;
-        font-size: 1em;
-        cursor: pointer;
-        box-shadow: 0 2px 8px 2px rgba(0,0,0,0.08);
-        transition: background 0.2s, color 0.2s;
         display: flex;
         align-items: center;
         justify-content: center;
