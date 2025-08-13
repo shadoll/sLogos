@@ -22,19 +22,22 @@
             }
         });
         // Highlight by country name (name attribute)
-        const names = Array.isArray(countryNames) ? countryNames : countryNames ? [countryNames] : [];
-            names.forEach((name) => {
-                // Find all elements with matching name attribute or class name
-                console.log(`Highlighting country: ${name}`);
-                const pathsByName = svgEl.querySelectorAll(`[name='${name}']`);
-                const pathsByClass = svgEl.querySelectorAll(`.${name.replace(/ /g, '.')}`);
-                const allPaths = [...pathsByName, ...pathsByClass];
-                console.log(`Found paths for ${name}:`, allPaths, `(${allPaths.length})`);
-                allPaths.forEach((countryPath) => {
-                    countryPath.setAttribute("fill", "#4f8cff");
-                    countryPath.setAttribute("stroke", "#222");
-                    countryPath.style.filter = "drop-shadow(0 0 4px #4f8cff44)";
-                });
+        const names = Array.isArray(countryNames)
+            ? countryNames
+            : countryNames
+              ? [countryNames]
+              : [];
+        names.forEach((name) => {
+            const pathsByName = svgEl.querySelectorAll(`[name='${name}']`);
+            const pathsByClass = svgEl.querySelectorAll(
+                `.${name.replace(/ /g, ".")}`,
+            );
+            const allPaths = [...pathsByName, ...pathsByClass];
+            allPaths.forEach((countryPath) => {
+                countryPath.setAttribute("fill", "#4f8cff");
+                countryPath.setAttribute("stroke", "#222");
+                countryPath.style.filter = "drop-shadow(0 0 4px #4f8cff44)";
+            });
         });
     }
 
