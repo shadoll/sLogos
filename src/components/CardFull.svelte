@@ -165,7 +165,11 @@
       </div>
       <div class="right-column">
         {#if logo.tags && logo.tags.some((tagObj) => (tagObj.text || tagObj) === "Country") && logo.meta && logo.meta["ISO code"]}
-          <CountryMap countryCodes={[logo.meta["ISO code"]]} countryNames={[logo.meta["country"]]} />
+          <CountryMap
+            countryCodes={[logo.meta["ISO code"]]}
+            countryNames={[logo.meta["country"]]}
+            countryScale={true}
+          />
         {/if}
 
         <div class="logo-details fullscreen-details">
@@ -510,5 +514,4 @@
   .logo-details span {
     color: var(--color-text);
   }
-
 </style>
