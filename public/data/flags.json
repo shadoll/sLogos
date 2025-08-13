@@ -19,7 +19,11 @@
       "description": "Andorra is a small, landlocked country in the eastern Pyrenees mountains, bordered by France and Spain. It is known for its ski resorts and a tax-haven status that attracts tourists.",
       "area": "468 km²",
       "ISO code": "AD",
-      "Official languages": "Catalan"
+      "Official languages": "Catalan",
+      "cities": [
+        "Escaldes-Engordany",
+        "Encamp"
+      ]
     },
     "variants": [
       "vertical stripes",
@@ -112,7 +116,13 @@
       "capital": "Abu Dhabi",
       "description": "The United Arab Emirates (UAE) is a federation of seven emirates located on the southeast corner of the Arabian Peninsula. It is known for its modern architecture, luxury shopping, and vibrant culture.",
       "area": "83,600 km²",
-      "ISO code": "AE"
+      "ISO code": "AE",
+      "cities": [
+        "Dubai",
+        "Sharjah",
+        "Al Ain",
+        "Ajman"
+      ]
     }
   },
   {
@@ -130,7 +140,13 @@
       "description": "Afghanistan is a landlocked country located in South Asia, bordered by Pakistan, Iran, Turkmenistan, Uzbekistan, Tajikistan, and China. It has a rich history and diverse culture, but has faced significant challenges due to conflict and political instability.",
       "area": "652,230 km²",
       "ISO code": "AF",
-      "wikipedia": "https://en.wikipedia.org/wiki/Afghanistan"
+      "wikipedia": "https://en.wikipedia.org/wiki/Afghanistan",
+      "cities": [
+        "Kandahar",
+        "Herat",
+        "Mazar-i-Sharif",
+        "Jalalabad"
+      ]
     }
   },
   {
@@ -151,7 +167,12 @@
       "capital": "Saint John's",
       "description": "Antigua and Barbuda is a twin-island nation in the Caribbean, known for its beautiful beaches and vibrant culture.",
       "area": "442 km²",
-      "ISO code": "AG"
+      "ISO code": "AG",
+      "cities": [
+        "All Saints",
+        "Liberta",
+        "Potters Village"
+      ]
     }
   },
   {
@@ -185,7 +206,11 @@
       "description": "Anguilla is a British Overseas Territory in the Caribbean, known for its beautiful beaches and luxury resorts. It is located east of Puerto Rico and the Virgin Islands.",
       "area": "91 km²",
       "ISO code": "AI",
-      "wikipedia": "https://en.wikipedia.org/wiki/Anguilla"
+      "wikipedia": "https://en.wikipedia.org/wiki/Anguilla",
+      "cities": [
+        "Blowing Point",
+        "Sandy Ground"
+      ]
     }
   },
   {
@@ -207,7 +232,14 @@
       "description": "Albania is a country in Southeast Europe on the Balkan Peninsula. It is bordered by Montenegro, Kosovo, North Macedonia, and Greece, and has a coastline along the Adriatic and Ionian Seas.",
       "area": "28,748 km²",
       "ISO code": "AL"
-    },
+      ,
+        "cities": [
+          "Durrës",
+          "Shkodër",
+          "Vlorë",
+          "Elbasan"
+        ]
+      },
     "variants": [
       "red",
       "black",
@@ -237,7 +269,14 @@
       "description": "Armenia is a landlocked country in the South Caucasus region of Eurasia, bordered by Turkey, Georgia, Azerbaijan, and Iran. It is known for its rich cultural heritage and historical significance as one of the first countries to adopt Christianity.",
       "area": "29,743 km²",
       "ISO code": "AM"
-    },
+      ,
+        "cities": [
+          "Gyumri",
+          "Vanadzor",
+          "Vagharshapat",
+          "Hrazdan"
+        ]
+      },
     "variants": [
       "horizontal stripes",
       "3 colours",
@@ -287,7 +326,14 @@
       "area": "1,246,700 km²",
       "ISO code": "AO",
       "wikipedia": "https://en.wikipedia.org/wiki/Angola"
-    }
+      ,
+        "cities": [
+          "Huambo",
+          "Lobito",
+          "Benguela",
+          "Kuito"
+        ]
+      }
   },
   {
     "name": "Antarctica",
@@ -320,7 +366,14 @@
       "area": "2,780,400 km²",
       "ISO code": "AR",
       "wikipedia": "https://en.wikipedia.org/wiki/Argentina"
-    }
+      ,
+        "cities": [
+          "Córdoba",
+          "Rosario",
+          "Mendoza",
+          "La Plata"
+        ]
+      }
   },
   {
     "name": "League of Arab States",
@@ -384,7 +437,14 @@
       "area": "83,879 km²",
       "ISO code": "AT",
       "wikipedia": "https://en.wikipedia.org/wiki/Austria"
-    }
+      ,
+        "cities": [
+          "Graz",
+          "Linz",
+          "Salzburg",
+          "Innsbruck"
+        ]
+      }
   },
   {
     "name": "Australia",
@@ -402,7 +462,14 @@
       "area": "7,692,024 km²",
       "ISO code": "AU",
       "wikipedia": "https://en.wikipedia.org/wiki/Australia"
-    }
+      ,
+        "cities": [
+          "Sydney",
+          "Melbourne",
+          "Brisbane",
+          "Perth"
+        ]
+      }
   },
   {
     "name": "Aruba",
@@ -1994,7 +2061,13 @@
       "description": "Guinea is a country located in West Africa, bordered by Guinea-Bissau to the northwest, Senegal to the north, Mali to the northeast, Côte d'Ivoire to the southeast, Liberia to the south, and Sierra Leone to the southwest. It is known for its rich natural resources, including bauxite, gold, and diamonds, as well as its diverse cultures and languages.",
       "area": "245,857 km²",
       "ISO code": "GN",
-      "wikipedia": "https://en.wikipedia.org/wiki/Guinea"
+      "wikipedia": "https://en.wikipedia.org/wiki/Guinea",
+      "cities": [
+        "Kankan",
+        "Labé",
+        "Kindia",
+        "Mamou"
+      ]
     }
   },
   {
@@ -2013,7 +2086,13 @@
       "description": "Guadeloupe is an overseas department and region of France located in the Caribbean. It consists of several islands, with Basse-Terre and Grande-Terre being the largest. Guadeloupe is known for its beautiful beaches, lush rainforests, and vibrant Creole culture. The economy is primarily based on tourism, agriculture, and services.",
       "area": "1,628 km²",
       "ISO code": "GP",
-      "wikipedia": "https://en.wikipedia.org/wiki/Guadeloupe"
+      "wikipedia": "https://en.wikipedia.org/wiki/Guadeloupe",
+      "cities": [
+        "Pointe-à-Pitre",
+        "Le Moule",
+        "Sainte-Anne",
+        "Saint-François"
+      ]
     }
   },
   {
@@ -2031,7 +2110,13 @@
       "description": "Equatorial Guinea is a country located on the west coast of Central Africa, bordered by Cameroon to the north, Gabon to the south and east, and the Atlantic Ocean to the west. It consists of a mainland region (Río Muni) and several islands, including Bioko Island where the capital, Malabo, is located. The country is known for its rich oil reserves and diverse ecosystems.",
       "area": "28,051 km²",
       "ISO code": "GQ",
-      "wikipedia": "https://en.wikipedia.org/wiki/Equatorial_Guinea"
+      "wikipedia": "https://en.wikipedia.org/wiki/Equatorial_Guinea",
+      "cities": [
+        "Bata",
+        "Ebebiyin",
+        "Mongomo",
+        "Evinayong"
+      ]
     }
   },
   {
@@ -2049,7 +2134,13 @@
       "description": "Greece is a country located in southeastern Europe, bordered by Albania to the northwest, North Macedonia and Bulgaria to the north, and Turkey to the northeast. It has a rich history that dates back thousands of years and is known as the cradle of Western civilization. Greece is famous for its ancient ruins, beautiful islands, and vibrant culture.",
       "area": "131,957 km²",
       "ISO code": "GR",
-      "wikipedia": "https://en.wikipedia.org/wiki/Greece"
+      "wikipedia": "https://en.wikipedia.org/wiki/Greece",
+      "cities": [
+        "Thessaloniki",
+        "Patras",
+        "Heraklion",
+        "Larissa"
+      ]
     }
   },
   {
@@ -2068,7 +2159,8 @@
       "description": "South Georgia and the South Sandwich Islands is a British Overseas Territory located in the southern Atlantic Ocean. It consists of the island of South Georgia and the South Sandwich Islands, which are known for their rugged terrain, glaciers, and rich wildlife, including seals and penguins. The territory has no permanent population and is primarily used for scientific research.",
       "area": "3,903 km²",
       "ISO code": "GS",
-      "wikipedia": "https://en.wikipedia.org/wiki/South_Georgia_and_the_South_Sandwich_Islands"
+      "wikipedia": "https://en.wikipedia.org/wiki/South_Georgia_and_the_South_Sandwich_Islands",
+      "cities": []
     }
   },
   {
@@ -2086,7 +2178,13 @@
       "description": "Guatemala is a country located in Central America, bordered by Mexico to the north and west, Belize to the northeast, Honduras to the southeast, and El Salvador to the south. It is known for its rich Mayan heritage, diverse landscapes, and vibrant culture. The country has a mix of indigenous and Spanish influences, reflected in its languages, traditions, and cuisine.",
       "area": "108,889 km²",
       "ISO code": "GT",
-      "wikipedia": "https://en.wikipedia.org/wiki/Guatemala"
+      "wikipedia": "https://en.wikipedia.org/wiki/Guatemala",
+      "cities": [
+        "Mixco",
+        "Villa Nueva",
+        "Quetzaltenango",
+        "San Miguel Petapa"
+      ]
     }
   },
   {
@@ -2104,7 +2202,13 @@
       "description": "Guam is an unincorporated territory of the United States located in the western Pacific Ocean. It is the largest and southernmost island in the Mariana Islands archipelago. Guam is known for its beautiful beaches, rich Chamorro culture, and as a strategic military base for the U.S. The island has a diverse population and a vibrant tourism industry.",
       "area": "544 km²",
       "ISO code": "GU",
-      "wikipedia": "https://en.wikipedia.org/wiki/Guam"
+      "wikipedia": "https://en.wikipedia.org/wiki/Guam",
+      "cities": [
+        "Dededo",
+        "Tamuning",
+        "Yigo",
+        "Mangilao"
+      ]
     }
   },
   {
@@ -2122,7 +2226,13 @@
       "description": "Guinea-Bissau is a country located in West Africa, bordered by Senegal to the north, Guinea to the south and east, and the Atlantic Ocean to the west. It is known for its rich biodiversity, including numerous islands and national parks. The country has a diverse culture influenced by African, Portuguese, and indigenous traditions.",
       "area": "36,125 km²",
       "ISO code": "GW",
-      "wikipedia": "https://en.wikipedia.org/wiki/Guinea-Bissau"
+      "wikipedia": "https://en.wikipedia.org/wiki/Guinea-Bissau",
+      "cities": [
+        "Bafatá",
+        "Gabú",
+        "Cacheu",
+        "Bolama"
+      ]
     }
   },
   {
@@ -2140,7 +2250,13 @@
       "description": "Guyana is a country located on the northeastern coast of South America, bordered by Venezuela to the west, Brazil to the south, Suriname to the southeast, and the Atlantic Ocean to the north. It is known for its diverse ecosystems, including rainforests, savannas, and rivers. Guyana has a rich cultural heritage influenced by indigenous, African, Indian, and European traditions.",
       "area": "214,969 km²",
       "ISO code": "GY",
-      "wikipedia": "https://en.wikipedia.org/wiki/Guyana"
+      "wikipedia": "https://en.wikipedia.org/wiki/Guyana",
+      "cities": [
+        "Linden",
+        "New Amsterdam",
+        "Bartica",
+        "Skeldon"
+      ]
     }
   },
   {
@@ -3991,7 +4107,13 @@
       "description": "Seychelles is an archipelago nation located in the Indian Ocean, known for its stunning beaches, coral reefs, and nature reserves.",
       "area": "459 km²",
       "ISO code": "SC",
-      "wikipedia": "https://en.wikipedia.org/wiki/Seychelles"
+      "wikipedia": "https://en.wikipedia.org/wiki/Seychelles",
+      "cities": [
+        "Anse Boileau",
+        "Beau Vallon",
+        "Bel Ombre",
+        "Cascade"
+      ]
     }
   },
   {
@@ -4009,7 +4131,13 @@
       "description": "Sudan is a country located in North-East Africa, known for its rich history and diverse cultures.",
       "area": "1,861,484 km²",
       "ISO code": "SD",
-      "wikipedia": "https://en.wikipedia.org/wiki/Sudan"
+      "wikipedia": "https://en.wikipedia.org/wiki/Sudan",
+      "cities": [
+        "Omdurman",
+        "Port Sudan",
+        "Kassala",
+        "El Obeid"
+      ]
     }
   },
   {
@@ -4027,7 +4155,13 @@
       "description": "Sweden is a Scandinavian country known for its rich history, stunning landscapes, and progressive society.",
       "area": "450,295 km²",
       "ISO code": "SE",
-      "wikipedia": "https://en.wikipedia.org/wiki/Sweden"
+      "wikipedia": "https://en.wikipedia.org/wiki/Sweden",
+      "cities": [
+        "Gothenburg",
+        "Malmö",
+        "Uppsala",
+        "Västerås"
+      ]
     }
   },
   {
@@ -4045,7 +4179,8 @@
       "description": "Singapore is a city-state located in Southeast Asia, known for its global financial hub, multicultural population, and strict laws.",
       "area": "728.6 km²",
       "ISO code": "SG",
-      "wikipedia": "https://en.wikipedia.org/wiki/Singapore"
+      "wikipedia": "https://en.wikipedia.org/wiki/Singapore",
+      "cities": []
     }
   },
   {
@@ -4064,7 +4199,12 @@
       "description": "Saint Kitts and Nevis is a two-island country in the West Indies, known for its mountains, beaches, and historical sites.",
       "area": "261 km²",
       "ISO code": "KN",
-      "wikipedia": "https://en.wikipedia.org/wiki/Saint_Kitts_and_Nevis"
+      "wikipedia": "https://en.wikipedia.org/wiki/Saint_Kitts_and_Nevis",
+      "cities": [
+        "Charlestown",
+        "Sandy Point Town",
+        "Cayon"
+      ]
     }
   },
   {
@@ -4083,7 +4223,11 @@
       "description": "Saint Helena, Ascension and Tristan da Cunha is a British Overseas Territory located in the South Atlantic Ocean, known for its remote location and unique wildlife.",
       "area": "394 km²",
       "ISO code": "SH",
-      "wikipedia": "https://en.wikipedia.org/wiki/Saint_Helena,_Ascension_and_Tristan_da_Cunha"
+      "wikipedia": "https://en.wikipedia.org/wiki/Saint_Helena,_Ascension_and_Tristan_da_Cunha",
+      "cities": [
+        "Georgetown",
+        "Edinburgh of the Seven Seas"
+      ]
     }
   },
   {
@@ -4102,7 +4246,8 @@
       "description": "Tristan da Cunha is a remote volcanic archipelago in the South Atlantic Ocean, known for its rugged terrain and unique wildlife.",
       "area": "98 km²",
       "ISO code": "TA",
-      "wikipedia": "https://en.wikipedia.org/wiki/Tristan_da_Cunha"
+      "wikipedia": "https://en.wikipedia.org/wiki/Tristan_da_Cunha",
+      "cities": []
     }
   },
   {
@@ -4120,7 +4265,13 @@
       "description": "Slovenia is a small country in Central Europe, known for its beautiful lakes, mountains, and medieval castles.",
       "area": "20,273 km²",
       "ISO code": "SI",
-      "wikipedia": "https://en.wikipedia.org/wiki/Slovenia"
+      "wikipedia": "https://en.wikipedia.org/wiki/Slovenia",
+      "cities": [
+        "Maribor",
+        "Celje",
+        "Kranj",
+        "Velenje"
+      ]
     }
   },
   {
@@ -4157,7 +4308,13 @@
       "description": "Slovakia is a landlocked country in Central Europe, known for its medieval castles and mountainous terrain.",
       "area": "49,035 km²",
       "ISO code": "SK",
-      "wikipedia": "https://en.wikipedia.org/wiki/Slovakia"
+      "wikipedia": "https://en.wikipedia.org/wiki/Slovakia",
+      "cities": [
+        "Košice",
+        "Prešov",
+        "Žilina",
+        "Nitra"
+      ]
     }
   },
   {
@@ -4193,7 +4350,13 @@
       "description": "San Marino is a small, landlocked country surrounded by Italy, known for its historic architecture and mountainous terrain.",
       "area": "61 km²",
       "ISO code": "SM",
-      "wikipedia": "https://en.wikipedia.org/wiki/San_Marino"
+      "wikipedia": "https://en.wikipedia.org/wiki/San_Marino",
+      "cities": [
+        "Serravalle",
+        "Borgo Maggiore",
+        "Domagnano",
+        "Acquaviva"
+      ]
     }
   },
   {
@@ -4211,7 +4374,13 @@
       "description": "Sierra Leone is a country on the southwest coast of West Africa, known for its white-sand beaches and mountainous terrain.",
       "area": "71,740 km²",
       "ISO code": "SL",
-      "wikipedia": "https://en.wikipedia.org/wiki/Sierra_Leone"
+      "wikipedia": "https://en.wikipedia.org/wiki/Sierra_Leone",
+      "cities": [
+        "Bo",
+        "Kenema",
+        "Makeni",
+        "Koidu"
+      ]
     }
   },
   {
@@ -4229,7 +4398,13 @@
       "description": "Somalia is a country located in the Horn of Africa, known for its rich cultural heritage and historical significance.",
       "area": "637,657 km²",
       "ISO code": "SO",
-      "wikipedia": "https://en.wikipedia.org/wiki/Somalia"
+      "wikipedia": "https://en.wikipedia.org/wiki/Somalia",
+      "cities": [
+        "Hargeisa",
+        "Bosaso",
+        "Kismayo",
+        "Baidoa"
+      ]
     }
   },
   {
@@ -4247,7 +4422,13 @@
       "description": "Suriname is a small country on the northeastern coast of South America, known for its tropical rainforests and diverse wildlife.",
       "area": "163,820 km²",
       "ISO code": "SR",
-      "wikipedia": "https://en.wikipedia.org/wiki/Suriname"
+      "wikipedia": "https://en.wikipedia.org/wiki/Suriname",
+      "cities": [
+        "Lelydorp",
+        "Nieuw Nickerie",
+        "Moengo",
+        "Albina"
+      ]
     }
   },
   {
@@ -5014,7 +5195,14 @@
       "area": "447,400 km²",
       "ISO code": "UZ",
       "wikipedia": "https://en.wikipedia.org/wiki/Uzbekistan"
-    }
+      ,
+        "cities": [
+          "Samarkand",
+          "Bukhara",
+          "Namangan",
+          "Andijan"
+        ]
+      }
   },
   {
     "name": "Holy See",

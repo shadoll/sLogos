@@ -157,6 +157,50 @@
         {/if}
       </div>
       <div class="right-column">
+        <!-- Country flag section for logos with 'Country' tag and ISO code -->
+        {#if logo.tags && logo.tags.some(tagObj => (tagObj.text || tagObj) === 'Country') && logo.meta && logo.meta["ISO code"]}
+          <div class="country-map-section">
+            <h3 style="margin-bottom:0.5em;">Country</h3>
+            <div class="country-meta">
+              <strong>ISO code:</strong> <span>{logo.meta["ISO code"]}</span>
+            </div>
+            <InlineSvg
+              path="/data/world.svg"
+              alt="World map with highlighted country"
+              bind:this={inlineSvgRef}
+              color={undefined}
+            />
+            <style>
+              .country-map-section {
+                background: var(--color-card);
+                border-radius: 12px;
+                padding: 1rem;
+                margin-bottom: 1.5rem;
+                box-shadow: 0 2px 8px 2px rgba(0,0,0,0.08);
+              }
+              .country-meta {
+                margin-bottom: 1em;
+                font-size: 1em;
+              }
+              .country-map-section .svg-wrapper {
+                width: 100%;
+                height: 180px;
+                margin: 0 auto;
+                background: var(--color-bg);
+                border-radius: 8px;
+                box-shadow: 0 1px 4px 0 rgba(0,0,0,0.04);
+              }
+            </style>
+            {@html `<style>
+              .country-map-section .svg-wrapper svg #${logo.meta["ISO code"]} {
+                fill: #4f8cff !important;
+                stroke: #222 !important;
+                filter: drop-shadow(0 0 4px #4f8cff44);
+              }
+            </style>`}
+          </div>
+        {/if}
+
         <div class="logo-details fullscreen-details">
           {#if logo.colors}
             <ColorSwitcher
