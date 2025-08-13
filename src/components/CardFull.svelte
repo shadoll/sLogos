@@ -1,12 +1,13 @@
 <script>
+  import CountryMap from "./CountryMap.svelte";
   import { onMount, getContext } from "svelte";
   import InlineSvg from "./InlineSvg.svelte";
   import Actions from "./Actions.svelte";
   import ColorSwitcher from "./ColorSwitcher.svelte";
   import { getDefaultLogoColor, getThemeColor } from "../utils/colorTheme.js";
   import { fetchSvgSource } from "../utils/svgSource.js";
-  import { collections } from '../collections.js';
-    import { get } from "svelte/store";
+  import { collections } from "../collections.js";
+  import { get } from "svelte/store";
 
   export let show = false;
   export let logo = null;
@@ -109,11 +110,17 @@
   }
 
   // Use the current collection context for baseDir
-  let collection = getContext('collection');
+  let collection = getContext("collection");
   if (!collection) {
     // fallback: try to infer from window.appData
-    if (typeof window !== 'undefined' && window.appData && window.appData.collection) {
-      collection = collections.find(c => c.name === window.appData.collection) || collections[0];
+    if (
+      typeof window !== "undefined" &&
+      window.appData &&
+      window.appData.collection
+    ) {
+      collection =
+        collections.find((c) => c.name === window.appData.collection) ||
+        collections[0];
     } else {
       collection = collections[0];
     }
@@ -137,7 +144,7 @@
       <div class="header-spacer"></div>
     </div>
     <div class="preview-body">
-      <div class="preview-container" >
+      <div class="preview-container">
         {#if isSvgLogo(logo)}
           <InlineSvg
             bind:this={inlineSvgRef}
@@ -157,48 +164,8 @@
         {/if}
       </div>
       <div class="right-column">
-        <!-- Country flag section for logos with 'Country' tag and ISO code -->
-        {#if logo.tags && logo.tags.some(tagObj => (tagObj.text || tagObj) === 'Country') && logo.meta && logo.meta["ISO code"]}
-          <div class="country-map-section">
-            <h3 style="margin-bottom:0.5em;">Country</h3>
-            <div class="country-meta">
-              <strong>ISO code:</strong> <span>{logo.meta["ISO code"]}</span>
-            </div>
-            <InlineSvg
-              path="/data/world.svg"
-              alt="World map with highlighted country"
-              bind:this={inlineSvgRef}
-              color={undefined}
-            />
-            <style>
-              .country-map-section {
-                background: var(--color-card);
-                border-radius: 12px;
-                padding: 1rem;
-                margin-bottom: 1.5rem;
-                box-shadow: 0 2px 8px 2px rgba(0,0,0,0.08);
-              }
-              .country-meta {
-                margin-bottom: 1em;
-                font-size: 1em;
-              }
-              .country-map-section .svg-wrapper {
-                width: 100%;
-                height: 180px;
-                margin: 0 auto;
-                background: var(--color-bg);
-                border-radius: 8px;
-                box-shadow: 0 1px 4px 0 rgba(0,0,0,0.04);
-              }
-            </style>
-            {@html `<style>
-              .country-map-section .svg-wrapper svg #${logo.meta["ISO code"]} {
-                fill: #4f8cff !important;
-                stroke: #222 !important;
-                filter: drop-shadow(0 0 4px #4f8cff44);
-              }
-            </style>`}
-          </div>
+        {#if logo.tags && logo.tags.some((tagObj) => (tagObj.text || tagObj) === "Country") && logo.meta && logo.meta["ISO code"]}
+          <CountryMap countryCodes={[logo.meta["ISO code"]]} countryNames={[logo.meta["country"]]} />
         {/if}
 
         <div class="logo-details fullscreen-details">
@@ -223,10 +190,24 @@
             <div class="logo-meta">
               {#each Object.entries(logo.meta) as [key, value]}
                 <p>
-                  {#if typeof value === 'string' && value.startsWith('https://')}
-                    <a class="meta-link" href={value} target="_blank" rel="noopener noreferrer">
+                  {#if typeof value === "string" && value.startsWith("https://")}
+                    <a
+                      class="meta-link"
+                      href={value}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       {capitalizeFirst(key)}
-                      <svg height="12" viewBox="0 0 12 12" width="12" xmlns="http://www.w3.org/2000/svg"><path d="m6 1h5v5l-2.14-2.15-4.16 4.15-.7-.7 4.15-4.16zm-4 2h2v1h-2v6h6v-2h1v2a1 1 0 0 1 -1 1h-6a1 1 0 0 1 -1-1v-6a1 1 0 0 1 1-1" fill="currentColor"/></svg>
+                      <svg
+                        height="12"
+                        viewBox="0 0 12 12"
+                        width="12"
+                        xmlns="http://www.w3.org/2000/svg"
+                        ><path
+                          d="m6 1h5v5l-2.14-2.15-4.16 4.15-.7-.7 4.15-4.16zm-4 2h2v1h-2v6h6v-2h1v2a1 1 0 0 1 -1 1h-6a1 1 0 0 1 -1-1v-6a1 1 0 0 1 1-1"
+                          fill="currentColor"
+                        /></svg
+                      >
                     </a>
                   {:else}
                     <strong>{capitalizeFirst(key)}:</strong>
@@ -359,7 +340,6 @@
     border-radius: 12px;
     padding: 1.5rem;
     box-shadow: 0 2px 16px 4px rgba(0, 0, 0, 0.18);
-    overflow-y: scroll;
   }
   .logo-tags {
     display: flex;
@@ -530,4 +510,5 @@
   .logo-details span {
     color: var(--color-text);
   }
+
 </style>
