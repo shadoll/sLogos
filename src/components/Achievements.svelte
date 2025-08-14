@@ -29,6 +29,13 @@
       iconColor: "#fbbf24", // gold
       requirement: () => currentStreak >= 5,
     },
+    star_performer: {
+      name: "Star Performer",
+      description: "Get 5 perfect rounds in a row",
+      icon: "star.svg",
+      iconColor: "#ffd700",
+      requirement: () => achievements.perfectRounds >= 5,
+    },
     dedication: {
       name: "Dedicated Learner",
       description: "Answer 10 questions in total",
@@ -49,6 +56,13 @@
       icon: "running.svg",
       iconColor: "#fbbf24", // gold
       requirement: () => achievements.consecutive_skips >= 10,
+    },
+    city_expert: {
+      name: "City Expert",
+      description: "Answer 10 capital city questions correctly",
+      icon: "buildings.svg",
+      iconColor: "#4f8cff",
+      requirement: () => gameStats.capitalsCorrect >= 10,
     },
     persistent: {
       name: "Persistent Scholar",

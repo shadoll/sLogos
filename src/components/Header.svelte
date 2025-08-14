@@ -49,7 +49,7 @@
 
   // Check if we're in game mode
   $: isGameMode = $location && $location.startsWith('/game');
-  $: isQuizPage = $location && $location.startsWith('/game/flags');
+  $: isQuizPage = $location && ($location.startsWith('/game/flags') || $location.startsWith('/game/capitals'));
 
   // Determine default stats view based on quiz state
   $: {

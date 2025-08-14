@@ -48,6 +48,10 @@
   let showAchievements = false;
   let achievementsComponent;
   let achievementCount = { unlocked: 0, total: 0 };
+  // New achievement tracking
+  let capitalsCorrect = 0;
+  let perfectRounds = 0;
+  let mapChallengeCompleted = false;
 
   // Settings
   let autoAdvance = true;
@@ -449,6 +453,7 @@
       gameStats.correct++;
       sessionStats.correct++;
       currentStreak++;
+      capitalsCorrect++;
 
       // Play correct sound
       playCorrectSound();
@@ -648,6 +653,11 @@
   }
 
   function endSession() {
+    // Track perfect rounds for achievements
+    if (sessionStats.correct === sessionLength && sessionStats.wrong === 0 && sessionStats.skipped === 0) {
+      perfectRounds++;
+    }
+
     // Clear session state
     sessionInProgress = false;
     clearSessionState();
@@ -960,6 +970,9 @@
       {gameStats}
       {currentStreak}
       show={showAchievements}
+      capitalsCorrect={capitalsCorrect}
+      perfectRounds={perfectRounds}
+      mapChallengeCompleted={mapChallengeCompleted}
       on:close={() => (showAchievements = false)}
       on:achievementsUnlocked={handleAchievementsUnlocked}
     />
