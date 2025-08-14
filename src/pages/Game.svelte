@@ -1,4 +1,5 @@
 <script>
+  import { applyTheme, setTheme, themeStore } from "../utils/theme.js";
   import { onMount } from 'svelte';
   import { collections } from '../collections.js';
   import Header from '../components/Header.svelte';
@@ -12,13 +13,7 @@
 
   let availableGames = [flagQuizInfo, capitalsQuizInfo, geographyQuizInfo, logoQuizInfo, emblemQuizInfo];
 
-  let theme = 'system';
-
-  function setTheme(t) {
-    localStorage.setItem('theme', t);
-    applyTheme(t);
-    theme = t;
-  }
+  let theme;
 
   onMount(() => {
     // Initialize theme from storage and apply
@@ -32,22 +27,14 @@
         setCollection: () => {},
         collections: collections,
         theme,
-        setTheme
+    setTheme
       };
     }
   });
 
-  function applyTheme(theme) {
-    let effectiveTheme = theme;
-    if (theme === 'system') {
-      effectiveTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    }
-    document.documentElement.setAttribute('data-theme', effectiveTheme);
-    document.documentElement.className = effectiveTheme;
-  }
 </script>
 
-<Header {theme} {setTheme} />
+<Header theme={$themeStore} setTheme={setTheme} />
 
 <main class="game-selection">
   <div class="container">

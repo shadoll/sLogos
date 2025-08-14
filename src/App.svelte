@@ -1,6 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import { collections } from "./collections.js";
+  import { applyTheme, setTheme, themeStore } from "./utils/theme.js";
   import Router from "svelte-spa-router/Router.svelte";
   import Home from "./pages/Home.svelte";
   import Preview from "./pages/Preview.svelte";
@@ -26,7 +27,9 @@
   let logos = [];
   let filteredLogos = [];
   let displayLogos = [];
-  let theme = "system";
+  let theme;
+  // Keep local theme in sync with shared theme store
+  $: theme = $themeStore;
   let allTags = [];
   let selectedTags = [];
   let selectedBrands = [];
@@ -178,7 +181,7 @@
         logos: [],
         filteredLogos: [],
         displayLogos: [],
-        theme,
+        theme: $themeStore,
         effectiveTheme: "light",
         viewMode,
         searchQuery,
@@ -430,7 +433,7 @@
       setGridView,
       setListView,
       setCompactView,
-      setTheme: (newTheme) => {
+        setTheme: (newTheme) => {
         console.log("window.appData.setTheme called with:", newTheme);
         setTheme(newTheme);
       },
@@ -541,30 +544,6 @@
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-  }
-
-  function applyTheme() {
-    let effectiveTheme = theme;
-    if (theme === "system") {
-      effectiveTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
-        ? "dark"
-        : "light";
-    }
-    // Apply theme both ways for compatibility
-    document.documentElement.setAttribute("data-theme", effectiveTheme);
-    document.documentElement.className = effectiveTheme; // Add class-based theming
-    console.log("[Theme] Applied theme:", effectiveTheme);
-  }
-
-  function setTheme(newTheme) {
-    if (newTheme === "light" || newTheme === "dark" || newTheme === "system") {
-      console.log("App.svelte: Setting theme to:", newTheme);
-      theme = newTheme;
-      localStorage.setItem("theme", newTheme);
-      console.log("[Theme] setTheme:", newTheme);
-      // Apply theme immediately after setting
-      setTimeout(() => applyTheme(), 0);
-    }
   }
 
   function toggleTag(tag) {
@@ -837,11 +816,11 @@
 
 <Router {routes} let:Component>
   <svelte:component
-    this={Component}
-    {displayLogos}
-    allLogos={logos}
-    {theme}
-    {setTheme}
+  this={Component}
+  {displayLogos}
+  allLogos={logos}
+  {theme}
+  setTheme={setTheme}
     {viewMode}
     {setGridView}
     {setListView}

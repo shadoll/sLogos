@@ -21,3 +21,22 @@ export function loadSessionState(key, defaultState) {
 export function clearSessionState(key) {
     localStorage.removeItem(key);
 }
+
+// Return a new session state object for a quiz with the provided session length
+export function createNewSessionState(sessionLength = 10) {
+    return {
+        score: { correct: 0, total: 0, skipped: 0 },
+        currentSessionQuestions: 0,
+        sessionStats: {
+            correct: 0,
+            wrong: 0,
+            skipped: 0,
+            total: 0,
+            sessionLength: sessionLength,
+        },
+        sessionInProgress: true,
+        sessionStartTime: Date.now(),
+        showSessionResults: false,
+        sessionRestoredFromReload: false,
+    };
+}

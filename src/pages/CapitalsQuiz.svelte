@@ -1,14 +1,24 @@
 <script>
-  import { updateAchievementCount as sharedUpdateAchievementCount } from '../quizLogic/quizAchievements.js';
-  import { saveSettings as sharedSaveSettings, loadSettings as sharedLoadSettings } from '../quizLogic/quizSettings.js';
-  import { loadGlobalStats as sharedLoadGlobalStats, updateGlobalStats as sharedUpdateGlobalStats } from '../quizLogic/quizGlobalStats.js';
-  import { saveSessionState as sharedSaveSessionState, loadSessionState as sharedLoadSessionState, clearSessionState as sharedClearSessionState } from '../quizLogic/quizSession.js';
-  import { playCorrectSound as sharedPlayCorrectSound, playWrongSound as sharedPlayWrongSound } from '../quizLogic/quizSound.js';
-  import { quizInfo } from '../quizInfo/CapitalsQuizInfo.js';
+  import { applyTheme, setTheme, themeStore } from "../utils/theme.js";
+
+  import { updateAchievementCount } from "../quizLogic/quizAchievements.js";
+  import { saveSettings, loadSettings } from "../quizLogic/quizSettings.js";
+  import {
+    loadGlobalStats,
+    updateGlobalStats,
+  } from "../quizLogic/quizGlobalStats.js";
+  import {
+    saveSessionState,
+    loadSessionState,
+    clearSessionState,
+    createNewSessionState,
+  } from "../quizLogic/quizSession.js";
+  import { createAdvanceTimer } from "../quizLogic/advanceTimer.js";
+  import { playCorrectSound, playWrongSound } from "../quizLogic/quizSound.js";
+  import { quizInfo } from "../quizInfo/CapitalsQuizInfo.js";
   import { onMount } from "svelte";
   import Header from "../components/Header.svelte";
   import Footer from "../components/Footer.svelte";
-  import InlineSvg from "../components/InlineSvg.svelte";
   import Achievements from "../components/Achievements.svelte";
   import QuizSettings from "../components/QuizSettings.svelte";
   import QuizInfo from "../components/QuizInfo.svelte";
@@ -34,10 +44,11 @@
   let showResultCountryInfo = false;
 
   // Auto-advance timer variables
-  let autoAdvanceTimer = null;
+  // advance timer (shared)
+
+  let advanceTimer;
   let timerProgress = 0;
   let timerDuration = 2000; // 2 seconds
-  let timerStartTime = 0;
 
   // Force component re-render key to prevent button state persistence
   let questionKey = 0;
@@ -81,23 +92,14 @@
   let sessionStartTime = null;
   let sessionRestoredFromReload = false; // Track if session was restored from page reload
 
-  // Theme
-  let theme = "system";
-
-  function setTheme(t) {
-    localStorage.setItem("theme", t);
-    applyTheme(t);
-    theme = t;
-  }
-
   // Update achievement count when achievements component is available
   $: if (achievementsComponent) {
-    achievementCount = sharedUpdateAchievementCount(achievementsComponent);
+    achievementCount = updateAchievementCount(achievementsComponent);
   }
 
   // Save settings when they change (after initial load)
   $: if (settingsLoaded && typeof reduceCorrectAnswers !== "undefined") {
-    sharedSaveSettings("capitalsQuizSettings", {
+    saveSettings("capitalsQuizSettings", {
       autoAdvance,
       focusWrongAnswers,
       reduceCorrectAnswers,
@@ -108,9 +110,7 @@
 
   // Load game stats from localStorage
   onMount(async () => {
-    // Initialize theme
-    theme = localStorage.getItem("theme") || "system";
-    applyTheme(theme);
+    applyTheme($themeStore);
 
     // Set window.appData for header compatibility
     if (typeof window !== "undefined") {
@@ -118,8 +118,8 @@
         ...window.appData,
         collection: "capitals",
         setCollection: () => {},
-        theme,
-        setTheme,
+        theme: $themeStore,
+        setTheme: setTheme,
       };
 
       // Load saved game stats
@@ -140,7 +140,9 @@
       }
 
       // Load wrong answers tracking
-      const savedWrongAnswers = localStorage.getItem("capitalsQuizWrongAnswers");
+      const savedWrongAnswers = localStorage.getItem(
+        "capitalsQuizWrongAnswers",
+      );
       if (savedWrongAnswers) {
         try {
           const loadedWrongAnswers = JSON.parse(savedWrongAnswers);
@@ -164,7 +166,7 @@
       }
 
       // Load settings
-      const loadedSettings = sharedLoadSettings("capitalsQuizSettings", {
+      const loadedSettings = loadSettings("capitalsQuizSettings", {
         autoAdvance,
         focusWrongAnswers,
         reduceCorrectAnswers,
@@ -180,80 +182,14 @@
       }
 
       // Load global stats and update them
-      sharedLoadGlobalStats("globalQuizStats");
+      loadGlobalStats("globalQuizStats");
     }
 
     await loadFlags();
     settingsLoaded = true;
 
     // Load or initialize session
-    loadSessionState();
-  });
-
-  function applyTheme(theme) {
-    let effectiveTheme = theme;
-    if (theme === "system") {
-      effectiveTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
-        ? "dark"
-        : "light";
-    }
-    document.documentElement.setAttribute("data-theme", effectiveTheme);
-    document.documentElement.className = effectiveTheme;
-  }
-
-  async function loadFlags() {
-    try {
-      const response = await fetch("/data/flags.json");
-      const data = await response.json();
-      // Filter for only country flags (has "Country" tag) and ensure we have country name and capital
-      flags = data.filter(
-        (flag) =>
-          !flag.disable &&
-          flag.meta?.country &&
-          flag.meta?.capital &&
-          flag.tags &&
-          flag.tags.includes("Country"),
-      );
-
-      // Remove duplicates based on country name
-      const uniqueFlags = [];
-      const seenCountries = new Set();
-
-      for (const flag of flags) {
-        const countryName = flag.meta.country.toLowerCase().trim();
-        if (!seenCountries.has(countryName)) {
-          seenCountries.add(countryName);
-          uniqueFlags.push(flag);
-        }
-      }
-
-      flags = uniqueFlags;
-      console.log(`Loaded ${flags.length} unique country flags for capitals quiz`);
-    } catch (error) {
-      console.error("Error loading flags:", error);
-      flags = [];
-    }
-  }
-
-  function saveSessionState() {
-    const sessionState = {
-      sessionInProgress,
-      currentSessionQuestions,
-      sessionStats,
-      score,
-      currentQuestion,
-      selectedAnswer,
-      showResult,
-      gameState,
-      quizSubpage,
-      sessionStartTime,
-      questionKey,
-    };
-  sharedSaveSessionState("capitalsQuizSessionState", sessionState);
-  }
-
-  function loadSessionState() {
-    const loadedSession = sharedLoadSessionState("capitalsQuizSessionState", null);
+    const loadedSession = loadSessionState("capitalsQuizSessionState", null);
     if (loadedSession) {
       // Restore session
       sessionInProgress = loadedSession.sessionInProgress;
@@ -286,10 +222,42 @@
       quizSubpage = "welcome";
       gameState = "welcome";
     }
-  }
+  });
 
-  function clearSessionState() {
-  sharedClearSessionState("capitalsQuizSessionState");
+  async function loadFlags() {
+    try {
+      const response = await fetch("/data/flags.json");
+      const data = await response.json();
+      // Filter for only country flags (has "Country" tag) and ensure we have country name and capital
+      flags = data.filter(
+        (flag) =>
+          !flag.disable &&
+          flag.meta?.country &&
+          flag.meta?.capital &&
+          flag.tags &&
+          flag.tags.includes("Country"),
+      );
+
+      // Remove duplicates based on country name
+      const uniqueFlags = [];
+      const seenCountries = new Set();
+
+      for (const flag of flags) {
+        const countryName = flag.meta.country.toLowerCase().trim();
+        if (!seenCountries.has(countryName)) {
+          seenCountries.add(countryName);
+          uniqueFlags.push(flag);
+        }
+      }
+
+      flags = uniqueFlags;
+      console.log(
+        `Loaded ${flags.length} unique country flags for capitals quiz`,
+      );
+    } catch (error) {
+      console.error("Error loading flags:", error);
+      flags = [];
+    }
   }
 
   function generateQuestion() {
@@ -410,7 +378,19 @@
     console.log("Generated capitals question:", currentQuestion);
 
     // Save session state
-    saveSessionState();
+    saveSessionState("capitalsQuizSessionState", {
+      sessionInProgress,
+      currentSessionQuestions,
+      sessionStats,
+      score,
+      currentQuestion,
+      selectedAnswer,
+      showResult,
+      gameState,
+      quizSubpage,
+      sessionStartTime,
+      questionKey,
+    });
   }
 
   function selectAnswer(index) {
@@ -436,7 +416,7 @@
       capitalsCorrect++;
 
       // Play correct sound
-      playCorrectSound();
+      playCorrectSound(soundEnabled);
 
       // Track correct answer for this flag
       if (currentQuestion.correct?.name) {
@@ -476,7 +456,7 @@
       currentStreak = 0; // Reset streak on wrong answer
 
       // Play wrong sound
-      playWrongSound();
+      playWrongSound(soundEnabled);
 
       // Track wrong answer for this flag
       if (currentQuestion.correct?.name) {
@@ -499,7 +479,7 @@
     localStorage.setItem("capitalsQuizStats", JSON.stringify(gameStats));
 
     // Update global stats
-    updateGlobalStats(isCorrect);
+    updateGlobalStats("globalQuizStats", "capitalsQuiz", isCorrect);
 
     // Check for new achievements
     if (achievementsComponent) {
@@ -507,7 +487,19 @@
     }
 
     // Save session state
-    saveSessionState();
+    saveSessionState("capitalsQuizSessionState", {
+      sessionInProgress,
+      currentSessionQuestions,
+      sessionStats,
+      score,
+      currentQuestion,
+      selectedAnswer,
+      showResult,
+      gameState,
+      quizSubpage,
+      sessionStartTime,
+      questionKey,
+    });
 
     // Check if session is complete
     if (currentSessionQuestions >= sessionLength) {
@@ -559,10 +551,22 @@
     localStorage.setItem("capitalsQuizStats", JSON.stringify(gameStats));
 
     // Update global stats (skipped question)
-    updateGlobalStats(null, true);
+    updateGlobalStats("globalQuizStats", "capitalsQuiz", null, true);
 
     // Save session state
-    saveSessionState();
+    saveSessionState("capitalsQuizSessionState", {
+      sessionInProgress,
+      currentSessionQuestions,
+      sessionStats,
+      score,
+      currentQuestion,
+      selectedAnswer,
+      showResult,
+      gameState,
+      quizSubpage,
+      sessionStartTime,
+      questionKey,
+    });
 
     // Check if session is complete
     if (currentSessionQuestions >= sessionLength) {
@@ -578,88 +582,54 @@
 
   function startAutoAdvanceTimer(duration) {
     timerDuration = duration;
-    timerProgress = 0;
-    timerStartTime = Date.now();
-
-    // Clear any existing timer
-    if (autoAdvanceTimer) {
-      clearInterval(autoAdvanceTimer);
+    if (!advanceTimer) {
+      advanceTimer = createAdvanceTimer(
+        (p) => (timerProgress = p),
+        () => generateQuestion(),
+      );
     }
-
-    // Update progress every 50ms for smooth animation
-    autoAdvanceTimer = setInterval(() => {
-      const elapsed = Date.now() - timerStartTime;
-      timerProgress = Math.min((elapsed / duration) * 100, 100);
-
-      if (timerProgress >= 100) {
-        clearInterval(autoAdvanceTimer);
-        autoAdvanceTimer = null;
-        timerProgress = 0;
-        generateQuestion();
-      }
-    }, 50);
+    advanceTimer.start(duration);
   }
 
   function cancelAutoAdvanceTimer() {
-    if (autoAdvanceTimer) {
-      clearInterval(autoAdvanceTimer);
-      autoAdvanceTimer = null;
-      timerProgress = 0;
-    }
+    if (advanceTimer) advanceTimer.cancel();
+    timerProgress = 0;
   }
 
   function startNewSession() {
-    // Reset session data
-    score = { correct: 0, total: 0, skipped: 0 };
-    currentSessionQuestions = 0;
-    sessionStats = {
-      correct: 0,
-      wrong: 0,
-      skipped: 0,
-      total: 0,
-      sessionLength,
-    };
-    sessionInProgress = true;
-    sessionStartTime = Date.now();
-    showSessionResults = false;
-    sessionRestoredFromReload = false; // Reset reload flag for new sessions
+    // Create canonical new session state and apply it
+    const s = createNewSessionState(sessionLength);
+    score = s.score;
+    currentSessionQuestions = s.currentSessionQuestions;
+    sessionStats = s.sessionStats;
+    sessionInProgress = s.sessionInProgress;
+    sessionStartTime = s.sessionStartTime;
+    showSessionResults = s.showSessionResults;
+    sessionRestoredFromReload = s.sessionRestoredFromReload;
 
-    // Switch to quiz subpage
     quizSubpage = "quiz";
     gameState = "loading";
-
-    // Generate first question
     generateQuestion();
   }
 
   function endSession() {
     // Track perfect rounds for achievements
-    if (sessionStats.correct === sessionLength && sessionStats.wrong === 0 && sessionStats.skipped === 0) {
+    if (
+      sessionStats.correct === sessionLength &&
+      sessionStats.wrong === 0 &&
+      sessionStats.skipped === 0
+    ) {
       perfectRounds++;
     }
 
     // Clear session state
     sessionInProgress = false;
-    clearSessionState();
+    clearSessionState("capitalsQuizSessionState");
 
     // Switch to welcome/stats page
     quizSubpage = "welcome";
     gameState = "welcome";
     showSessionResults = true; // Show results on welcome page
-  }
-
-  function resetGame() {
-    endSession();
-  }
-
-  function resetStats() {
-    gameStats = { correct: 0, wrong: 0, total: 0, skipped: 0 };
-    localStorage.setItem("capitalsQuizStats", JSON.stringify(gameStats));
-  }
-
-
-  function toggleSettings() {
-    showSettings = !showSettings;
   }
 
   function handleSettingsChange(event) {
@@ -686,53 +656,6 @@
 
   function handleResetConfirmation(event) {
     showResetConfirmation = event.detail;
-  }
-
-  function handleResetStats() {
-    // Reset game statistics
-    gameStats = { correct: 0, wrong: 0, total: 0, skipped: 0 };
-    score = { correct: 0, total: 0, skipped: 0 };
-    currentStreak = 0;
-    currentSessionQuestions = 0;
-    sessionStats = {
-      correct: 0,
-      wrong: 0,
-      skipped: 0,
-      total: 0,
-      sessionLength,
-    };
-    localStorage.setItem("capitalsQuizStats", JSON.stringify(gameStats));
-
-    // Reset wrong answers tracking
-    wrongAnswers = new Map();
-    localStorage.removeItem("capitalsQuizWrongAnswers");
-
-    // Reset correct answers tracking
-    correctAnswers = new Map();
-    localStorage.removeItem("capitalsQuizCorrectAnswers");
-
-    // Reset achievements if component is available
-    if (achievementsComponent) {
-      achievementsComponent.resetConsecutiveSkips();
-    }
-
-    showResetConfirmation = false;
-  }
-
-  function handleSessionPlayAgain() {
-    resetGame();
-  }
-
-  function handleSessionGoToGames() {
-    window.location.hash = "#/game";
-  }
-
-  function handleSessionClose() {
-    showSessionResults = false;
-  }
-
-  function cancelReset() {
-    showResetConfirmation = false;
   }
 
   function nextQuestion() {
@@ -776,27 +699,8 @@
     return `/images/flags/${flag.path}`;
   }
 
-
   function handleAchievementsUnlocked() {
-    achievementCount = sharedUpdateAchievementCount(achievementsComponent);
-  }
-
-  // Global statistics functions
-  function loadGlobalStats() {
-  sharedLoadGlobalStats("globalQuizStats");
-  }
-
-  function updateGlobalStats(isCorrect, isSkipped = false) {
-  sharedUpdateGlobalStats("globalQuizStats", "capitalsQuiz", isCorrect, isSkipped);
-  }
-
-  // Sound functions
-  function playCorrectSound() {
-  sharedPlayCorrectSound(soundEnabled);
-  }
-
-  function playWrongSound() {
-  sharedPlayWrongSound(soundEnabled);
+    achievementCount = updateAchievementCount(achievementsComponent);
   }
 </script>
 
@@ -805,7 +709,7 @@
 </svelte:head>
 
 <Header
-  {theme}
+  theme={$themeStore}
   {setTheme}
   {gameStats}
   {achievementCount}
@@ -830,7 +734,6 @@
       on:settingsChange={handleSettingsChange}
       on:settingsToggle={handleSettingsToggle}
       on:resetConfirmation={handleResetConfirmation}
-      on:resetStats={handleResetStats}
     />
 
     <!-- Achievements Component -->
@@ -839,9 +742,9 @@
       {gameStats}
       {currentStreak}
       show={showAchievements}
-      capitalsCorrect={capitalsCorrect}
-      perfectRounds={perfectRounds}
-      mapChallengeCompleted={mapChallengeCompleted}
+      {capitalsCorrect}
+      {perfectRounds}
+      {mapChallengeCompleted}
       on:close={() => (showAchievements = false)}
       on:achievementsUnlocked={handleAchievementsUnlocked}
     />
@@ -853,7 +756,7 @@
         {sessionStats}
         {sessionLength}
         {showSessionResults}
-        quizInfo={quizInfo}
+        {quizInfo}
         on:startQuiz={startNewSession}
         on:openSettings={() => (showSettings = true)}
         on:closeResults={() => (showSessionResults = false)}
@@ -900,8 +803,11 @@
               <button
                 class="option"
                 class:selected={selectedAnswer === index}
-                class:correct={showResult && index === currentQuestion.correctIndex}
-                class:wrong={showResult && selectedAnswer === index && index !== currentQuestion.correctIndex}
+                class:correct={showResult &&
+                  index === currentQuestion.correctIndex}
+                class:wrong={showResult &&
+                  selectedAnswer === index &&
+                  index !== currentQuestion.correctIndex}
                 on:click={() => selectAnswer(index)}
                 disabled={gameState === "answered"}
               >
@@ -911,9 +817,14 @@
           </div>
 
           {#if gameState === "question"}
-            <button class="btn btn-skip btn-next-full" on:click={skipQuestion}>Skip Question</button>
+            <button class="btn btn-skip btn-next-full" on:click={skipQuestion}
+              >Skip Question</button
+            >
           {:else if (!autoAdvance && gameState === "answered") || (autoAdvance && gameState === "answered" && sessionRestoredFromReload)}
-            <button class="btn btn-primary btn-next-full" on:click={nextQuestion}>Next Question →</button>
+            <button
+              class="btn btn-primary btn-next-full"
+              on:click={nextQuestion}>Next Question →</button
+            >
           {/if}
 
           <!-- Auto-advance timer display -->

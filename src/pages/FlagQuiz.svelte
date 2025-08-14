@@ -1,7 +1,21 @@
 <script>
-import { updateAchievementCount as sharedUpdateAchievementCount } from '../quizLogic/quizAchievements.js';
-import { saveSettings as sharedSaveSettings } from '../quizLogic/quizSettings.js';
-import { quizInfo } from '../quizInfo/FlagQuizInfo.js';
+  import { applyTheme, setTheme, themeStore } from "../utils/theme.js";
+  import { updateAchievementCount } from "../quizLogic/quizAchievements.js";
+  import { saveSettings } from "../quizLogic/quizSettings.js";
+  import {
+    loadGlobalStats,
+    updateGlobalStats,
+  } from "../quizLogic/quizGlobalStats.js";
+  import { playCorrectSound, playWrongSound } from "../quizLogic/quizSound.js";
+  import {
+    saveSessionState,
+    loadSessionState,
+    clearSessionState,
+    createNewSessionState,
+  } from "../quizLogic/quizSession.js";
+  import { createAdvanceTimer } from "../quizLogic/advanceTimer.js";
+
+  import { quizInfo } from "../quizInfo/FlagQuizInfo.js";
   import { onMount } from "svelte";
   import Header from "../components/Header.svelte";
   import Footer from "../components/Footer.svelte";
@@ -33,11 +47,10 @@ import { quizInfo } from '../quizInfo/FlagQuizInfo.js';
   let showCountryInfo = false;
   let showResultCountryInfo = false;
 
-  // Auto-advance timer variables
-  let autoAdvanceTimer = null;
+  // advance timer (shared)
+  let advanceTimer;
   let timerProgress = 0;
   let timerDuration = 2000; // 2 seconds
-  let timerStartTime = 0;
 
   // Force component re-render key to prevent button state persistence
   let questionKey = 0;
@@ -78,23 +91,14 @@ import { quizInfo } from '../quizInfo/FlagQuizInfo.js';
   let sessionStartTime = null;
   let sessionRestoredFromReload = false; // Track if session was restored from page reload
 
-  // Theme
-  let theme = "system";
-
-  function setTheme(t) {
-    localStorage.setItem("theme", t);
-    applyTheme(t);
-    theme = t;
-  }
-
   // Update achievement count when achievements component is available
   $: if (achievementsComponent) {
-    achievementCount = sharedUpdateAchievementCount(achievementsComponent);
+    achievementCount = updateAchievementCount(achievementsComponent);
   }
 
   // Save settings when they change (after initial load)
   $: if (settingsLoaded && typeof reduceCorrectAnswers !== "undefined") {
-    sharedSaveSettings("flagQuizSettings", {
+    saveSettings("flagQuizSettings", {
       autoAdvance,
       focusWrongAnswers,
       reduceCorrectAnswers,
@@ -105,9 +109,7 @@ import { quizInfo } from '../quizInfo/FlagQuizInfo.js';
 
   // Load game stats from localStorage
   onMount(async () => {
-    // Initialize theme
-    theme = localStorage.getItem("theme") || "system";
-    applyTheme(theme);
+    applyTheme($themeStore);
 
     // Set window.appData for header compatibility
     if (typeof window !== "undefined") {
@@ -115,8 +117,8 @@ import { quizInfo } from '../quizInfo/FlagQuizInfo.js';
         ...window.appData,
         collection: "flags",
         setCollection: () => {},
-        theme,
-        setTheme,
+        theme: $themeStore,
+        setTheme: setTheme,
       };
 
       // Load saved game stats
@@ -185,26 +187,50 @@ import { quizInfo } from '../quizInfo/FlagQuizInfo.js';
       }
 
       // Load global stats and update them
-      loadGlobalStats();
+      loadGlobalStats("globalQuizStats");
     }
 
     await loadFlags();
     settingsLoaded = true;
 
     // Load or initialize session
-    loadSessionState();
+    const loaded = loadSessionState("flagQuizSessionState", null);
+    if (loaded) {
+      if (loaded.sessionInProgress) {
+        sessionInProgress = loaded.sessionInProgress;
+        currentSessionQuestions = loaded.currentSessionQuestions || 0;
+        sessionStats = loaded.sessionStats || {
+          correct: 0,
+          wrong: 0,
+          skipped: 0,
+          total: 0,
+          sessionLength,
+        };
+        score = loaded.score || { correct: 0, total: 0, skipped: 0 };
+        currentQuestion = loaded.currentQuestion;
+        selectedAnswer = loaded.selectedAnswer;
+        showResult = loaded.showResult || false;
+        gameState = loaded.gameState || "question";
+        quizSubpage = "quiz";
+        sessionStartTime = loaded.sessionStartTime;
+        questionKey = loaded.questionKey || 0;
+
+        sessionRestoredFromReload = true;
+
+        if (!currentQuestion) {
+          generateQuestion();
+        }
+      } else {
+        quizSubpage = "welcome";
+        gameState = "welcome";
+      }
+    } else {
+      quizSubpage = "welcome";
+      gameState = "welcome";
+    }
   });
 
-  function applyTheme(theme) {
-    let effectiveTheme = theme;
-    if (theme === "system") {
-      effectiveTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
-        ? "dark"
-        : "light";
-    }
-    document.documentElement.setAttribute("data-theme", effectiveTheme);
-    document.documentElement.className = effectiveTheme;
-  }
+  // use shared applyTheme from ../utils/theme.js
 
   async function loadFlags() {
     try {
@@ -237,76 +263,6 @@ import { quizInfo } from '../quizInfo/FlagQuizInfo.js';
       console.error("Error loading flags:", error);
       flags = [];
     }
-  }
-
-  function saveSessionState() {
-    const sessionState = {
-      sessionInProgress,
-      currentSessionQuestions,
-      sessionStats,
-      score,
-      currentQuestion,
-      selectedAnswer,
-      showResult,
-      gameState,
-      quizSubpage,
-      sessionStartTime,
-      questionKey,
-    };
-    localStorage.setItem("flagQuizSessionState", JSON.stringify(sessionState));
-  }
-
-  function loadSessionState() {
-    const savedState = localStorage.getItem("flagQuizSessionState");
-    if (savedState) {
-      try {
-        const state = JSON.parse(savedState);
-        if (state.sessionInProgress) {
-          // Restore session
-          sessionInProgress = state.sessionInProgress;
-          currentSessionQuestions = state.currentSessionQuestions || 0;
-          sessionStats = state.sessionStats || {
-            correct: 0,
-            wrong: 0,
-            skipped: 0,
-            total: 0,
-            sessionLength,
-          };
-          score = state.score || { correct: 0, total: 0, skipped: 0 };
-          currentQuestion = state.currentQuestion;
-          selectedAnswer = state.selectedAnswer;
-          showResult = state.showResult || false;
-          gameState = state.gameState || "question";
-          quizSubpage = "quiz";
-          sessionStartTime = state.sessionStartTime;
-          questionKey = state.questionKey || 0;
-
-          // Mark that session was restored from reload
-          sessionRestoredFromReload = true;
-
-          // If we don't have a current question, generate one
-          if (!currentQuestion) {
-            generateQuestion();
-          }
-        } else {
-          // No active session, show welcome page
-          quizSubpage = "welcome";
-          gameState = "welcome";
-        }
-      } catch (e) {
-        console.error("Error loading session state:", e);
-        quizSubpage = "welcome";
-        gameState = "welcome";
-      }
-    } else {
-      // No saved state, show welcome page
-      quizSubpage = "welcome";
-      gameState = "welcome";
-    }
-  }
-
-  function clearSessionState() {
-    localStorage.removeItem("flagQuizSessionState");
   }
 
   function generateQuestion() {
@@ -430,7 +386,19 @@ import { quizInfo } from '../quizInfo/FlagQuizInfo.js';
     console.log("Generated question:", currentQuestion);
 
     // Save session state
-    saveSessionState();
+    saveSessionState("flagQuizSessionState", {
+      sessionInProgress,
+      currentSessionQuestions,
+      sessionStats,
+      score,
+      currentQuestion,
+      selectedAnswer,
+      showResult,
+      gameState,
+      quizSubpage,
+      sessionStartTime,
+      questionKey,
+    });
   }
   function selectAnswer(index) {
     if (gameState !== "question") return;
@@ -454,7 +422,7 @@ import { quizInfo } from '../quizInfo/FlagQuizInfo.js';
       currentStreak++;
 
       // Play correct sound
-      playCorrectSound();
+      playCorrectSound(soundEnabled);
 
       // Track correct answer for this flag
       if (currentQuestion.correct?.name) {
@@ -494,7 +462,7 @@ import { quizInfo } from '../quizInfo/FlagQuizInfo.js';
       currentStreak = 0; // Reset streak on wrong answer
 
       // Play wrong sound
-      playWrongSound();
+      playWrongSound(soundEnabled);
 
       // Track wrong answer for this flag
       if (currentQuestion.correct?.name) {
@@ -517,7 +485,7 @@ import { quizInfo } from '../quizInfo/FlagQuizInfo.js';
     localStorage.setItem("flagQuizStats", JSON.stringify(gameStats));
 
     // Update global stats
-    updateGlobalStats(isCorrect);
+    updateGlobalStats("globalQuizStats", "flagQuiz", isCorrect);
 
     // Check for new achievements
     if (achievementsComponent) {
@@ -525,7 +493,19 @@ import { quizInfo } from '../quizInfo/FlagQuizInfo.js';
     }
 
     // Save session state
-    saveSessionState();
+    saveSessionState("flagQuizSessionState", {
+      sessionInProgress,
+      currentSessionQuestions,
+      sessionStats,
+      score,
+      currentQuestion,
+      selectedAnswer,
+      showResult,
+      gameState,
+      quizSubpage,
+      sessionStartTime,
+      questionKey,
+    });
 
     // Check if session is complete
     if (currentSessionQuestions >= sessionLength) {
@@ -576,10 +556,22 @@ import { quizInfo } from '../quizInfo/FlagQuizInfo.js';
     localStorage.setItem("flagQuizStats", JSON.stringify(gameStats));
 
     // Update global stats (skipped question)
-    updateGlobalStats(null, true);
+    updateGlobalStats("globalQuizStats", "flagQuiz", null, true);
 
     // Save session state
-    saveSessionState();
+    saveSessionState("flagQuizSessionState", {
+      sessionInProgress,
+      currentSessionQuestions,
+      sessionStats,
+      score,
+      currentQuestion,
+      selectedAnswer,
+      showResult,
+      gameState,
+      quizSubpage,
+      sessionStartTime,
+      questionKey,
+    });
 
     // Check if session is complete
     if (currentSessionQuestions >= sessionLength) {
@@ -595,83 +587,45 @@ import { quizInfo } from '../quizInfo/FlagQuizInfo.js';
 
   function startAutoAdvanceTimer(duration) {
     timerDuration = duration;
-    timerProgress = 0;
-    timerStartTime = Date.now();
-
-    // Clear any existing timer
-    if (autoAdvanceTimer) {
-      clearInterval(autoAdvanceTimer);
+    if (!advanceTimer) {
+      advanceTimer = createAdvanceTimer(
+        (p) => (timerProgress = p),
+        () => generateQuestion(),
+      );
     }
-
-    // Update progress every 50ms for smooth animation
-    autoAdvanceTimer = setInterval(() => {
-      const elapsed = Date.now() - timerStartTime;
-      timerProgress = Math.min((elapsed / duration) * 100, 100);
-
-      if (timerProgress >= 100) {
-        clearInterval(autoAdvanceTimer);
-        autoAdvanceTimer = null;
-        timerProgress = 0;
-        generateQuestion();
-      }
-    }, 50);
+    advanceTimer.start(duration);
   }
 
   function cancelAutoAdvanceTimer() {
-    if (autoAdvanceTimer) {
-      clearInterval(autoAdvanceTimer);
-      autoAdvanceTimer = null;
-      timerProgress = 0;
-    }
+    if (advanceTimer) advanceTimer.cancel();
+    timerProgress = 0;
   }
 
   function startNewSession() {
-    // Reset session data
-    score = { correct: 0, total: 0, skipped: 0 };
-    currentSessionQuestions = 0;
-    sessionStats = {
-      correct: 0,
-      wrong: 0,
-      skipped: 0,
-      total: 0,
-      sessionLength,
-    };
-    sessionInProgress = true;
-    sessionStartTime = Date.now();
-    showSessionResults = false;
-    sessionRestoredFromReload = false; // Reset reload flag for new sessions
+    // Create a canonical new session state and apply it to component state
+    const s = createNewSessionState(sessionLength);
+    score = s.score;
+    currentSessionQuestions = s.currentSessionQuestions;
+    sessionStats = s.sessionStats;
+    sessionInProgress = s.sessionInProgress;
+    sessionStartTime = s.sessionStartTime;
+    showSessionResults = s.showSessionResults;
+    sessionRestoredFromReload = s.sessionRestoredFromReload;
 
-    // Switch to quiz subpage
     quizSubpage = "quiz";
     gameState = "loading";
-
-    // Generate first question
     generateQuestion();
   }
 
   function endSession() {
     // Clear session state
     sessionInProgress = false;
-    clearSessionState();
+    clearSessionState("flagQuizSessionState");
 
     // Switch to welcome/stats page
     quizSubpage = "welcome";
     gameState = "welcome";
     showSessionResults = true; // Show results on welcome page
-  }
-
-  function resetGame() {
-    endSession();
-  }
-
-  function resetStats() {
-    gameStats = { correct: 0, wrong: 0, total: 0, skipped: 0 };
-    localStorage.setItem("flagQuizStats", JSON.stringify(gameStats));
-  }
-
-
-  function toggleSettings() {
-    showSettings = !showSettings;
   }
 
   function handleSettingsChange(event) {
@@ -698,53 +652,6 @@ import { quizInfo } from '../quizInfo/FlagQuizInfo.js';
 
   function handleResetConfirmation(event) {
     showResetConfirmation = event.detail;
-  }
-
-  function handleResetStats() {
-    // Reset game statistics
-    gameStats = { correct: 0, wrong: 0, total: 0, skipped: 0 };
-    score = { correct: 0, total: 0, skipped: 0 };
-    currentStreak = 0;
-    currentSessionQuestions = 0;
-    sessionStats = {
-      correct: 0,
-      wrong: 0,
-      skipped: 0,
-      total: 0,
-      sessionLength,
-    };
-    localStorage.setItem("flagQuizStats", JSON.stringify(gameStats));
-
-    // Reset wrong answers tracking
-    wrongAnswers = new Map();
-    localStorage.removeItem("flagQuizWrongAnswers");
-
-    // Reset correct answers tracking
-    correctAnswers = new Map();
-    localStorage.removeItem("flagQuizCorrectAnswers");
-
-    // Reset achievements if component is available
-    if (achievementsComponent) {
-      achievementsComponent.resetConsecutiveSkips();
-    }
-
-    showResetConfirmation = false;
-  }
-
-  function handleSessionPlayAgain() {
-    resetGame();
-  }
-
-  function handleSessionGoToGames() {
-    window.location.hash = "#/game";
-  }
-
-  function handleSessionClose() {
-    showSessionResults = false;
-  }
-
-  function cancelReset() {
-    showResetConfirmation = false;
   }
 
   function nextQuestion() {
@@ -784,129 +691,8 @@ import { quizInfo } from '../quizInfo/FlagQuizInfo.js';
     return `/images/flags/${flag.path}`;
   }
 
-
   function handleAchievementsUnlocked() {
-    achievementCount = sharedUpdateAchievementCount(achievementsComponent);
-  }
-
-  // Global statistics functions
-  function loadGlobalStats() {
-    const savedGlobalStats = localStorage.getItem("globalQuizStats");
-    if (savedGlobalStats) {
-      try {
-        const globalStats = JSON.parse(savedGlobalStats);
-        console.log("Loaded global stats:", globalStats);
-      } catch (e) {
-        console.error("Error loading global stats:", e);
-      }
-    }
-  }
-
-  function updateGlobalStats(isCorrect, isSkipped = false) {
-    let globalStats = {};
-
-    // Load existing global stats
-    const savedGlobalStats = localStorage.getItem("globalQuizStats");
-    if (savedGlobalStats) {
-      try {
-        globalStats = JSON.parse(savedGlobalStats);
-      } catch (e) {
-        console.error("Error parsing global stats:", e);
-      }
-    }
-
-    // Initialize stats structure if it doesn't exist
-    if (!globalStats.flagQuiz) {
-      globalStats.flagQuiz = { correct: 0, wrong: 0, total: 0, skipped: 0 };
-    }
-    if (!globalStats.overall) {
-      globalStats.overall = { correct: 0, wrong: 0, total: 0, skipped: 0 };
-    }
-
-    // Update flag quiz stats
-    globalStats.flagQuiz.total++;
-    globalStats.overall.total++;
-
-    if (isSkipped) {
-      globalStats.flagQuiz.skipped++;
-      globalStats.overall.skipped++;
-    } else if (isCorrect) {
-      globalStats.flagQuiz.correct++;
-      globalStats.overall.correct++;
-    } else {
-      globalStats.flagQuiz.wrong++;
-      globalStats.overall.wrong++;
-    }
-
-    // Save updated global stats
-    localStorage.setItem("globalQuizStats", JSON.stringify(globalStats));
-    console.log("Updated global stats:", globalStats);
-  }
-
-  // Sound functions
-  function playCorrectSound() {
-    if (!soundEnabled) return;
-
-    try {
-      const audioContext = new (window.AudioContext ||
-        window.webkitAudioContext)();
-      const oscillator = audioContext.createOscillator();
-      const gainNode = audioContext.createGain();
-
-      oscillator.connect(gainNode);
-      gainNode.connect(audioContext.destination);
-
-      // Pleasant ascending tone for correct answer
-      oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime); // C5
-      oscillator.frequency.setValueAtTime(
-        659.25,
-        audioContext.currentTime + 0.1,
-      ); // E5
-      oscillator.frequency.setValueAtTime(
-        783.99,
-        audioContext.currentTime + 0.2,
-      ); // G5
-
-      gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-      gainNode.gain.exponentialRampToValueAtTime(
-        0.001,
-        audioContext.currentTime + 0.4,
-      );
-
-      oscillator.start(audioContext.currentTime);
-      oscillator.stop(audioContext.currentTime + 0.4);
-    } catch (e) {
-      console.log("Audio not supported:", e);
-    }
-  }
-
-  function playWrongSound() {
-    if (!soundEnabled) return;
-
-    try {
-      const audioContext = new (window.AudioContext ||
-        window.webkitAudioContext)();
-      const oscillator = audioContext.createOscillator();
-      const gainNode = audioContext.createGain();
-
-      oscillator.connect(gainNode);
-      gainNode.connect(audioContext.destination);
-
-      // Descending tone for wrong answer
-      oscillator.frequency.setValueAtTime(400, audioContext.currentTime); // Lower frequency
-      oscillator.frequency.setValueAtTime(300, audioContext.currentTime + 0.15);
-
-      gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-      gainNode.gain.exponentialRampToValueAtTime(
-        0.001,
-        audioContext.currentTime + 0.3,
-      );
-
-      oscillator.start(audioContext.currentTime);
-      oscillator.stop(audioContext.currentTime + 0.3);
-    } catch (e) {
-      console.log("Audio not supported:", e);
-    }
+    achievementCount = updateAchievementCount(achievementsComponent);
   }
 </script>
 
@@ -915,7 +701,7 @@ import { quizInfo } from '../quizInfo/FlagQuizInfo.js';
 </svelte:head>
 
 <Header
-  {theme}
+  theme={$themeStore}
   {setTheme}
   {gameStats}
   {achievementCount}
@@ -940,7 +726,6 @@ import { quizInfo } from '../quizInfo/FlagQuizInfo.js';
       on:settingsChange={handleSettingsChange}
       on:settingsToggle={handleSettingsToggle}
       on:resetConfirmation={handleResetConfirmation}
-      on:resetStats={handleResetStats}
     />
 
     <!-- Achievements Component -->
@@ -955,12 +740,12 @@ import { quizInfo } from '../quizInfo/FlagQuizInfo.js';
 
     {#if quizSubpage === "welcome"}
       <!-- Welcome/Stats Subpage -->
-  <QuizInfo
+      <QuizInfo
         {gameStats}
         {sessionStats}
         {sessionLength}
         {showSessionResults}
-  quizInfo={quizInfo}
+        {quizInfo}
         on:startQuiz={startNewSession}
         on:openSettings={() => (showSettings = true)}
         on:closeResults={() => (showSessionResults = false)}

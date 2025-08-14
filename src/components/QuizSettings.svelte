@@ -29,7 +29,6 @@
   }
 
   function handleOverlayClick(event) {
-    // Only close if clicking on the overlay itself, not the modal content
     if (event.target === event.currentTarget) {
       toggleSettings();
     }
@@ -41,8 +40,45 @@
   }
 
   function handleResetStats() {
-    dispatch('resetStats');
+    // Perform a full reset here so individual quizzes don't need to implement reset handlers
+    const keysToRemove = [
+      // Flag quiz
+      'flagQuizStats',
+      'flagQuizWrongAnswers',
+      'flagQuizCorrectAnswers',
+      'flagQuizAchievements',
+      'flagQuizSessionState',
+      // Capitals quiz
+      'capitalsQuizStats',
+      'capitalsQuizWrongAnswers',
+      'capitalsQuizCorrectAnswers',
+      'capitalsQuizAchievements',
+      'capitalsQuizSessionState',
+      // Shared/global
+      'globalQuizStats'
+    ];
+
+    try {
+      for (const k of keysToRemove) {
+        localStorage.removeItem(k);
+      }
+    } catch (e) {
+      console.error('Error clearing quiz data during reset:', e);
+    }
+
+    // Close confirmation modal and settings overlay, notify parent
     showResetConfirmation = false;
+    if (showSettings) {
+      showSettings = false;
+      dispatch('settingsToggle', false);
+    }
+
+    // Give a moment for UI to close, then reload so components pick up cleared state
+    setTimeout(() => {
+      if (typeof window !== 'undefined') {
+        window.location.reload();
+      }
+    }, 150);
   }
 
   // Reactive statements to dispatch settings changes
