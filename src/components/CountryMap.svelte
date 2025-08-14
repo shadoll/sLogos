@@ -180,8 +180,8 @@
 </script>
 
 <div class="country-map-section">
-    <div bind:this={wrapperRef} style="width:100%;height:100%;position:relative; cursor: grab;" on:mousedown={onMouseDown}>
-        <InlineSvg path={mapPath} alt="World map" color={undefined} />
+    <div bind:this={wrapperRef} role="application" style="width:100%;height:100%;position:relative; cursor: grab;">
+        <InlineSvg path={mapPath} alt="World map" color={undefined} on:mousedown={onMouseDown} />
         {#if countryScale}
         <div class="map-controls-on-map">
             <button class="zoom-btn-on-map" on:click={zoomIn}>+</button>
