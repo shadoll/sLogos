@@ -6,7 +6,7 @@ import { quizInfo } from '../quizInfo/FlagQuizInfo.js';
   import InlineSvg from "../components/InlineSvg.svelte";
   import Achievements from "../components/Achievements.svelte";
   import QuizSettings from "../components/QuizSettings.svelte";
-  import WelcomeStats from "../components/WelcomeStats.svelte";
+  import QuizInfo from "../components/QuizInfo.svelte";
   import ActionButtons from "../components/ActionButtons.svelte";
 
   // Game data
@@ -965,7 +965,7 @@ import { quizInfo } from '../quizInfo/FlagQuizInfo.js';
 
     {#if quizSubpage === "welcome"}
       <!-- Welcome/Stats Subpage -->
-      <WelcomeStats
+  <QuizInfo
         {gameStats}
         {sessionStats}
         {sessionLength}

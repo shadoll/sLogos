@@ -4,29 +4,13 @@
   import Header from '../components/Header.svelte';
   import Footer from '../components/Footer.svelte';
 
-  let availableGames = [
-    {
-      name: 'flags',
-      title: 'Flag Quiz',
-      description: 'Test your knowledge of world flags',
-      icon: '🏳️',
-      route: '#/game/flags'
-    },
-    {
-      name: 'capitals',
-      title: 'Capitals Quiz',
-      description: 'Test your knowledge of world capitals',
-      icon: '🏛️',
-      route: '#/game/capitals'
-    },
-    {
-      name: 'geography',
-      title: 'Geography Quiz',
-      description: 'Test your knowledge of world geography',
-      icon: '🗺️',
-      route: '#/game/geography'
-    }
-  ];
+  import { quizInfo as flagQuizInfo } from '../quizInfo/FlagQuizInfo.js';
+  import { quizInfo as capitalsQuizInfo } from '../quizInfo/CapitalsQuizInfo.js';
+  import { quizInfo as geographyQuizInfo } from '../quizInfo/GeographyQuizInfo.js';
+  import { quizInfo as logoQuizInfo } from '../quizInfo/LogoQuizInfo.js';
+  import { quizInfo as emblemQuizInfo } from '../quizInfo/EmblemQuizInfo.js';
+
+  let availableGames = [flagQuizInfo, capitalsQuizInfo, geographyQuizInfo, logoQuizInfo, emblemQuizInfo];
 
   let theme = 'system';
 
@@ -72,27 +56,41 @@
 
     <div class="game-grid">
       {#each availableGames as game}
-        <a href={game.route} class="game-card">
-          <div class="game-icon">{game.icon}</div>
-          <h2>{game.title}</h2>
-          <p>{game.description}</p>
-          <div class="play-button">Play Now →</div>
-        </a>
+        {#if game.state === 'released'}
+          <a href={game.route} class="game-card">
+            <div class="game-icon">
+              {#if game.emoji}
+                <span>{game.emoji}</span>
+              {/if}
+            </div>
+            <h2>{game.title}</h2>
+            <p>{game.description}</p>
+            <div class="play-button">Play Now →</div>
+          </a>
+        {:else if game.state === 'testing'}
+          <a href={game.route} class="game-card testing">
+            <div class="game-icon">
+              {#if game.emoji}
+                <span>{game.emoji}</span>
+              {/if}
+            </div>
+            <h2>{game.title}</h2>
+            <p>{game.description}</p>
+            <div class="play-button">Play Now →</div>
+          </a>
+        {:else if game.state === 'scheduled'}
+          <div class="game-card scheduled">
+            <div class="game-icon">
+              {#if game.emoji}
+                <span class="grayscale">{game.emoji}</span>
+              {/if}
+            </div>
+            <h2>{game.title}</h2>
+            <p>{game.description}</p>
+            <div class="coming-soon-text">Coming soon</div>
+          </div>
+        {/if}
       {/each}
-    </div>
-
-    <div class="coming-soon">
-      <h3>⏳ Coming Soon</h3>
-      <div class="upcoming-games">
-        <div class="upcoming-game">
-          <span class="icon">🏢</span>
-          <span>Logo Quiz</span>
-        </div>
-        <div class="upcoming-game">
-          <span class="icon">🛡️</span>
-          <span>Emblem Quiz</span>
-        </div>
-      </div>
     </div>
   </div>
 </main>
@@ -145,10 +143,30 @@
     color: var(--color-text-primary);
   }
 
-  .game-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-    border-color: var(--color-primary);
+  .game-card.scheduled {
+    border: 2px dashed var(--color-border);
+    opacity: 0.7;
+  }
+
+  .game-card.testing {
+    border: 2px solid #ef4444;
+  }
+
+  .game-card.scheduled .game-icon .grayscale {
+    filter: grayscale(1);
+    opacity: 0.5;
+  }
+
+  .game-card.scheduled .play-button {
+    display: none;
+  }
+
+  .coming-soon-text {
+    margin-top: 1.5rem;
+    font-size: 1.1rem;
+    color: var(--color-text-secondary);
+    font-weight: 600;
+    opacity: 0.8;
   }
 
   .game-icon {

@@ -5,7 +5,7 @@ import { quizInfo } from '../quizInfo/GeographyQuizInfo.js';
   import Header from "../components/Header.svelte";
   import Footer from "../components/Footer.svelte";
   import CountryMap from "../components/CountryMap.svelte";
-  import WelcomeStats from "../components/WelcomeStats.svelte";
+  import QuizInfo from "../components/QuizInfo.svelte";
   import ActionButtons from "../components/ActionButtons.svelte";
 
   // Game data
@@ -104,7 +104,7 @@ import { quizInfo } from '../quizInfo/GeographyQuizInfo.js';
 <main class="map-quiz">
   {#if quizSubpage === "welcome"}
     <div class="container">
-      <WelcomeStats
+  <QuizInfo
         gameStats={sessionStats}
         {sessionStats}
         {sessionLength}
