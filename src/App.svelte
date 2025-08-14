@@ -9,6 +9,7 @@
   import CapitalsQuiz from "./pages/CapitalsQuiz.svelte";
   import NotFound from "./pages/NotFound.svelte";
   import Header from "./components/Header.svelte";
+  import GeographyQuiz from "./pages/GeographyQuiz.svelte";
 
   export const routes = {
     "/": Home,
@@ -16,6 +17,7 @@
     "/game": Game,
     "/game/flags": FlagQuiz,
     "/game/capitals": CapitalsQuiz,
+    "/game/geography": GeographyQuiz,
     "*": NotFound,
   };
 
@@ -87,7 +89,11 @@
       selectedVariants = [];
       tagDropdownOpen = false;
       compactMode = false;
-      console.error("loadCollectionData: error loading data for", collection, error);
+      console.error(
+        "loadCollectionData: error loading data for",
+        collection,
+        error,
+      );
     }
   }
 
@@ -102,11 +108,16 @@
       window.appData.filteredLogos = window.appData.logos.filter((logo) => {
         const matchesSearch =
           logo.name.toLowerCase().includes(val.toLowerCase()) ||
-          (logo.title && logo.title.toLowerCase().includes(val.toLowerCase())) ||
-          (logo.brand && logo.brand.toLowerCase().includes(val.toLowerCase())) ||
-          (logo.meta && Object.values(logo.meta).some(
-            v => typeof v === 'string' && v.toLowerCase().includes(val.toLowerCase())
-          ));
+          (logo.title &&
+            logo.title.toLowerCase().includes(val.toLowerCase())) ||
+          (logo.brand &&
+            logo.brand.toLowerCase().includes(val.toLowerCase())) ||
+          (logo.meta &&
+            Object.values(logo.meta).some(
+              (v) =>
+                typeof v === "string" &&
+                v.toLowerCase().includes(val.toLowerCase()),
+            ));
         const matchesTags =
           !selectedTags.length ||
           (logo.tags &&
@@ -207,7 +218,7 @@
     // Restore selected tags from URL
     const tagsParam = params.get("tags");
     if (tagsParam) {
-      selectedTags = tagsParam.split(",").filter(tag => tag.trim());
+      selectedTags = tagsParam.split(",").filter((tag) => tag.trim());
       console.log("App: Restored selectedTags from URL:", selectedTags);
       // Update localStorage with URL values
       localStorage.setItem("selectedTags", JSON.stringify(selectedTags));
@@ -216,7 +227,7 @@
     // Restore selected brands from URL
     const brandsParam = params.get("brands");
     if (brandsParam) {
-      selectedBrands = brandsParam.split(",").filter(brand => brand.trim());
+      selectedBrands = brandsParam.split(",").filter((brand) => brand.trim());
       console.log("App: Restored selectedBrands from URL:", selectedBrands);
       // Update localStorage with URL values      localStorage.setItem("selectedBrands", JSON.stringify(selectedBrands));
     }
@@ -224,10 +235,15 @@
     // Restore selected variants from URL
     const variantsParam = params.get("variants");
     if (variantsParam) {
-      selectedVariants = variantsParam.split(",").filter(variant => variant.trim());
+      selectedVariants = variantsParam
+        .split(",")
+        .filter((variant) => variant.trim());
       console.log("App: Restored selectedVariants from URL:", selectedVariants);
       // Update localStorage with URL values
-      localStorage.setItem("selectedVariants", JSON.stringify(selectedVariants));
+      localStorage.setItem(
+        "selectedVariants",
+        JSON.stringify(selectedVariants),
+      );
     }
 
     // Force update window.appData after restoration
@@ -236,7 +252,10 @@
         window.appData.selectedTags = [...selectedTags];
         window.appData.selectedBrands = [...selectedBrands];
         window.appData.selectedVariants = [...selectedVariants];
-        console.log("App: Updated window.appData after restoration with variants:", selectedVariants);
+        console.log(
+          "App: Updated window.appData after restoration with variants:",
+          selectedVariants,
+        );
         updateFilteredLogosImmediate();
 
         // Force re-render of components by updating references
@@ -246,11 +265,15 @@
       }
     }, 100);
 
-        // Restore view mode and compact mode from localStorage
-        const savedViewMode = localStorage.getItem("viewMode");
-        if (savedViewMode === "grid" || savedViewMode === "list" || savedViewMode === "compact") {
-          viewMode = savedViewMode;
-        }
+    // Restore view mode and compact mode from localStorage
+    const savedViewMode = localStorage.getItem("viewMode");
+    if (
+      savedViewMode === "grid" ||
+      savedViewMode === "list" ||
+      savedViewMode === "compact"
+    ) {
+      viewMode = savedViewMode;
+    }
     const savedCompact = localStorage.getItem("compactMode");
     if (savedCompact === "true" || savedCompact === "false") {
       setCompactMode(savedCompact === "true");
@@ -264,7 +287,10 @@
           const parsedTags = JSON.parse(savedTags);
           if (Array.isArray(parsedTags)) {
             selectedTags = parsedTags;
-            console.log("App: Restored selectedTags from localStorage:", selectedTags);
+            console.log(
+              "App: Restored selectedTags from localStorage:",
+              selectedTags,
+            );
           }
         } catch (error) {
           console.error("App: Error parsing saved tags:", error);
@@ -281,7 +307,10 @@
           const parsedBrands = JSON.parse(savedBrands);
           if (Array.isArray(parsedBrands)) {
             selectedBrands = parsedBrands;
-            console.log("App: Restored selectedBrands from localStorage:", selectedBrands);
+            console.log(
+              "App: Restored selectedBrands from localStorage:",
+              selectedBrands,
+            );
           }
         } catch (error) {
           console.error("App: Error parsing saved brands:", error);
@@ -298,7 +327,10 @@
           const parsedVariants = JSON.parse(savedVariants);
           if (Array.isArray(parsedVariants)) {
             selectedVariants = parsedVariants;
-            console.log("App: Restored selectedVariants from localStorage:", selectedVariants);
+            console.log(
+              "App: Restored selectedVariants from localStorage:",
+              selectedVariants,
+            );
           }
         } catch (error) {
           console.error("App: Error parsing saved variants:", error);
@@ -330,11 +362,16 @@
   $: filteredLogos = logos.filter((logo) => {
     const matchesSearch =
       logo.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (logo.title && logo.title.toLowerCase().includes(searchQuery.toLowerCase())) ||
-      (logo.brand && logo.brand.toLowerCase().includes(searchQuery.toLowerCase())) ||
-      (logo.meta && Object.values(logo.meta).some(
-        v => typeof v === 'string' && v.toLowerCase().includes(searchQuery.toLowerCase())
-      ));
+      (logo.title &&
+        logo.title.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (logo.brand &&
+        logo.brand.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (logo.meta &&
+        Object.values(logo.meta).some(
+          (v) =>
+            typeof v === "string" &&
+            v.toLowerCase().includes(searchQuery.toLowerCase()),
+        ));
     const matchesTags =
       !selectedTags.length ||
       (logo.tags &&
@@ -640,7 +677,10 @@
     console.log("App: Adding variant:", variant);
     if (!selectedVariants.includes(variant)) {
       selectedVariants = [...selectedVariants, variant];
-      localStorage.setItem("selectedVariants", JSON.stringify(selectedVariants));
+      localStorage.setItem(
+        "selectedVariants",
+        JSON.stringify(selectedVariants),
+      );
       console.log("App: Updated selectedVariants:", selectedVariants);
 
       // Update window.appData immediately
@@ -691,11 +731,16 @@
       window.appData.filteredLogos = window.appData.logos.filter((logo) => {
         const matchesSearch =
           logo.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          (logo.title && logo.title.toLowerCase().includes(searchQuery.toLowerCase())) ||
-          (logo.brand && logo.brand.toLowerCase().includes(searchQuery.toLowerCase())) ||
-          (logo.meta && Object.values(logo.meta).some(
-            v => typeof v === 'string' && v.toLowerCase().includes(searchQuery.toLowerCase())
-          ));
+          (logo.title &&
+            logo.title.toLowerCase().includes(searchQuery.toLowerCase())) ||
+          (logo.brand &&
+            logo.brand.toLowerCase().includes(searchQuery.toLowerCase())) ||
+          (logo.meta &&
+            Object.values(logo.meta).some(
+              (v) =>
+                typeof v === "string" &&
+                v.toLowerCase().includes(searchQuery.toLowerCase()),
+            ));
         const matchesTags =
           !selectedTags.length ||
           (logo.tags &&
@@ -753,17 +798,19 @@
   }
 
   function getTagObj(tag) {
-    const tagObj = allTags.find(t => t.text === tag);
+    const tagObj = allTags.find((t) => t.text === tag);
     return tagObj || { text: tag };
   }
 
   function openLogoByAnchor(hash) {
-    if (!hash || !hash.startsWith('#/preview/')) return;
+    if (!hash || !hash.startsWith("#/preview/")) return;
 
-    const logoName = hash.replace('#/preview/', '').replace(/-/g, ' ');
-    const logo = logos.find(l =>
-      l.name.toLowerCase().replace(/\s+/g, '-') === hash.replace('#/preview/', '').toLowerCase() ||
-      l.name.toLowerCase() === logoName.toLowerCase()
+    const logoName = hash.replace("#/preview/", "").replace(/-/g, " ");
+    const logo = logos.find(
+      (l) =>
+        l.name.toLowerCase().replace(/\s+/g, "-") ===
+          hash.replace("#/preview/", "").toLowerCase() ||
+        l.name.toLowerCase() === logoName.toLowerCase(),
     );
 
     if (logo) {
@@ -774,16 +821,16 @@
 
   // Listen for outside click to close dropdown
   function handleOutsideClick(event) {
-    if (tagDropdownOpen && !event.target.closest('.filter-dropdown')) {
+    if (tagDropdownOpen && !event.target.closest(".filter-dropdown")) {
       closeDropdown();
     }
   }
 
   $: if (typeof window !== "undefined") {
     if (tagDropdownOpen) {
-      document.addEventListener('click', handleOutsideClick);
+      document.addEventListener("click", handleOutsideClick);
     } else {
-      document.removeEventListener('click', handleOutsideClick);
+      document.removeEventListener("click", handleOutsideClick);
     }
   }
 </script>
@@ -791,37 +838,36 @@
 <Router {routes} let:Component>
   <svelte:component
     this={Component}
-    displayLogos={displayLogos}
+    {displayLogos}
     allLogos={logos}
-    theme={theme}
-    setTheme={setTheme}
-    viewMode={viewMode}
-    setGridView={setGridView}
-    setListView={setListView}
-    setCompactView={setCompactView}
-    searchQuery={searchQuery}
-    setSearchQuery={setSearchQuery}
-    allTags={allTags}
-    selectedTags={selectedTags}
-    selectedBrands={selectedBrands}
-    selectedVariants={selectedVariants}
-    tagDropdownOpen={tagDropdownOpen}
-    toggleDropdown={toggleDropdown}
-    addTag={addTag}
-    removeTag={removeTag}
-    addBrand={addBrand}
-    removeBrand={removeBrand}
-    addVariant={addVariant}
-    removeVariant={removeVariant}
-    getTagObj={getTagObj}
-    compactMode={compactMode}
-    setCompactMode={setCompactMode}
-    collection={collection}
-    setCollection={setCollection}
-    collections={collections}
+    {theme}
+    {setTheme}
+    {viewMode}
+    {setGridView}
+    {setListView}
+    {setCompactView}
+    {searchQuery}
+    {setSearchQuery}
+    {allTags}
+    {selectedTags}
+    {selectedBrands}
+    {selectedVariants}
+    {tagDropdownOpen}
+    {toggleDropdown}
+    {addTag}
+    {removeTag}
+    {addBrand}
+    {removeBrand}
+    {addVariant}
+    {removeVariant}
+    {getTagObj}
+    {compactMode}
+    {setCompactMode}
+    {collection}
+    {setCollection}
+    {collections}
   />
 </Router>
-
 
 <style>
 </style>

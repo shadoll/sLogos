@@ -8,6 +8,7 @@
     export let sessionStats = null;
     export let showSessionResults = false;
     export let sessionLength = 10;
+    export let quizInfo;
 
     function startQuiz() {
         dispatch("startQuiz");
@@ -72,27 +73,39 @@
 <div class="welcome-container">
     {#if showSessionResults && sessionStats}
         <!-- Session Results View -->
-        <div class="welcome-header">
-            <div class="welcome-icon">
-                <InlineSvg path="/icons/check-circle.svg" alt="Quiz Complete" />
-            </div>
-            <h1>Quiz Complete!</h1>
-            <p class="welcome-subtitle">Great job on completing the quiz</p>
+        <div class="welcome-stats">
+            {#if quizInfo}
+                <div class="quiz-info">
+                    {#if quizInfo.icon}
+                        <div class="quiz-icon">
+                            <img src={`/icons/${quizInfo.icon}.svg`} alt="Quiz icon" />
+                        </div>
+                    {/if}
+                    {#if quizInfo.title}
+                        <div class="quiz-title">{quizInfo.title}</div>
+                    {/if}
+                    {#if quizInfo.description}
+                        <div class="quiz-description">{quizInfo.description}</div>
+                    {/if}
+                    {#if quizInfo.features}
+                        <ul class="quiz-features">
+                            {#each quizInfo.features as feature}
+                                <li class="feature">
+                                    {#if feature.icon}
+                                        <InlineSvg path={feature.icon} alt={feature.text} />
+                                    {/if}
+                                    <span>{feature.text}</span>
+                                </li>
+                            {/each}
+                        </ul>
+                    {/if}
+                </div>
+            {/if}
         </div>
-
-        <div class="stats-section">
-            <div class="grade-display">
-                <div
-                    class="grade-circle"
-                    style="border-color: {sessionGrade.color}; color: {sessionGrade.color}"
-                >
-                    {sessionGrade.letter}
-                </div>
-                <div class="grade-text">
-                    <div class="percentage">{sessionPercentage}%</div>
-                    <div class="description">{sessionGrade.description}</div>
-                </div>
-            </div>
+        <div class="grade-display">
+            <div class="percentage">{sessionPercentage}%</div>
+            <div class="description">{sessionGrade.description}</div>
+        </div>
 
             <div class="stats-grid">
                 <div class="stat-card">
@@ -145,106 +158,107 @@
                     {/if}.
                 </h3>
             </div>
-        </div>
+        <!-- End of session results block -->
     {:else}
         <!-- Welcome/Stats View -->
-        <div class="welcome-header">
-            <div class="welcome-icon">
-                <InlineSvg path="/icons/flag.svg" alt="Flag Quiz" />
+        {#if quizInfo}
+            <div class="welcome-header">
+                {#if quizInfo.icon}
+                    <div class="welcome-icon">
+                        <InlineSvg path={quizInfo.icon} alt={quizInfo.title} />
+                    </div>
+                {/if}
+                {#if quizInfo.title}
+                    <h1>{quizInfo.title}</h1>
+                {/if}
+                {#if quizInfo.description}
+                    <p class="welcome-subtitle">{quizInfo.description}</p>
+                {/if}
             </div>
-            <h1>Flag Quiz</h1>
-            <p class="welcome-subtitle">Test your knowledge of world flags</p>
-        </div>
 
-        {#if hasPlayedBefore}
-            <div class="stats-section">
-                <h2>Your Statistics</h2>
+            {#if hasPlayedBefore}
+                <div class="stats-section">
+                    <h2>Your Statistics</h2>
 
-                <div class="grade-display">
-                    <div
-                        class="accuracy-icon"
-                        style="color: {accuracyGrade.color}"
-                    >
-                        <InlineSvg
-                            path="/icons/medal-star.svg"
-                            alt="Accuracy"
-                        />
-                    </div>
-                    <div class="grade-text">
-                        <div class="percentage">{accuracy}%</div>
-                        <div class="description">Accuracy</div>
-                    </div>
-                </div>
-
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-icon correct">
+                    <div class="grade-display">
+                        <div
+                            class="accuracy-icon"
+                            style="color: {accuracyGrade?.color}"
+                        >
                             <InlineSvg
-                                path="/icons/check-square.svg"
-                                alt="Correct"
+                                path="/icons/medal-star.svg"
+                                alt="Accuracy"
                             />
                         </div>
-                        <div class="stat-value">{gameStats.correct}</div>
-                        <div class="stat-label">Correct</div>
-                    </div>
-
-                    <div class="stat-card">
-                        <div class="stat-icon wrong">
-                            <InlineSvg
-                                path="/icons/close-square.svg"
-                                alt="Wrong"
-                            />
+                        <div class="grade-text">
+                            <div class="percentage">{accuracy}%</div>
+                            <div class="description">Accuracy</div>
                         </div>
-                        <div class="stat-value">{gameStats.wrong}</div>
-                        <div class="stat-label">Wrong</div>
                     </div>
 
-                    <div class="stat-card">
-                        <div class="stat-icon skipped">
-                            <InlineSvg
-                                path="/icons/skip-square.svg"
-                                alt="Skipped"
-                            />
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon correct">
+                                <InlineSvg
+                                    path="/icons/check-square.svg"
+                                    alt="Correct"
+                                />
+                            </div>
+                            <div class="stat-value">{gameStats.correct}</div>
+                            <div class="stat-label">Correct</div>
                         </div>
-                        <div class="stat-value">{gameStats.skipped}</div>
-                        <div class="stat-label">Skipped</div>
-                    </div>
-                </div>
 
-                <div class="progress-summary">
-                    <h3>Total Questions Answered: {totalQuestions}</h3>
-                </div>
-            </div>
-        {:else}
-            <div class="welcome-message">
-                <h2>Welcome to Flag Quiz!</h2>
-                <p>
-                    Challenge yourself to identify flags from around the world.
-                    Each quiz contains <strong>{sessionLength} questions</strong
-                    > with a mix of flag-to-country and country-to-flag challenges.
-                </p>
+                        <div class="stat-card">
+                            <div class="stat-icon wrong">
+                                <InlineSvg
+                                    path="/icons/close-square.svg"
+                                    alt="Wrong"
+                                />
+                            </div>
+                            <div class="stat-value">{gameStats.wrong}</div>
+                            <div class="stat-label">Wrong</div>
+                        </div>
 
-                <div class="features">
-                    <div class="feature">
-                        <InlineSvg path="/icons/global.svg" alt="Global" />
-                        <span>Flags from every continent</span>
+                        <div class="stat-card">
+                            <div class="stat-icon skipped">
+                                <InlineSvg
+                                    path="/icons/skip-square.svg"
+                                    alt="Skipped"
+                                />
+                            </div>
+                            <div class="stat-value">{gameStats.skipped}</div>
+                            <div class="stat-label">Skipped</div>
+                        </div>
                     </div>
-                    <div class="feature">
-                        <InlineSvg
-                            path="/icons/medal-ribbon.svg"
-                            alt="Achievements"
-                        />
-                        <span>Unlock achievements</span>
-                    </div>
-                    <div class="feature">
-                        <InlineSvg
-                            path="/icons/chart-square.svg"
-                            alt="Statistics"
-                        />
-                        <span>Track your progress</span>
+
+                    <div class="progress-summary">
+                        <h3>Total Questions Answered: {totalQuestions}</h3>
                     </div>
                 </div>
-            </div>
+            {:else}
+                <div class="welcome-message">
+                    {#if quizInfo.title}
+                        <h2>Welcome to {quizInfo.title}!</h2>
+                    {/if}
+                    {#if quizInfo.description}
+                        <p>{quizInfo.description}</p>
+                    {/if}
+                    {#if quizInfo.features}
+                        <div class="features">
+                            {#each quizInfo.features as feature}
+                                {#if feature.icon && feature.text}
+                                    <div class="feature">
+                                        <InlineSvg path={feature.icon} alt={feature.text} />
+                                        <span>{feature.text}</span>
+                                    </div>
+                                {:else}
+                                    <div class="feature">{feature}</div>
+                                {/if}
+                            {/each}
+                        </div>
+                    {/if}
+                </div>
+            {/if}
         {/if}
     {/if}
 </div>

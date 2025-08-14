@@ -21,6 +21,9 @@
 
   <div class="action-buttons">
     {#if mode === 'welcome'}
+      <button class="action-btn secondary" on:click={() => handleAction('goToGames')}>
+        Back to Games
+      </button>
       <button class="action-btn primary" on:click={() => handleAction('startQuiz')}>
         {hasPlayedBefore ? 'Start New Quiz' : 'Start Quiz'}
       </button>

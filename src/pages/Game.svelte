@@ -18,8 +18,14 @@
       description: 'Test your knowledge of world capitals',
       icon: '🏛️',
       route: '#/game/capitals'
+    },
+    {
+      name: 'geography',
+      title: 'Geography Quiz',
+      description: 'Test your knowledge of world geography',
+      icon: '🗺️',
+      route: '#/game/geography'
     }
-    // Future games will be added here
   ];
 
   let theme = 'system';
