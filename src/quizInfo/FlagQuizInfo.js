@@ -1,4 +1,8 @@
 export const quizInfo = {
+  name: "flags",
+  emoji: "🏳️",
+  route: "#/game/flags",
+  state: "released",
   title: "Flag Quiz",
   icon: "/icons/flag.svg",
   description: "Test your knowledge of world flags.",

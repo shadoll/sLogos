@@ -1,4 +1,8 @@
 export const quizInfo = {
+  name: "capitals",
+  emoji: "🏛️",
+  route: "#/game/capitals",
+  state: "released",
   title: "Capitals Quiz",
   icon: "/icons/buildings.svg",
   description: "Test your knowledge of world capitals.",

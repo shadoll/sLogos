@@ -1,4 +1,8 @@
 export const quizInfo = {
+  name: "geography",
+  emoji: "🗺️",
+  route: "#/game/geography",
+  state: "testing",
   title: "Geography Quiz",
   icon: "/icons/map.svg",
   description: "Test your knowledge of world geography by identifying countries from their map shapes.",
