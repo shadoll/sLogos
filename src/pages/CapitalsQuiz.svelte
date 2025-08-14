@@ -1,4 +1,9 @@
 <script>
+  import { updateAchievementCount as sharedUpdateAchievementCount } from '../quizLogic/quizAchievements.js';
+  import { saveSettings as sharedSaveSettings, loadSettings as sharedLoadSettings } from '../quizLogic/quizSettings.js';
+  import { loadGlobalStats as sharedLoadGlobalStats, updateGlobalStats as sharedUpdateGlobalStats } from '../quizLogic/quizGlobalStats.js';
+  import { saveSessionState as sharedSaveSessionState, loadSessionState as sharedLoadSessionState, clearSessionState as sharedClearSessionState } from '../quizLogic/quizSession.js';
+  import { playCorrectSound as sharedPlayCorrectSound, playWrongSound as sharedPlayWrongSound } from '../quizLogic/quizSound.js';
   import { quizInfo } from '../quizInfo/CapitalsQuizInfo.js';
   import { onMount } from "svelte";
   import Header from "../components/Header.svelte";
@@ -87,21 +92,18 @@
 
   // Update achievement count when achievements component is available
   $: if (achievementsComponent) {
-    updateAchievementCount();
+    achievementCount = sharedUpdateAchievementCount(achievementsComponent);
   }
 
   // Save settings when they change (after initial load)
   $: if (settingsLoaded && typeof reduceCorrectAnswers !== "undefined") {
-    localStorage.setItem(
-      "capitalsQuizSettings",
-      JSON.stringify({
-        autoAdvance,
-        focusWrongAnswers,
-        reduceCorrectAnswers,
-        soundEnabled,
-        sessionLength,
-      }),
-    );
+    sharedSaveSettings("capitalsQuizSettings", {
+      autoAdvance,
+      focusWrongAnswers,
+      reduceCorrectAnswers,
+      soundEnabled,
+      sessionLength,
+    });
   }
 
   // Load game stats from localStorage
@@ -162,31 +164,23 @@
       }
 
       // Load settings
-      const savedSettings = localStorage.getItem("capitalsQuizSettings");
-      if (savedSettings) {
-        try {
-          const settings = JSON.parse(savedSettings);
-          autoAdvance =
-            settings.autoAdvance !== undefined ? settings.autoAdvance : true;
-          focusWrongAnswers =
-            settings.focusWrongAnswers !== undefined
-              ? settings.focusWrongAnswers
-              : false;
-          reduceCorrectAnswers =
-            settings.reduceCorrectAnswers !== undefined
-              ? settings.reduceCorrectAnswers
-              : false;
-          soundEnabled =
-            settings.soundEnabled !== undefined ? settings.soundEnabled : true;
-          sessionLength =
-            settings.sessionLength !== undefined ? settings.sessionLength : 10;
-        } catch (e) {
-          console.error("Error loading settings:", e);
-        }
+      const loadedSettings = sharedLoadSettings("capitalsQuizSettings", {
+        autoAdvance,
+        focusWrongAnswers,
+        reduceCorrectAnswers,
+        soundEnabled,
+        sessionLength,
+      });
+      if (loadedSettings) {
+        autoAdvance = loadedSettings.autoAdvance;
+        focusWrongAnswers = loadedSettings.focusWrongAnswers;
+        reduceCorrectAnswers = loadedSettings.reduceCorrectAnswers;
+        soundEnabled = loadedSettings.soundEnabled;
+        sessionLength = loadedSettings.sessionLength;
       }
 
       // Load global stats and update them
-      loadGlobalStats();
+      sharedLoadGlobalStats("globalQuizStats");
     }
 
     await loadFlags();
@@ -255,50 +249,37 @@
       sessionStartTime,
       questionKey,
     };
-    localStorage.setItem("capitalsQuizSessionState", JSON.stringify(sessionState));
+  sharedSaveSessionState("capitalsQuizSessionState", sessionState);
   }
 
   function loadSessionState() {
-    const savedState = localStorage.getItem("capitalsQuizSessionState");
-    if (savedState) {
-      try {
-        const state = JSON.parse(savedState);
-        if (state.sessionInProgress) {
-          // Restore session
-          sessionInProgress = state.sessionInProgress;
-          currentSessionQuestions = state.currentSessionQuestions || 0;
-          sessionStats = state.sessionStats || {
-            correct: 0,
-            wrong: 0,
-            skipped: 0,
-            total: 0,
-            sessionLength,
-          };
-          score = state.score || { correct: 0, total: 0, skipped: 0 };
-          currentQuestion = state.currentQuestion;
-          selectedAnswer = state.selectedAnswer;
-          showResult = state.showResult || false;
-          gameState = state.gameState || "question";
-          quizSubpage = "quiz";
-          sessionStartTime = state.sessionStartTime;
-          questionKey = state.questionKey || 0;
+    const loadedSession = sharedLoadSessionState("capitalsQuizSessionState", null);
+    if (loadedSession) {
+      // Restore session
+      sessionInProgress = loadedSession.sessionInProgress;
+      currentSessionQuestions = loadedSession.currentSessionQuestions || 0;
+      sessionStats = loadedSession.sessionStats || {
+        correct: 0,
+        wrong: 0,
+        skipped: 0,
+        total: 0,
+        sessionLength,
+      };
+      score = loadedSession.score || { correct: 0, total: 0, skipped: 0 };
+      currentQuestion = loadedSession.currentQuestion;
+      selectedAnswer = loadedSession.selectedAnswer;
+      showResult = loadedSession.showResult || false;
+      gameState = loadedSession.gameState || "question";
+      quizSubpage = "quiz";
+      sessionStartTime = loadedSession.sessionStartTime;
+      questionKey = loadedSession.questionKey || 0;
 
-          // Mark that session was restored from reload
-          sessionRestoredFromReload = true;
+      // Mark that session was restored from reload
+      sessionRestoredFromReload = true;
 
-          // If we don't have a current question, generate one
-          if (!currentQuestion) {
-            generateQuestion();
-          }
-        } else {
-          // No active session, show welcome page
-          quizSubpage = "welcome";
-          gameState = "welcome";
-        }
-      } catch (e) {
-        console.error("Error loading session state:", e);
-        quizSubpage = "welcome";
-        gameState = "welcome";
+      // If we don't have a current question, generate one
+      if (!currentQuestion) {
+        generateQuestion();
       }
     } else {
       // No saved state, show welcome page
@@ -308,7 +289,7 @@
   }
 
   function clearSessionState() {
-    localStorage.removeItem("capitalsQuizSessionState");
+  sharedClearSessionState("capitalsQuizSessionState");
   }
 
   function generateQuestion() {
@@ -676,10 +657,6 @@
     localStorage.setItem("capitalsQuizStats", JSON.stringify(gameStats));
   }
 
-  function saveSettings() {
-    const settings = { autoAdvance };
-    localStorage.setItem("capitalsQuizSettings", JSON.stringify(settings));
-  }
 
   function toggleSettings() {
     showSettings = !showSettings;
@@ -736,7 +713,7 @@
 
     // Reset achievements if component is available
     if (achievementsComponent) {
-      achievementsComponent.resetAllAchievements();
+      achievementsComponent.resetConsecutiveSkips();
     }
 
     showResetConfirmation = false;
@@ -799,134 +776,27 @@
     return `/images/flags/${flag.path}`;
   }
 
-  function updateAchievementCount() {
-    if (achievementsComponent) {
-      achievementCount = achievementsComponent.getAchievementCount();
-    }
-  }
 
   function handleAchievementsUnlocked() {
-    updateAchievementCount();
+    achievementCount = sharedUpdateAchievementCount(achievementsComponent);
   }
 
   // Global statistics functions
   function loadGlobalStats() {
-    const savedGlobalStats = localStorage.getItem("globalQuizStats");
-    if (savedGlobalStats) {
-      try {
-        const globalStats = JSON.parse(savedGlobalStats);
-        console.log("Loaded global stats:", globalStats);
-      } catch (e) {
-        console.error("Error loading global stats:", e);
-      }
-    }
+  sharedLoadGlobalStats("globalQuizStats");
   }
 
   function updateGlobalStats(isCorrect, isSkipped = false) {
-    let globalStats = {};
-
-    // Load existing global stats
-    const savedGlobalStats = localStorage.getItem("globalQuizStats");
-    if (savedGlobalStats) {
-      try {
-        globalStats = JSON.parse(savedGlobalStats);
-      } catch (e) {
-        console.error("Error parsing global stats:", e);
-      }
-    }
-
-    // Initialize stats structure if it doesn't exist
-    if (!globalStats.capitalsQuiz) {
-      globalStats.capitalsQuiz = { correct: 0, wrong: 0, total: 0, skipped: 0 };
-    }
-    if (!globalStats.overall) {
-      globalStats.overall = { correct: 0, wrong: 0, total: 0, skipped: 0 };
-    }
-
-    // Update capitals quiz stats
-    globalStats.capitalsQuiz.total++;
-    globalStats.overall.total++;
-
-    if (isSkipped) {
-      globalStats.capitalsQuiz.skipped++;
-      globalStats.overall.skipped++;
-    } else if (isCorrect) {
-      globalStats.capitalsQuiz.correct++;
-      globalStats.overall.correct++;
-    } else {
-      globalStats.capitalsQuiz.wrong++;
-      globalStats.overall.wrong++;
-    }
-
-    // Save updated global stats
-    localStorage.setItem("globalQuizStats", JSON.stringify(globalStats));
-    console.log("Updated global stats:", globalStats);
+  sharedUpdateGlobalStats("globalQuizStats", "capitalsQuiz", isCorrect, isSkipped);
   }
 
   // Sound functions
   function playCorrectSound() {
-    if (!soundEnabled) return;
-
-    try {
-      const audioContext = new (window.AudioContext ||
-        window.webkitAudioContext)();
-      const oscillator = audioContext.createOscillator();
-      const gainNode = audioContext.createGain();
-
-      oscillator.connect(gainNode);
-      gainNode.connect(audioContext.destination);
-
-      // Pleasant ascending tone for correct answer
-      oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime); // C5
-      oscillator.frequency.setValueAtTime(
-        659.25,
-        audioContext.currentTime + 0.1,
-      ); // E5
-      oscillator.frequency.setValueAtTime(
-        783.99,
-        audioContext.currentTime + 0.2,
-      ); // G5
-
-      gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-      gainNode.gain.exponentialRampToValueAtTime(
-        0.001,
-        audioContext.currentTime + 0.4,
-      );
-
-      oscillator.start(audioContext.currentTime);
-      oscillator.stop(audioContext.currentTime + 0.4);
-    } catch (e) {
-      console.log("Audio not supported:", e);
-    }
+  sharedPlayCorrectSound(soundEnabled);
   }
 
   function playWrongSound() {
-    if (!soundEnabled) return;
-
-    try {
-      const audioContext = new (window.AudioContext ||
-        window.webkitAudioContext)();
-      const oscillator = audioContext.createOscillator();
-      const gainNode = audioContext.createGain();
-
-      oscillator.connect(gainNode);
-      gainNode.connect(audioContext.destination);
-
-      // Descending tone for wrong answer
-      oscillator.frequency.setValueAtTime(400, audioContext.currentTime); // Lower frequency
-      oscillator.frequency.setValueAtTime(300, audioContext.currentTime + 0.15);
-
-      gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-      gainNode.gain.exponentialRampToValueAtTime(
-        0.001,
-        audioContext.currentTime + 0.3,
-      );
-
-      oscillator.start(audioContext.currentTime);
-      oscillator.stop(audioContext.currentTime + 0.3);
-    } catch (e) {
-      console.log("Audio not supported:", e);
-    }
+  sharedPlayWrongSound(soundEnabled);
   }
 </script>
 

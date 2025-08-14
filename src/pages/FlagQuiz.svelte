@@ -1,4 +1,6 @@
 <script>
+import { updateAchievementCount as sharedUpdateAchievementCount } from '../quizLogic/quizAchievements.js';
+import { saveSettings as sharedSaveSettings } from '../quizLogic/quizSettings.js';
 import { quizInfo } from '../quizInfo/FlagQuizInfo.js';
   import { onMount } from "svelte";
   import Header from "../components/Header.svelte";
@@ -87,21 +89,18 @@ import { quizInfo } from '../quizInfo/FlagQuizInfo.js';
 
   // Update achievement count when achievements component is available
   $: if (achievementsComponent) {
-    updateAchievementCount();
+    achievementCount = sharedUpdateAchievementCount(achievementsComponent);
   }
 
   // Save settings when they change (after initial load)
   $: if (settingsLoaded && typeof reduceCorrectAnswers !== "undefined") {
-    localStorage.setItem(
-      "flagQuizSettings",
-      JSON.stringify({
-        autoAdvance,
-        focusWrongAnswers,
-        reduceCorrectAnswers,
-        soundEnabled,
-        sessionLength,
-      }),
-    );
+    sharedSaveSettings("flagQuizSettings", {
+      autoAdvance,
+      focusWrongAnswers,
+      reduceCorrectAnswers,
+      soundEnabled,
+      sessionLength,
+    });
   }
 
   // Load game stats from localStorage
@@ -670,10 +669,6 @@ import { quizInfo } from '../quizInfo/FlagQuizInfo.js';
     localStorage.setItem("flagQuizStats", JSON.stringify(gameStats));
   }
 
-  function saveSettings() {
-    const settings = { autoAdvance };
-    localStorage.setItem("flagQuizSettings", JSON.stringify(settings));
-  }
 
   function toggleSettings() {
     showSettings = !showSettings;
@@ -730,7 +725,7 @@ import { quizInfo } from '../quizInfo/FlagQuizInfo.js';
 
     // Reset achievements if component is available
     if (achievementsComponent) {
-      achievementsComponent.resetAllAchievements();
+      achievementsComponent.resetConsecutiveSkips();
     }
 
     showResetConfirmation = false;
@@ -789,14 +784,9 @@ import { quizInfo } from '../quizInfo/FlagQuizInfo.js';
     return `/images/flags/${flag.path}`;
   }
 
-  function updateAchievementCount() {
-    if (achievementsComponent) {
-      achievementCount = achievementsComponent.getAchievementCount();
-    }
-  }
 
   function handleAchievementsUnlocked() {
-    updateAchievementCount();
+    achievementCount = sharedUpdateAchievementCount(achievementsComponent);
   }
 
   // Global statistics functions
