@@ -1,12 +1,12 @@
 <script>
-import { quizInfo } from '../quizInfo/CapitalsQuizInfo.js';
+  import { quizInfo } from '../quizInfo/CapitalsQuizInfo.js';
   import { onMount } from "svelte";
   import Header from "../components/Header.svelte";
   import Footer from "../components/Footer.svelte";
   import InlineSvg from "../components/InlineSvg.svelte";
   import Achievements from "../components/Achievements.svelte";
   import QuizSettings from "../components/QuizSettings.svelte";
-  import WelcomeStats from "../components/WelcomeStats.svelte";
+  import QuizInfo from "../components/QuizInfo.svelte";
   import ActionButtons from "../components/ActionButtons.svelte";
 
   // Game data
@@ -14,7 +14,6 @@ import { quizInfo } from '../quizInfo/CapitalsQuizInfo.js';
   let currentQuestion = null;
 
   // Question and answer arrays
-  let currentCapitalOptions = [];
   let correctAnswer = "";
 
   // Game states
@@ -49,7 +48,6 @@ import { quizInfo } from '../quizInfo/CapitalsQuizInfo.js';
   let showAchievements = false;
   let achievementsComponent;
   let achievementCount = { unlocked: 0, total: 0 };
-  // New achievement tracking
   let capitalsCorrect = 0;
   let perfectRounds = 0;
   let mapChallengeCompleted = false;
@@ -980,12 +978,12 @@ import { quizInfo } from '../quizInfo/CapitalsQuizInfo.js';
 
     {#if quizSubpage === "welcome"}
       <!-- Welcome/Stats Subpage -->
-      <WelcomeStats
+      <QuizInfo
         {gameStats}
         {sessionStats}
         {sessionLength}
         {showSessionResults}
-  quizInfo={quizInfo}
+        quizInfo={quizInfo}
         on:startQuiz={startNewSession}
         on:openSettings={() => (showSettings = true)}
         on:closeResults={() => (showSessionResults = false)}
@@ -1014,62 +1012,6 @@ import { quizInfo } from '../quizInfo/CapitalsQuizInfo.js';
             </div>
           </div>
 
-          <!-- Fixed height result area -->
-          <div class="result-area">
-            {#if showResult}
-              <div class="result">
-                {#if selectedAnswer === correctAnswer}
-                  <div class="correct-result">
-                    <span class="result-icon smile-icon"
-                      ><InlineSvg
-                        path="/icons/smile-squre.svg"
-                        alt="Correct"
-                      /></span
-                    > Correct!
-                  </div>
-                {:else}
-                  <div class="wrong-result">
-                    <span class="result-icon sad-icon"
-                      ><InlineSvg
-                        path="/icons/sad-square.svg"
-                        alt="Wrong"
-                      /></span
-                    >
-                    Wrong!
-                    <span class="result-country-info">
-                      The correct answer is: {getCapitalName(currentQuestion.correct)}.
-                      <button
-                        class="info-icon result-info-btn"
-                        aria-label="Show country info"
-                        aria-expanded={showResultCountryInfo}
-                        on:click={() =>
-                          (showResultCountryInfo = !showResultCountryInfo)}
-                        on:keydown={(e) => {
-                          if (e.key === "Escape")
-                            showResultCountryInfo = false;
-                        }}
-                      >
-                        <InlineSvg
-                          path="/icons/info-square.svg"
-                          alt="Country info"
-                        />
-                      </button>
-                      {#if showResultCountryInfo}
-                        <div
-                          class="info-tooltip result-info-tooltip"
-                          role="dialog"
-                          aria-live="polite"
-                        >
-                          {currentQuestion.correct.meta.description}
-                        </div>
-                      {/if}
-                    </span>
-                  </div>
-                {/if}
-              </div>
-            {/if}
-          </div>
-
           <div class="country-display">
             <div class="flag-and-country">
               <img
@@ -1079,27 +1021,6 @@ import { quizInfo } from '../quizInfo/CapitalsQuizInfo.js';
               />
               <h2 class="country-name">
                 {getCountryName(currentQuestion.correct)}
-                {#if currentQuestion.correct?.meta?.description}
-                  <button
-                    class="info-icon"
-                    aria-label="Show country info"
-                    aria-expanded={showCountryInfo}
-                    on:click={() => (showCountryInfo = !showCountryInfo)}
-                    on:keydown={(e) => {
-                      if (e.key === "Escape") showCountryInfo = false;
-                    }}
-                  >
-                    <InlineSvg
-                      path="/icons/info-square.svg"
-                      alt="Country info"
-                    />
-                  </button>
-                  {#if showCountryInfo}
-                    <div class="info-tooltip" role="dialog" aria-live="polite">
-                      {currentQuestion.correct.meta.description}
-                    </div>
-                  {/if}
-                {/if}
               </h2>
             </div>
           </div>
@@ -1109,10 +1030,8 @@ import { quizInfo } from '../quizInfo/CapitalsQuizInfo.js';
               <button
                 class="option"
                 class:selected={selectedAnswer === index}
-                class:correct={showResult && index === correctAnswer}
-                class:wrong={showResult &&
-                  selectedAnswer === index &&
-                  index !== correctAnswer}
+                class:correct={showResult && index === currentQuestion.correctIndex}
+                class:wrong={showResult && selectedAnswer === index && index !== currentQuestion.correctIndex}
                 on:click={() => selectAnswer(index)}
                 disabled={gameState === "answered"}
               >
@@ -1122,14 +1041,9 @@ import { quizInfo } from '../quizInfo/CapitalsQuizInfo.js';
           </div>
 
           {#if gameState === "question"}
-            <button class="btn btn-skip btn-next-full" on:click={skipQuestion}
-              >Skip Question</button
-            >
+            <button class="btn btn-skip btn-next-full" on:click={skipQuestion}>Skip Question</button>
           {:else if (!autoAdvance && gameState === "answered") || (autoAdvance && gameState === "answered" && sessionRestoredFromReload)}
-            <button
-              class="btn btn-primary btn-next-full"
-              on:click={nextQuestion}>Next Question →</button
-            >
+            <button class="btn btn-primary btn-next-full" on:click={nextQuestion}>Next Question →</button>
           {/if}
 
           <!-- Auto-advance timer display -->
@@ -1154,14 +1068,12 @@ import { quizInfo } from '../quizInfo/CapitalsQuizInfo.js';
 
       <ActionButtons
         mode="quiz"
-        sessionInfo="Question {currentSessionQuestions +
-          1} from {sessionLength}"
+        sessionInfo={`Question ${currentSessionQuestions + 1} from ${sessionLength}`}
         on:action={handleActionButtonClick}
       />
     {/if}
   </div>
 </main>
-
 <Footer />
 
 <style>
@@ -1209,14 +1121,6 @@ import { quizInfo } from '../quizInfo/CapitalsQuizInfo.js';
     color: var(--color-text-primary);
   }
 
-  .result-area {
-    min-height: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1rem;
-  }
-
   .country-display {
     text-align: center;
     margin-bottom: 2rem;
@@ -1247,52 +1151,6 @@ import { quizInfo } from '../quizInfo/CapitalsQuizInfo.js';
     position: relative;
   }
 
-  .info-icon {
-    margin-left: 0.5rem;
-    width: 2rem;
-    height: 2rem;
-    vertical-align: middle;
-    background: none;
-    color: var(--color-text-primary);
-    cursor: pointer;
-    padding: 0;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 5px;
-  }
-
-  .info-icon :global(.svg-wrapper) {
-    width: 100%;
-    height: 100%;
-  }
-
-  .info-icon:hover,
-  .info-icon:focus {
-    color: var(--color-text-primary);
-    border-color: var(--color-border);
-    outline: none;
-  }
-
-  .info-tooltip {
-    position: absolute;
-    left: 50%;
-    top: calc(100% + 8px);
-    transform: translateX(-50%);
-    background: var(--color-bg-secondary);
-    color: var(--color-text-primary);
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
-    padding: 0.75rem 1rem;
-    width: min(90vw, 520px);
-    max-height: 40vh;
-    overflow: auto;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    z-index: 5;
-    text-align: left;
-    font-size: 0.95rem;
-  }
-
   .options {
     display: grid;
     gap: 1rem;
@@ -1315,12 +1173,6 @@ import { quizInfo } from '../quizInfo/CapitalsQuizInfo.js';
     background: var(--color-bg-hover);
   }
 
-  /* Prevent residual hover states on new questions */
-  .option:not(:hover):not(.selected):not(.correct):not(.wrong) {
-    border-color: var(--color-border);
-    background: var(--color-bg-primary);
-  }
-
   .option.selected {
     border-color: var(--color-primary);
     background: var(--color-primary-light);
@@ -1336,114 +1188,6 @@ import { quizInfo } from '../quizInfo/CapitalsQuizInfo.js';
     border-color: #ef4444;
     background: #ef4444;
     color: white;
-  }
-
-  .result {
-    text-align: center;
-    font-size: 1.2rem;
-    font-weight: 600;
-  }
-
-  .correct-result {
-    color: #22c55e;
-  }
-
-  .wrong-result {
-    color: #ef4444;
-  }
-
-  .result-icon {
-    display: inline-flex;
-    width: 24px;
-    height: 24px;
-    vertical-align: middle;
-    margin-right: 0.5rem;
-  }
-
-  .result-icon.smile-icon {
-    color: #22c55e; /* green for correct */
-    animation: correctBounce 0.6s ease-out;
-  }
-
-  .result-icon.sad-icon {
-    color: #ef4444; /* red for wrong */
-    animation: wrongShake 0.5s ease-in-out;
-  }
-
-  @keyframes correctBounce {
-    0% {
-      transform: scale(0) rotate(0deg);
-      opacity: 0;
-    }
-    50% {
-      transform: scale(1.3) rotate(5deg);
-      opacity: 1;
-    }
-    100% {
-      transform: scale(1) rotate(0deg);
-      opacity: 1;
-    }
-  }
-
-  @keyframes wrongShake {
-    0% {
-      transform: translateX(0) scale(0);
-      opacity: 0;
-    }
-    25% {
-      transform: translateX(-5px) scale(1);
-      opacity: 1;
-    }
-    50% {
-      transform: translateX(5px) scale(1);
-    }
-    75% {
-      transform: translateX(-3px) scale(1);
-    }
-    100% {
-      transform: translateX(0) scale(1);
-      opacity: 1;
-    }
-  }
-
-  .result-country-info {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .result-info-btn {
-    margin-left: 0.25rem;
-    width: 2rem;
-    height: 2rem;
-    vertical-align: middle;
-    background: none;
-    border: none;
-    color: var(--color-text-primary);
-    cursor: pointer;
-    padding: 0;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0.7;
-    transition: opacity 0.2s;
-  }
-
-  .result-info-btn:hover,
-  .result-info-btn:focus {
-    opacity: 1;
-    outline: none;
-  }
-
-  .result-info-tooltip {
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    margin-top: 0.5rem;
-    min-width: 200px;
-    max-width: 300px;
   }
 
   .btn {
@@ -1484,7 +1228,6 @@ import { quizInfo } from '../quizInfo/CapitalsQuizInfo.js';
     background: var(--color-text-primary);
   }
 
-  /* Auto-advance timer styles */
   .auto-advance-timer {
     margin-top: 1rem;
     text-align: center;
@@ -1530,12 +1273,6 @@ import { quizInfo } from '../quizInfo/CapitalsQuizInfo.js';
 
     .country-name {
       font-size: 1.5rem;
-    }
-
-    .info-tooltip {
-      width: 92vw;
-      left: 50%;
-      transform: translateX(-50%);
     }
   }
 </style>
