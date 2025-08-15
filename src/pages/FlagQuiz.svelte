@@ -9,14 +9,15 @@
   import { playCorrectSound, playWrongSound } from "../quizLogic/quizSound.js";
   import {
     saveSessionState,
-    loadSessionState,
     clearSessionState,
     createNewSessionState,
   } from "../quizLogic/quizSession.js";
+  import { restoreSessionState } from "../quizLogic/quizSession.js";
   import { createAdvanceTimer } from "../quizLogic/advanceTimer.js";
 
   import { quizInfo } from "../quizInfo/FlagQuizInfo.js";
-  import { onMount } from "svelte";
+  import { onMount, onDestroy } from "svelte";
+  import { loadFlags as loadFlagsShared, getCountryName, getFlagImage, pickWeightedFlag } from "../quizLogic/flags.js";
   import Header from "../components/Header.svelte";
   import Footer from "../components/Footer.svelte";
   import InlineSvg from "../components/InlineSvg.svelte";
@@ -31,8 +32,6 @@
   let questionType = "flag-to-country"; // 'flag-to-country' or 'country-to-flag'
 
   // Question and answer arrays
-  let currentCountryOptions = [];
-  let currentFlagOptions = [];
   let correctAnswer = "";
 
   // Game states
@@ -40,10 +39,7 @@
   let quizSubpage = "welcome"; // 'welcome' or 'quiz'
   let selectedAnswer = null;
   let answered = false;
-  let isAnswered = false;
-  let resultMessage = "";
   let showResult = false;
-  let timeoutId = null;
   let showCountryInfo = false;
   let showResultCountryInfo = false;
 
@@ -58,8 +54,8 @@
   // Scoring
   let score = { correct: 0, total: 0, skipped: 0 };
   let gameStats = { correct: 0, wrong: 0, total: 0, skipped: 0 };
-  let wrongAnswers = new Map(); // Track flags answered incorrectly: flag.name -> count
-  let correctAnswers = new Map(); // Track flags answered correctly: flag.name -> count
+  let wrongAnswers = new Map();
+  let correctAnswers = new Map();
 
   // Achievement System
   let currentStreak = 0;
@@ -89,7 +85,7 @@
   let showSessionResults = false;
   let sessionInProgress = false;
   let sessionStartTime = null;
-  let sessionRestoredFromReload = false; // Track if session was restored from page reload
+  let sessionRestoredFromReload = false;
 
   // Update achievement count when achievements component is available
   $: if (achievementsComponent) {
@@ -193,36 +189,24 @@
     await loadFlags();
     settingsLoaded = true;
 
-    // Load or initialize session
-    const loaded = loadSessionState("flagQuizSessionState", null);
-    if (loaded) {
-      if (loaded.sessionInProgress) {
-        sessionInProgress = loaded.sessionInProgress;
-        currentSessionQuestions = loaded.currentSessionQuestions || 0;
-        sessionStats = loaded.sessionStats || {
-          correct: 0,
-          wrong: 0,
-          skipped: 0,
-          total: 0,
-          sessionLength,
-        };
-        score = loaded.score || { correct: 0, total: 0, skipped: 0 };
-        currentQuestion = loaded.currentQuestion;
-        selectedAnswer = loaded.selectedAnswer;
-        showResult = loaded.showResult || false;
-        gameState = loaded.gameState || "question";
-        quizSubpage = "quiz";
-        sessionStartTime = loaded.sessionStartTime;
-        questionKey = loaded.questionKey || 0;
+    // Load or initialize session (centralized)
+    const restored = restoreSessionState("flagQuizSessionState");
+    if (restored && restored.sessionInProgress) {
+      sessionInProgress = restored.sessionInProgress;
+      currentSessionQuestions = restored.currentSessionQuestions;
+      sessionStats = restored.sessionStats;
+      score = restored.score;
+      currentQuestion = restored.currentQuestion;
+      selectedAnswer = restored.selectedAnswer;
+      showResult = restored.showResult;
+      gameState = restored.gameState;
+      quizSubpage = restored.quizSubpage;
+      sessionStartTime = restored.sessionStartTime;
+      questionKey = restored.questionKey || 0;
+      sessionRestoredFromReload = restored.sessionRestoredFromReload;
 
-        sessionRestoredFromReload = true;
-
-        if (!currentQuestion) {
-          generateQuestion();
-        }
-      } else {
-        quizSubpage = "welcome";
-        gameState = "welcome";
+      if (!currentQuestion) {
+        generateQuestion();
       }
     } else {
       quizSubpage = "welcome";
@@ -230,39 +214,16 @@
     }
   });
 
+  // Cleanup on component destroy: cancel any running advance timer
+  onDestroy(() => {
+    if (advanceTimer) advanceTimer.cancel();
+  });
+
   // use shared applyTheme from ../utils/theme.js
 
   async function loadFlags() {
-    try {
-      const response = await fetch("/data/flags.json");
-      const data = await response.json();
-      // Filter for only country flags (has "Country" tag) and ensure we have country name
-      flags = data.filter(
-        (flag) =>
-          !flag.disable &&
-          flag.meta?.country &&
-          flag.tags &&
-          flag.tags.includes("Country"),
-      );
-
-      // Remove duplicates based on country name
-      const uniqueFlags = [];
-      const seenCountries = new Set();
-
-      for (const flag of flags) {
-        const countryName = flag.meta.country.toLowerCase().trim();
-        if (!seenCountries.has(countryName)) {
-          seenCountries.add(countryName);
-          uniqueFlags.push(flag);
-        }
-      }
-
-      flags = uniqueFlags;
-      console.log(`Loaded ${flags.length} unique country flags for quiz`);
-    } catch (error) {
-      console.error("Error loading flags:", error);
-      flags = [];
-    }
+  flags = await loadFlagsShared();
+  console.log(`Loaded ${flags.length} unique country flags for quiz`);
   }
 
   function generateQuestion() {
@@ -305,50 +266,11 @@
     // Randomly choose question type
     questionType = Math.random() < 0.5 ? "flag-to-country" : "country-to-flag";
 
-    // Pick correct answer with adaptive learning settings
-    let correctFlag;
+  // Pick correct answer with shared helper (handles adaptive settings)
+  const pick = pickWeightedFlag(flags, { focusWrongAnswers, reduceCorrectAnswers }, wrongAnswers, correctAnswers);
+  const correctFlag = pick || flags[Math.floor(Math.random() * flags.length)];
 
-    // Simple fallback to avoid uninitialized variable errors
-    if (settingsLoaded && (focusWrongAnswers || reduceCorrectAnswers)) {
-      // Re-enable adaptive learning
-      // Create weighted array based on learning settings
-      const weightedFlags = [];
-      for (const flag of flags) {
-        const wrongCount = wrongAnswers.get(flag.name) || 0;
-        const correctCount = correctAnswers.get(flag.name) || 0;
-
-        let weight = 1; // Base weight
-
-        // Increase weight for flags with wrong answers (if setting enabled)
-        if (focusWrongAnswers && wrongCount > 0) {
-          weight = Math.min(wrongCount + 1, 4); // Max 4x weight for wrong answers
-        }
-
-        // Decrease weight for flags with correct answers (if setting enabled)
-        if (reduceCorrectAnswers && correctCount > 0) {
-          weight = weight / Math.min(correctCount + 1, 4); // Reduce weight, min 0.25x
-        }
-
-        // Add flag to weighted array based on calculated weight
-        const finalWeight = Math.max(0.25, weight); // Minimum weight to ensure variety
-        const timesToAdd = Math.ceil(finalWeight);
-        for (let i = 0; i < timesToAdd; i++) {
-          weightedFlags.push(flag);
-        }
-      }
-
-      if (weightedFlags.length > 0) {
-        correctFlag =
-          weightedFlags[Math.floor(Math.random() * weightedFlags.length)];
-      } else {
-        correctFlag = flags[Math.floor(Math.random() * flags.length)];
-      }
-    } else {
-      // Normal random selection
-      correctFlag = flags[Math.floor(Math.random() * flags.length)];
-    }
-
-    const correctCountry = getCountryName(correctFlag).toLowerCase();
+  const correctCountry = getCountryName(correctFlag).toLowerCase();
 
     // Generate 3 wrong answers ensuring no duplicate country names
     const wrongOptions = [];
@@ -356,7 +278,7 @@
 
     while (wrongOptions.length < 3 && wrongOptions.length < flags.length - 1) {
       const randomFlag = flags[Math.floor(Math.random() * flags.length)];
-      const randomCountry = getCountryName(randomFlag).toLowerCase();
+  const randomCountry = getCountryName(randomFlag).toLowerCase();
 
       if (!usedCountries.has(randomCountry)) {
         wrongOptions.push(randomFlag);
@@ -373,9 +295,7 @@
     }
 
     // Combine correct and wrong answers
-    const allOptions = [correctFlag, ...wrongOptions].sort(
-      () => Math.random() - 0.5,
-    );
+  const allOptions = [correctFlag, ...wrongOptions].sort(() => Math.random() - 0.5);
     currentQuestion = {
       type: questionType,
       correct: correctFlag,
@@ -683,13 +603,7 @@
     }
   }
 
-  function getCountryName(flag) {
-    return flag.meta?.country || flag.name || "Unknown";
-  }
-
-  function getFlagImage(flag) {
-    return `/images/flags/${flag.path}`;
-  }
+  // use shared getCountryName from ../quizLogic/flags.js
 
   function handleAchievementsUnlocked() {
     achievementCount = updateAchievementCount(achievementsComponent);
