@@ -49,7 +49,12 @@
 
   // Check if we're in game mode
   $: isGameMode = $location && $location.startsWith('/game');
-  $: isQuizPage = $location && ($location.startsWith('/game/flags') || $location.startsWith('/game/capitals'));
+  // Treat known quiz routes as quiz pages so the header shows quiz stats/achievements
+  $: isQuizPage = $location && (
+    $location.startsWith('/game/flags') ||
+    $location.startsWith('/game/capitals') ||
+    $location.startsWith('/game/geography')
+  );
 
   // Determine default stats view based on quiz state
   $: {

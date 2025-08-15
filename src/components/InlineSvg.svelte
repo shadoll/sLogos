@@ -27,24 +27,24 @@
         const svg = doc.documentElement;
 
         // Fix SVG dimensions here too
-        const viewBox = svg.getAttribute('viewBox');
+        const viewBox = svg.getAttribute("viewBox");
         if (viewBox) {
           // Remove any existing style and dimension attributes
-          svg.removeAttribute('style');
-          svg.removeAttribute('width');
-          svg.removeAttribute('height');
+          svg.removeAttribute("style");
+          svg.removeAttribute("width");
+          svg.removeAttribute("height");
 
           // Set percentage dimensions to allow scaling
-          svg.setAttribute('width', '100%');
-          svg.setAttribute('height', '100%');
+          svg.setAttribute("width", "100%");
+          svg.setAttribute("height", "100%");
           // svg.setAttribute('preserveAspectRatio', 'none');
 
           // Ensure viewBox is preserved for proper clipping
-          svg.setAttribute('viewBox', viewBox);
+          svg.setAttribute("viewBox", viewBox);
         } else {
-          svg.removeAttribute('style');
-          svg.setAttribute('width', '100%');
-          svg.setAttribute('height', '100%');
+          svg.removeAttribute("style");
+          svg.setAttribute("width", "100%");
+          svg.setAttribute("height", "100%");
         }
 
         // Set currentColor on SVG element if no fill is specified
@@ -64,33 +64,33 @@
       const svg = doc.documentElement;
 
       // Fix SVG dimensions based on viewBox
-      const viewBox = svg.getAttribute('viewBox');
+      const viewBox = svg.getAttribute("viewBox");
       if (viewBox) {
         // Remove any existing style attribute and fixed dimensions
-        svg.removeAttribute('style');
-        svg.removeAttribute('width');
-        svg.removeAttribute('height');
+        svg.removeAttribute("style");
+        svg.removeAttribute("width");
+        svg.removeAttribute("height");
 
         // Set percentage dimensions to allow scaling
-        svg.setAttribute('width', '100%');
-        svg.setAttribute('height', '100%');
+        svg.setAttribute("width", "100%");
+        svg.setAttribute("height", "100%");
 
         // Ensure viewBox is preserved for proper clipping
-        svg.setAttribute('viewBox', viewBox);
+        svg.setAttribute("viewBox", viewBox);
 
         // Add preserveAspectRatio to ensure proper scaling
-        if (!svg.hasAttribute('preserveAspectRatio')) {
-          svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+        if (!svg.hasAttribute("preserveAspectRatio")) {
+          svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
         }
       } else {
         // If no viewBox, remove style and set percentage dimensions
-        svg.removeAttribute('style');
-        svg.setAttribute('width', '100%');
-        svg.setAttribute('height', '100%');
+        svg.removeAttribute("style");
+        svg.setAttribute("width", "100%");
+        svg.setAttribute("height", "100%");
       }
 
       // Ensure proper overflow handling
-      svg.setAttribute('overflow', 'visible'); // Let CSS handle the clipping
+      svg.setAttribute("overflow", "visible"); // Let CSS handle the clipping
 
       // Now process color changes
       // 1. Parse <style> rules and apply as inline attributes before removing <style>
@@ -121,13 +121,21 @@
       // Remove all <style> elements
       styleEls.forEach((styleEl) => styleEl.remove());
       // Handle the new format with targets and sets if available
-      if (targets && sets && activeSet && typeof activeSet === 'string' && sets[activeSet]) {
+      if (
+        targets &&
+        sets &&
+        activeSet &&
+        typeof activeSet === "string" &&
+        sets[activeSet]
+      ) {
         try {
           // Get the color assignments from the active set
           const colorAssignments = sets[activeSet];
 
           // Apply each target-color pair
-          for (const [targetName, colorName] of Object.entries(colorAssignments)) {
+          for (const [targetName, colorName] of Object.entries(
+            colorAssignments,
+          )) {
             if (targets[targetName] && colors && colors[colorName]) {
               // Get the selector and determine if it's for fill or stroke
               const targetInfo = targets[targetName];
@@ -135,24 +143,24 @@
               // Parse the selector to extract the target and attribute (fill/stroke)
               let selector, attribute;
 
-              if (typeof targetInfo === 'string') {
-                if (targetInfo.includes('&stroke')) {
+              if (typeof targetInfo === "string") {
+                if (targetInfo.includes("&stroke")) {
                   // Format: "#element&stroke" - target stroke attribute
-                  selector = targetInfo.split('&stroke')[0];
-                  attribute = 'stroke';
-                } else if (targetInfo.includes('&fill')) {
+                  selector = targetInfo.split("&stroke")[0];
+                  attribute = "stroke";
+                } else if (targetInfo.includes("&fill")) {
                   // Format: "#element&fill" - target fill attribute
-                  selector = targetInfo.split('&fill')[0];
-                  attribute = 'fill';
+                  selector = targetInfo.split("&fill")[0];
+                  attribute = "fill";
                 } else {
                   // Default is fill if not specified
                   selector = targetInfo;
-                  attribute = 'fill';
+                  attribute = "fill";
                 }
               } else {
                 // Fallback for older format
                 selector = targetInfo;
-                attribute = 'fill';
+                attribute = "fill";
               }
 
               // Proceed with selecting elements and applying colors
@@ -160,13 +168,13 @@
               const targetColor = colors[colorName];
 
               // Apply the color to all elements matching this selector
-              targetElements.forEach(el => {
+              targetElements.forEach((el) => {
                 if (colorName === "none") {
                   // Special case for 'none' value
                   el.setAttribute(attribute, "none");
-                } else if (attribute === 'fill') {
+                } else if (attribute === "fill") {
                   el.setAttribute("fill", targetColor);
-                } else if (attribute === 'stroke') {
+                } else if (attribute === "stroke") {
                   el.setAttribute("stroke", targetColor);
                 }
               });
@@ -191,7 +199,14 @@
     return svgSource;
   }
 
-  $: path, color, colorConfig, targets, sets, activeSet, colors, fetchAndColorSvg();
+  $: path,
+    color,
+    colorConfig,
+    targets,
+    sets,
+    activeSet,
+    colors,
+    fetchAndColorSvg();
 </script>
 
 <div class="svg-wrapper" role="img" aria-label={alt || "SVG image"}>
@@ -213,7 +228,7 @@
 
   .svg-wrapper :global(svg) {
     width: 100%;
-    height: 100%;
+    height: auto;
     object-fit: contain;
     display: block;
     transform-origin: center;
