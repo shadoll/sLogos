@@ -2,7 +2,6 @@
     import { afterUpdate, onMount } from "svelte";
     import InlineSvg from "./InlineSvg.svelte";
     export let countryCodes = [];
-    export let countryNames = [];
     export let forceCenterKey = 0;
     export let mapPath = "/data/world.svg";
     export let countryScale = false;
@@ -58,174 +57,67 @@
     let svgSeen = false; // whether we've already run the initial highlight for the inlined SVG
 
     function highlightCountries() {
-        // backward-compatible signature: allow passing a force flag
         const args = Array.from(arguments);
         const forceCenter = args && args[0] === true;
         if (!wrapperRef) return;
         const svgEl = wrapperRef.querySelector("svg");
         if (!svgEl) return;
-        // Clear previous highlights robustly. Try to restore any saved inline
-        // attributes; if they are missing (e.g. due to re-mounts) also remove
-        // the highlight styling if present.
+        // Simple cleanup: remove any inline fill/stroke/filter and any
+        // data-geo* helper attributes on all path and g elements. We don't
+        // keep or restore previous values; just clear styling before
+        // applying new highlight styles.
         try {
-            const candidateSelectors = 'path, g, polygon, rect, circle, ellipse, use';
-            const allEls = Array.from(svgEl.querySelectorAll(candidateSelectors));
-            allEls.forEach((el) => {
+            const els = Array.from(svgEl.querySelectorAll('path, g'));
+            els.forEach((el) => {
                 try {
-                    const prevFill = el.getAttribute('data-geo-prev-fill');
-                    const prevStroke = el.getAttribute('data-geo-prev-stroke');
-                    const prevFilter = el.getAttribute('data-geo-prev-filter');
+                    // Clear basic inline styling
+                    el.removeAttribute('fill');
+                    el.removeAttribute('stroke');
+                    if (el.style) el.style.filter = '';
 
-                    // If we saved explicit previous values, restore them (empty string means remove attr)
-                    if (prevFill !== null) {
-                        if (prevFill === '') el.removeAttribute('fill');
-                        else el.setAttribute('fill', prevFill);
-                    } else {
-                        // no saved value: if the element currently has the highlight color, remove it
-                        try {
-                            const curFill = el.getAttribute && el.getAttribute('fill');
-                            if (curFill && curFill.toLowerCase() === '#4f8cff') el.removeAttribute('fill');
-                        } catch (e) {}
-                    }
-
-                    if (prevStroke !== null) {
-                        if (prevStroke === '') el.removeAttribute('stroke');
-                        else el.setAttribute('stroke', prevStroke);
-                    } else {
-                        try {
-                            const curStroke = el.getAttribute && el.getAttribute('stroke');
-                            if (curStroke && curStroke.toLowerCase() === '#222') el.removeAttribute('stroke');
-                        } catch (e) {}
-                    }
-
-                    if (prevFilter !== null) {
-                        if (prevFilter === '') el.style.filter = '';
-                        else el.style.filter = prevFilter;
-                    } else {
-                        try {
-                            const cf = el.style && el.style.filter;
-                            if (cf && cf.indexOf('4f8cff') !== -1) el.style.filter = '';
-                        } catch (e) {}
-                    }
-
-                    // Clean up helper attributes if present
+                    // Remove any attributes that start with 'data-geo'
                     try {
-                        el.removeAttribute('data-geo-prev-fill');
-                        el.removeAttribute('data-geo-prev-stroke');
-                        el.removeAttribute('data-geo-prev-filter');
-                        el.removeAttribute('data-geo-highlight');
+                        const attrs = Array.from(el.attributes || []);
+                        attrs.forEach((a) => {
+                            try {
+                                if (a && typeof a.name === 'string' && a.name.indexOf('data-geo') === 0) {
+                                    el.removeAttribute(a.name);
+                                }
+                            } catch (e) {}
+                        });
                     } catch (e) {}
-                } catch (err) {}
+                } catch (e) {}
             });
         } catch (err) {}
 
-        // Highlight by country code (id)
+        // Highlight by country ISO using data-iso attribute only (case-insensitive via uppercasing)
         let highlighted = [];
         countryCodes.forEach((code) => {
-            const countryPath = svgEl.querySelector(`#${code}`);
-            if (countryPath) {
-                // Save previous inline attributes so we can restore later
-                const prevFill = countryPath.getAttribute('fill');
-                const prevStroke = countryPath.getAttribute('stroke');
-                const prevFilter = countryPath.style.filter || '';
-                if (prevFill !== null) countryPath.setAttribute('data-geo-prev-fill', prevFill);
-                else countryPath.setAttribute('data-geo-prev-fill', '');
-                if (prevStroke !== null) countryPath.setAttribute('data-geo-prev-stroke', prevStroke);
-                else countryPath.setAttribute('data-geo-prev-stroke', '');
-                countryPath.setAttribute('data-geo-prev-filter', prevFilter);
-
-                countryPath.setAttribute("fill", "#4f8cff");
-                countryPath.setAttribute("stroke", "#222");
-                countryPath.style.filter = "drop-shadow(0 0 4px #4f8cff44)";
-                countryPath.setAttribute('data-geo-highlight', '1');
-                highlighted.push(countryPath);
-            }
-        });
-        // Highlight by country name (try many fallbacks: attributes, class names, <title> children)
-        const names = Array.isArray(countryNames) ? countryNames : countryNames ? [countryNames] : [];
-        if (names.length > 0) {
-            // candidate elements to check for name matches
-            const candidateSelectors = 'path, g, polygon, rect, circle, ellipse, use';
-            const candidates = Array.from(svgEl.querySelectorAll(candidateSelectors));
-
-            names.forEach((nameRaw) => {
-                if (!nameRaw) return;
-                const name = String(nameRaw).trim();
-                if (!name) return;
-                const nameLower = name.toLowerCase();
-
-                    const matched = new Set();
-
-                    // First pass: strict attribute/title/id matches (case-insensitive)
+            try {
+                if (!code) return;
+                const iso = String(code).trim().toUpperCase();
+                // Prefer elements that explicitly declare data-iso
+                let countryPath = null;
+                try {
+                    countryPath = svgEl.querySelector(`[data-iso="${iso}"]`);
+                } catch (err) {
+                    // Fallback: try lowercase attribute selector
                     try {
-                        const attrsToCheck = ['name', 'data-name', 'id', 'title', 'inkscape:label'];
-                        candidates.forEach((el) => {
-                            for (const a of attrsToCheck) {
-                                try {
-                                    const val = el.getAttribute && el.getAttribute(a);
-                                    if (val && String(val).trim().toLowerCase() === nameLower) {
-                                        matched.add(el);
-                                        return;
-                                    }
-                                } catch (err) {}
-                            }
-                            // child <title> element (redundant with 'title' attr check but kept safe)
-                            try {
-                                const titleEl = el.querySelector && el.querySelector('title');
-                                if (titleEl && titleEl.textContent && titleEl.textContent.trim().toLowerCase() === nameLower) {
-                                    matched.add(el);
-                                    return;
-                                }
-                            } catch (err) {}
-                        });
-                    } catch (err) {}
-
-                    // If we didn't find any strict matches, fall back to class/slug heuristics
-                    if (matched.size === 0) {
-                        try {
-                            // Try direct selectors only when safe
-                            try {
-                                const byNameAttr = svgEl.querySelectorAll(`[name='${name}']`);
-                                byNameAttr.forEach((el) => matched.add(el));
-                            } catch (err) {}
-                            try {
-                                const byClassDot = svgEl.querySelectorAll(`.${name.replace(/\s+/g, '.')}`);
-                                byClassDot.forEach((el) => matched.add(el));
-                            } catch (err) {}
-
-                            // class list heuristics: slug (lower, dashes)
-                            candidates.forEach((el) => {
-                                try {
-                                    const cls = (el.className && (typeof el.className === 'string' ? el.className : el.className.baseVal)) || '';
-                                    if (cls) {
-                                        const parts = cls.split(/\s+/).map((c) => c.trim()).filter(Boolean);
-                                        const slug = nameLower.replace(/[^a-z0-9]+/g, '-').replace(/^\-+|\-+$/g, '');
-                                        if (parts.includes(name) || parts.includes(nameLower) || parts.includes(slug)) matched.add(el);
-                                    }
-                                } catch (err) {}
-                            });
-                        } catch (err) {}
+                        countryPath = svgEl.querySelector(`[data-iso='${iso.toLowerCase()}']`);
+                    } catch (err2) {
+                        countryPath = null;
                     }
+                }
 
-                    // Apply highlighting to matched elements
-                    matched.forEach((countryPath) => {
-                    const prevFill = countryPath.getAttribute('fill');
-                    const prevStroke = countryPath.getAttribute('stroke');
-                    const prevFilter = countryPath.style.filter || '';
-                    if (prevFill !== null) countryPath.setAttribute('data-geo-prev-fill', prevFill);
-                    else countryPath.setAttribute('data-geo-prev-fill', '');
-                    if (prevStroke !== null) countryPath.setAttribute('data-geo-prev-stroke', prevStroke);
-                    else countryPath.setAttribute('data-geo-prev-stroke', '');
-                    countryPath.setAttribute('data-geo-prev-filter', prevFilter);
-
+                if (countryPath) {
                     countryPath.setAttribute('fill', '#4f8cff');
                     countryPath.setAttribute('stroke', '#222');
                     countryPath.style.filter = 'drop-shadow(0 0 4px #4f8cff44)';
                     countryPath.setAttribute('data-geo-highlight', '1');
                     highlighted.push(countryPath);
-                });
-            });
-        }
+                }
+            } catch (err) {}
+        });
     // Smart scale/center if enabled and at least one country is highlighted
     if (countryScale && highlighted.length > 0) {
             // Compute bounding box of all highlighted paths

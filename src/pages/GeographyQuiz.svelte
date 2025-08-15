@@ -50,10 +50,14 @@
   }
 
   function isFlagOnMap(flag) {
-    if (!mapParsed) return true; // allow through if we couldn't parse map
+    // Prefer ISO comparison against data-iso values. If map couldn't be parsed, allow.
+    if (!mapParsed) return true;
     try {
-      const iso = flag?.meta?.["ISO code"] || flag?.meta?.["ISO Code"] || flag?.meta?.["ISO"] || flag?.ISO;
-      if (iso && availableIso.has(String(iso).trim())) return true;
+      const isoRaw = flag?.meta?.["ISO code"] || flag?.meta?.["ISO Code"] || flag?.meta?.["ISO"] || flag?.ISO;
+      const iso = isoRaw ? String(isoRaw).trim().toUpperCase() : '';
+      if (iso && availableIso.has(iso)) return true;
+
+      // Fallbacks to name/slug checks remain, but only used if no ISO matches.
       const name = getCountryName(flag);
       const n = normalizeNameForLookup(name);
       if (n && availableNames.has(n)) return true;
@@ -206,8 +210,13 @@
           const all = Array.from(doc.querySelectorAll('*'));
           all.forEach((el) => {
             try {
+              // Prefer data-iso attribute for ISO lookup. Normalize to uppercase.
+              const dataIso = el.getAttribute && (el.getAttribute('data-iso') || el.getAttribute('data-ISO'));
+              if (dataIso) availableIso.add(String(dataIso).trim().toUpperCase());
+              // Backwards-compatible: also include id if present (older maps)
               const id = el.getAttribute && el.getAttribute('id');
-              if (id) availableIso.add(String(id).trim());
+              if (id) availableIso.add(String(id).trim().toUpperCase());
+
               const nameAttr = el.getAttribute && (el.getAttribute('name') || el.getAttribute('data-name') || el.getAttribute('inkscape:label'));
               if (nameAttr) availableNames.add(String(nameAttr).trim().toLowerCase());
               // title child
@@ -570,18 +579,12 @@
             currentQuestion.correct.meta["ISO code"]) ||
           currentQuestion.correct?.ISO ||
           "",
-      ].filter(Boolean)
+      ]
+        .filter(Boolean)
+        .map((c) => (c ? String(c).trim().toUpperCase() : c))
     : [];
 
-  // Reactive country names array for CountryMap (fallback when no ISO present)
-  $: countryNames = currentQuestion
-    ? [
-        currentQuestion.correct?.name ||
-          (currentQuestion.correct?.meta && currentQuestion.correct.meta.country) ||
-          currentQuestion.correct?.meta?.country ||
-          "",
-      ].filter(Boolean)
-    : [];
+
 </script>
 
 <svelte:head>
@@ -660,8 +663,7 @@
 
           <div class="map-display">
             <CountryMap
-              {countryCodes}
-              {countryNames}
+                      {countryCodes}
               countryScale={true}
               scalePadding={90}
               forceCenterKey={questionKey}

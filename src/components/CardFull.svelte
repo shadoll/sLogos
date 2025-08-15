@@ -166,8 +166,7 @@
       <div class="right-column">
         {#if logo.tags && logo.tags.some((tagObj) => (tagObj.text || tagObj) === "Country") && logo.meta && logo.meta["ISO code"]}
           <CountryMap
-            countryCodes={[logo.meta["ISO code"]]}
-            countryNames={[logo.meta["country"]]}
+            countryCodes={[String(logo.meta["ISO code"]).trim().toUpperCase()]}
             countryScale={true}
           />
         {/if}
