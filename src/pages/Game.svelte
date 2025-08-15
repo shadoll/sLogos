@@ -144,10 +144,6 @@
     opacity: 0.5;
   }
 
-  .game-card.scheduled .play-button {
-    display: none;
-  }
-
   .coming-soon-text {
     margin-top: 1.5rem;
     font-size: 1.1rem;
@@ -187,38 +183,6 @@
     background: var(--color-primary-dark);
   }
 
-  .coming-soon {
-    text-align: center;
-    padding: 2rem;
-    background: var(--color-bg-secondary);
-    border-radius: 12px;
-    border: 1px dashed var(--color-border);
-  }
-
-  .coming-soon h3 {
-    color: var(--color-text-secondary);
-    margin-bottom: 1rem;
-  }
-
-  .upcoming-games {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    flex-wrap: wrap;
-  }
-
-  .upcoming-game {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: var(--color-text-secondary);
-    font-size: 0.9rem;
-  }
-
-  .upcoming-game .icon {
-    font-size: 1.2rem;
-  }
-
   @media (max-width: 768px) {
     .container {
       padding: 1rem;
@@ -233,10 +197,5 @@
       font-size: 2.5rem;
     }
 
-    .upcoming-games {
-      flex-direction: column;
-      align-items: center;
-      gap: 1rem;
-    }
   }
 </style>
