@@ -228,7 +228,7 @@
 
   .svg-wrapper :global(svg) {
     width: 100%;
-    height: auto;
+    height: 100%;
     object-fit: contain;
     display: block;
     transform-origin: center;

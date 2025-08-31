@@ -315,16 +315,16 @@
   }
 
   .preview-container {
-    flex: 3;
+    /* flex: 3;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 2rem;
-    background-color: var(--color-card);
+    background-color: var(--color-card); */
     color: var(--color-text);
-    overflow: hidden;
+    /* overflow: hidden;
     position: relative;
-    contain: layout style paint; /* CSS containment */
+    contain: layout style paint; */
   }
 
   .preview-container img {
