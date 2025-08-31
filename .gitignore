@@ -43,6 +43,11 @@ Temporary Items
 *.sln
 *.sw?
 
+# Backup files
+*.bak
+*.bak.*
+*.tmp
+
 # Svelte related
 .svelte-kit/
 
@@ -56,3 +61,4 @@ Temporary Items
 # Make favicon generation script executable
 chmod +x ./scripts/generate-favicons.js
 chmod +x ./scripts/update-data.js
+chmod +x ./scripts/*
