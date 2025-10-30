@@ -1354,7 +1354,23 @@
     ],
     "brand": "Dalnoboy Service",
     "colors": {
-      "orange": "#ee7800"
+      "orange": "#ee7800",
+      "black": "#000000",
+      "white": "#ffffff"
+    },
+    "targets": {
+      "main": "path"
+    },
+    "sets": {
+      "orange": {
+        "main": "orange"
+      },
+      "black": {
+        "main": "black"
+      },
+      "white": {
+        "main": "white"
+      }
     }
   },
   {
