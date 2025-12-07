@@ -2540,7 +2540,40 @@
     "tags": [
       "furniture"
     ],
-    "brand": "Nikamebel"
+    "brand": "Nikamebel",
+    "colors": {
+      "orange": "#fbc02d",
+      "sandstone": "#CEB17D",
+      "black": "#000000",
+      "transparent": "none"
+    },
+    "targets": {
+      "nika": "#nika-path",
+      "mebli": "#ua-group",
+      "mebel": "#ru-group"
+    },
+    "sets": {
+      "orange-ru": {
+        "nika": "orange",
+        "mebli": "transparent",
+        "mebel": "black"
+      },
+      "sandstone-ru": {
+        "nika": "sandstone",
+        "mebli": "transparent",
+        "mebel": "black"
+      },
+      "orange-ua": {
+        "nika": "orange",
+        "mebli": "black",
+        "mebel": "transparent"
+      },
+      "sandstone-ua": {
+        "nika": "sandstone",
+        "mebli": "black",
+        "mebel": "transparent"
+      }
+    }
   },
   {
     "name": "nova_post",
