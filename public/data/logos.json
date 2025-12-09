@@ -3963,7 +3963,8 @@
     "disable": false
   },
   {
-    "name": "Shkafnik",
+    "name": "shkafnik-ng",
+    "title": "Shkafnik",
     "path": "shkafnik-ng.svg",
     "format": "SVG",
     "disable": false,
