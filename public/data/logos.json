@@ -3961,5 +3961,46 @@
     "path": "vite.svg",
     "format": "SVG",
     "disable": false
+  },
+  {
+    "name": "Shkafnik",
+    "path": "shkafnik-ng.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Shkafnik",
+    "tags": [
+      "furniture"
+    ],
+    "colors": {
+      "green": "#3a7456",
+      "gold": "#cc950b",
+      "currentColor": "currentColor"
+    },
+    "targets": {
+      "logo": "#logo",
+      "text": "#shkafnik-text",
+      "text-small": "#eng-text",
+      "tm": "#tm"
+    },
+    "sets": {
+      "main": {
+        "logo": "green",
+        "text": "green",
+        "text-small": "gold",
+        "tm": "green"
+      },
+      "inverted": {
+        "logo": "gold",
+        "text": "gold",
+        "text-small": "green",
+        "tm": "gold"
+      },
+      "monochrome": {
+        "logo": "currentColor",
+        "text": "currentColor",
+        "text-small": "currentColor",
+        "tm": "currentColor"
+      }
+    }
   }
 ]

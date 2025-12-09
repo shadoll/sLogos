@@ -231,15 +231,14 @@
       "capital": "Tirana",
       "description": "Albania is a country in Southeast Europe on the Balkan Peninsula. It is bordered by Montenegro, Kosovo, North Macedonia, and Greece, and has a coastline along the Adriatic and Ionian Seas.",
       "area": "28,748 km²",
-      "ISO code": "AL"
-      ,
-        "cities": [
-          "Durrës",
-          "Shkodër",
-          "Vlorë",
-          "Elbasan"
-        ]
-      },
+      "ISO code": "AL",
+      "cities": [
+        "Durrës",
+        "Shkodër",
+        "Vlorë",
+        "Elbasan"
+      ]
+    },
     "variants": [
       "red",
       "black",
@@ -268,15 +267,14 @@
       "capital": "Yerevan",
       "description": "Armenia is a landlocked country in the South Caucasus region of Eurasia, bordered by Turkey, Georgia, Azerbaijan, and Iran. It is known for its rich cultural heritage and historical significance as one of the first countries to adopt Christianity.",
       "area": "29,743 km²",
-      "ISO code": "AM"
-      ,
-        "cities": [
-          "Gyumri",
-          "Vanadzor",
-          "Vagharshapat",
-          "Hrazdan"
-        ]
-      },
+      "ISO code": "AM",
+      "cities": [
+        "Gyumri",
+        "Vanadzor",
+        "Vagharshapat",
+        "Hrazdan"
+      ]
+    },
     "variants": [
       "horizontal stripes",
       "3 colours",
@@ -325,15 +323,14 @@
       "description": "Angola is a country in Southern Africa, bordered by Namibia, Zambia, the Democratic Republic of the Congo, and the Atlantic Ocean. It is known for its rich natural resources, including oil and diamonds.",
       "area": "1,246,700 km²",
       "ISO code": "AO",
-      "wikipedia": "https://en.wikipedia.org/wiki/Angola"
-      ,
-        "cities": [
-          "Huambo",
-          "Lobito",
-          "Benguela",
-          "Kuito"
-        ]
-      }
+      "wikipedia": "https://en.wikipedia.org/wiki/Angola",
+      "cities": [
+        "Huambo",
+        "Lobito",
+        "Benguela",
+        "Kuito"
+      ]
+    }
   },
   {
     "name": "Antarctica",
@@ -365,15 +362,14 @@
       "description": "Argentina is a country in South America, bordered by Chile, Bolivia, Paraguay, Brazil, Uruguay, and the South Atlantic Ocean. It is known for its diverse landscapes, rich cultural heritage, and vibrant cities.",
       "area": "2,780,400 km²",
       "ISO code": "AR",
-      "wikipedia": "https://en.wikipedia.org/wiki/Argentina"
-      ,
-        "cities": [
-          "Córdoba",
-          "Rosario",
-          "Mendoza",
-          "La Plata"
-        ]
-      }
+      "wikipedia": "https://en.wikipedia.org/wiki/Argentina",
+      "cities": [
+        "Córdoba",
+        "Rosario",
+        "Mendoza",
+        "La Plata"
+      ]
+    }
   },
   {
     "name": "League of Arab States",
@@ -436,15 +432,14 @@
       "description": "Austria is a landlocked country in Central Europe, bordered by Germany, Czech Republic, Slovakia, Hungary, Slovenia, Italy, Switzerland, and Liechtenstein. It is known for its rich cultural heritage, stunning alpine landscapes, and historical significance.",
       "area": "83,879 km²",
       "ISO code": "AT",
-      "wikipedia": "https://en.wikipedia.org/wiki/Austria"
-      ,
-        "cities": [
-          "Graz",
-          "Linz",
-          "Salzburg",
-          "Innsbruck"
-        ]
-      }
+      "wikipedia": "https://en.wikipedia.org/wiki/Austria",
+      "cities": [
+        "Graz",
+        "Linz",
+        "Salzburg",
+        "Innsbruck"
+      ]
+    }
   },
   {
     "name": "Australia",
@@ -461,15 +456,14 @@
       "description": "Australia is a country and continent surrounded by the Indian and Pacific Oceans. It is known for its unique wildlife, diverse landscapes, and vibrant cities. The country is the sixth-largest in the world by total area.",
       "area": "7,692,024 km²",
       "ISO code": "AU",
-      "wikipedia": "https://en.wikipedia.org/wiki/Australia"
-      ,
-        "cities": [
-          "Sydney",
-          "Melbourne",
-          "Brisbane",
-          "Perth"
-        ]
-      }
+      "wikipedia": "https://en.wikipedia.org/wiki/Australia",
+      "cities": [
+        "Sydney",
+        "Melbourne",
+        "Brisbane",
+        "Perth"
+      ]
+    }
   },
   {
     "name": "Aruba",
@@ -5194,15 +5188,14 @@
       "description": "Uzbekistan is a landlocked country in Central Asia, known for its rich history along the Silk Road and its architectural heritage.",
       "area": "447,400 km²",
       "ISO code": "UZ",
-      "wikipedia": "https://en.wikipedia.org/wiki/Uzbekistan"
-      ,
-        "cities": [
-          "Samarkand",
-          "Bukhara",
-          "Namangan",
-          "Andijan"
-        ]
-      }
+      "wikipedia": "https://en.wikipedia.org/wiki/Uzbekistan",
+      "cities": [
+        "Samarkand",
+        "Bukhara",
+        "Namangan",
+        "Andijan"
+      ]
+    }
   },
   {
     "name": "Holy See",
