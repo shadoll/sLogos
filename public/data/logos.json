@@ -4054,6 +4054,13 @@
         "text-ua": "none",
         "text-en": "none",
         "tm": "none"
+      },
+      "ng": {
+        "logoI": "green",
+        "logoU": "green",
+        "text-ua": "green",
+        "text-en": "gold",
+        "tm": "green"
       }
     }
 
