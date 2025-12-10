@@ -4044,16 +4044,16 @@
       "logo-only": {
         "logoI": "green",
         "logoU": "gold",
-        "text-ua": "none",
-        "text-en": "none",
-        "tm": "none"
+        "text-ua": "transparent",
+        "text-en": "transparent",
+        "tm": "transparent"
       },
       "logo-only-monochrome": {
         "logoI": "currentColor",
         "logoU": "currentColor",
-        "text-ua": "none",
-        "text-en": "none",
-        "tm": "none"
+        "text-ua": "transparent",
+        "text-en": "transparent",
+        "tm": "transparent"
       },
       "ng": {
         "logoI": "green",
