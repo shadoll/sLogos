@@ -4035,6 +4035,13 @@
         "text-en": "gold",
         "tm": "green"
       },
+      "ng": {
+        "logoI": "green",
+        "logoU": "green",
+        "text-ua": "green",
+        "text-en": "gold",
+        "tm": "green"
+      },
       "monochrome": {
         "logoI": "currentColor",
         "logoU": "currentColor",
@@ -4049,21 +4056,20 @@
         "text-en": "transparent",
         "tm": "transparent"
       },
+      "logo-only-green": {
+        "logoI": "green",
+        "logoU": "green",
+        "text-ua": "transparent",
+        "text-en": "transparent",
+        "tm": "transparent"
+      },
       "logo-only-monochrome": {
         "logoI": "currentColor",
         "logoU": "currentColor",
         "text-ua": "transparent",
         "text-en": "transparent",
         "tm": "transparent"
-      },
-      "ng": {
-        "logoI": "green",
-        "logoU": "green",
-        "text-ua": "green",
-        "text-en": "gold",
-        "tm": "green"
       }
     }
-
   }
 ]
