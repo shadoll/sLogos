@@ -4003,5 +4003,59 @@
         "tm": "currentColor"
       }
     }
+  },
+  {
+    "title": "Shkafnik",
+    "name": "Shkafnik-ev",
+    "path": "shkafnik-ev.svg",
+    "format": "SVG",
+    "disable": false,
+    "brand": "Shkafnik",
+    "tags": [
+      "furniture"
+    ],
+    "colors": {
+      "green": "#3a7456",
+      "gold": "#cc950b",
+      "currentColor": "currentColor"
+    },
+    "targets": {
+      "logoI": "#shkafnik-I",
+      "logoU": "#shkafnik-U",
+      "text-ua": "#shkafnik-ua",
+      "text-en": "#shkafnik-en",
+      "tm": "#tm"
+    },
+    "sets": {
+      "main": {
+        "logoI": "gold",
+        "logoU": "green",
+        "text-ua": "green",
+        "text-en": "gold",
+        "tm": "green"
+      },
+      "monochrome": {
+        "logoI": "currentColor",
+        "logoU": "currentColor",
+        "text-ua": "currentColor",
+        "text-en": "currentColor",
+        "tm": "currentColor"
+      },
+      "logo-only": {
+        "logoI": "green",
+        "logoU": "gold",
+        "text-ua": "none",
+        "text-en": "none",
+        "tm": "none"
+      },
+      "logo-only-monochrome": {
+        "logoI": "currentColor",
+        "logoU": "currentColor",
+        "text-ua": "none",
+        "text-en": "none",
+        "tm": "none"
+      }
+    }
+
   }
 ]
