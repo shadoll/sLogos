@@ -4017,7 +4017,8 @@
     "colors": {
       "green": "#3a7456",
       "gold": "#cc950b",
-      "currentColor": "currentColor"
+      "currentColor": "currentColor",
+      "transparent": "none"
     },
     "targets": {
       "logoI": "#shkafnik-I",
